@@ -54,7 +54,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | Group | Domain | Notes |
 | --- | --- | --- |
 | `01-x` | Cellular and mobile communications | 01-1 … 01-4 |
-| `02-x` | WLAN | 02-1 … 02-3 |
+| `02-x` | WLAN | 02-1 … 02-4 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-3 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
@@ -80,6 +80,7 @@ flowchart LR
         w1["02-1 Wi-Fi generations"]
         w2["02-2 Power saving"]
         w3["02-3 WFA · EasyMesh · prpl"]
+        w4["02-4 Packet TX/RX datapath and offload"]
     end
     subgraph g3["03 · Low-power / sensor"]
         s1["03-1 WSN and low-power MAC"]
@@ -112,6 +113,8 @@ flowchart LR
     c2 --> e3
     c4 --> s1
     w1 --> w2 --> w3
+    w3 --> w4
+    w4 --> e2
     w2 --> s1 --> e1
     e1 --> e2 --> e3
     c2 --> d1 --> d2
@@ -138,6 +141,7 @@ flowchart LR
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — 802.11n/ac/ax/be/bn, Wi-Fi 4→9, MLO, OFDMA, UHR, multi-AP coordination
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — legacy PS / PS-Poll, U-APSD, SMPS, TXOP PS, TWT and r-TWT, wake-up radio, AP power save, ambient power
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification, Multi-AP control plane, prplMesh/prplOS
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — end-to-end TX/RX path (socket → qdisc → mac80211 → descriptor → EDCA/A-MPDU/Block Ack → PHY, and back through reorder/decrypt/GRO), the five planes of offload (per-packet assists, FullMAC vs SoftMAC, AP flow offload and WED, kernel bypass, control-plane), MLO reordering, and how to localise a fault in the path
 
 ### 03 · Low-power and sensor networking
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — clustering, UAV-assisted collection, TSCH, AoI

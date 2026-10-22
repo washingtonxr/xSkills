@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.5
+version: 1.6
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,11 +11,12 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 22 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
+> This file supports the 23 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN;
-> `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem;
+> `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,
+> `02-4` packet TX/RX datapath and offload;
 > `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;
 > `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture;
 > `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
@@ -23,7 +24,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `07-x` silicon and ISA — `07-1` RISC-V;
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
-> Sections `22`–`24` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `23`–`25` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -331,6 +332,52 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - The de facto reference implementation for Wi-Fi stack behaviour on Linux. When in doubt about how a feature behaves on a real device, read hostapd.
 - **[Doc · ★]** **RDK-B (Reference Design Kit for Broadband)** documentation
   - The cable/telco gateway software stack; useful context for the operator-managed device world EasyMesh and prpl target.
+
+---
+
+## 02-4 · WLAN — Packet TX/RX Datapath and Offload Evolution
+
+### Books
+
+- **[Book · \u2605\u2605\u2605]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast, O'Reilly, 2005. ISBN 978-0-596-10052-0
+  - Still the clearest description of MAC frame formats, DCF/EDCA contention and the ACK machinery. Read chapter 3 (frames) and chapter 9 (MAC) before anything else here.
+- **[Book · \u2605\u2605\u2605]** *Next Generation Wireless LANs: 802.11n and 802.11ac*, 2nd ed. — Eldad Perahia and Robert Stacey, Cambridge University Press, 2013. ISBN 978-1-107-01676-7
+  - Written by the standard's editors: aggregation, Block Ack, and *why* the sizes and windows are what they are. The A-MPDU and BA chapters are the reference for this note.
+- **[Book · \u2605\u2605\u2605]** *Linux Device Drivers*, 3rd ed. — Jonathan Corbet, Alessandro Rubini, Greg Kroah-Hartman, O'Reilly, 2005, plus the current `Documentation/driver-api/`
+  - DMA mapping, interrupt handling and the `ndo_start_xmit` contract; the driver half of the TX path.
+- **[Book · \u2605\u2605]** *Understanding Linux Network Internals* — Christian Benvenuti, O'Reilly, 2005. ISBN 978-0-596-00255-8
+  - Still the best explanation of NAPI, the RX softirq, and where an `skb` is allocated, cloned and freed.
+
+### Standards
+
+- **[Standard · \u2605\u2605\u2605]** **IEEE 802.11-2024** (published 28 April 2025) — the base standard. Clause 10 (MAC) and Clause 27 (aggregation and Block Ack) are the normative sources for every mechanism in this note.
+- **[Standard · \u2605\u2605\u2605]** **IEEE 802.11ax-2021** — extended compressed Block Ack (256-MPDU window), trigger-based UL, and the A-MPDU size increase.
+- **[Standard · \u2605\u2605\u2605]** **IEEE 802.11be-2024** (published 22 July 2025) — multi-link operation: per-link Block Ack, MLD-level reordering, and per-MLD security/replay state.
+- **[Standard · \u2605\u2605]** **IEEE 802.11-2016 Clause 10.22 / Annex** for EDCA parameter sets, AIFS and CW ranges per access category.
+
+### Papers
+
+- **[Paper · \u2605\u2605\u2605]** Bianchi, G. "Performance Analysis of the IEEE 802.11 Distributed Coordination Function." *IEEE Journal on Selected Areas in Communications* 18(3), 2000, 535–547. DOI 10.1109/49.840210
+  - The analytical model that every backoff/window/CW argument descends from. Cite it when you claim contention efficiency.
+- **[Paper · \u2605\u2605\u2605]** Høiland-Jørgensen, T., Kazior, M., Täht, D., Hurtig, P., Brunström, A. "Ending the Anomaly: Achieving Low Latency and Airtime Fairness in WiFi." *USENIX ATC* 2017
+  - Airtime queue limits (AQL) and `fq_codel` on Wi-Fi: why byte-based queueing fails on an airtime-limited medium, and what the fix costs.
+- **[Paper · \u2605\u2605]** Høiland-Jørgensen, T., Möller, J. D., Do, V.-H., Pradel, B., Németh, F. "The eXpress Data Path: Fast Programmable Packet Processing in the Operating System Kernel." *ACM CoNEXT* 2018
+  - AF_XDP and the boundary conditions under which kernel bypass actually pays.
+- **[Paper · \u2605\u2605]** "MAC Level Throughput Comparison: 802.11ax vs. 802.11ac." arXiv:1803.10189
+  - Analytical treatment of A-MPDU size, the BA window, and why a 256-MPDU window needs extended BA to mean anything.
+
+### Implementation references
+
+- **[Code · \u2605\u2605\u2605]** Linux `net/mac80211/tx.c`, `rx.c`, `agg-tx.c`, `agg-rx.c`; `include/net/flow_offload.h`; `Documentation/networking/`
+  - The authoritative description of `ieee80211_subif_start_xmit`, `ieee80211_fast_tx`, `ieee80211_rx_reorder_ampdu`, `tid_ampdu_rx`, and the `ndo_flow_offload` fast-path API.
+- **[Code · \u2605\u2605\u2605]** `ath9k` / `mt76` (SoftMAC) versus `brcmfmac` (FullMAC) — read one of each
+  - The fastest way to internalise the `ieee80211_hw` + `ieee80211_ops` versus `cfg80211_ops` + command/event-mailbox distinction.
+- **[Doc · \u2605\u2605]** OpenWrt, "Wireless Ethernet Dispatch (WED)" <https://openwrt.org/docs/guide-user/network/wifi/wed>
+  - How MediaTek's packet engine takes Wi-Fi frames directly (MT7622/MT7981/MT7986/MT7988), the `wed_enable=Y` switch, `/sys/kernel/debug/ppe0/bind`, and the documented loss of AQL.
+- **[Doc · \u2605\u2605]** DPDK *Programmer's Guide* and FD.io *VPP* hostap plugin documentation
+  - The kernel-bypass end of the spectrum, and the concrete reason Wi-Fi has no upstream DPDK device class.
+- **[Doc · \u2605\u2605]** `iw`, `hostapd` and `ethtool` documentation; kernel `Documentation/networking/napi.rst`, `scaling.rst`
+  - The measurement tools referenced in the symptom→layer table. `iw dev <dev> station dump` is where aggregation and BA state become visible.
 
 ---
 
@@ -886,7 +933,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 22 · Primary Standards and Specification Repositories
+## 23 · Primary Standards and Specification Repositories
 
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
@@ -914,7 +961,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 23 · Suggested Reading Order
+## 24 · Suggested Reading Order
 
 
 **If you have 4 weeks before an interview:**
@@ -922,7 +969,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 | Week | Focus | Reading |
 | --- | --- | --- |
 | 1 | Anchor the map | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV |
-| 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique |
+| 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique · WLAN datapath: §02-4 against `net/mac80211/tx.c` and `rx.c` — read the code once, it is the only way the host/device split becomes obvious |
 | 2b | Language layer (do this once, whatever your track) | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large |
 | 2c | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion |
 | 3 | Future direction | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025) |
@@ -935,13 +982,13 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 24 · Verification and Maintenance
+## 25 · Verification and Maintenance
 
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check.
 
 ---
 

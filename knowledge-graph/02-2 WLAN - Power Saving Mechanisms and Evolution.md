@@ -2,7 +2,7 @@
 title: "WLAN — Power Saving Mechanisms and Evolution"
 type: domain-note
 domain: wlan
-group: "04"
+group: "02"
 series: "02-2"
 tags:
   - wlan
@@ -472,6 +472,7 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the non-Wi-Fi low-power MAC tradition: TSCH, duty cycling, AoI
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS and eRedCap: the cellular answer to the same battery problem
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload
