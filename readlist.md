@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.4
+version: 1.5
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,7 +11,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 19 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
+> This file supports the 22 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN;
@@ -21,8 +21,9 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
 > `06-x` AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems;
 > `07-x` silicon and ISA — `07-1` RISC-V;
-> `08-x` programming — `08-1` toolchain and performance, `08-2` C and C++.
-> Sections `19`–`21` collect primary standards repositories, a reading order, and maintenance notes.
+> `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
+> `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
+> Sections `22`–`24` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -770,7 +771,122 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 19 · Primary Standards and Specification Repositories
+## 08-3 · Python Programming — Language, Object Model and Engineering Practice
+
+### Books
+
+- **[Book · ★★★]** *Fluent Python: Clear, Concise, and Effective Programming*, 2nd ed. — Luciano Ramalho, O'Reilly, 2022. ISBN 978-1-492-05635-5. [EN]
+  - The reference for the data model: dunder protocols, descriptors, MRO, generators. Read Part I and Part IV before any interview that claims Python fluency.
+- **[Book · ★★★]** *Effective Python: 90 Specific Ways to Write Better Python*, 2nd ed. — Brett Slatkin, Addison-Wesley, 2019. ISBN 978-0-13-485398-7. [EN]
+  - Item-level advice with the "why"; the chapters on closures, generators and concurrency map directly onto interview questions.
+- **[Book · ★★]** *Python Cookbook*, 3rd ed. — David Beazley and Brian K. Jones, O'Reilly, 2013. ISBN 978-1-449-34037-7. [EN]
+  - Recipe-level: iterators, `__slots__`, wrapping C libraries with `ctypes`, mixing threads and processes.
+- **[Book · ★★]** *Python for Data Analysis*, 3rd ed. — Wes McKinney, O'Reilly, 2022. ISBN 978-1-098-10403-0. [EN]
+  - Written by NumPy/pandas' author; the clearest account of the array-and-label model behind KPI analysis.
+- **[Book · ★★]** *High Performance Python*, 2nd ed. — Micha Gorelick and Ian Ozsvald, O'Reilly, 2020. ISBN 978-1-492-05502-0. [EN]
+  - The measurement-first approach: profiling, memory, C extensions, multiprocessing, and when each one actually helps.
+- **[Book · ★]** *CPython Internals* — Anthony Shaw, Real Python, 2021. [EN]
+  - Compiler pipeline, frames, the evaluation loop and object representation, written for people who want to reason about CPython rather than about Python.
+
+### Documentation and specifications
+
+- **[Doc · ★★★]** *The Python Language Reference* and *The Python Data Model*. <https://docs.python.org/3/reference/> [EN]
+  - The data model chapter is the normative description of every dunder method; read it once end to end.
+- **[Doc · ★★★]** *What's New In Python 3.15* (released 2026-10-09). <https://docs.python.org/3/whatsnew/3.15.html> [EN]
+  - Lazy imports (PEP 810), `frozendict` (PEP 814), UTF-8 default (PEP 686), Tachyon profiler (PEP 799).
+- **[Standard · ★★]** PEP 8 (style), PEP 484 (type hints), PEP 544 (Protocols), PEP 557 (dataclasses), PEP 659 (adaptive interpreter), PEP 703 (free-threading), PEP 779 (free-threading support status). <https://peps.python.org/> [EN]
+- **[Doc · ★★]** *asyncio* documentation — task groups, timeouts, cancellation, the event loop. <https://docs.python.org/3/library/asyncio.html> [EN]
+- **[Standard · ★★]** NumPy *NEP 50* — promotion rules for Python scalars, the change that broke dtype assumptions in NumPy 2.0. <https://numpy.org/neps/nep-0050-scalar-promotion.html> [EN]
+
+### Papers and practice
+
+- **[Paper · ★★★]** Harris, C. R., Millman, K. J., van der Walt, S. J., et al. "Array programming with NumPy." *Nature* 585, 357–362 (2020). DOI 10.1038/s41586-020-2649-2. [EN]
+  - The canonical citation for why strided arrays with a dtype beat lists by two orders of magnitude.
+- **[Code · ★★]** pybind11 and nanobind — C++ ↔ Python binding layers; the casters and GIL handling are the practical content. <https://pybind11.readthedocs.io/> · <https://nanobind.readthedocs.io/> [EN]
+- **[Code · ★★]** Numba and Cython — JIT and ahead-of-time compilation of numeric Python. <https://numba.readthedocs.io/> · <https://cython.readthedocs.io/> [EN]
+- **[Doc · ★★]** pytest, ruff, mypy, uv — the 2026 default toolchain for tests, lint, types and environments. [EN]
+
+---
+
+## 08-4 · MATLAB and Simulink — Programming, Modelling and Code Generation
+
+### Books
+
+- **[Book · ★★★]** *MATLAB Guide*, 3rd ed. — Desmond J. Higham and Nicholas J. Higham, SIAM, 2017. ISBN 978-1-611974-18-6. [EN]
+  - The best-written account of the language itself: arrays, functions, object-oriented programming, and numerical quality. Written by numerical analysts, so the advice on conditioning is worth taking.
+- **[Book · ★★★]** *Numerical Computing with MATLAB* — Cleve B. Moler, SIAM, 2004. ISBN 978-0-89871-660-3. [EN]
+  - MATLAB's creator on the numerical methods behind the built-ins; explains why `\` is not `inv(A)*b`.
+- **[Book · ★★]** *MATLAB: A Practical Introduction to Programming and Problem Solving*, 5th ed. — Stormy Attaway, Butterworth-Heinemann, 2019. ISBN 978-0-12-815479-3. [EN]
+  - Fastest route for someone coming from C or Python; the chapter on vectorisation is the useful part.
+- **[Book · ★★]** *Basic MATLAB, Simulink, and Stateflow* — Richard D. Colgren, AIAA Education Series, 2007. ISBN 978-1-56347-838-1. [EN]
+  - Written for aerospace control work, which is exactly the audience that needs sample time and state machines explained together.
+- **[Book · ★★]** *Simulation of Dynamic Systems with MATLAB and Simulink*, 3rd ed. — Harold Klee and Randal Allen, CRC Press, 2018. [EN]
+  - Integrator theory, stiffness and solver selection treated as numerical analysis rather than as tool settings.
+
+### Documentation
+
+- **[Doc · ★★★]** *Object-Oriented Programming in MATLAB* — handle vs value classes, property validation, events, `matlab.System`. <https://www.mathworks.com/help/matlab/matlab_oop/object-oriented-programming.html> [EN]
+- **[Doc · ★★★]** *Function Argument Validation* — the `arguments` block, validators, name-value arguments. <https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html> [EN]
+- **[Doc · ★★★]** *Choose a Solver* — stiffness, variable vs fixed step, and the code-generation constraint. <https://www.mathworks.com/help/simulink/ug/choose-a-solver.html> [EN]
+- **[Doc · ★★]** *Stateflow User's Guide* — hierarchy, temporal logic, truth tables, generated-code structure. <https://www.mathworks.com/help/stateflow/> [EN]
+- **[Doc · ★★]** *Fixed-Point Designer* — `fi`, `fimath`, rounding and overflow modes, word-length analysis. <https://www.mathworks.com/help/fixedpoint/> [EN]
+- **[Doc · ★★]** *HDL Coder* and *Embedded Coder* — synthesizable subset, latency balancing, MISRA checking, SIL/PIL. <https://www.mathworks.com/help/hdlcoder/> · <https://www.mathworks.com/help/ecoder/> [EN]
+- **[Doc · ★★]** *MATLAB and Simulink Release Notes* — R2026a (April 2026) and R2026b (24 September 2026) are the current pair. <https://www.mathworks.com/help/relnotes/> [EN]
+- **[Doc · ★]** *5G Toolbox* — NR waveform generation, TDL/CDL channel models, reference measurement channels. <https://www.mathworks.com/help/5g/> [EN]
+
+### Papers and practitioner material
+
+- **[Doc · ★★]** "MATLAB R2026a has been released — What's new?" *MATLAB Blog*, 21 April 2026. <https://blogs.mathworks.com/matlab/2026/04/21/matlab-r2026a-has-been-released-whats-new/> [EN]
+  - Release-level summary with worked examples: ODE automatic differentiation, `metafunction` introspection, Python 3.9–3.13 support.
+- **[Doc · ★★]** "MathWorks Introduces Release 2026b of MATLAB and Simulink." Press release, 24 September 2026. [EN]
+  - The variant-management, JSON data dictionary, custom-solver and TOML project changes that affect how a model is version-controlled.
+
+---
+
+## 08-5 · Verilog HDL — RTL Design, Verification and Synthesis Practice
+
+### Books
+
+- **[Book · ★★★]** *Verilog HDL: A Guide to Digital Design and Synthesis*, 2nd ed. — Samir Palnitkar, Prentice Hall, 2003. ISBN 0-13-044911-3. [EN]
+  - The standard teaching text: language, modelling styles, synthesisable subset. Old, and still the clearest explanation of blocking vs non-blocking.
+- **[Book · ★★★]** *SystemVerilog for Verification: A Guide to Learning the Testbench Language Features*, 3rd ed. — Chris Spear, Springer, 2012. ISBN 978-1-4614-0714-0. [EN]
+  - Classes, virtual interfaces, mailboxes, constrained random and coverage — the class layer of the language, which plain Verilog does not have.
+- **[Book · ★★]** *The Verilog Hardware Description Language*, 5th ed. — Donald E. Thomas and Philip R. Moorby, Springer, 2002. ISBN 978-0-7923-7621-7. [EN]
+  - Written by Verilog's co-designer; the simulation semantics are explained from the scheduler's point of view.
+- **[Book · ★★]** *FPGA Prototyping by Verilog Examples* — Pong P. Chu, Wiley-IEEE Press, 2008. ISBN 978-0-470-18532-2. [EN]
+  - Working RTL for FSMs, UARTs, video and DSP blocks; useful because every example is complete and synthesizable.
+- **[Book · ★★]** *Advanced FPGA Design: Architecture, Implementation, and Optimization* — Steve Kilts, Wiley-IEEE Press, 2007. ISBN 978-0-470-05437-6. [EN]
+  - Pipelining, retiming, resource sharing and timing closure as architecture decisions rather than tool settings.
+
+### Standards
+
+- **[Standard · ★★★]** IEEE Std 1364-2005 — *IEEE Standard for Verilog Hardware Description Language*. [EN]
+  - The last standalone Verilog standard; superseded by inclusion in IEEE 1800-2009.
+- **[Standard · ★★★]** IEEE Std 1800-2023 — *IEEE Standard for SystemVerilog*, approved 6 December 2023. <https://ieeexplore.ieee.org/document/10458102> [EN]
+  - The current normative text. Verilog is the synthesizable core of this document, not a separate standard.
+- **[Standard · ★★]** IEEE Std 1800.2-2020 — *Universal Verification Methodology (UVM) Language Reference Manual*. <https://ieeexplore.ieee.org/document/9195920> [EN]
+- **[Standard · ★]** IEEE Std 1076-2019 — *VHDL Language Reference Manual*, for the nine-state `std_logic` comparison. [EN]
+
+### Papers and application notes
+
+- **[Paper · ★★★]** Cummings, C. E. "Nonblocking Assignments in Verilog Synthesis, Coding Styles That Kill!" SNUG-2000. <https://www.sunburst-design.com/papers/> [EN]
+  - The paper that settled the blocking/non-blocking convention the industry now follows.
+- **[Paper · ★★★]** Cummings, C. E., and Mills, D. "Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?" SNUG-2002. [EN]
+  - Reset strategy, and the async-assert/sync-release synchroniser that most designs need.
+- **[Paper · ★★★]** Cummings, C. E. "Simulation and Synthesis Techniques for Asynchronous FIFO Design." SNUG-2002. [EN]
+  - Gray-coded pointers, synchronised flags, and why the depth must exceed the synchroniser latency.
+- **[Paper · ★★]** Cummings, C. E. "Clock Domain Crossing (CDC) Design & Verification Techniques Using SystemVerilog." SNUG-2008. [EN]
+  - The taxonomy of crossings and the structure that makes each one checkable.
+
+### Tools and open flows
+
+- **[Code · ★★]** Verilator — compiles synthesizable Verilog to C++ for fast simulation. <https://verilator.org/guide/latest/> [EN]
+- **[Code · ★★]** Yosys and OpenLane/OpenROAD with the SkyWater SKY130 PDK — a fully open synthesis-to-GDSII flow. <https://yosyshq.readthedocs.io/> · <https://openlane.readthedocs.io/> [EN]
+- **[Code · ★]** Icarus Verilog and GTKWave — the long-standing open simulator and waveform viewer. <https://steveicarus.github.io/iverilog/> [EN]
+
+---
+
+## 22 · Primary Standards and Specification Repositories
 
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
@@ -798,7 +914,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 20 · Suggested Reading Order
+## 23 · Suggested Reading Order
 
 
 **If you have 4 weeks before an interview:**
@@ -819,13 +935,13 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 21 · Verification and Maintenance
+## 24 · Verification and Maintenance
 
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification.
 
 ---
 

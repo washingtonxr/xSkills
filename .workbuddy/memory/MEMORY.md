@@ -26,7 +26,7 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 - `knowledge-graph/` is the Obsidian vault root — open *that* folder, not the project root.
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
 - Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
-- Fixed note body shape: knowledge points → **Anchors** → **Related**.
+- Fixed note body shape: knowledge points → **Anchors** → **Related**; the three language notes (08-3/08-4/08-5) additionally close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
 - Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view); every note is expected to carry them in its structural sections (architecture, data path, timing, decision logic), not just in passing.
 - Bulk renumbering recipe: two-phase `git mv` (old → `__tmp__` → final) to avoid filename collisions, then one regex pass with `(?<![\d\-])(\d{2})-(\d)(?!\d)` and a lookup dict — single pass avoids chained rewrites, and the lookbehind protects dates and version strings.
 
@@ -45,9 +45,9 @@ replaced on request. Group order follows the signal path outward:
 | `05-x` | Data plane and heterogeneous compute | 05-1 DPDK/UPF · 05-2 cloud-edge-end |
 | `06-x` | AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems |
 | `07-x` | Silicon and ISA | 07-1 RISC-V |
-| `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ |
+| `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ · 08-3 Python · 08-4 MATLAB/Simulink · 08-5 Verilog HDL |
 
-`readlist.md` sections use the **same** `GG-x` numbers (sections 19–21 are the
+`readlist.md` sections use the **same** `GG-x` numbers (sections 22–24 are the
 standards repositories, reading order, and maintenance). Renumbering a note means
 renumbering its readlist section too.
 

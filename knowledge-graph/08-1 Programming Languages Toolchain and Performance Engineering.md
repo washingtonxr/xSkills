@@ -52,6 +52,7 @@ The layer that makes every other note in this vault executable.
 - **asyncio** for test harnesses driving many simulated UEs/devices concurrently.
 - **Bindings**: pybind11 or nanobind to expose C++ to Python (xLLM uses pybind). This is the standard "Python flexibility + C++ performance" compromise.
 - Be explicit about the GIL: it is why Python serving stacks use multi-process, and it is part of the tail-latency argument for C++ inference engines.
+- Full treatment — execution model, dunder protocols, class system, asyncio, typing, NumPy array model, performance decision tree, packaging — is in [[08-3 Python Programming - Language, Object Model and Engineering Practice]].
 
 ## 3. Linux systems programming
 
@@ -96,6 +97,8 @@ flowchart TD
 - Where it is used in this domain: **prototyping baseband blocks, hardware-in-the-loop testbeds, accelerating specific kernels (FEC, FFT, CRC), and pre-silicon validation**.
 - **HLS** (C/C++ → RTL) exists but rarely beats hand-written RTL on the kernels that matter.
 - Verification: testbenches, assertions (SVA), UVM for larger designs, and co-simulation against a C model.
+- Full treatment — standard lineage, assignment scheduling, FSM/reset discipline, timing arithmetic, CDC mechanisms, SystemVerilog classes and UVM, synthesis flows — is in [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]].
+- The **MATLAB/Simulink** path into the same RTL (fixed point, HDL Coder, SIL/PIL) is in [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]].
 
 ## 5. Performance engineering method
 
@@ -146,6 +149,9 @@ flowchart TD
 ## Related
 
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language-level counterpart: C23/C++26 features, templates, memory model, STL
+- [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — the tooling and modelling language in depth
+- [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — model-based design and code generation
+- [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — the RTL counterpart of the build/profiling method
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]

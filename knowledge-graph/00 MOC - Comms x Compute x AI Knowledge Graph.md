@@ -60,7 +60,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
 | `06-x` | AI inference and agent systems | 06-1, 06-2 |
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
-| `08-x` | Programming languages and engineering practice | 08-1, 08-2 |
+| `08-x` | Programming languages and engineering practice | 08-1 … 08-5 |
 
 The order is deliberate: it walks the signal path outward — air interface and RAN (`01`), then the wireless LAN and sensor edges (`02`, `03`), then the software that runs on the devices (`04`), then the data plane and the compute fabric (`05`), then the AI workloads that consume it (`06`), and finally the silicon and language foundations underneath everything (`07`, `08`).
 
@@ -103,6 +103,9 @@ flowchart LR
     subgraph g8["08 · Languages and practice"]
         p1["08-1 Toolchain and performance"]
         p2["08-2 C and C++ · STL"]
+        p3["08-3 Python"]
+        p4["08-4 MATLAB and Simulink"]
+        p5["08-5 Verilog HDL"]
     end
 
     c1 --> c2 --> c3
@@ -119,6 +122,10 @@ flowchart LR
     p2 --> e1
     p2 --> d1
     p1 --> p2
+    p3 --> p1
+    p4 --> c1
+    p4 --> p5
+    p5 --> r1
 ```
 
 ### 01 · Cellular and mobile communications
@@ -152,8 +159,11 @@ flowchart LR
 - [[07-1 RISC-V for Communication Infrastructure]] — baseband clusters, EdgeQ, software-defined PHY, L1/L2 interface
 
 ### 08 · Programming languages and engineering practice
-- [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, Python, Linux, Verilog HDL, profiling
+- [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, Linux, profiling, kernel bypass, and how the languages fit together
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — C23/C++26 language features, templates, memory model, STL containers and algorithms, systems idioms
+- [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — CPython execution model, dunder protocols, classes (dataclass / ABC / Protocol / metaclass), asyncio, typing, NumPy array model, performance decision tree, packaging
+- [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — array semantics and copy-on-write, `classdef` value vs handle classes, `arguments` validation, Simulink solvers and sample time, Stateflow, fixed point, Embedded/HDL Coder, SIL/PIL/HIL
+- [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — 1364/1800 lineage, blocking vs non-blocking semantics, FSM and reset discipline, timing and CDC, SystemVerilog classes and UVM, synthesis flows, DSP RTL patterns
 
 ## Cross-cutting threads
 

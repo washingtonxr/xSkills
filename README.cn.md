@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.4
+version: 1.5
 sibling: README.md
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（19 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（22 篇笔记）**。
 
 ---
 
@@ -62,7 +62,8 @@ flowchart LR
 | 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
 | WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 03-1 → 04-3 |
 | 低功耗 / IoT 设备方向 | 02-2 → 03-1 → 01-4 → 04-1 |
-| 软件 / 语言基础（任何岗位都要过一遍） | 08-2 → 08-1 |
+| 软件 / 语言基础（任何岗位都要过一遍） | 08-2 → 08-3 → 08-1 |
+| 算法建模 / DSP 原型验证 | 08-4 → 08-5 → 08-3 |
 
 ---
 
@@ -77,7 +78,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，19 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，22 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -96,7 +97,10 @@ flowchart LR
 │   ├── 06-2 Agent Systems and Edge Orchestration.md
 │   ├── 07-1 RISC-V for Communication Infrastructure.md
 │   ├── 08-1 Programming Languages Toolchain and Performance Engineering.md
-│   └── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 08-3 Python Programming - Language, Object Model and Engineering Practice.md
+│   ├── 08-4 MATLAB and Simulink - Programming, Modelling and Code Generation.md
+│   └── 08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice.md
 └── .workbuddy/                    项目工作数据（勿删）
 ```
 
@@ -114,7 +118,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 21 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、07-1 RISC-V、08-1 语言与性能、08-2 C/C++，另附 19 一手标准库、20 阅读顺序、21 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 24 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 22 一手标准库、23 阅读顺序、24 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -137,15 +141,18 @@ flowchart LR
 | **06-1** | LLM 推理引擎与 xLLM | KV Cache、PagedAttention、量化、算子融合、prefill/decode |
 | **06-2** | Agent 系统与边缘编排 | GRAFT、多设备 SLM mesh、安全边界执行 |
 | **07-1** | RISC-V 通信基础设施 | 基带集群、软件定义 PHY、H 扩展、L1/L2 接口 |
-| **08-1** | 语言、工具链与性能工程 | 构建系统、Python、内核旁路选型、性能方法论 |
+| **08-1** | 语言、工具链与性能工程 | 构建系统、内核旁路选型、性能方法论、各语言的定位与衔接 |
 | **08-2** | C/C++ 编程与 STL | C23/C++26 语言特性、模板与编译期计算、内存模型与并发、STL 容器/迭代器/算法、系统级惯用法与 UB 清单 |
+| **08-3** | **Python 编程** | CPython 执行模型（字节码、特化、JIT、GIL 与自由线程）、dunder 对象协议、属性查找与 C3 MRO、从 dataclass 到 Protocol 到元类的类体系、生成器与 asyncio、类型标注演进、NumPy 跨步数组模型、性能决策树、打包与测试实践 |
+| **08-4** | **MATLAB 与 Simulink** | 列主序数组语义与写时复制、向量化、`classdef` 值类与句柄类、`arguments` 参数校验、事件、System 对象、Simulink 采样时间与求解器选择、Stateflow、定点字长设计、Embedded/HDL Coder、SIL/PIL/HIL |
+| **08-5** | **Verilog HDL** | IEEE 1364→1800 沿革、线网与变量及四值逻辑、阻塞与非阻塞调度、状态机与复位纪律、时序方程、CDC 与异步 FIFO、测试平台与 SystemVerilog 类/UVM、FPGA 与 ASIC 综合流程、DSP RTL 结构 |
 
 ---
 
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 18 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+2. **入口**：`00 MOC` 是唯一导航页，其余 21 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
 5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 69 个图块。
@@ -195,6 +202,9 @@ flowchart LR
 - Linux kernel 主线与 LTS 发布 → 更新 08-1/04-2
 - xLLM / Agent 框架的版本与论文 → 更新 06-1/06-2
 - WG21 / WG14 会议与 GCC、Clang 大版本发布 → 更新 08-2
+- CPython 特性版本发布（每年 10 月）与 PEP 采纳、NumPy 大版本 → 更新 08-3
+- MATLAB / Simulink 发布（每年 3 月与 9 月）与 HDL / Embedded Coder 能力变化 → 更新 08-4
+- IEEE 1800 修订与 IEEE 1800.2（UVM）修订 → 更新 08-5
 - AUTOSAR 年度发布（每年 11 月）、MISRA 文档修订、Zephyr 半年发布与 LTS 分支 → 更新 04-3
 
 ---
