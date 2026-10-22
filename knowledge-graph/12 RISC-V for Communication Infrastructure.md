@@ -118,6 +118,7 @@ Answer across four dimensions:
 
 ## Related
 
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
 - [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions
 - [[02 5G NR RAN Layer 2 Protocol Stack]]
 - [[07 Embedded Systems RTOS and Hardware Interfaces]]

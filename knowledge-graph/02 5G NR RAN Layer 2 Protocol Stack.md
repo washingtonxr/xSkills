@@ -152,6 +152,7 @@ End-to-end QoS mapping is the most useful "system view" answer an L2 engineer ca
 
 ## Related
 
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
 - [[01 5G-Advanced and 6G Radio Access]]
 - [[03 AI-ML for RAN and O-RAN RIC]]
 - [[08 DPDK User Plane and 5G UPF]]

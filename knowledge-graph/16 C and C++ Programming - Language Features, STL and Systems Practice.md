@@ -929,6 +929,7 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 
 - [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
 - [[08 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
 - [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
 - [[07 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`
 - [[10 LLM Inference Engines and xLLM]] — C++17/20 and pure-C++ inference engines, KV cache, SIMD kernels

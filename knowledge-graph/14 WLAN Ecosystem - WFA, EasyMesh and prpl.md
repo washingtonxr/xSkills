@@ -108,6 +108,7 @@ The design questions this ecosystem must answer:
 
 ## Related
 
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
 - [[04 WLAN - Wi-Fi Generations Evolution]]
 - [[07 Embedded Systems RTOS and Hardware Interfaces]]
 - [[11 Agent Systems and Edge Orchestration]]

@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.1
+version: 1.2
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,13 +11,13 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 17 notes in `knowledge-graph/`. Sections are numbered to match:
+> This file supports the 18 notes in `knowledge-graph/`. Sections are numbered to match:
 > `01` = 5G-Advanced and 6G Radio Access, `02` = NR RAN L2, `03` = AI/ML for RAN and O-RAN RIC,
 > `04` = WLAN Generations, `05` = RedCap/eRedCap/NTN, `06` = WSN, `07` = Embedded RTOS,
 > `08` = DPDK/UPF, `09` = Cloud-Edge-End, `10` = LLM Inference, `11` = Agent Systems,
 > `12` = RISC-V, `13` = Languages and Performance, `14` = WLAN Ecosystem, `15` = Linux Embedded,
-> `16` = C and C++ Programming.
-> Sections `17`–`19` collect primary standards repositories, a reading order, and maintenance notes.
+> `16` = C and C++ Programming, `17` = Embedded Software Architecture.
+> Sections `18`–`20` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -613,7 +613,67 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 17 · Primary Standards and Specification Repositories
+## 17 · Embedded Software Architecture — Patterns, Layering and Wireless System Structure
+
+### Books — architecture and design method
+
+- **[Book · ★★★ · EN]** **Making Embedded Systems: Design Patterns for Great Software**, 2nd ed. — Elecia White, O'Reilly, 2024. ISBN 9781098151546. The most readable entry point into embedded architecture as a *design* discipline rather than a driver catalogue. Chapter 2 ("Creating a System Architecture") is the one to read before an interview; the second edition adds IoT/networked sensors, motors and data-handling strategy. Chapters on reducing RAM, code space and power are directly quotable.
+- **[Book · ★★★ · EN]** **Embedded Systems Architecture**, 2nd ed. — Daniele Lacamera, Packt, Jan 2023. ISBN 9781803239545 (342 pp.). Chapter 3 is literally "Architectural Patterns"; also covers boot-up procedure, memory management, distributed/IoT architecture, parallel tasks and scheduling, and Trusted Execution Environment. Good coverage of the memory-isolation-oriented view of RTOS design.
+- **[Book · ★★ · EN]** **Software Engineering for Embedded Systems: Methods, Practical Techniques, and Applications**, 2nd ed. — Robert Oshana and Mark Kraeling (eds.), Newnes/Elsevier, 2019. ISBN 978-0-12-809448-8 (1st ed. 2013, ISBN 978-0-12-415917-4). Multi-author reference; the relevant chapters are on architecture and design patterns, real-time building blocks, safety-critical development, and multicore software development. Contributors include Jean Labrosse and Bruce Douglass.
+- **[Book · ★★ · EN]** **Better Embedded System Software** — Philip Koopman, Drumnadrochit Education, 2010. ISBN 978-0-9844490-0-2. Short, opinionated and practice-driven: requirements, design, implementation and test discipline specifically for embedded. Strong on the failure modes that architecture should prevent.
+- **[Book · ★ · EN]** **The Art of Designing Embedded Systems**, 2nd ed. — Jack Ganssle, Newnes, 2008. Essays rather than a textbook; useful for the project-reality side (estimation, firmware process, why projects fail). `VERIFY` the exact edition/ISBN before citing.
+
+### Books — execution models, scheduling and time-triggered design
+
+- **[Book · ★★★ · EN]** **Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications**, 3rd ed. — Giorgio C. Buttazzo, Springer, 2011. ISBN 978-1-4614-0676-1, DOI 10.1007/978-1-4614-0676-1 (Real-Time Systems Series, vol. 24). The standard text for the scheduling theory in note 17 §2.3: periodic and aperiodic task scheduling, fixed- and dynamic-priority servers, resource access protocols, limited-preemptive scheduling, overload handling, kernel and application design issues.
+- **[Book · ★★ · EN]** **Real-Time Systems and Programming Languages**, 4th ed. — Alan Burns and Andy Wellings, Addison-Wesley, 2009. Broader than Buttazzo: covers the language and OS support for real-time (Ada, Real-Time Java, real-time POSIX, Ada/RT scheduling). Good for the "what does the platform actually give you" question.
+- **[Book · ★★ · EN]** **Patterns for Time-Triggered Embedded Systems: Building Reliable Applications with the 8051 Family of Microcontrollers** — Michael J. Pont, Addison-Wesley, 2001. ISBN 0-201-33138-1 / 9780201331387. The canonical catalogue of time-triggered architecture patterns (70+). Free PDF from the author's site. 8051-flavoured, which is dated — read it for the *patterns*, not the silicon.
+- **[Book · ★★★ · EN]** **The Engineering of Reliable Embedded Systems**, 2nd ed. — Michael J. Pont, SafeTTy Systems, 2016/2017. ISBN 978-0-9930355-3-1. The successor to PTTES and the one to cite for safety work: second-generation time-triggered architectures, with worked case studies targeting IEC 61508 SIL 2, IEC 60730 Class B, IEC 62304 Class C, ISO 26262 ASIL D and DO-178C Level A.
+
+### Books — state machines and event-driven architecture
+
+- **[Book · ★★★ · EN]** **Practical UML Statecharts in C/C++: Event-Driven Programming for Embedded Systems**, 2nd ed. — Miro Samek, Newnes/Elsevier, 2008/2009. ISBN 978-0-7506-8706-5. The definitive text: UML statecharts, hierarchical state machines, run-to-completion, inversion of control, event queues, and the design study of the QP event-driven framework (including the QEP hierarchical event processor). Read Part II even if you never use QP — the argument for RTC over blocking is the architectural core.
+- **[Book · ★ · EN]** **Design Patterns: Elements of Reusable Object-Oriented Software** — Gamma, Helm, Johnson, Vlissides (GoF), Addison-Wesley, 1994. ISBN 978-0-201-63361-0. The source catalogue for §4. Read it knowing that the embedded cost accounting differs: virtual dispatch, object size and allocation are all first-class costs on a microcontroller.
+
+### Papers — scheduling theory
+
+- **[Paper · ★★★ · EN]** Liu, C. L. and Layland, J. W., **"Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment"**, *Journal of the ACM* 20(1): 46–61, 1973. The founding paper: rate-monotonic priority assignment is optimal among fixed-priority schemes for implicit deadlines; utilization bound `n(2^(1/n) − 1)` tending to `ln 2 ≈ 0.693`; EDF is feasible up to `U ≤ 1`.
+- **[Paper · ★★ · EN]** Sha, L., Rajkumar, R. and Lehoczky, J. P., **"Priority Inheritance Protocols: An Approach to Real-Time Synchronization"**, *IEEE Transactions on Computers* 39(9): 1175–1185, 1990. The reference for priority inheritance and ceiling protocols — the standard answer to priority inversion.
+- **[Paper · ★★ · EN]** Baker, T. P., **"A Stack-Based Resource Allocation Policy for Realtime Processes"**, IEEE Real-Time Systems Symposium, 1990. Stack Resource Policy: the bound-optimal approach that also yields the best known worst-case stack requirement.
+- **[Paper · ★★ · EN]** Leung, J. Y.-T. and Whitehead, J., **"On the Complexity of Fixed-Priority Scheduling of Periodic, Real-Time Tasks"**, *Performance Evaluation* 2(4): 237–250, 1982. Deadline-monotonic priority ordering.
+- **[Paper · ★ · EN]** Audsley, N. C., Burns, A., Richardson, M. F. and Wellings, A. J., **"Hard Real-Time Scheduling: The Deadline-Monotonic Approach"** (1991) and **"Applying New Scheduling Theory to Static Priority Pre-emptive Scheduling"** (1993). Audsley's Optimal Priority Assignment: an optimal ordering in at most `n(n+1)/2` tests, plus the release-jitter extensions.
+- **[Paper · ★ · EN]** Buttazzo, G. C., **"Rate Monotonic vs. EDF: Judgment Day"**. A systematic demolition of the common misconceptions that favour RM over EDF. Excellent interview ammunition — it lets you answer "RM or EDF?" with the trade-offs rather than the folklore.
+
+### Papers — safety, protection and dependability
+
+- **[Paper · ★★ · EN]** Holzmann, G. J., **"The Power of 10: Rules for Developing Safety-Critical Code"**, *IEEE Computer* 39(6): 95–99, 2006. DOI 10.1109/MC.2006.212. NASA/JPL. Ten rules, including bounded loops, no dynamic allocation after initialisation, and restricted use of interrupts and recursion. Short enough to memorise and quote.
+- **[Paper · ★★ · EN]** Zhou, W. et al., **"Good Motive But Bad Design: Why ARM MPU Has Become an Outcast in Embedded Systems"**, arXiv:1908.03638, 2019. Documents why the ARM MPU is rarely configured as intended. The credible, non-obvious point to raise when discussing memory protection and freedom from interference.
+- **[Paper · ★ · EN]** Stankovic, J. A., **"Misconceptions About Real-Time Computing: A Serious Problem for Next-Generation Systems"**, *IEEE Computer* 21(10): 10–19, 1988. Still worth reading: the gap between "fast" and "predictable" is the same confusion that appears in modern latency-vs-throughput arguments.
+
+### Standards and specifications
+
+- **[Standard · ★★★ · EN]** **AUTOSAR Classic Platform** — current release **R25-11** (Release Event 4 December 2025). `autosar.org/standards/classic-platform`. Application / RTE / BSW layering, MCAL, Complex Drivers, and the Virtual Functional Bus. Start with *Layered Software Architecture* and *Methodology*.
+- **[Standard · ★★ · EN]** **AUTOSAR Adaptive Platform** — same release train; ARA (AUTOSAR Runtime for Adaptive Applications), functional clusters, POSIX-based, service-oriented. Read alongside the **Foundation** standard for cross-platform interoperability.
+- **[Standard · ★★★ · EN]** **MISRA C:2025** — current edition (updated March 2025), MISRA. Supersedes MISRA C:2023. The coding standard referenced for safety-critical C.
+- **[Standard · ★★ · EN]** **MISRA C++:2023** (with TC1:2026) — current MISRA C++, written against **C++17**. Note the implication: a MISRA-conformant C++ project is not on C++20/23/26.
+- **[Standard · ★★ · EN]** **ISO 26262:2018** (2nd ed., December 2018) — *Road vehicles — Functional safety*. 12 parts; Part 4 system level, Part 5 hardware, Part 6 software, Part 9 ASIL-oriented analysis, Part 11 semiconductors, Part 12 motorcycles. ASIL A–D and QM from Severity/Exposure/Controllability; SPFM/LFM/PMHF targets.
+- **[Standard · ★★ · EN]** **IEC 61508** (2nd ed., 2010) — the parent functional-safety standard; SIL 1–4. Sector derivatives: IEC 61511 (process), IEC 62061/ISO 13849 (machinery), EN 5012x (rail), IEC 62304 (medical software), IEC 60730 (household), DO-178C (avionics).
+- **[Spec · ★★ · EN]** **OSEK/VDX Operating System Specification 2.2.1** (2003) — the static, configurable RTOS specification that AUTOSAR OS descends from. Worth knowing conceptually: it is where the "configuration rather than code" philosophy comes from.
+- **[Spec · ★★ · EN]** **ETSI TS 103859** (O-RAN.WG4.CUS.0) — O-RAN Fronthaul Control, User and Synchronization Plane. Defines the **7-2x** split, Category A/B O-RUs, eCPRI transport and IQ compression. The normative source for note 17 §6.3.
+- **[Spec · ★ · EN]** **O-RAN.WG1 Architecture Description** and **O-RAN.WG3 (E2/E2SM)** — the architecture and near-RT RIC interface specs. See §18.
+- **[Spec · ★★ · EN]** **3GPP TS 38.401** — NG-RAN architecture description, including the CU/DU split. `VERIFY` the F1/E1 part numbers before quoting them.
+
+### Documentation and code
+
+- **[Doc · ★★★ · EN]** **Zephyr Project documentation** — `docs.zephyrproject.org`. Releases, devicetree, Kconfig, power management, and MCUboot. Current stable **4.4.0** (2026-04-14); **3.7.0** is LTS3 (2024-07-26, EOL 2029-07-27); LTS4 planned as 5.0 (Oct 2027). Read the *release and migration guides* — they are the best available example of how a serious embedded project manages long-term compatibility.
+- **[Code · ★★ · EN]** **MCUboot** — open-source secure bootloader for 32-bit MCUs, integrated with Zephyr. Study it for the A/B update, image format, signature verification and swap/overwrite strategies described in note 17 §9.
+- **[Code · ★★ · EN]** **QP / QP/C / QP/C++** (Quantum Leaps) — the open-source active-object and hierarchical state machine framework behind Samek's book. Read `qpc` source for a production-quality HSM dispatcher and event queue implementation in C.
+- **[Code · ★ · EN]** **FreeRTOS kernel** — `freertos.org`; see §07. Read its `port.c` for the PendSV context-switch mechanics that the execution model in note 17 §2 depends on.
+- **[Doc · ★ · EN]** **MCUboot / RAUC / SWUpdate / Mender documentation** — three different answers to the same update problem; comparing them is the fastest way to internalise what is *essential* in an OTA architecture versus what is implementation detail.
+
+---
+
+## 18 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -629,6 +689,10 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 - **UnifiedBus (灵衢)** — `www.unifiedbus.com`. UB base, firmware, OS and SuperPoD reference architecture documents.
 - **DPDK** — `dpdk.org` (Programmer's Guide, API reference, sample applications).
 - **FreeRTOS** — `freertos.org` (kernel book, API reference, LTS release notes).
+- **Zephyr Project** — `zephyrproject.org` and `docs.zephyrproject.org` (releases, migration guides, devicetree, power management, MCUboot).
+- **AUTOSAR** — `autosar.org/standards` (Classic Platform, Adaptive Platform, Foundation, Application Interfaces; current release R25-11).
+- **MISRA** — `misra.org.uk` (MISRA C:2025, MISRA C++:2023, and the MISRA Compliance documents).
+- **ISO / IEC** — `iso.org`, `iec.ch` (ISO 26262:2018, IEC 61508, IEC 62304; purchased, not free).
 - **The Linux kernel** — `kernel.org` and the in-tree `Documentation/`.
 - **Yocto Project** — `docs.yoctoproject.org` · **Buildroot** — `buildroot.org/downloads/manual`.
 - **prpl Foundation** — prplOS, prplMesh and prpl LCM open-source projects.
@@ -636,7 +700,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 18 · Suggested Reading Order
+## 19 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -645,6 +709,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 | 1 | Anchor the map | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV |
 | 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial |
 | 2b | Language layer (do this once, whatever your track) | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large |
+| 2c | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion |
 | 3 | Future direction | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025) |
 | 4 | Consolidate | Each note's **Anchors** section; the correction table in `README.md` §7; re-read only what you cannot state from memory |
 
@@ -655,12 +720,12 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 19 · Verification and Maintenance
+## 20 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01/§02/§05; IEEE 802.11 working group and Wi-Fi Alliance announcements for §04/§14; Linux mainline and LTS releases for §13/§15; xLLM, Mooncake and agent-framework releases for §10/§11; RISC-V International ratifications for §12; **WG21/WG14 meetings and GCC/Clang major releases for §16** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01/§02/§05; IEEE 802.11 working group and Wi-Fi Alliance announcements for §04/§14; Linux mainline and LTS releases for §13/§15; xLLM, Mooncake and agent-framework releases for §10/§11; RISC-V International ratifications for §12; **WG21/WG14 meetings and GCC/Clang major releases for §16** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §17** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life.
 
 ---
 

@@ -146,6 +146,7 @@ The strongest cross-domain answer you can give here:
 
 ## Related
 
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layer above: execution models, HSM, time-triggered vs event-triggered, safety cases built on these primitives
 - [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
 - [[08 DPDK User Plane and 5G UPF]]
 - [[06 Wireless Sensor Networks and Low-Power MAC]]

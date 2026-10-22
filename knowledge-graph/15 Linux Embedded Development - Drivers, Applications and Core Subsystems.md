@@ -628,6 +628,7 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 
 ## Related
 
+- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the architecture layer: HAL/BSP separation, execution models, OTA/rollback design, safety and partitioning rationale
 - [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, kernel-bypass options, profiling method
 - [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — kernel C conventions, `container_of`, user-space C/C++ for drivers' tools and daemons
 - [[07 Embedded Systems RTOS and Hardware Interfaces]] — when RTOS beats Linux; OpenAMP/rpmsg/remoteproc heterogeneous pairing

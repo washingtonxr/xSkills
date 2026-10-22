@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (17 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (18 notes)**.
 
 ---
 
@@ -51,8 +51,8 @@ Four cross-cutting threads run through the whole vault:
 | --- | --- |
 | RAN system architect | 01 → 02 → 03 → 08 → 12 |
 | Edge AI / cloud-edge-end architect | 09 → 10 → 11 → 13 → 15 |
-| Embedded / Linux platform | 07 → 15 → 12 → 08 → 13 |
-| WLAN / gateway | 04 → 14 → 06 → 15 |
+| Embedded / Linux platform | 17 → 07 → 15 → 12 → 08 → 13 |
+| WLAN / gateway | 04 → 14 → 06 → 17 |
 | Software / language foundation (any role) | 16 → 13 |
 
 ---
@@ -68,7 +68,7 @@ Four cross-cutting threads run through the whole vault:
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 17 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 18 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01 5G-Advanced and 6G Radio Access.md
 │   ├── 02 5G NR RAN Layer 2 Protocol Stack.md
@@ -85,7 +85,8 @@ Four cross-cutting threads run through the whole vault:
 │   ├── 13 Programming Languages Toolchain and Performance Engineering.md
 │   ├── 14 WLAN Ecosystem - WFA, EasyMesh and prpl.md
 │   ├── 15 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
-│   └── 16 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 16 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   └── 17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
 └── .workbuddy/                     Project working data (do not delete)
 ```
 
@@ -103,7 +104,7 @@ Four cross-cutting threads run through the whole vault:
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 19 themed sections: 01 5G-A and 6G, 02 NR L2, 03 AI-RAN and O-RAN, 04 WLAN generations, 05 RedCap/eRedCap/NTN, 06 WSN, 07 embedded RTOS, 08 DPDK/UPF, 09 cloud-edge-end, 10 LLM inference and xLLM, 11 agent systems, 12 RISC-V, 13 languages and performance, 14 WLAN ecosystem, 15 Linux embedded, 16 C and C++ — plus 17 primary standards repositories, 18 a reading order, and 19 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 20 themed sections: 01 5G-A and 6G, 02 NR L2, 03 AI-RAN and O-RAN, 04 WLAN generations, 05 RedCap/eRedCap/NTN, 06 WSN, 07 embedded RTOS, 08 DPDK/UPF, 09 cloud-edge-end, 10 LLM inference and xLLM, 11 agent systems, 12 RISC-V, 13 languages and performance, 14 WLAN ecosystem, 15 Linux embedded, 16 C and C++, 17 embedded software architecture — plus 18 primary standards repositories, 19 a reading order, and 20 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -125,15 +126,16 @@ Four cross-cutting threads run through the whole vault:
 | 13 | Languages, toolchain and performance engineering | Build systems, Python, kernel-bypass selection, performance methodology |
 | 14 | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
 | 15 | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
-| **16** | **C and C++ programming and STL** | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
+| 16 | C and C++ programming and STL | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
+| **17** | **Embedded software architecture** | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
 
 ---
 
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 16 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
-3. **Naming rule**: `00 MOC` is the index; `01`-`16` are domain notes, where the file name *is* the topic, so they sort by number and are searchable by name.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 17 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+3. **Naming rule**: `00 MOC` is the index; `01`-`17` are domain notes, where the file name *is* the topic, so they sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
 5. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
@@ -168,6 +170,7 @@ Four cross-cutting threads run through the whole vault:
 | Rel-21 milestones | "complete 2029, commercial 2030" | Four official milestones: Stage-1 **2027-03** / Stage-2 **2028-06** / Stage-3 **2028-12** / ASN.1+OpenAPI **2029-03** |
 | PREEMPT_RT | not covered | Merged into mainline in **Linux 6.12 (2024-11)** for x86/arm64/RISC-V; 32-bit ARM added in 7.1 |
 | C/C++ standard status | mentions only "C/C++" | **C23 = ISO/IEC 9899:2024** (published 2024-10-31, `__STDC_VERSION__` = 202311L); **C++26 shipped by WG21 on 2026-03-28** (working draft N5046), to be published as ISO/IEC 14882:2026 |
+| AUTOSAR / MISRA versions | not covered | **AUTOSAR R25-11** is current (Release Event 2025-12-04); **MISRA C:2025** is the current C edition and supersedes MISRA C:2023; **MISRA C++:2023** (TC1:2026) targets C++17 — so a MISRA-conformant C++ project is not on C++20/23/26 |
 
 **Update triggers**
 
@@ -176,6 +179,7 @@ Four cross-cutting threads run through the whole vault:
 - Linux mainline and LTS releases → update 13/15
 - xLLM / agent framework releases and papers → update 10/11
 - WG21 / WG14 meetings and GCC / Clang major releases → update 16
+- AUTOSAR releases (annual, each November), MISRA document revisions, Zephyr six-month releases and LTS branches → update 17
 
 ---
 

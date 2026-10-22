@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（17 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（18 篇笔记）**。
 
 ---
 
@@ -51,8 +51,8 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | --- | --- |
 | RAN 系统架构师 | 01 → 02 → 03 → 08 → 12 |
 | 边缘 AI / 端边云架构师 | 09 → 10 → 11 → 13 → 15 |
-| 嵌入式 / Linux 平台 | 07 → 15 → 12 → 08 → 13 |
-| WLAN / 网关方向 | 04 → 14 → 06 → 15 |
+| 嵌入式 / Linux 平台 | 17 → 07 → 15 → 12 → 08 → 13 |
+| WLAN / 网关方向 | 04 → 14 → 06 → 17 |
 | 软件 / 语言基础（任何岗位都要过一遍） | 16 → 13 |
 
 ---
@@ -68,7 +68,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，17 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，18 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01 5G-Advanced and 6G Radio Access.md
 │   ├── 02 5G NR RAN Layer 2 Protocol Stack.md
@@ -85,7 +85,8 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 │   ├── 13 Programming Languages Toolchain and Performance Engineering.md
 │   ├── 14 WLAN Ecosystem - WFA, EasyMesh and prpl.md
 │   ├── 15 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
-│   └── 16 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 16 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   └── 17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
 └── .workbuddy/                    项目工作数据（勿删）
 ```
 
@@ -103,7 +104,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 19 个主题域的书籍 / 论文 / 标准 / 文档清单：01 5G-A 与 6G、02 NR L2、03 AI-RAN 与 O-RAN、04 WLAN 代际、05 RedCap/eRedCap/NTN、06 WSN、07 嵌入式 RTOS、08 DPDK/UPF、09 端边云与异构算力、10 LLM 推理与 xLLM、11 Agent 与边缘编排、12 RISC-V、13 语言与性能、14 WLAN 生态、15 Linux 嵌入式、16 C/C++ 语言与 STL，另附 17 一手标准库、18 阅读顺序、19 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 20 个主题域的书籍 / 论文 / 标准 / 文档清单：01 5G-A 与 6G、02 NR L2、03 AI-RAN 与 O-RAN、04 WLAN 代际、05 RedCap/eRedCap/NTN、06 WSN、07 嵌入式 RTOS、08 DPDK/UPF、09 端边云与异构算力、10 LLM 推理与 xLLM、11 Agent 与边缘编排、12 RISC-V、13 语言与性能、14 WLAN 生态、15 Linux 嵌入式、16 C/C++ 语言与 STL、17 嵌入式软件架构，另附 18 一手标准库、19 阅读顺序、20 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -125,15 +126,16 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | 13 | 语言、工具链与性能工程 | 构建系统、Python、内核旁路选型、性能方法论 |
 | 14 | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
 | 15 | Linux 嵌入式开发 | 启动链、设备树、驱动、IPC、网络栈、虚拟化、PREEMPT_RT |
-| **16** | **C/C++ 编程与 STL** | C23/C++26 语言特性、模板与编译期计算、内存模型与并发、STL 容器/迭代器/算法、系统级惯用法与 UB 清单 |
+| 16 | C/C++ 编程与 STL | C23/C++26 语言特性、模板与编译期计算、内存模型与并发、STL 容器/迭代器/算法、系统级惯用法与 UB 清单 |
+| **17** | **嵌入式软件架构** | 分层与 HAL/BSP 划分、执行模型（超级循环 / 时间触发 / RTOS / 主动对象）、调度理论、HSM 与事件驱动、设计模式、数据所有权与邮箱接口、无线协议栈切分（L1/L2 边界、CU/DU、O-RAN 7-2x）、内存与功耗架构、OTA 与回滚、ISO 26262 / IEC 61508 安全架构 |
 
 ---
 
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 16 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
-3. **命名规则**：`00 MOC` 为索引；`01`–`16` 为领域笔记，文件名即主题，便于按编号排序与按名检索。
+2. **入口**：`00 MOC` 是唯一导航页，其余 17 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+3. **命名规则**：`00 MOC` 为索引；`01`–`17` 为领域笔记，文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
 5. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
@@ -168,6 +170,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | Rel-21 节点 | "2029 完成、2030 商用" | 官方四个里程碑：Stage-1 **2027-03** / Stage-2 **2028-06** / Stage-3 **2028-12** / ASN.1+OpenAPI **2029-03** |
 | PREEMPT_RT | 未涉及 | 已于 **Linux 6.12（2024-11）** 合入主线（x86/arm64/RISC-V），32 位 ARM 于 7.1 补齐 |
 | C/C++ 标准现状 | 仅提及 "C/C++" | **C23 = ISO/IEC 9899:2024**（2024-10-31 发布，`__STDC_VERSION__` = 202311L）；**C++26 由 WG21 于 2026-03-28 定稿**（工作草案 N5046），待发布为 ISO/IEC 14882:2026 |
+| AUTOSAR / MISRA 版本 | 未涉及 | **AUTOSAR R25-11** 为当前版本（2025-12-04 发布会）；**MISRA C:2025** 为 C 语言现行版并取代 MISRA C:2023；**MISRA C++:2023**（TC1:2026）面向 C++17 —— 因此符合 MISRA 的 C++ 项目并不在 C++20/23/26 上 |
 
 **更新触发点**
 
@@ -176,6 +179,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - Linux kernel 主线与 LTS 发布 → 更新 13/15
 - xLLM / Agent 框架的版本与论文 → 更新 10/11
 - WG21 / WG14 会议与 GCC、Clang 大版本发布 → 更新 16
+- AUTOSAR 年度发布（每年 11 月）、MISRA 文档修订、Zephyr 半年发布与 LTS 分支 → 更新 17
 
 ---
 
