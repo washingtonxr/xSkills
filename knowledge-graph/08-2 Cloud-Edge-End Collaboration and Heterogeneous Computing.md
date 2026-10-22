@@ -24,7 +24,7 @@ last-updated: 2026-10-22
 
 The old model was static layering (device → edge → cloud, each with a fixed role). The 2026 direction is **per-task dynamic placement**: decide *per request* which device runs which sub-task, based on capability, current load, privacy and latency budget.
 
-See [[11 Agent Systems and Edge Orchestration]] for the concrete system (GRAFT) that demonstrates this.
+See [[10-2 Agent Systems and Edge Orchestration]] for the concrete system (GRAFT) that demonstrates this.
 
 ## 2. The performance model that makes you credible
 
@@ -119,7 +119,7 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 
 ## Related
 
-- [[10 LLM Inference Engines and xLLM]]
-- [[11 Agent Systems and Edge Orchestration]]
-- [[08 DPDK User Plane and 5G UPF]]
-- [[12 RISC-V for Communication Infrastructure]]
+- [[10-1 LLM Inference Engines and xLLM]]
+- [[10-2 Agent Systems and Edge Orchestration]]
+- [[08-1 DPDK User Plane and 5G UPF]]
+- [[12-1 RISC-V for Communication Infrastructure]]

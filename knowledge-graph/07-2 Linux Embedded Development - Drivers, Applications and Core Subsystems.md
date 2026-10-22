@@ -60,14 +60,14 @@ Key facts to be able to state:
 - **Device tree** sources (`.dts`/`.dtsi`) for the board and the SoC.
 - **Bootloader** (U-Boot) with board defconfig and SPL.
 - **Toolchain / SDK** (cross gcc, glibc or musl, sysroot).
-- **Root filesystem** built by [[13 Programming Languages Toolchain and Performance Engineering]] toolchains (Buildroot/Yocto/OpenWrt).
+- **Root filesystem** built by [[13-1 Programming Languages Toolchain and Performance Engineering]] toolchains (Buildroot/Yocto/OpenWrt).
 - **Firmware blobs** (Wi-Fi/BT, GPU, NPU, modem) — a recurring licensing and OTA pain point.
 
 ### 1.3 Root filesystem and storage
 | Choice | Consider when |
 | --- | --- |
 | **initramfs / initrd** | Early userspace, small, RAM-resident; used for mounting the real root or for recovery |
-| **SquashFS / EROFS** | Read-only compressed rootfs (routers, CPE — see [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]]); paired with an overlay for writes |
+| **SquashFS / EROFS** | Read-only compressed rootfs (routers, CPE — see [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]); paired with an overlay for writes |
 | **ext4** | Read-write, journaling, mainstream for eMMC/SD |
 | **UBIFS** | Raw NAND with UBI volume management; handles bad blocks and wear levelling |
 | **JFFS2** | Legacy raw NOR/NAND, largely superseded |
@@ -226,7 +226,7 @@ Rules that interviewers probe:
   - **threaded IRQ** — the interrupt handler becomes a schedulable thread; the default under PREEMPT_RT, and the cleanest model for most embedded drivers.
 - **irqdomain** maps hardware IRQ numbers to Linux virtual IRQs; the GIC (ARM) or PLIC/AIA (RISC-V) is described in DT and handled by the irqchip driver.
 - **MSI/MSI-X** converts an interrupt into a memory write — essential for PCIe devices and for pinning interrupts to specific CPUs.
-- Affinity: `/proc/irq/<n>/smp_affinity`, `irqbalance` off on dataplane systems — see [[08 DPDK User Plane and 5G UPF]].
+- Affinity: `/proc/irq/<n>/smp_affinity`, `irqbalance` off on dataplane systems — see [[08-1 DPDK User Plane and 5G UPF]].
 
 ### 3.8 Timers and deferred work
 - `timer_setup()` + `mod_timer()` — jiffies-resolution, low-res timer API.
@@ -300,7 +300,7 @@ The upstream rule to remember: **"don't break userspace" is kernel policy, not a
 
 ### 3.14 Userspace drivers: UIO vs VFIO
 - **UIO** — minimal: exposes MMIO and interrupt to userspace via `/dev/uioX` and `read()` blocking on the IRQ. No DMA/IOMMU support. Good for simple, low-throughput hardware; increasingly discouraged.
-- **VFIO** — the modern path: uses the IOMMU to build a secure, isolated IOVA mapping for a userspace driver or a VM-assigned device. Supports DMA, MSI, and device reset. This is what DPDK uses for real NIC access — see [[08 DPDK User Plane and 5G UPF]].
+- **VFIO** — the modern path: uses the IOMMU to build a secure, isolated IOVA mapping for a userspace driver or a VM-assigned device. Supports DMA, MSI, and device reset. This is what DPDK uses for real NIC access — see [[08-1 DPDK User Plane and 5G UPF]].
 
 ### 3.15 Kernel debugging toolbox
 | Tool | Finds |
@@ -355,7 +355,7 @@ Reading an **Oops**: get the PC, the symbolised call trace, and the "Code:" line
 - **`close()` does not mean "written"** — a power-loss path must call `fsync` + rename.
 - `posix_fadvise()` / `madvise()` / `readahead()` to hint access patterns; `FALLOC_FL_*` to preallocate.
 - **`inotify`/`fanotify`** for filesystem event watching; inotify does not recurse and has queue limits.
-- **io_uring** (since 5.1) is now the default high-performance choice for both storage and sockets: submission/completion rings, `IORING_SETUP_SQPOLL`, registered buffers/files, and zero-copy receive. Compare with the kernel-bypass options in [[13 Programming Languages Toolchain and Performance Engineering]].
+- **io_uring** (since 5.1) is now the default high-performance choice for both storage and sockets: submission/completion rings, `IORING_SETUP_SQPOLL`, registered buffers/files, and zero-copy receive. Compare with the kernel-bypass options in [[13-1 Programming Languages Toolchain and Performance Engineering]].
 
 ### 4.4 Time
 - `clock_gettime()` with `CLOCK_MONOTONIC` for intervals, `CLOCK_MONOTONIC_RAW` for drift-free, `CLOCK_REALTIME` for wall-clock (can jump), `CLOCK_BOOTTIME` to include suspend, `CLOCK_PROCESS_CPUTIME_ID` for CPU accounting.
@@ -373,7 +373,7 @@ Reading an **Oops**: get the PC, the symbolised call trace, and the "Code:" line
 ### 4.6 Memory in userspace
 - `malloc` uses `brk` for small and `mmap` for large allocations; **virtual memory overcommit** means allocation succeeds and the failure arrives later as an OOM kill — control it with `vm.overcommit_memory`, cgroup limits, and by preallocating pools in latency-critical daemons.
 - **`mlockall(MCL_CURRENT|MCL_FUTURE)`** locks pages to avoid fault latency in RT paths; needs `RLIMIT_MEMLOCK`.
-- **Huge pages**: `hugetlbfs` and THP reduce TLB pressure; mandatory for DPDK ([[08 DPDK User Plane and 5G UPF]]).
+- **Huge pages**: `hugetlbfs` and THP reduce TLB pressure; mandatory for DPDK ([[08-1 DPDK User Plane and 5G UPF]]).
 - **RSS vs VSZ**: VSZ is nearly meaningless on embedded; watch RSS/PSS and slab/unreclaimable kernel memory.
 - Leak/limit tooling: `valgrind` (slow, dev only), ASan/LSan, `mtrace`, `smem`, `/proc/<pid>/smaps`, cgroup `memory.events`.
 - **Fragmentation on long-running devices**: prefer pools/arenas preallocated at startup for embedded daemons that must run for months.
@@ -413,7 +413,7 @@ The single most useful way to answer an IPC question is along these axes: **dire
 4. **Need to hand over a resource (fd, mmap'd buffer, dmabuf)?** → Unix domain socket with `SCM_RIGHTS`. This is the only clean way.
 5. **Need peer identity?** → Unix socket `SO_PEERCRED` (`struct ucred`: pid/uid/gid) — the standard local authentication primitive.
 6. **Kernel needs to talk to you (config or events)?** → netlink or generic netlink.
-7. **Cross-machine?** → then it is a network protocol problem; see §6 and [[11 Agent Systems and Edge Orchestration]].
+7. **Cross-machine?** → then it is a network protocol problem; see §6 and [[10-2 Agent Systems and Edge Orchestration]].
 
 ### 5.3 Zero-copy pattern: shared memory + futex doorbell
 The canonical high-performance local pipeline:
@@ -427,7 +427,7 @@ producer                         consumer
 ```
 - **Why**: no syscalls on the steady-state path, no copies, and the kernel only gets involved on contention or wakeup.
 - **The hard parts**: cache-line alignment of head/tail indices (false sharing), memory ordering (`atomic_load_acquire`/`atomic_store_release`, not bare `volatile`), and what happens when one side dies holding the lock (use robust futexes or an external supervisor).
-- This is the same shape as the ring buffers in DPDK and as the L1↔L2 interface in a modem — see [[12 RISC-V for Communication Infrastructure]].
+- This is the same shape as the ring buffers in DPDK and as the L1↔L2 interface in a modem — see [[12-1 RISC-V for Communication Infrastructure]].
 
 ### 5.4 Passing a file descriptor
 ```c
@@ -458,7 +458,7 @@ The receiving process gets a *new* fd number pointing at the same file — this 
   - `SO_REUSEADDR` (bind in `TIME_WAIT`) vs `SO_REUSEPORT` (multiple listeners, load spread) — they are different things.
   - `TCP_NODELAY` (disable Nagle) and `TCP_CORK` (coalesce) — pick per message pattern; Nagle + delayed-ACK interaction is a classic latency bug.
   - `SO_RCVBUF`/`SO_SNDBUF` (kernel doubles them; autotuning usually beats manual setting).
-  - `SO_KEEPALIVE`, `TCP_USER_TIMEOUT`, `TCP_KEEPIDLE/INTVL/CNT` — dead-peer detection on links that fail silently (very relevant for NTN and lossy backhaul — see [[05 Cellular IoT RedCap eRedCap and NTN]]).
+  - `SO_KEEPALIVE`, `TCP_USER_TIMEOUT`, `TCP_KEEPIDLE/INTVL/CNT` — dead-peer detection on links that fail silently (very relevant for NTN and lossy backhaul — see [[01-4 Cellular IoT RedCap eRedCap and NTN]]).
   - `SO_BUSY_POLL`, `SO_INCOMING_CPU` — latency vs CPU trade-off.
   - `SO_TIMESTAMPING` for hardware/software timestamps (PTP).
 - **Non-blocking discipline**: every `read`/`write` must handle `EAGAIN`/`EWOULDBLOCK` and `EINTR`; partial writes on non-blocking sockets are normal.
@@ -500,9 +500,9 @@ NIC DMA → RX ring (descriptor + skb buffer)
 
 ### 6.4 Kernel ↔ userspace networking control plane
 - **netlink** is the right interface: `NETLINK_ROUTE` (rtnetlink: links, addresses, routes), `NETLINK_KOBJECT_UEVENT`, `NETLINK_NETFILTER`, and **generic netlink** for custom families. `ip`, `ss`, `tc`, and `ethtool` all speak it.
-- **nl80211 / cfg80211 / mac80211** is the Wi-Fi control path: `iw`, `hostapd`, `wpa_supplicant` drive the stack through nl80211. This is the Linux counterpart of everything in [[04 WLAN - Wi-Fi Generations Evolution]] and [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+- **nl80211 / cfg80211 / mac80211** is the Wi-Fi control path: `iw`, `hostapd`, `wpa_supplicant` drive the stack through nl80211. This is the Linux counterpart of everything in [[04-1 WLAN - Wi-Fi Generations Evolution]] and [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
 - **AF_PACKET / `PF_PACKET`** raw sockets for sniffing and raw L2 injection (`tcpdump`, custom protocols); classic BPF filters attach to these.
-- **AF_XDP** exposes the NIC ring to userspace through an `XSK` UMEM — bypass without giving up the kernel stack; see the bypass comparison in [[13 Programming Languages Toolchain and Performance Engineering]].
+- **AF_XDP** exposes the NIC ring to userspace through an `XSK` UMEM — bypass without giving up the kernel stack; see the bypass comparison in [[13-1 Programming Languages Toolchain and Performance Engineering]].
 - **eBPF attach points**: XDP (driver-level, pre-`skb`), tc ingress/egress, cgroup/skb, sockops, `sk_msg`. Constrained by the **verifier** (bounded loops, no arbitrary memory access) — which is precisely why it is safe to load into a running kernel.
 - **io_uring** zero-copy Rx/Tx is now a serious alternative to a full DPDK deployment for moderate rates.
 
@@ -518,7 +518,7 @@ NIC DMA → RX ring (descriptor + skb buffer)
 | **bonding / team** | Link aggregation and failover across backhaul interfaces |
 | **VRF + policy routing** | Multi-homed gateways (e.g. cellular + fibre) with clean separation |
 
-This is the toolkit behind a containerised UPF or a virtualised RAN element — see [[08 DPDK User Plane and 5G UPF]] and [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]].
+This is the toolkit behind a containerised UPF or a virtualised RAN element — see [[08-1 DPDK User Plane and 5G UPF]] and [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]].
 
 ### 6.6 Networking debugging checklist
 `ip link/addr/route` → `ss -tulpn` (replaces `netstat`) → `ethtool -S` (drop counters, offloads) → `tcpdump`/`tshark` → `nstat`/`/proc/net/snmp` (protocol counters) → `dropwatch` (where skbs are freed) → `perf`/`bpftrace` for latency → `traceroute`/`mtr` for path. Always check **interface counters and qdisc drops first**; they localise the problem faster than any capture.
@@ -545,7 +545,7 @@ This is the toolkit behind a containerised UPF or a virtualised RAN element — 
 
 Container primitives to know precisely:
 - **Namespaces**: `mnt`, `pid`, `net`, `ipc`, `uts`, `user`, `cgroup`, `time`. `unshare`/`nsenter` for debugging; `/proc/<pid>/ns/*` are the handles.
-- **cgroups v2**: unified hierarchy; `cpu`, `memory`, `io`, `pids`, `cpuset`, `hugetlb`; delegated via systemd slices. This is the same mechanism you use to pin and budget dataplane cores ([[08 DPDK User Plane and 5G UPF]]).
+- **cgroups v2**: unified hierarchy; `cpu`, `memory`, `io`, `pids`, `cpuset`, `hugetlb`; delegated via systemd slices. This is the same mechanism you use to pin and budget dataplane cores ([[08-1 DPDK User Plane and 5G UPF]]).
 - **capabilities**: drop `CAP_SYS_ADMIN`; keep only what is needed (`CAP_NET_RAW` for raw sockets, `CAP_NET_ADMIN` for netlink config, `CAP_SYS_NICE` for RT priority).
 - **seccomp-bpf**, **LSM (SELinux/AppArmor)**, **no_new_privs** — defence in depth after capabilities.
 - **rootfs**: `pivot_root`/`chroot`, `overlayfs` layered images, OCI runtime spec, `runc`/`crun`.
@@ -565,18 +565,18 @@ For a vRAN or UPF deployment the usual answer is: **SR-IOV or VFIO passthrough f
 ### 7.4 Hardware virtualization extensions
 - **x86**: Intel VT-x (VMX, EPT, VPIDs, preemption timer) / AMD-V (SVM, NPT, AVIC); IOMMU = VT-d / AMD-Vi.
 - **ARM**: EL2 hypervisor mode, two-stage translation, Virtualization Host Extensions (VHE) letting the host kernel run at EL2; **TrustZone** (EL3/secure world) is a *separate* isolation mechanism, not virtualization.
-- **RISC-V**: the **H extension** (ratified v1.0, December 2019) adds HS-mode plus VS/VU guest modes and two-stage address translation; it is **mandatory in the RVA23 application profile**, so application-class RISC-V is expected to support it. KVM is upstream, and QEMU has supported RISC-V virtualization since 7.0. Interrupt virtualization comes from the **AIA**, and device assignment from the **IOMMU**. This matters for [[12 RISC-V for Communication Infrastructure]]: a RISC-V baseband or edge box can be virtualized the same way an ARM one can.
+- **RISC-V**: the **H extension** (ratified v1.0, December 2019) adds HS-mode plus VS/VU guest modes and two-stage address translation; it is **mandatory in the RVA23 application profile**, so application-class RISC-V is expected to support it. KVM is upstream, and QEMU has supported RISC-V virtualization since 7.0. Interrupt virtualization comes from the **AIA**, and device assignment from the **IOMMU**. This matters for [[12-1 RISC-V for Communication Infrastructure]]: a RISC-V baseband or edge box can be virtualized the same way an ARM one can.
 - Nested virtualization, and paravirt interfaces (`virtio`, PV timers, PV spinlocks), reduce exit frequency.
 
 ### 7.5 Partitioning hypervisors and mixed criticality
 - **Static partitioning** (Jailhouse, Bao, ACRN's pre-launched VMs, Xen with `dom0-less` + cpupools) assigns CPUs, memory and devices exclusively at boot — no hypervisor scheduling, so no scheduler-induced jitter. This is the argument for running a real-time control loop beside Linux on the same SoC.
 - **The caveat to state honestly**: static core assignment removes *scheduler* interference but not *temporal* interference through the shared last-level cache, memory controller and interconnect. The interference argument is narrowed, not closed.
 - **Project status, stated accurately**: the public Siemens Jailhouse repository's latest tag is v0.12 (Feb 2020) with the last commits in January 2023 — treat it as a design worth studying, not an actively maintained supplier position, and verify any vendor fork separately (`VERIFY` before citing it in a safety context).
-- For **Linux + RTOS on one SoC**, the more common shipping pattern is heterogeneous: OpenAMP with **remoteproc** (lifecycle, firmware load) and **rpmsg** (messaging, exposed as `/dev/rpmsg*` and `/sys/class/remoteproc/`), e.g. Linux on the A-cores plus an RTOS/bare-metal core for the deterministic loop — see [[07 Embedded Systems RTOS and Hardware Interfaces]].
+- For **Linux + RTOS on one SoC**, the more common shipping pattern is heterogeneous: OpenAMP with **remoteproc** (lifecycle, firmware load) and **rpmsg** (messaging, exposed as `/dev/rpmsg*` and `/sys/class/remoteproc/`), e.g. Linux on the A-cores plus an RTOS/bare-metal core for the deterministic loop — see [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 ### 7.6 Where virtualization meets this vault
 - Network functions (UPF, vCU/vDU, RIC) packaged as containers or VMs with SR-IOV dataplane NICs.
-- Edge AI: partition an SoC so the inference engine gets dedicated cores and memory while Linux keeps the rest — the partitioning analogue of [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]].
+- Edge AI: partition an SoC so the inference engine gets dedicated cores and memory while Linux keeps the rest — the partitioning analogue of [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]].
 - Test infrastructure: QEMU/KVM for CI of kernel and rootfs images without hardware, plus hardware-in-the-loop for the parts that actually touch the radio.
 
 ## 8. Real-time Linux
@@ -587,14 +587,14 @@ For a vRAN or UPF deployment the usual answer is: **SR-IOV or VFIO passthrough f
 - **Verify, don't assume**: measure with **`cyclictest`** (rt-tests). On tuned hardware, worst-case wakeup latency is tens of microseconds; RTOS designs bound latency *by construction* to single-digit microseconds. RT Linux is validated empirically; an RTOS is argued structurally. Honest framing for interviews: PREEMPT_RT gives a *measured* bound, not a proved one.
 - **Userspace must cooperate**: an RT kernel alone gives you nothing. You need `SCHED_FIFO`/`SCHED_RR` (or `SCHED_DEADLINE`), core isolation, `mlockall()`, priority-inheritance mutexes, and no page faults on the hot path.
 - **Companion knobs**: `NO_HZ_FULL`, `CPUSETS`, `CPU_ISOLATION`, `HZ_1000`, `threadirqs` (forced IRQ threading), `hwlat_detector`, `osnoise` tracer (finds the *source* of latency, not just its magnitude).
-- Related: [[07 Embedded Systems RTOS and Hardware Interfaces]] for when Linux is the wrong answer.
+- Related: [[07-1 Embedded Systems RTOS and Hardware Interfaces]] for when Linux is the wrong answer.
 
 ## 9. Recent kernel capabilities worth citing in interviews
 
 - **EEVDF** replaced CFS as the default scheduler in **6.6** — lower wakeup-latency jitter, and it invalidates old CFS tuning knobs (`sched_latency_ns`, `sched_min_granularity_ns`).
 - **sched_ext** (merged **6.12**, formally part of **7.0**): scheduling policy implemented as a BPF program, loadable and hot-swappable at runtime, with a watchdog fallback to the fair scheduler. Per-cgroup sub-schedulers and the fixed `ops.dequeue()` callback landed in **7.1**. Directly relevant to "how do I give a workload its own policy" questions.
 - **Rust in the kernel**: introduced in 6.1 as experimental and graduated from experimental status in **7.0** (April 2026) — a peer language for *new* drivers, not a rewrite of C.
-- **Wi-Fi 8 (802.11bn) groundwork** landed in the Linux wireless stack in 7.0 — the Linux counterpart of [[04 WLAN - Wi-Fi Generations Evolution]].
+- **Wi-Fi 8 (802.11bn) groundwork** landed in the Linux wireless stack in 7.0 — the Linux counterpart of [[04-1 WLAN - Wi-Fi Generations Evolution]].
 - **eBPF progression**: from packet filtering to tracing, networking, security and now scheduling — the single most leveraged kernel skill for observability and dataplane work.
 
 ## 10. The "can you actually do this" checklist
@@ -628,13 +628,13 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 
 ## Related
 
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the architecture layer: HAL/BSP separation, execution models, OTA/rollback design, safety and partitioning rationale
-- [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, kernel-bypass options, profiling method
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — kernel C conventions, `container_of`, user-space C/C++ for drivers' tools and daemons
-- [[07 Embedded Systems RTOS and Hardware Interfaces]] — when RTOS beats Linux; OpenAMP/rpmsg/remoteproc heterogeneous pairing
-- [[08 DPDK User Plane and 5G UPF]] — VFIO, hugepages, core isolation, NAPI bypass
-- [[12 RISC-V for Communication Infrastructure]] — H extension, AIA, IOMMU on RISC-V targets
-- [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — partitioning, memory pooling, NUMA
-- [[04 WLAN - Wi-Fi Generations Evolution]] and [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]] — nl80211/cfg80211/mac80211 as the Linux side of Wi-Fi
-- [[11 Agent Systems and Edge Orchestration]] — IPC and sandboxing model for on-device agents
-- [[05 Cellular IoT RedCap eRedCap and NTN]] — keepalive and lossy-link socket tuning
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the architecture layer: HAL/BSP separation, execution models, OTA/rollback design, safety and partitioning rationale
+- [[13-1 Programming Languages Toolchain and Performance Engineering]] — build systems, kernel-bypass options, profiling method
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — kernel C conventions, `container_of`, user-space C/C++ for drivers' tools and daemons
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]] — when RTOS beats Linux; OpenAMP/rpmsg/remoteproc heterogeneous pairing
+- [[08-1 DPDK User Plane and 5G UPF]] — VFIO, hugepages, core isolation, NAPI bypass
+- [[12-1 RISC-V for Communication Infrastructure]] — H extension, AIA, IOMMU on RISC-V targets
+- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — partitioning, memory pooling, NUMA
+- [[04-1 WLAN - Wi-Fi Generations Evolution]] and [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — nl80211/cfg80211/mac80211 as the Linux side of Wi-Fi
+- [[10-2 Agent Systems and Edge Orchestration]] — IPC and sandboxing model for on-device agents
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]] — keepalive and lossy-link socket tuning

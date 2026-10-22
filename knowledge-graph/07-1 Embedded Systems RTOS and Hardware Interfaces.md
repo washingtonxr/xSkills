@@ -28,7 +28,7 @@ last-updated: 2026-10-22
 - **Fixed-priority preemptive scheduling** by default; equal-priority tasks round-robin under time slicing if configured.
 - `configMAX_PRIORITIES` bounds the priority count; a **higher number = higher priority**.
 - **Tick**: periodic SysTick interrupt drives the time base; `configTICK_RATE_HZ` sets it. Every tick the scheduler checks for a higher-priority ready task.
-- **Tickless idle** (`configUSE_TICKLESS_IDLE`) suppresses the tick during idle to allow deep sleep — essential for the low-power designs in [[06 Wireless Sensor Networks and Low-Power MAC]].
+- **Tickless idle** (`configUSE_TICKLESS_IDLE`) suppresses the tick during idle to allow deep sleep — essential for the low-power designs in [[06-1 Wireless Sensor Networks and Low-Power MAC]].
 
 ### 1.2 Task state machine
 `Running → Ready → Blocked → Suspended`
@@ -75,7 +75,7 @@ Correct pattern: ISR does the minimum (read/clear hardware, push to a queue usin
 - **Software timers** — run in the timer service (daemon) task; callback context is a task, not an ISR.
 - **Critical sections** — `taskENTER_CRITICAL` / `taskEXIT_CRITICAL` disable interrupts; keep them very short, especially with a radio running.
 - **MPU support** — memory protection for safety-critical or certified designs.
-- **SMP FreeRTOS** — core affinity for multi-core parts; relevant to the heterogeneous-core discussion in [[12 RISC-V for Communication Infrastructure]].
+- **SMP FreeRTOS** — core affinity for multi-core parts; relevant to the heterogeneous-core discussion in [[12-1 RISC-V for Communication Infrastructure]].
 
 ## 2. Bus and peripheral interfaces
 
@@ -122,7 +122,7 @@ Correct pattern: ISR does the minimum (read/clear hardware, push to a queue usin
 The strongest cross-domain answer you can give here:
 
 - **RTOS message queues** typically copy small fixed-size items, or pass pointers. Passing pointers is cheap but hands you lifetime-ownership problems.
-- **DPDK `rte_mempool`** solves the same problem with pre-allocated, NUMA-aware, per-core-cached `mbuf` pools — see [[08 DPDK User Plane and 5G UPF]].
+- **DPDK `rte_mempool`** solves the same problem with pre-allocated, NUMA-aware, per-core-cached `mbuf` pools — see [[08-1 DPDK User Plane and 5G UPF]].
 - **DPAA / DPDK on embedded multi-core** adds hardware buffer pools and queue managers.
 - The tradeoff is identical in both worlds: **pre-allocation and pooling eliminates allocation jitter and fragmentation at the cost of fixed memory commitment.** On a constrained device that commitment is the whole design question.
 
@@ -146,10 +146,11 @@ The strongest cross-domain answer you can give here:
 
 ## Related
 
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layer above: execution models, HSM, time-triggered vs event-triggered, safety cases built on these primitives
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
-- [[08 DPDK User Plane and 5G UPF]]
-- [[06 Wireless Sensor Networks and Low-Power MAC]]
-- [[12 RISC-V for Communication Infrastructure]]
-- [[13 Programming Languages Toolchain and Performance Engineering]]
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layer above: execution models, HSM, time-triggered vs event-triggered, safety cases built on these primitives
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
+- [[08-1 DPDK User Plane and 5G UPF]]
+- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
+- [[12-1 RISC-V for Communication Infrastructure]]
+- [[13-1 Programming Languages Toolchain and Performance Engineering]]
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model

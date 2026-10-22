@@ -68,7 +68,7 @@ DPDK's answer:
 ### 3.4 QoS alignment with the RAN
 `Application → QoS Flow (QFI/5QI) → DRB (SDAP, RAN) → GTP-U tunnel (N3) → PDR/FAR/QER (UPF)`
 
-- The same QoS flow traverses both domains; see [[02 5G NR RAN Layer 2 Protocol Stack]].
+- The same QoS flow traverses both domains; see [[01-2 5G NR RAN Layer 2 Protocol Stack]].
 - **Time-scale mismatch is the diagnostic key.** RAN scheduling operates per slot (0.125–1 ms); UPF QoS enforcement operates per flow over milliseconds to seconds. If a user sees poor throughput:
   - Air-interface bottleneck → PRB utilisation high, CQI low, HARQ retransmissions high, BSR non-zero but unserved.
   - User-plane bottleneck → GTP-U queue depth and drop counters grow, per-flow rate caps hit, UPF CPU/core saturation, N6 congestion.
@@ -114,9 +114,9 @@ Data path sketch:
 
 ## Related
 
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
-- [[12 RISC-V for Communication Infrastructure]]
-- [[07 Embedded Systems RTOS and Hardware Interfaces]]
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — VFIO, hugepages, IRQ affinity, core isolation underneath the PMD
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
+- [[12-1 RISC-V for Communication Infrastructure]]
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — VFIO, hugepages, IRQ affinity, core isolation underneath the PMD

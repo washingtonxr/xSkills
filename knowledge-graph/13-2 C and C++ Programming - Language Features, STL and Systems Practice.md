@@ -24,7 +24,7 @@ last-updated: 2026-10-22
 
 The language layer. Every note in this vault eventually compiles down to this one: protocol stacks are C, dataplanes are C with C++ control planes, inference engines are C++ with C kernels, drivers are C, and the boundary between them is where most real bugs live.
 
-Companion to [[13 Programming Languages Toolchain and Performance Engineering]] (build systems, profiling, kernel bypass) and [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] (the OS-facing side).
+Companion to [[13-1 Programming Languages Toolchain and Performance Engineering]] (build systems, profiling, kernel bypass) and [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] (the OS-facing side).
 
 ---
 
@@ -207,7 +207,7 @@ Deterministic on every compiler and every endianness.
 - `malloc`/`calloc`/`realloc`/`free`, plus `aligned_alloc` (C11, size must be a multiple of alignment), `posix_memalign`, and `memalign`.
 - `alloca` and VLAs: avoid in production — unbounded stack growth, and an 8 KB kernel stack or a 4 KB RTOS task stack will not forgive you.
 - **Ownership convention must be documented per API**: caller frees / callee frees / pool returns. Most C bugs are a disagreement about this, not a `malloc` bug.
-- **Pool/mempool first**: fixed-size slab allocation eliminates fragmentation and makes worst-case latency bounded. See [[08 DPDK User Plane and 5G UPF]] (`rte_mempool`).
+- **Pool/mempool first**: fixed-size slab allocation eliminates fragmentation and makes worst-case latency bounded. See [[08-1 DPDK User Plane and 5G UPF]] (`rte_mempool`).
 
 ### 3.8 Bit manipulation — C11 vs C23
 
@@ -593,7 +593,7 @@ for (std::size_t i = 0; i < n; i += floatv::size()) {
     std::simd::unchecked_store(x * y + 1.0f, out.begin() + i, floatv::size());
 }
 ```
-One source for AVX-512, NEON, SVE and RVV instead of per-ISA intrinsics — directly relevant to [[12 RISC-V for Communication Infrastructure]].
+One source for AVX-512, NEON, SVE and RVV instead of per-ISA intrinsics — directly relevant to [[12-1 RISC-V for Communication Infrastructure]].
 
 **Other C++26 highlights**: `std::inplace_vector` (`<inplace_vector>`, P0843 — fixed capacity, no heap, the embedded `vector`), `std::hive` (`<hive>`, P0447 — bucket container reusing erased slots, from `plf::colony`, ideal for entity/connection pools), `std::linalg` (`<linalg>`, P1673 — BLAS-level ops over `mdspan`), `#embed` (P1967), expansion statements `template for` (P1306), hazard pointers (P2530) and RCU (P2545), **standard library hardening** (P3471 — bounds checks turning UB into contract violations), **erroneous behaviour** for uninitialised reads (P2795) with `[[indeterminate]]` as an explicit opt-out, `std::submdspan`, `std::views::concat`, saturating arithmetic (`std::saturating_add` etc.), `std::copyable_function`, `std::is_within_lifetime`, `= delete("reason")`, placeholder `_`, adding `@ $ \`` to the basic character set, and deprecation of `memory_order::consume`.
 
@@ -851,7 +851,7 @@ auto H = std::mdspan(h.data(), nr, nt);            // row-major by default
 std::mdspan Hs(h.data(), nr, nt, std::layout_stride::mapping{nr*nt, {1, nr}});  // transposed view, no copy
 /* C++26: std::linalg::matrix_vector_product(H, x, y); */
 ```
-One buffer, multiple views, no transposition copy. Directly applicable to channel estimation and to any tensor view in [[10 LLM Inference Engines and xLLM]].
+One buffer, multiple views, no transposition copy. Directly applicable to channel estimation and to any tensor view in [[10-1 LLM Inference Engines and xLLM]].
 
 ### 6.6 PMR arena per connection
 
@@ -927,11 +927,11 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 
 ## Related
 
-- [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
-- [[08 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
-- [[07 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`
-- [[10 LLM Inference Engines and xLLM]] — C++17/20 and pure-C++ inference engines, KV cache, SIMD kernels
-- [[12 RISC-V for Communication Infrastructure]] — RVV, `std::simd` portability, custom extensions
-- [[02 5G NR RAN Layer 2 Protocol Stack]] — the C implementation target for most of this
+- [[13-1 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
+- [[08-1 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`
+- [[10-1 LLM Inference Engines and xLLM]] — C++17/20 and pure-C++ inference engines, KV cache, SIMD kernels
+- [[12-1 RISC-V for Communication Infrastructure]] — RVV, `std::simd` portability, custom extensions
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the C implementation target for most of this

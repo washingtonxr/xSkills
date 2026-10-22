@@ -22,7 +22,7 @@ last-updated: 2026-10-22
 
 # WLAN Ecosystem — WFA Certification, EasyMesh and the prpl Stack
 
-Certification, multi-AP control and gateway software. For the PHY/MAC generation-by-generation technology, see [[04 WLAN - Wi-Fi Generations Evolution]].
+Certification, multi-AP control and gateway software. For the PHY/MAC generation-by-generation technology, see [[04-1 WLAN - Wi-Fi Generations Evolution]].
 
 ## 1. Wi-Fi Alliance and the certification layers
 
@@ -108,7 +108,8 @@ The design questions this ecosystem must answer:
 
 ## Related
 
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
-- [[04 WLAN - Wi-Fi Generations Evolution]]
-- [[07 Embedded Systems RTOS and Hardware Interfaces]]
-- [[11 Agent Systems and Edge Orchestration]]
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
+- [[04-1 WLAN - Wi-Fi Generations Evolution]]
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[10-2 Agent Systems and Edge Orchestration]]

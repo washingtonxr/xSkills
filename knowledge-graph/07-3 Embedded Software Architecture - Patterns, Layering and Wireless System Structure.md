@@ -27,7 +27,7 @@ related-notes:
 
 # Embedded Software Architecture — Patterns, Layering and Wireless System Structure
 
-> **Scope.** This note is about *structure and decomposition*: how an embedded system is split into layers, execution contexts, states and interfaces, and why. Mechanics live elsewhere — [[07 Embedded Systems RTOS and Hardware Interfaces]] covers RTOS primitives, buses and the Cortex-M exception model; [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] covers the Linux side; [[16 C and C++ Programming - Language Features, STL and Systems Practice]] covers the language. This note is the level above all three.
+> **Scope.** This note is about *structure and decomposition*: how an embedded system is split into layers, execution contexts, states and interfaces, and why. Mechanics live elsewhere — [[07-1 Embedded Systems RTOS and Hardware Interfaces]] covers RTOS primitives, buses and the Cortex-M exception model; [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] covers the Linux side; [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] covers the language. This note is the level above all three.
 
 ## 0. Why "architecture" is a separate question in embedded
 
@@ -89,7 +89,7 @@ AUTOSAR (AUTomotive Open System ARchitecture, founded 2003) is the most fully sp
 
 **Adaptive Platform (AP)** — high-performance ECUs, POSIX-based OS, service-oriented, dynamic. Implements the **AUTOSAR Runtime for Adaptive Applications (ARA)**, functional clusters grouped into services, plus the Adaptive Basis. Designed for dynamic update and reconfiguration.
 
-**Why this matters beyond cars:** the VFB/RTE pattern is *exactly* the same problem as a portable Wi-Fi or modem stack — decouple applications from transport so the same code runs over a local API or over a bus. See [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]] for the WLAN analogue (prpl's abstraction of the Multi-AP control plane).
+**Why this matters beyond cars:** the VFB/RTE pattern is *exactly* the same problem as a portable Wi-Fi or modem stack — decouple applications from transport so the same code runs over a local API or over a bus. See [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] for the WLAN analogue (prpl's abstraction of the Multi-AP control plane).
 
 **Interesting for a comms person:** the CP BSW explicitly contains a *wireless communication* stack — drivers and HW abstraction for cellular/V2X. So AUTOSAR CP is not "the car stack", it is "the deeply-embedded stack" that happens to include radio.
 
@@ -123,7 +123,7 @@ This is the single most consequential architectural decision. Five models, in in
 - **EDF** — dynamic priority by absolute deadline. Schedulable up to `U ≤ 1` (Dertouzos, 1974 showed preemptive EDF is optimal on a single processor). More CPU-efficient, but degrades unpredictably in transient overload and is rarely available natively in commercial RTOSes.
 - **Deadline Monotonic (DM)** — Leung & Whitehead, 1982. Priority by *deadline*, not period. Optimal fixed-priority assignment for constrained deadlines (deadline ≤ period). Identical to RM when deadline = period.
 - **Audsley's Optimal Priority Assignment (OPA)** — for arbitrary deadlines, finds an optimal priority ordering in at most `n(n+1)/2` schedulability tests.
-- **Priority inversion** — a low-priority task holding a lock blocks a high-priority task. Fixes: **priority inheritance** and **priority ceiling**; for a rigorous bound, **Stack Resource Policy** (Baker, 1990), which also gives the best known worst-case stack bound. See [[07 Embedded Systems RTOS and Hardware Interfaces]] for the FreeRTOS-level mechanics.
+- **Priority inversion** — a low-priority task holding a lock blocks a high-priority task. Fixes: **priority inheritance** and **priority ceiling**; for a rigorous bound, **Stack Resource Policy** (Baker, 1990), which also gives the best known worst-case stack bound. See [[07-1 Embedded Systems RTOS and Hardware Interfaces]] for the FreeRTOS-level mechanics.
 - **Release jitter** — tasks triggered by an ISR or another task do not become ready instantly. Audsley et al. (1993) and Tindell et al. (1994) extend the analysis; "Deadline minus Jitter monotonic" is optimal for constrained deadlines with jitter.
 
 **Interview framing that lands:** don't recite the bound. Say *why you did not rely on it*: "RM's 69% bound is sufficient but conservative, so for a modem L2 task set we did exact response-time analysis per task including OS overhead and ISR interference, and reserved the remaining budget for best-effort work at lowest priority."
@@ -173,7 +173,7 @@ The hierarchical dispatch trick, in essence: a state handler either consumes an 
 - **Every state machine needs an explicit top-state initial transition**, and every orthogonal region needs its own initial transition.
 - **Never transition inside an entry or exit action** — it produces ill-formed handlers with ambiguous semantics.
 - **Event deferral** (queue an event for later rather than dropping it) is a first-class mechanism in HSM frameworks; using it deliberately is better than a `bool pending_later` flag.
-- Where the state machine is the protocol state (RRC states, Wi-Fi association states, connection lifecycle), the HSM *is* the architecture — link it to [[02 5G NR RAN Layer 2 Protocol Stack]] and [[04 WLAN - Wi-Fi Generations Evolution]], where the same "modes with inherited behaviour" pattern appears as spec-level state machines.
+- Where the state machine is the protocol state (RRC states, Wi-Fi association states, connection lifecycle), the HSM *is* the architecture — link it to [[01-2 5G NR RAN Layer 2 Protocol Stack]] and [[04-1 WLAN - Wi-Fi Generations Evolution]], where the same "modes with inherited behaviour" pattern appears as spec-level state machines.
 
 ---
 
@@ -186,7 +186,7 @@ The GoF catalogue applies, but with different cost accounting: every virtual cal
 | **Adapter / Facade** | The HAL: stable narrow API over a messy peripheral family | Zero-cost if header-only + static inline |
 | **Proxy / Hardware surrogate** | A fake peripheral for host-side unit testing (see §8) | The single highest-value testability pattern in embedded |
 | **Active Object** | Own thread (or queue) + private event queue + RTC; serialises access by construction | One queue and one stack per object — budget it |
-| **Reactor / event demultiplexer** | One loop demultiplexes many event sources to handlers | See [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] for `epoll`; same shape on RTOS with a queue set |
+| **Reactor / event demultiplexer** | One loop demultiplexes many event sources to handlers | See [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] for `epoll`; same shape on RTOS with a queue set |
 | **Observer / Publish-Subscribe** | Decouple producer from consumers (sensor → UI, telemetry) | Prefer static subscriber lists; dynamic registration on a small heap invites fragmentation |
 | **Strategy** | Swap algorithms at runtime (modulation scheme, power policy) | Function-pointer struct; no allocation |
 | **Command** | Queue operations; enables undo, deferred execution, logging | Good for OTA job queues and diagnostic command dispatch |
@@ -196,7 +196,7 @@ The GoF catalogue applies, but with different cost accounting: every virtual cal
 | **Template Method** | Fixed algorithm skeleton with hooks | Prefer compile-time (CRTP) over virtual where latency matters |
 | **Flyweight** | Share immutable config/const data in ROM | Directly maps to `const` tables in flash |
 | **Composite** | Treat single device and device group uniformly | Careful: adds indirection to hot paths |
-| **Visitor** | Add an operation over a fixed set of node types | See [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — `std::visit` with an `overloaded` lambda set |
+| **Visitor** | Add an operation over a fixed set of node types | See [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — `std::visit` with an `overloaded` lambda set |
 | **Memento** | Snapshot/restore configuration or calibration | Natural fit for "revert to last known good config after a failed OTA" |
 | **Singleton** | **Usually an anti-pattern in embedded** | Hidden global state, untestable, and initialisation order across translation units is a real bug source. Prefer explicit dependency injection — an init function taking a pointer to its context. |
 | **Dependency Inversion / Ports & Adapters** | Application depends on abstract ports; adapters bind to HAL/BSP | The pattern that makes host-based testing possible; also the AUTOSAR VFB idea in miniature |
@@ -269,7 +269,7 @@ The standard heterogenous-processor interface (application core ↔ modem/baseba
 3. **Doorbell**: producer raises an interrupt to the peer (a mailbox peripheral or software IRQ).
 4. **Consumer** takes the interrupt, drains all completed descriptors, then acknowledges — acknowledgement clears the doorbell, so one interrupt can retire many descriptors (interrupt coalescing).
 
-Design points that make or break it: cache coherency (see [[07 Embedded Systems RTOS and Hardware Interfaces]]), whether the doorbell is level- or edge-triggered, ordering between payload write and doorbell, and a version/feature handshake at boot so mismatched host and firmware images fail loudly rather than silently.
+Design points that make or break it: cache coherency (see [[07-1 Embedded Systems RTOS and Hardware Interfaces]]), whether the doorbell is level- or edge-triggered, ordering between payload write and doorbell, and a version/feature handshake at boot so mismatched host and firmware images fail loudly rather than silently.
 
 ---
 
@@ -288,7 +288,7 @@ This is where this note earns its place in this vault: the structure of a radio 
 | **L2 — SDAP** | QoS flow ↔ DRB mapping | Task, often fused into PDCP | Throughput-bound |
 | **L3 — RRC / NAS** | Connection, mobility, configuration, security | Low-priority task | 10s of ms; event-driven |
 
-**Architectural rule:** the real-time boundary sits between L1 and L2. Above it, deadlines are soft-ish and a general-purpose core with an RTOS is fine; below it, you need either hard-partitioned time or dedicated acceleration. That single line explains why baseband SoCs are heterogeneous (see [[12 RISC-V for Communication Infrastructure]]) and why O-RAN splits the stack where it does.
+**Architectural rule:** the real-time boundary sits between L1 and L2. Above it, deadlines are soft-ish and a general-purpose core with an RTOS is fine; below it, you need either hard-partitioned time or dedicated acceleration. That single line explains why baseband SoCs are heterogeneous (see [[12-1 RISC-V for Communication Infrastructure]]) and why O-RAN splits the stack where it does.
 
 ### 6.2 Modem / host architecture
 
@@ -315,10 +315,10 @@ In a device (UE, CPE, IoT module) the modem subsystem and the application host a
 
 ### 6.4 Where the layers meet the vault's other notes
 
-- MAC scheduling and HARQ timing → [[02 5G NR RAN Layer 2 Protocol Stack]]
-- RAN intelligence moved out of the box → [[03 AI-ML for RAN and O-RAN RIC]]
-- Wi-Fi: `mac80211`/`cfg80211` is the Linux embodiment of this split → [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]], [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]]
-- Constrained-device radio duty cycling → [[06 Wireless Sensor Networks and Low-Power MAC]]
+- MAC scheduling and HARQ timing → [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- RAN intelligence moved out of the box → [[01-3 AI-ML for RAN and O-RAN RIC]]
+- Wi-Fi: `mac80211`/`cfg80211` is the Linux embodiment of this split → [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]], [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+- Constrained-device radio duty cycling → [[06-1 Wireless Sensor Networks and Low-Power MAC]]
 
 ---
 
@@ -340,7 +340,7 @@ MISRA C forbids dynamic memory allocation in critical systems (Rule 21.3 in MISR
 - **MPU** (Cortex-M) or **MMU** (Cortex-A, RISC-V with Sv39/Sv48): define regions for code, RO data, stacks, shared memory, and peripherals. Default-deny is the goal.
 - **Freedom from interference (FFI)** — an ISO 26262 concept: a lower-ASIL component must not be able to corrupt a higher-ASIL one. Enforced by memory protection, temporal isolation (partition scheduling), and controlled shared services.
 - **Reality check worth citing**: the academic review *"Good Motive but Bad Design: Why ARM MPU Has Become an Outcast in Embedded Systems"* (Zhou et al., arXiv:1908.03638, 2019) documents how rarely the ARM MPU is actually used as intended. It is a strong, credible thing to raise in an architecture discussion — the mechanism exists but the ecosystem rarely configures it.
-- **Static partitioning hypervisors** and mixed-criticality co-existence are covered in [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]]; note that static core assignment removes *scheduler* interference but not *cache and interconnect* interference, which is the harder argument.
+- **Static partitioning hypervisors** and mixed-criticality co-existence are covered in [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]]; note that static core assignment removes *scheduler* interference but not *cache and interconnect* interference, which is the harder argument.
 
 ### 7.3 What to define in the memory map
 
@@ -366,7 +366,7 @@ Then the standard test pyramid, adapted:
 | **Fault injection** | Board or simulation | Failure handling, watchdog behaviour, recovery |
 | **Field telemetry / soak** | Fleet | The failures only volume reveals |
 
-**Replay is the highest-leverage tool** — if events, inputs and time are all captured through ports, a field failure can be replayed deterministically on the host. This is the same methodology argument made for AI-RAN in [[03 AI-ML for RAN and O-RAN RIC]] (sim → replay → HIL).
+**Replay is the highest-leverage tool** — if events, inputs and time are all captured through ports, a field failure can be replayed deterministically on the host. This is the same methodology argument made for AI-RAN in [[01-3 AI-ML for RAN and O-RAN RIC]] (sim → replay → HIL).
 
 ---
 
@@ -383,7 +383,7 @@ Then the standard test pyramid, adapted:
 | **Atomicity** | Never erase the running image. Power loss at any instant leaves a bootable device |
 | **Delta updates** | Smaller transfers for constrained links — but the reconstruct step must be verifiable and crash-safe |
 
-On Linux targets this is RAUC/SWUpdate/Mender (see [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]]); on MCU targets, MCUboot is the common open choice and Zephyr integrates it. **The architectural content is identical**: verified image, two slots, monotonic version, and a power-loss-anywhere guarantee.
+On Linux targets this is RAUC/SWUpdate/Mender (see [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]]); on MCU targets, MCUboot is the common open choice and Zephyr integrates it. **The architectural content is identical**: verified image, two slots, monotonic version, and a power-loss-anywhere guarantee.
 
 ---
 
@@ -449,7 +449,7 @@ Power is architectural because sleeping is a *system-wide coordinated* action, n
 - **Peripheral and clock gating**: owned centrally by a power/resource manager, not scattered through drivers — otherwise two drivers disagree about when the bus clock may drop.
 - **DVFS**: scale voltage/frequency to the current workload; requires a performance-level negotiation interface between the scheduler and the power manager.
 - **Retention RAM**: keep only what must survive sleep; every retained byte costs leakage.
-- **Duty cycling** is the dominant term for radio devices — the radio is usually the largest consumer, and the MAC's sleep schedule is therefore an architecture-level decision (see [[06 Wireless Sensor Networks and Low-Power MAC]] for TWT/TSCH and duty-cycle reasoning, and [[05 Cellular IoT RedCap eRedCap and NTN]] for LP-WUS/eDRX at the cellular level).
+- **Duty cycling** is the dominant term for radio devices — the radio is usually the largest consumer, and the MAC's sleep schedule is therefore an architecture-level decision (see [[06-1 Wireless Sensor Networks and Low-Power MAC]] for TWT/TSCH and duty-cycle reasoning, and [[01-4 Cellular IoT RedCap eRedCap and NTN]] for LP-WUS/eDRX at the cellular level).
 
 The architectural test: can every subsystem answer "what is the deepest sleep state I can be in right now, and what wakes me?" If not, the product's battery life is set by whichever module forgot.
 
@@ -476,7 +476,7 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 ### 14.2 Wi-Fi router / residential gateway
 
-**Structure**: embedded Linux. Kernel side: `mac80211`/`cfg80211` (softMAC) or a vendor fullMAC driver; userspace: hostapd/wpa_supplicant, a Multi-AP agent (EasyMesh / prplMesh), DHCP/DNS, firewall, telemetry. See [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]] and [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
+**Structure**: embedded Linux. Kernel side: `mac80211`/`cfg80211` (softMAC) or a vendor fullMAC driver; userspace: hostapd/wpa_supplicant, a Multi-AP agent (EasyMesh / prplMesh), DHCP/DNS, firewall, telemetry. See [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] and [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
 
 **Why**: throughput and feature velocity dominate; determinism matters only inside the driver and firmware. Datapath: `sk_buff` ownership transfer through the stack (single-owner zero-copy), with fast-path offload where the SoC supports it.
 
@@ -484,7 +484,7 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 ### 14.3 Modem / baseband subsystem
 
-**Structure**: **heterogeneous**. L1 on dedicated cores or accelerators (increasingly RISC-V clusters — [[12 RISC-V for Communication Infrastructure]]), L2/L3 on general-purpose cores with an RTOS, application on a separate host processor. Interfaces: shared-memory descriptor rings + mailbox doorbell (§5.4) internally; RPC or multiplexed binary protocol to the host (§6.2).
+**Structure**: **heterogeneous**. L1 on dedicated cores or accelerators (increasingly RISC-V clusters — [[12-1 RISC-V for Communication Infrastructure]]), L2/L3 on general-purpose cores with an RTOS, application on a separate host processor. Interfaces: shared-memory descriptor rings + mailbox doorbell (§5.4) internally; RPC or multiplexed binary protocol to the host (§6.2).
 
 **Why**: the L1 processing budget is a fixed number of operations per TTI — it cannot be scheduled on a shared core with anything else. The L1/L2 boundary is the real-time boundary.
 
@@ -533,13 +533,14 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 ## Related
 
-- [[07 Embedded Systems RTOS and Hardware Interfaces]] — the RTOS and hardware mechanics this note's execution model sits on top of
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux-class counterpart: driver model, IPC, OTA, PREEMPT_RT, partitioning
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — the language mechanisms used to express ports, HSMs and lock-free handoffs
-- [[02 5G NR RAN Layer 2 Protocol Stack]] — the L1/L2/L3 decomposition in §6.1 at spec level
-- [[03 AI-ML for RAN and O-RAN RIC]] — where RAN intelligence is placed relative to the stack split
-- [[12 RISC-V for Communication Infrastructure]] — the silicon substrate for L1 acceleration and heterogeneous baseband
-- [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the WLAN instantiation of layered control/data separation
-- [[06 Wireless Sensor Networks and Low-Power MAC]] — duty cycling and sleep architecture at the constrained end
-- [[05 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS, eDRX and the power architecture of cellular IoT devices
-- [[08 DPDK User Plane and 5G UPF]] — single-owner zero-copy ownership applied at line rate
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]] — the RTOS and hardware mechanics this note's execution model sits on top of
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux-class counterpart: driver model, IPC, OTA, PREEMPT_RT, partitioning
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language mechanisms used to express ports, HSMs and lock-free handoffs
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the L1/L2/L3 decomposition in §6.1 at spec level
+- [[01-3 AI-ML for RAN and O-RAN RIC]] — where RAN intelligence is placed relative to the stack split
+- [[12-1 RISC-V for Communication Infrastructure]] — the silicon substrate for L1 acceleration and heterogeneous baseband
+- [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the WLAN instantiation of layered control/data separation
+- [[06-1 Wireless Sensor Networks and Low-Power MAC]] — duty cycling and sleep architecture at the constrained end
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the worked example of a power policy split across host, firmware and RF capability
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS, eDRX and the power architecture of cellular IoT devices
+- [[08-1 DPDK User Plane and 5G UPF]] — single-owner zero-copy ownership applied at line rate

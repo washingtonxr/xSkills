@@ -25,8 +25,29 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 
 - `knowledge-graph/` is the Obsidian vault root — open *that* folder, not the project root.
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
-- Notes are numbered `01`–`16`; the file name *is* the topic.
+- Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
 - Fixed note body shape: knowledge points → **Anchors** → **Related**.
+- Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view).
+
+## Note numbering scheme `GG-x` (decided 2026-10-22)
+
+Group number `GG` is inherited from the group's original top-level note, so group
+numbers are intentionally **not contiguous**:
+
+| Group | Domain | Notes |
+| --- | --- | --- |
+| `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) |
+| `04-x` | WLAN | 04-1 generations · 04-2 power saving · 04-3 ecosystem (WFA/EasyMesh/prpl) |
+| `06-x` | Low-power and sensor networking | 06-1 WSN and low-power MAC |
+| `07-x` | Embedded and systems software | 07-1 RTOS and hardware interfaces · 07-2 Linux embedded · 07-3 software architecture |
+| `08-x` | Data plane and heterogeneous compute | 08-1 DPDK/UPF · 08-2 cloud-edge-end |
+| `10-x` | AI inference and agent systems | 10-1 LLM inference/xLLM · 10-2 agent systems |
+| `12-x` | Silicon and ISA | 12-1 RISC-V |
+| `13-x` | Programming languages and practice | 13-1 toolchain and performance · 13-2 C and C++ |
+
+`readlist.md` sections use the **same** `GG-x` numbers (sections 19–21 are the
+standards repositories, reading order, and maintenance). Renumbering a note means
+renumbering its readlist section too.
 
 ## Content conventions
 

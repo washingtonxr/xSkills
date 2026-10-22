@@ -67,7 +67,7 @@ Critique to offer: these are **energy-balancing heuristics under idealised radio
 
 ### 4.3 Wake-up radio
 - Move the listening function to an always-on, sub-mW receiver; the main radio stays off until woken.
-- Directly analogous to **3GPP LP-WUS** work in Rel-19 for cellular IoT — see [[05 Cellular IoT RedCap eRedCap and NTN]].
+- Directly analogous to **3GPP LP-WUS** work in Rel-19 for cellular IoT — see [[01-4 Cellular IoT RedCap eRedCap and NTN]].
 - The engineering question is always: does the wake-up receiver's own power plus false-wake cost beat the duty-cycled main radio at your traffic rate? Below some packet rate, duty cycling wins; above it, wake-up radio wins.
 
 ## 5. Routing and network layer
@@ -81,7 +81,7 @@ Critique to offer: these are **energy-balancing heuristics under idealised radio
 - AoI measures **the time elapsed since the newest update at the receiver was generated** — not throughput, not latency of a single packet.
 - Relevant because both 802.11 "next-gen" discussions and industrial sensing are shifting from "how many bits" to "how stale is the state".
 - Scheduling for AoI changes policy: it favours fresh, small, evenly-spaced updates over batched large transfers, and it penalises queues.
-- See [[04 WLAN - Wi-Fi Generations Evolution]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
+- See [[04-1 WLAN - Wi-Fi Generations Evolution]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
 
 ## 7. The embedded-system hard question
 
@@ -96,7 +96,7 @@ Answer shape:
 - Account for **worst-case wake cost**: oscillator stabilisation, PLL lock, RX ramp, and cache/PMU restore — these are often larger than the intended RX window.
 - Budget the join/re-synchronisation cost: a node that loses sync may burn more energy re-acquiring than it saved sleeping.
 
-See [[07 Embedded Systems RTOS and Hardware Interfaces]].
+See [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 ## Anchors — verified facts
 
@@ -108,6 +108,7 @@ See [[07 Embedded Systems RTOS and Hardware Interfaces]].
 
 ## Related
 
-- [[05 Cellular IoT RedCap eRedCap and NTN]]
-- [[07 Embedded Systems RTOS and Hardware Interfaces]]
-- [[04 WLAN - Wi-Fi Generations Evolution]]
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[04-1 WLAN - Wi-Fi Generations Evolution]]
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the Wi-Fi answer to the same duty-cycling problem: TWT, TIM segmentation, wake-up radio, ambient power

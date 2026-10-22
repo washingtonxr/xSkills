@@ -20,7 +20,7 @@ last-updated: 2026-10-22
 
 # 5G NR RAN Layer 2 Protocol Stack
 
-The permanent core of any L2 interview. See [[01 5G-Advanced and 6G Radio Access]] for what is changing around it.
+The permanent core of any L2 interview. See [[01-1 5G-Advanced and 6G Radio Access]] for what is changing around it.
 
 ## 1. Layer 2 structure and specifications
 
@@ -38,7 +38,7 @@ Above them RRC (TS 38.331) controls configuration; below them PHY (TS 38.2xx) pr
 - Subcarrier spacing: **15 / 30 / 60 kHz in FR1**, **60 / 120 kHz in FR2**; additional options exist at higher bands.
 - Slot duration is inversely proportional to SCS: **1 ms @15 kHz, 0.5 ms @30 kHz, 0.25 ms @60 kHz, 0.125 ms @120 kHz**.
 - Mini-slots (2/4/7 symbols) exist for URLLC and for unlicensed/beam-based operation.
-- **The slot duration is the hard budget for the scheduler decision.** Any AI-assisted scheduling must fit inside it — this is the single most important constraint when arguing about online learning in MAC. See [[03 AI-ML for RAN and O-RAN RIC]].
+- **The slot duration is the hard budget for the scheduler decision.** Any AI-assisted scheduling must fit inside it — this is the single most important constraint when arguing about online learning in MAC. See [[01-3 AI-ML for RAN and O-RAN RIC]].
 - BWP (Bandwidth Part): up to 4 configured DL and UL BWPs per serving cell, **one active at a time**; BWP switching is a latency/bandwidth/power trade.
 
 ## 3. MAC — the invariant core
@@ -115,7 +115,7 @@ End-to-end QoS mapping is the most useful "system view" answer an L2 engineer ca
 - **5QI** characteristics: resource type (GBR / non-GBR / delay-critical GBR), priority level, packet delay budget (PDB), packet error rate (PER), averaging window, max data burst volume.
 - **ARP** (Allocation and Retention Priority) for admission, separate from scheduling priority.
 - **Reflective QoS (RQA / RQI)** lets the UE derive UL QoS flow → DRB mapping from DL marking.
-- On the core side the same QoS flow is enforced by UPF via **PDR/FAR/QER** — see [[08 DPDK User Plane and 5G UPF]].
+- On the core side the same QoS flow is enforced by UPF via **PDR/FAR/QER** — see [[08-1 DPDK User Plane and 5G UPF]].
 - Key interview point: RAN-side DRB/QoS flow mapping and UPF-side QoS enforcement are aligned within the 3GPP framework, but operate on **different time scales** (TTI/slot versus flow-level). Diagnosing whether a bottleneck is air-interface or user-plane requires separating those time scales.
 
 ## 8. Carrier aggregation and multi-connectivity
@@ -152,8 +152,8 @@ End-to-end QoS mapping is the most useful "system view" answer an L2 engineer ca
 
 ## Related
 
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
-- [[01 5G-Advanced and 6G Radio Access]]
-- [[03 AI-ML for RAN and O-RAN RIC]]
-- [[08 DPDK User Plane and 5G UPF]]
-- [[05 Cellular IoT RedCap eRedCap and NTN]]
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
+- [[01-1 5G-Advanced and 6G Radio Access]]
+- [[01-3 AI-ML for RAN and O-RAN RIC]]
+- [[08-1 DPDK User Plane and 5G UPF]]
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]]

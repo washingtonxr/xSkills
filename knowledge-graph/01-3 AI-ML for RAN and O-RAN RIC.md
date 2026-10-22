@@ -19,7 +19,7 @@ last-updated: 2026-10-22
 
 # AI/ML for the RAN and the O-RAN RIC
 
-Where the "AI trainer" credential and the "L2 protocol stack" experience actually meet. See [[01 5G-Advanced and 6G Radio Access]] for the standards arc and [[02 5G NR RAN Layer 2 Protocol Stack]] for the machinery being optimised.
+Where the "AI trainer" credential and the "L2 protocol stack" experience actually meet. See [[01-1 5G-Advanced and 6G Radio Access]] for the standards arc and [[01-2 5G NR RAN Layer 2 Protocol Stack]] for the machinery being optimised.
 
 ## 1. Standardisation timeline for AI in the RAN
 
@@ -117,7 +117,7 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 
 ## Related
 
-- [[01 5G-Advanced and 6G Radio Access]]
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[12 RISC-V for Communication Infrastructure]]
-- [[11 Agent Systems and Edge Orchestration]]
+- [[01-1 5G-Advanced and 6G Radio Access]]
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[12-1 RISC-V for Communication Infrastructure]]
+- [[10-2 Agent Systems and Edge Orchestration]]

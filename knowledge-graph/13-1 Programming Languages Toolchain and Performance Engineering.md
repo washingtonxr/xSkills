@@ -38,7 +38,7 @@ The layer that makes every other note in this vault executable.
 
 ### 1.3 Build and toolchain
 - **CMake** for cross-platform builds; toolchain files for cross-compilation; `cmake --build` with Ninja for speed.
-- **GCC / Clang**: `-O2`/`-O3`, `-flto`, `-march=native` or explicit `-march` for target ISA extensions (relevant for RISC-V custom extensions — see [[12 RISC-V for Communication Infrastructure]]).
+- **GCC / Clang**: `-O2`/`-O3`, `-flto`, `-march=native` or explicit `-march` for target ISA extensions (relevant for RISC-V custom extensions — see [[12-1 RISC-V for Communication Infrastructure]]).
 - **Sanitizers**: ASan, UBSan, TSan in CI; they find the UB class of bug that protocol stacks are full of.
 - **vcpkg / Conan** for dependency management (xLLM uses vcpkg).
 - **Cross-compilation** for ARM/RISC-V targets with sysroot isolation.
@@ -47,7 +47,7 @@ The layer that makes every other note in this vault executable.
 
 - Where it belongs: **simulation, data analysis, test harnesses, model prototyping, tooling**. Not in a sub-millisecond dataplane loop.
 - **numpy / scipy** for signal processing and numerical work; **pandas** for KPI analysis.
-- **PyTorch** for model work; the integration path to production is export (ONNX / TorchScript / vendor compilers) into a C++ runtime — see [[10 LLM Inference Engines and xLLM]].
+- **PyTorch** for model work; the integration path to production is export (ONNX / TorchScript / vendor compilers) into a C++ runtime — see [[10-1 LLM Inference Engines and xLLM]].
 - **asyncio** for test harnesses driving many simulated UEs/devices concurrently.
 - **Bindings**: pybind11 or nanobind to expose C++ to Python (xLLM uses pybind). This is the standard "Python flexibility + C++ performance" compromise.
 - Be explicit about the GIL: it is why Python serving stacks use multi-process, and it is part of the tail-latency argument for C++ inference engines.
@@ -58,9 +58,9 @@ The layer that makes every other note in this vault executable.
 - Process/thread model, `futex`, `epoll`, `io_uring`, `mmap`, shared memory.
 - **cgroups / namespaces** — the basis of containers, and of CPU isolation for dataplane cores.
 - **`sched_setaffinity`, `isolcpus`, `nohz_full`, `rcu_nocbs`** — isolating cores for deterministic packet processing.
-- **Huge pages**: `hugetlbfs` and THP — required by DPDK; see [[08 DPDK User Plane and 5G UPF]].
+- **Huge pages**: `hugetlbfs` and THP — required by DPDK; see [[08-1 DPDK User Plane and 5G UPF]].
 - **`/proc` and `/sys`** introspection; `perf`, `ftrace`, `bpftrace`, `eBPF` for production-visible tracing.
-- Full treatment of the kernel side — boot chain, device tree, drivers, IPC, networking, virtualization — is in [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
+- Full treatment of the kernel side — boot chain, device tree, drivers, IPC, networking, virtualization — is in [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
 
 ### 3.2 Kernel-bypass options and when to pick them
 | Mechanism | Use case | Trade-off |
@@ -73,7 +73,7 @@ The layer that makes every other note in this vault executable.
 
 ### 3.3 RTOS versus Linux
 - **Linux with PREEMPT_RT** for soft real-time with a full ecosystem.
-- **RTOS** for hard real-time, tight footprint and deep sleep — see [[07 Embedded Systems RTOS and Hardware Interfaces]].
+- **RTOS** for hard real-time, tight footprint and deep sleep — see [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
 - The decision axis is **worst-case latency and power**, not average throughput.
 
 ## 4. Verilog HDL and FPGA
@@ -121,9 +121,9 @@ The discipline that distinguishes senior from mid-level:
 
 ## Related
 
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — the language-level counterpart: C23/C++26 features, templates, memory model, STL
-- [[08 DPDK User Plane and 5G UPF]]
-- [[12 RISC-V for Communication Infrastructure]]
-- [[07 Embedded Systems RTOS and Hardware Interfaces]]
-- [[10 LLM Inference Engines and xLLM]]
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]]
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language-level counterpart: C23/C++26 features, templates, memory model, STL
+- [[08-1 DPDK User Plane and 5G UPF]]
+- [[12-1 RISC-V for Communication Infrastructure]]
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[10-1 LLM Inference Engines and xLLM]]
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]]

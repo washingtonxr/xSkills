@@ -48,7 +48,7 @@ Measured / claimed characteristics:
 - **Meets the 4 ms end-to-end constraint** for the baseband uplink of an 8×8 MIMO configuration with 32 antennas, 8 beams, 8 users, 15 kHz SCS on a 15 MHz FR1 carrier.
 - ISA extensions for baseband: **complex (16-bit real + imaginary) multiply & accumulate, division & square-root, SIMD**, and **hardware-managed systolic queues**.
 
-Why this matters to an L2 engineer: the numbers are stated against **real base-station latency and power budgets**, not against a synthetic benchmark. A 4 ms uplink budget is the kind of number you can reason about from [[02 5G NR RAN Layer 2 Protocol Stack]].
+Why this matters to an L2 engineer: the numbers are stated against **real base-station latency and power budgets**, not against a synthetic benchmark. A 4 ms uplink budget is the kind of number you can reason about from [[01-2 5G NR RAN Layer 2 Protocol Stack]].
 
 ## 4. EdgeQ — commercial converged baseband SoC
 
@@ -74,7 +74,7 @@ Answer across four dimensions:
 
 **a) Interface semantics**
 - Descriptor-based work submission (queue in, completion queue out) rather than register-level hand-holding.
-- Explicit ownership transfer: who owns the buffer at each point, and when is it safe to recycle. This is the same contract as an `mbuf` pool — see [[08 DPDK User Plane and 5G UPF]].
+- Explicit ownership transfer: who owns the buffer at each point, and when is it safe to recycle. This is the same contract as an `mbuf` pool — see [[08-1 DPDK User Plane and 5G UPF]].
 - Versioned, self-describing descriptors so accelerator firmware and L2 software can evolve independently.
 
 **b) Cache coherency**
@@ -85,7 +85,7 @@ Answer across four dimensions:
 **c) Real-time scheduling**
 - L1 work has hard deadlines tied to slot/symbol timing; L2 has slot-to-multi-slot deadlines.
 - Needs: bounded worst-case execution time for the L2 path, priority-aware descriptor queues, and **isolation** so a burst of L3/control work cannot starve an L1 deadline.
-- Interrupt/completion latency must be bounded — which is exactly the PendSV-style deferral argument from [[07 Embedded Systems RTOS and Hardware Interfaces]].
+- Interrupt/completion latency must be bounded — which is exactly the PendSV-style deferral argument from [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 **d) Observability and fallback**
 - Per-descriptor timestamps and completion/error codes, because debugging a miss-rate regression across an L1/L2 boundary without timestamps is guesswork.
@@ -107,7 +107,7 @@ Answer across four dimensions:
 
 - RISC-V baseband SoC vendors have announced **5G-NR/NTN dual-mode satellite backhaul** solutions, targeting the convergence of terrestrial and non-terrestrial waveforms on one programmable platform.
 - Rationale: a satellite payload wants the flexibility to change waveform and band allocation after launch, which a hardened modem cannot offer.
-- See [[05 Cellular IoT RedCap eRedCap and NTN]] for the protocol-side implications. *(Specific vendor model numbers: VERIFY against current announcements.)*
+- See [[01-4 Cellular IoT RedCap eRedCap and NTN]] for the protocol-side implications. *(Specific vendor model numbers: VERIFY against current announcements.)*
 
 ## Anchors — verified facts
 
@@ -118,11 +118,11 @@ Answer across four dimensions:
 
 ## Related
 
-- [[17 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
-- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[07 Embedded Systems RTOS and Hardware Interfaces]]
-- [[08 DPDK User Plane and 5G UPF]]
-- [[01 5G-Advanced and 6G Radio Access]]
-- [[05 Cellular IoT RedCap eRedCap and NTN]]
-- [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — H extension, AIA and IOMMU in the Linux virtualization stack
+- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
+- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[08-1 DPDK User Plane and 5G UPF]]
+- [[01-1 5G-Advanced and 6G Radio Access]]
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — H extension, AIA and IOMMU in the Linux virtualization stack

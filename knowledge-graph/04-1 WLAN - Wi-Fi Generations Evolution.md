@@ -30,7 +30,7 @@ last-updated: 2026-10-22
 
 # WLAN — Wi-Fi Generations Evolution (Wi-Fi 4 → Wi-Fi 8 → Wi-Fi 9)
 
-Full generational reference. Ecosystem, certification and mesh software live in [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+Full generational reference. Ecosystem, certification and mesh software live in [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
 
 ## 0. Generation map
 
@@ -461,7 +461,8 @@ AI features must demonstrate benefits that justify their **computational complex
 
 ## Related
 
-- [[14 WLAN Ecosystem - WFA, EasyMesh and prpl]]
-- [[06 Wireless Sensor Networks and Low-Power MAC]]
-- [[11 Agent Systems and Edge Orchestration]]
-- [[03 AI-ML for RAN and O-RAN RIC]]
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
+- [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[10-2 Agent Systems and Edge Orchestration]]
+- [[01-3 AI-ML for RAN and O-RAN RIC]]

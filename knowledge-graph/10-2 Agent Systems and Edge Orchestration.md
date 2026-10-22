@@ -82,14 +82,14 @@ This is the highest-value cross-domain argument available to a communications en
 
 ## 4. Agentic AI as a compute-architecture driver
 
-From the Huawei Connect 2026 framing (see [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]]):
+From the Huawei Connect 2026 framing (see [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]):
 - Agents interact with models hundreds of times per hour, requiring **flexible CPU:NPU ratio configuration**.
 - The resulting **KV Cache far exceeds memory capacity**, forcing cross-system and cross-tier storage — hence the push to PB-scale KV cache clusters with one-hop direct connection.
 - This is why "network-defined compute" and memory pooling moved from research topics to shipping architecture.
 
 ## 5. On-device and edge agent deployment constraints
 
-- **Memory**: weights + KV + OS + runtime must coexist in a unified-memory budget. See [[10 LLM Inference Engines and xLLM]] for block-size and prefix-caching trade-offs.
+- **Memory**: weights + KV + OS + runtime must coexist in a unified-memory budget. See [[10-1 LLM Inference Engines and xLLM]] for block-size and prefix-caching trade-offs.
 - **Thermal and power**: sustained decode on an NPU throttles; orchestration must account for a device whose capability changes over minutes.
 - **Privacy boundary**: which sub-tasks may leave the device. This is a routing policy input, not an afterthought.
 - **Offline operation**: no cloud fallback means the failure path must be local degradation, not an error.
@@ -97,7 +97,7 @@ From the Huawei Connect 2026 framing (see [[09 Cloud-Edge-End Collaboration and 
 
 ## 6. Semantic communication — the communications-side contribution
 
-For constrained links (single antenna, half-duplex, uplink-limited — see [[05 Cellular IoT RedCap eRedCap and NTN]]), the interesting design question is:
+For constrained links (single antenna, half-duplex, uplink-limited — see [[01-4 Cellular IoT RedCap eRedCap and NTN]]), the interesting design question is:
 
 > Instead of transmitting raw audio/features, transmit **compressed semantic features** and let the edge reconstruct intent.
 
@@ -118,7 +118,7 @@ Design considerations:
 
 ## Related
 
-- [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
-- [[10 LLM Inference Engines and xLLM]]
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[05 Cellular IoT RedCap eRedCap and NTN]]
+- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
+- [[10-1 LLM Inference Engines and xLLM]]
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]]

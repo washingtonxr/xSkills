@@ -98,7 +98,7 @@ Confirmed direction from the June 2026 RAN plenary:
 
 Open design questions worth being able to discuss:
 - Should AI inference sit **inside** the MAC scheduler (sub-slot latency budget, no northbound round trip) or in a **cross-layer controller** (better global view, longer loop)?
-- How does model lifecycle management align with **O-RAN near-RT / non-RT RIC** and the A1/E2 split? (See [[03 AI-ML for RAN and O-RAN RIC]].)
+- How does model lifecycle management align with **O-RAN near-RT / non-RT RIC** and the A1/E2 split? (See [[01-3 AI-ML for RAN and O-RAN RIC]].)
 - Where does training/inference compute physically live: DU, CU, or edge cloud? Each changes the control-loop budget by an order of magnitude.
 
 ## 5. Network energy saving — from static shutdown to AI policy
@@ -110,7 +110,7 @@ Open design questions worth being able to discuss:
 ## 6. Mobility — L1/L2-centric fast switching
 
 - Rel-18 introduced work on mobility driven by **L1/L2 signalling only** (LTM — L1/L2 Triggered Mobility), reducing RRC-layer involvement and interruption time.
-- Consequences for L2: MAC/PHY measurement and the switch decision become tightly coupled; candidate cell configuration, L1 measurement reporting and MAC-CE-based cell switch replace part of the classic RRC reconfiguration path. See [[02 5G NR RAN Layer 2 Protocol Stack]].
+- Consequences for L2: MAC/PHY measurement and the switch decision become tightly coupled; candidate cell configuration, L1 measurement reporting and MAC-CE-based cell switch replace part of the classic RRC reconfiguration path. See [[01-2 5G NR RAN Layer 2 Protocol Stack]].
 
 ## Anchors — verified facts
 
@@ -123,7 +123,7 @@ Open design questions worth being able to discuss:
 
 ## Related
 
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[03 AI-ML for RAN and O-RAN RIC]]
-- [[05 Cellular IoT RedCap eRedCap and NTN]]
-- [[12 RISC-V for Communication Infrastructure]]
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[01-3 AI-ML for RAN and O-RAN RIC]]
+- [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[12-1 RISC-V for Communication Infrastructure]]

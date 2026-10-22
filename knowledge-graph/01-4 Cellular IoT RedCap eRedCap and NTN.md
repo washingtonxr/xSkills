@@ -106,7 +106,8 @@ A defensible minimal-change answer:
 
 ## Related
 
-- [[01 5G-Advanced and 6G Radio Access]]
-- [[02 5G NR RAN Layer 2 Protocol Stack]]
-- [[06 Wireless Sensor Networks and Low-Power MAC]]
-- [[11 Agent Systems and Edge Orchestration]]
+- [[01-1 5G-Advanced and 6G Radio Access]]
+- [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
+- [[10-2 Agent Systems and Edge Orchestration]]
