@@ -13,12 +13,26 @@ aliases:
   - Rel-19
   - Rel-21
   - IMT-2030
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
 # 5G-Advanced and 6G Radio Access
 
 ## 1. Release map — the spine everything else hangs on
+
+```mermaid
+flowchart LR
+    R18["Rel-18<br/>frozen Jun 2024<br/>5G-Advanced phase 1"]
+    R19["Rel-19<br/>functional freeze Sep 2025<br/>protocol freeze Dec 2025"]
+    R20["Rel-20<br/>freeze target Mar 2027<br/>6G study + 5G-A completion"]
+    R21["Rel-21<br/>first normative 6G<br/>Stage-3 Dec 2028 · ASN.1 Mar 2029"]
+    IMT["IMT-2030 submission window"]
+    R18 --> R19 --> R20 --> R21 --> IMT
+    R20 -.->|"TR 22.870 Stage-1<br/>TR 38.914 scenarios"| R21
+```
+
+Reading it as an engineer: everything left of Rel-20 is deployable-now knowledge; Rel-20/21 is where you must be able to defend a design opinion with a requirement trace, not a citation.
 
 ### 1.1 Release 18 — first 5G-Advanced release
 - **Frozen June 2024** (RAN#104, 18 June 2024).
@@ -89,6 +103,21 @@ Confirmed direction from the June 2026 RAN plenary:
 
 ## 4. AI-native versus bolt-on AI — the architectural question
 
+Where the inference sits is decided by the control-loop budget, not by preference:
+
+```mermaid
+flowchart TD
+    Q{"Decision budget?"}
+    Q -->|"sub-slot<br/>≤ 1 ms"| MAC["Inside MAC / L1<br/>tiny model or AI-tuned parameters<br/>no northbound round trip"]
+    Q -->|"10 ms – 1 s"| NRT["Near-RT RIC xApp<br/>multi-cell view<br/>E2-KPM up, E2-RC down"]
+    Q -->|"minutes – hours"| NONRT["Non-RT RIC rApp<br/>training · policy · long-horizon"]
+    NONRT -->|"A1 policy"| NRT
+    NRT -->|"parameters / thresholds"| MAC
+    MAC -->|"KPI telemetry"| NRT
+    NRT -->|"aggregated KPIs"| NONRT
+    MAC -.->|"rule-based floor"| MAC
+```
+
 | Dimension | 5G-Advanced "AI for NR" | 6G "AI-native" |
 | --- | --- | --- |
 | Placement | Function-specific, often OAM-side or xApp-side | Capability fixed inside the architecture (SA2) |
@@ -103,9 +132,21 @@ Open design questions worth being able to discuss:
 
 ## 5. Network energy saving — from static shutdown to AI policy
 
-- Classic techniques: symbol shutdown, channel shutdown, carrier shutdown, cell DTX/DRX, SSB-less operation.
+- Classic techniques: symbol shutdown, channel shutdown, carrier shutdown, cell DTX/DRX, SSB-less operation. Depth order: symbol < channel < carrier < cell, i.e. each step saves more energy and costs more in coverage and latency.
 - 5G-A/6G direction: **per-site policy generation ("one site, one policy")** driven by traffic prediction and multi-objective optimisation, switching energy modes between low and high load.
-- The trade is always KPI degradation versus energy saved, and the evaluation methodology matters more than the algorithm.
+
+```mermaid
+flowchart LR
+    T["Traffic prediction<br/>per cell, per hour"]
+    P["Policy generation<br/>one site, one policy"]
+    M["Energy mode<br/>symbol / channel / carrier / cell off"]
+    K["KPI guardrail<br/>drop · latency · accessibility"]
+    T --> P --> M --> K
+    K -->|"violation → revert one depth level"| P
+```
+
+- The trade is always KPI degradation versus energy saved, and the evaluation methodology matters more than the algorithm: state the baseline (always-on), the traffic profile, the guardrail thresholds and the observation window, or the percentage is meaningless.
+- Two things a candidate should volunteer: sleeping cells still need a discovery/fallback path (neighbour-cell coverage assumption, SSB-less operation with on-demand SSB), and the energy saving is measured at the **site** meter — it includes the cost of waking up, not just the sleep depth.
 
 ## 6. Mobility — L1/L2-centric fast switching
 
@@ -126,4 +167,8 @@ Open design questions worth being able to discuss:
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
-- [[12-1 RISC-V for Communication Infrastructure]]
+- [[07-1 RISC-V for Communication Infrastructure]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

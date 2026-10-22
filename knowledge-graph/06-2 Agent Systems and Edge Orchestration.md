@@ -14,6 +14,7 @@ aliases:
   - multi-device agent mesh
   - task routing
   - agentic ai
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -32,6 +33,28 @@ Two ways out: send it to the cloud (privacy, availability, cost), or **orchestra
 - Authors: Chinmay Shringi, Alon Hillel-Tuch, Sariya Rizwan.
 
 > **Naming caution:** the acronym GRAFT is also used by an unrelated reinforcement-learning paper ("Gated Replacement of Answer-Failed groups with peer Trajectories"). Always write the full name when you cite it.
+
+```mermaid
+sequenceDiagram
+    participant CO as Coordinator
+    participant D1 as Device 1 — laptop, GPU/NPU
+    participant D2 as Device 2 — phone, NPU
+    participant D3 as Device 3 — embedded, CPU
+    D1->>CO: register + capability model
+    D2->>CO: register + capability model
+    D3->>CO: register + capability model
+    CO->>CO: partition document into staged plan
+    par stage k, dispatched by capability
+        CO->>D1: gRPC task + input budget
+        CO->>D2: gRPC task + input budget
+        CO->>D3: gRPC task + input budget
+    end
+    D1-->>CO: partial result + telemetry
+    D2-->>CO: partial result + telemetry
+    D3-->>CO: partial result + telemetry
+    Note over CO: synchronisation barrier —<br/>stage completes at the slowest worker
+    CO->>CO: merge partials, next stage
+```
 
 ### 2.1 What it provides
 - A **sessioned gRPC control plane** with device registration and a capability model.
@@ -68,6 +91,28 @@ This is the highest-value cross-domain argument available to a communications en
 
 **Where the analogy holds:** both allocate a scarce shared resource under a deadline, both rely on periodic measurement of consumer state, both need a fallback when the measured state is stale, and in both the completion time of a parallel stage is set by the slowest participant.
 
+```mermaid
+flowchart LR
+    subgraph ran["RAN L2 scheduler"]
+        A1["UE capability report"]
+        A2["CQI / BSR every slot"]
+        A3["grant · PRB allocation"]
+        A4["HARQ RTT deadline"]
+        A1 --> A2 --> A3 --> A4
+    end
+    subgraph agent["Agent task router"]
+        B1["device registration + capability"]
+        B2["per-request telemetry"]
+        B3["task partition + dispatch"]
+        B4["sync barrier"]
+        B1 --> B2 --> B3 --> B4
+    end
+    A1 <--> B1
+    A2 <--> B2
+    A3 <--> B3
+    A4 <--> B4
+```
+
 **Where it breaks — and saying this is what makes the answer senior:**
 - **Timescale differs by orders of magnitude.** A MAC scheduler decides in 0.125–1 ms; an agent router decides in seconds to minutes. Techniques that require tight feedback (per-slot closed-loop control) have no analogue in agent orchestration.
 - **Unit of work differs.** PRBs are fungible and pre-emptible; a model inference is a long, non-pre-emptible transaction with a large startup cost. Migration and pre-emption are cheap in RAN, expensive in agent land.
@@ -82,14 +127,14 @@ This is the highest-value cross-domain argument available to a communications en
 
 ## 4. Agentic AI as a compute-architecture driver
 
-From the Huawei Connect 2026 framing (see [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]):
+From the Huawei Connect 2026 framing (see [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]):
 - Agents interact with models hundreds of times per hour, requiring **flexible CPU:NPU ratio configuration**.
 - The resulting **KV Cache far exceeds memory capacity**, forcing cross-system and cross-tier storage — hence the push to PB-scale KV cache clusters with one-hop direct connection.
 - This is why "network-defined compute" and memory pooling moved from research topics to shipping architecture.
 
 ## 5. On-device and edge agent deployment constraints
 
-- **Memory**: weights + KV + OS + runtime must coexist in a unified-memory budget. See [[10-1 LLM Inference Engines and xLLM]] for block-size and prefix-caching trade-offs.
+- **Memory**: weights + KV + OS + runtime must coexist in a unified-memory budget. See [[06-1 LLM Inference Engines and xLLM]] for block-size and prefix-caching trade-offs.
 - **Thermal and power**: sustained decode on an NPU throttles; orchestration must account for a device whose capability changes over minutes.
 - **Privacy boundary**: which sub-tasks may leave the device. This is a routing policy input, not an afterthought.
 - **Offline operation**: no cloud fallback means the failure path must be local degradation, not an error.
@@ -118,7 +163,11 @@ Design considerations:
 
 ## Related
 
-- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
-- [[10-1 LLM Inference Engines and xLLM]]
+- [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
+- [[06-1 LLM Inference Engines and xLLM]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

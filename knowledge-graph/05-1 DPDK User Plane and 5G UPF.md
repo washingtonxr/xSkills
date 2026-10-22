@@ -15,6 +15,7 @@ aliases:
   - User Plane Function
   - PFCP
   - small packet forwarding
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -23,6 +24,27 @@ last-updated: 2026-10-22
 ## 1. Why user-plane bypass exists
 
 The kernel network stack costs: per-packet **interrupt handling**, **context switches** into kernel space, **sk_buff allocation**, **locks** on shared queues, and **copying** between kernel and user buffers. At 10 GbE line rate with 64-byte frames that is **~14.88 Mpps**, i.e. ~67 ns per packet — less than a couple of cache-miss latencies. Nothing that allocates or locks per packet survives that budget.
+
+Where the kernel path spends its budget, and what DPDK removes:
+
+```mermaid
+flowchart LR
+    subgraph kernel["Kernel network path — per packet"]
+        K1["IRQ + context switch"]
+        K2["sk_buff allocation"]
+        K3["copy to userspace"]
+        K4["locks on shared queues"]
+        K1 --> K2 --> K3 --> K4
+    end
+    subgraph dpdk["DPDK fast path — per packet"]
+        D1["PMD poll, no IRQ"]
+        D2["mbuf from per-core mempool cache"]
+        D3["zero-copy pointer handoff"]
+        D4["lock-free rte_ring between cores"]
+        D1 --> D2 --> D3 --> D4
+    end
+    kernel -->|"~67 ns budget at 14.88 Mpps<br/>cannot be met"| dpdk
+```
 
 DPDK's answer:
 - **Poll Mode Drivers (PMD)** — no interrupts; a core spins on the RX queue.
@@ -46,6 +68,20 @@ DPDK's answer:
 **NUMA is the first-order effect.** A NIC on socket 1 with processing cores on socket 0 pays a cross-socket penalty on every packet. Getting mempool allocation and lcore pinning NUMA-local is usually worth more than any algorithmic optimisation.
 
 ## 3. 5G UPF fundamentals
+
+```mermaid
+flowchart LR
+    RAN["RAN / gNB"]
+    UPF["UPF"]
+    SMF["SMF<br/>control plane"]
+    DN["Data network / internet"]
+    IUPF["I-UPF"]
+    RAN <-->|"N3 · GTP-U"| UPF
+    SMF <-->|"N4 · PFCP<br/>PDR / FAR / QER / URR / BAR"| UPF
+    UPF <-->|"N6 · plain IP"| DN
+    UPF <-->|"N9 · GTP-U"| IUPF
+    IUPF <-->|"N3 · GTP-U"| RAN
+```
 
 ### 3.1 Interfaces
 - **N3** — access side, GTP-U tunnel from RAN
@@ -80,6 +116,19 @@ DPDK's answer:
 - Accelerated user-plane datapaths are typically built on **DPDK**, **VPP/FD.io**, **AF_XDP**, or **io_uring**, with the PFCP control plane remaining in the core implementation.
 - Typical accelerated UPF pipeline:
   `NIC RX (PMD) → RSS/flow classification → GTP-U decap → PDR match (hash/radix) → FAR action (QER policing) → N6 encap/route → NIC TX`
+
+```mermaid
+flowchart LR
+    RX["NIC RX · PMD<br/>pinned lcore, RSS by TEID/UE IP"]
+    DEC["GTP-U decap<br/>strip + parse PDU Session Container"]
+    PDR["PDR match<br/>software hash / radix<br/>or rte_flow offload"]
+    FAR["FAR action<br/>forward · drop · buffer · duplicate"]
+    QER["QER policing<br/>gate · MBR · GBR · packet rate"]
+    ENC["N6 encap / route<br/>NAT · marking"]
+    TX["NIC TX · same core"]
+    RX --> DEC --> PDR --> FAR --> QER --> ENC --> TX
+    PDR -.->|"rule update is slow:<br/>hardware offload vs<br/>frequent PFCP modification"| PDR
+```
 - Design decision: where does the **PDR lookup** live — software hash in the fast path, or `rte_flow` hardware offload? Hardware offload is faster but has a limited rule count and slow rule update, which conflicts with frequent PFCP session modification.
 
 ## 5. Edge forwarding: the metrics that actually matter
@@ -114,9 +163,13 @@ Data path sketch:
 
 ## Related
 
-- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
+- [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
-- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
-- [[12-1 RISC-V for Communication Infrastructure]]
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
-- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — VFIO, hugepages, IRQ affinity, core isolation underneath the PMD
+- [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
+- [[07-1 RISC-V for Communication Infrastructure]]
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — VFIO, hugepages, IRQ affinity, core isolation underneath the PMD
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -17,6 +17,7 @@ aliases:
   - STL
   - C++26
   - C23
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -24,7 +25,7 @@ last-updated: 2026-10-22
 
 The language layer. Every note in this vault eventually compiles down to this one: protocol stacks are C, dataplanes are C with C++ control planes, inference engines are C++ with C kernels, drivers are C, and the boundary between them is where most real bugs live.
 
-Companion to [[13-1 Programming Languages Toolchain and Performance Engineering]] (build systems, profiling, kernel bypass) and [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] (the OS-facing side).
+Companion to [[08-1 Programming Languages Toolchain and Performance Engineering]] (build systems, profiling, kernel bypass) and [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] (the OS-facing side).
 
 ---
 
@@ -45,6 +46,28 @@ The rule of thumb that survives review: **C for interfaces and data layout, C++ 
 ---
 
 ## 2. The standards timeline
+
+```mermaid
+flowchart LR
+    subgraph c["C — ISO/IEC 9899"]
+        C99["C99 · 9899:1999<br/>stdint · restrict · designated init"]
+        C11["C11 · 9899:2011<br/>stdatomic · _Generic · _Alignas"]
+        C17["C17 · 9899:2018<br/>bug-fix only"]
+        C23["C23 · 9899:2024<br/>typeof · constexpr · nullptr<br/>_BitInt · #embed · stdbit.h"]
+        C2Y["C2Y · in progress"]
+        C99 --> C11 --> C17 --> C23 --> C2Y
+    end
+    subgraph cpp["C++ — ISO/IEC 14882"]
+        X11["C++11<br/>move · lambdas · constexpr · atomic"]
+        X17["C++17<br/>optional · variant · string_view"]
+        X20["C++20<br/>concepts · ranges · coroutines · modules"]
+        X23["C++23<br/>expected · mdspan · flat_map · print"]
+        X26["C++26 · shipped 2026-03-28<br/>reflection · contracts · execution · simd"]
+        X11 --> X17 --> X20 --> X23 --> X26
+    end
+```
+
+Two facts that are worth more than the feature lists: **C23 is ISO/IEC 9899:2024** (the nickname comes from the `202311L` feature macro), and **C++26 was shipped by WG21 on 28 March 2026** (draft N5046), so it is a real, quotable release — not a plan.
 
 ### 2.1 C (ISO/IEC 9899, WG14)
 
@@ -207,7 +230,7 @@ Deterministic on every compiler and every endianness.
 - `malloc`/`calloc`/`realloc`/`free`, plus `aligned_alloc` (C11, size must be a multiple of alignment), `posix_memalign`, and `memalign`.
 - `alloca` and VLAs: avoid in production — unbounded stack growth, and an 8 KB kernel stack or a 4 KB RTOS task stack will not forgive you.
 - **Ownership convention must be documented per API**: caller frees / callee frees / pool returns. Most C bugs are a disagreement about this, not a `malloc` bug.
-- **Pool/mempool first**: fixed-size slab allocation eliminates fragmentation and makes worst-case latency bounded. See [[08-1 DPDK User Plane and 5G UPF]] (`rte_mempool`).
+- **Pool/mempool first**: fixed-size slab allocation eliminates fragmentation and makes worst-case latency bounded. See [[05-1 DPDK User Plane and 5G UPF]] (`rte_mempool`).
 
 ### 3.8 Bit manipulation — C11 vs C23
 
@@ -247,6 +270,17 @@ int f(int, const char *);      /* unnamed parameters in a definition are legal *
 ## 4. C++ — complete feature map
 
 ### 4.1 Value categories and the object model
+
+```mermaid
+flowchart TD
+    EXPR["every expression"]
+    EXPR --> GL["glvalue<br/>has identity"]
+    EXPR --> RV["rvalue<br/>can be moved from"]
+    GL --> LV["lvalue<br/>named variable · *p · a[i] · T& return"]
+    GL --> XV["xvalue<br/>std::move(x) · T&& return"]
+    RV --> XV
+    RV --> PR["prvalue<br/>literal · x + y · T return"]
+```
 
 | Category | Examples | Can bind to |
 | --- | --- | --- |
@@ -437,6 +471,22 @@ void push_node(std::vector<T>& v, T&& node) {
 
 ### 4.11 The memory model and concurrency
 
+Choosing an order is a question about *which* guarantee you actually need:
+
+```mermaid
+flowchart TD
+    Q1{"Is a single total order across<br/>all threads required?"}
+    Q1 -->|"yes, or unsure"| SC["seq_cst<br/>default · costs mfence/xchg on x86"]
+    Q1 -->|"no"| Q2{"Is this a read-modify-write<br/>that must both consume<br/>and publish?"}
+    Q2 -->|"yes"| AR["acq_rel"]
+    Q2 -->|"no"| Q3{"Publishing data<br/>to another thread?"}
+    Q3 -->|"yes · write then release"| REL["release"]
+    Q3 -->|"no · reading peer's index"| ACQ["acquire"]
+    Q3 -->|"neither · just a counter"| RLX["relaxed<br/>atomicity only, no ordering"]
+```
+
+The pairing that must be stated out loud: **release on the producer's store pairs with acquire on the consumer's load** — that pair is what makes the non-atomic payload writes visible. `relaxed` alone never publishes data.
+
 **Six memory orders** — this is the part interviewers actually push on:
 
 | Order | Guarantee | Cost on x86 | Use |
@@ -593,7 +643,7 @@ for (std::size_t i = 0; i < n; i += floatv::size()) {
     std::simd::unchecked_store(x * y + 1.0f, out.begin() + i, floatv::size());
 }
 ```
-One source for AVX-512, NEON, SVE and RVV instead of per-ISA intrinsics — directly relevant to [[12-1 RISC-V for Communication Infrastructure]].
+One source for AVX-512, NEON, SVE and RVV instead of per-ISA intrinsics — directly relevant to [[07-1 RISC-V for Communication Infrastructure]].
 
 **Other C++26 highlights**: `std::inplace_vector` (`<inplace_vector>`, P0843 — fixed capacity, no heap, the embedded `vector`), `std::hive` (`<hive>`, P0447 — bucket container reusing erased slots, from `plf::colony`, ideal for entity/connection pools), `std::linalg` (`<linalg>`, P1673 — BLAS-level ops over `mdspan`), `#embed` (P1967), expansion statements `template for` (P1306), hazard pointers (P2530) and RCU (P2545), **standard library hardening** (P3471 — bounds checks turning UB into contract violations), **erroneous behaviour** for uninitialised reads (P2795) with `[[indeterminate]]` as an explicit opt-out, `std::submdspan`, `std::views::concat`, saturating arithmetic (`std::saturating_add` etc.), `std::copyable_function`, `std::is_within_lifetime`, `= delete("reason")`, placeholder `_`, adding `@ $ \`` to the basic character set, and deprecation of `memory_order::consume`.
 
@@ -628,6 +678,18 @@ The design insight worth stating in an interview: **algorithms are decoupled fro
 
 ### 5.2 Sequence containers
 
+```mermaid
+flowchart TD
+    Q1{"Size known at compile time?"}
+    Q1 -->|"yes"| ARR["std::array<br/>or inplace_vector (C++26)<br/>no heap"]
+    Q1 -->|"no"| Q2{"Insert/erase churn<br/>with stable references?"}
+    Q2 -->|"heavy churn, large N"| HIVE["std::hive (C++26)"]
+    Q2 -->|"stable iterators only"| LIST["std::list — rare"]
+    Q2 -->|"no"| Q3{"Push/pop at both ends?"}
+    Q3 -->|"yes"| DEQ["std::deque"]
+    Q3 -->|"no"| VEC["std::vector<br/>default: cache locality wins"]
+```
+
 | Container | Layout | Push/pop | Random access | Use when |
 | --- | --- | --- | --- | --- |
 | `std::array<T,N>` | contiguous, stack | — | O(1) | Fixed size known at compile time; no allocation |
@@ -641,6 +703,17 @@ The design insight worth stating in an interview: **algorithms are decoupled fro
 `vector` specifics worth knowing: `reserve()` to avoid reallocation; growth factor is implementation-defined (libstdc++ and libc++ use 2, MSVC ~1.5); `shrink_to_fit()` is non-binding; `emplace_back` constructs in place and avoids a temporary; iterators/references invalidate on reallocation.
 
 ### 5.3 Associative containers
+
+```mermaid
+flowchart TD
+    Q1{"Pure point lookup,<br/>order irrelevant,<br/>large N?"}
+    Q1 -->|"yes"| UM["std::unordered_map<br/>O(1) avg · reserve() up front"]
+    Q1 -->|"no"| Q2{"Ordered iteration<br/>or range queries?"}
+    Q2 -->|"no"| UM
+    Q2 -->|"yes"| Q3{"Read-mostly, or<br/>small and hot?"}
+    Q3 -->|"yes"| FM["std::flat_map (C++23)<br/>sorted vectors · cache-friendly<br/>insert is O(n)"]
+    Q3 -->|"no · frequent insert/erase"| MAP["std::map<br/>node-based · stable iterators"]
+```
 
 | Container | Structure | Lookup | Ordered | Notes |
 | --- | --- | --- | --- | --- |
@@ -851,7 +924,7 @@ auto H = std::mdspan(h.data(), nr, nt);            // row-major by default
 std::mdspan Hs(h.data(), nr, nt, std::layout_stride::mapping{nr*nt, {1, nr}});  // transposed view, no copy
 /* C++26: std::linalg::matrix_vector_product(H, x, y); */
 ```
-One buffer, multiple views, no transposition copy. Directly applicable to channel estimation and to any tensor view in [[10-1 LLM Inference Engines and xLLM]].
+One buffer, multiple views, no transposition copy. Directly applicable to channel estimation and to any tensor view in [[06-1 LLM Inference Engines and xLLM]].
 
 ### 6.6 PMR arena per connection
 
@@ -927,11 +1000,15 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 
 ## Related
 
-- [[13-1 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
-- [[08-1 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
-- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`
-- [[10-1 LLM Inference Engines and xLLM]] — C++17/20 and pure-C++ inference engines, KV cache, SIMD kernels
-- [[12-1 RISC-V for Communication Infrastructure]] — RVV, `std::simd` portability, custom extensions
+- [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
+- [[05-1 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
+- [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`
+- [[06-1 LLM Inference Engines and xLLM]] — C++17/20 and pure-C++ inference engines, KV cache, SIMD kernels
+- [[07-1 RISC-V for Communication Infrastructure]] — RVV, `std::simd` portability, custom extensions
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the C implementation target for most of this
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

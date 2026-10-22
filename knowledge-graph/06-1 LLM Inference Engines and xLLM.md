@@ -15,6 +15,7 @@ aliases:
   - KV cache
   - prefill and decode
   - continuous batching
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -28,6 +29,26 @@ last-updated: 2026-10-22
 | Regime | **Compute-bound** | **Memory-bound** (weights + KV cache must be re-read every step) |
 | Bottleneck | Arithmetic throughput | Memory bandwidth |
 | Optimisation that pays | Good GEMM tiling, chunking | Batching, KV cache layout, quantisation, operator fusion |
+
+```mermaid
+flowchart LR
+    subgraph prefill["Prefill"]
+        P1["all prompt tokens at once<br/>matrix × matrix"]
+        P2["compute-bound<br/>bottleneck: arithmetic throughput"]
+        P3["pays off: GEMM tiling, chunking"]
+        P1 --> P2 --> P3
+    end
+    subgraph decode["Decode"]
+        D1["one token per step<br/>matrix × vector"]
+        D2["memory-bound<br/>bottleneck: weight + KV bandwidth"]
+        D3["pays off: batching, KV layout,<br/>quantisation, fusion"]
+        D1 --> D2 --> D3
+    end
+    prefill -->|"KV cache written"| decode
+    decode -.->|"chunked prefill prevents<br/>one long prompt starving<br/>the decode batch"| prefill
+```
+
+Every optimisation in an inference engine is an answer to one of the two columns above. The single most common mistake is applying a decode-phase trick (fusion, quantisation) to a prefill-phase bottleneck and expecting a win.
 
 - **Chunked prefill** splits a long prompt so decode requests sharing the batch are not starved — this is why it matters for tail latency.
 - **Disaggregated prefill/decode** (prefill instances and decode instances separated) lets each phase be scheduled and scaled independently.
@@ -49,6 +70,25 @@ Multiply by layers and by context length to get per-sequence KV size; multiply b
 ### 2.3 Layout strategies
 - **Contiguous KV cache** — one buffer per sequence, sized to max context. Simple and fast, but wastes memory when sequences are short and cannot grow.
 - **PagedAttention** — KV stored in fixed-size blocks allocated on demand from a block pool; near-zero fragmentation and enables sharing.
+
+```mermaid
+flowchart TD
+    subgraph contiguous["Contiguous KV cache"]
+        C1["seq A: reserved max context"]
+        C2["seq B: reserved max context"]
+        C3["wasted tail in each"]
+    end
+    subgraph paged["PagedAttention"]
+        BT["block table per sequence<br/>logical block → physical block"]
+        P1["block pool: fixed-size blocks<br/>allocated on demand"]
+        P2["shared prefix blocks referenced<br/>by multiple sequences"]
+        BT --> P1
+        BT --> P2
+    end
+    contiguous -->|"same pool, higher<br/>usable concurrency"| paged
+```
+
+PagedAttention is the same idea as virtual memory for exactly the same reason: the allocator cannot know a sequence's final length in advance, so you pay for pages, not for the worst case.
 - **Prefix caching / radix caching** — blocks for a shared prefix (system prompt, few-shot examples, document) are reused across requests by reference.
 - **Multi-tier KV cache** — device → host → storage, with offload and prefetch. Necessary when KV exceeds accelerator memory, which is the norm for long-context agent workloads.
 
@@ -95,6 +135,36 @@ On an end device there is no large HBM pool, no overcommit, and often unified me
 - **Service layer** — request handling, scheduling, availability: `APIService` (HTTP/BRPC), schedulers, `AsyncResponseProcessor`, `XServiceClient` (distributed service discovery via Etcd).
 - **Engine layer** — orchestration and resources: `Master`, `Engine`, `KVCacheManager`, `Executor` (graph-mode execution).
 - **Runtime layer** — per-device workers (`LLMWorkerImpl`, `VLMWorkerImpl`, `DiTWorker`), registered models, layers (attention, MLP, MoE), and a unified **kernel API (`ops_api.h`)**.
+
+```mermaid
+flowchart TD
+    subgraph service["Service layer"]
+        S1["APIService · HTTP/BRPC"]
+        S2["schedulers"]
+        S3["AsyncResponseProcessor"]
+        S4["XServiceClient · Etcd discovery"]
+    end
+    subgraph engine["Engine layer"]
+        E1["Master"]
+        E2["Engine"]
+        E3["KVCacheManager"]
+        E4["Executor · graph mode"]
+    end
+    subgraph runtime["Runtime layer"]
+        R1["LLMWorkerImpl · VLMWorkerImpl · DiTWorker"]
+        R2["layers: attention · MLP · MoE"]
+        R3["ops_api.h · unified kernel API"]
+    end
+    subgraph backends["Backends — compile-time dispatch"]
+        B1["Ascend NPU"]
+        B2["CUDA"]
+        B3["MLU · MUSA · DCU · MACA · CoreX"]
+    end
+    service --> engine --> runtime --> backends
+    E3 -.->|"multi-tier: device / host / storage"| E3
+```
+
+The decoupling that matters is service ↔ engine: it is what lets prefill and decode be disaggregated into separate instance pools without rewriting the serving path.
 - Why decoupling matters: request handling and compute scale independently, and disaggregated prefill/decode topologies become a deployment choice rather than a rewrite.
 
 ### 6.3 Multi-backend abstraction
@@ -148,7 +218,11 @@ Collaborating labs: THU-MIG (BNRist, Tsinghua), USTC Cloudlab, Beihang HiPO, PKU
 
 ## Related
 
-- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — C++17/20 engine code, dtype dispatch via templates, `std::simd` kernels, `mdspan` tensors
-- [[08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
-- [[10-2 Agent Systems and Edge Orchestration]]
-- [[12-1 RISC-V for Communication Infrastructure]]
+- [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — C++17/20 engine code, dtype dispatch via templates, `std::simd` kernels, `mdspan` tensors
+- [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
+- [[06-2 Agent Systems and Edge Orchestration]]
+- [[07-1 RISC-V for Communication Infrastructure]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

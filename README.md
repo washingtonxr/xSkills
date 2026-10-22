@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.3
+version: 1.4
 sibling: README.cn.md
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -37,6 +37,14 @@ Four cross-cutting threads run through the whole vault:
 
 ## 2. Quick Start: Recommended Reading Path
 
+```mermaid
+flowchart LR
+    MOC["00 MOC<br/>build the map"] --> ROLE["pick 3–5 notes<br/>by target role"]
+    ROLE --> SRC["readlist.md<br/>pull primary sources"]
+    SRC --> MOCK["skills-draft.md<br/>groups A/B/C/D mock interview"]
+    MOCK --> SPRINT["48-hour sprint<br/>Anchors only"]
+```
+
 | Stage | What to do | Output |
 | --- | --- | --- |
 | 1. Build the map | Read `knowledge-graph/00 MOC ...` end to end | A unified mental model and a domain map |
@@ -49,12 +57,12 @@ Four cross-cutting threads run through the whole vault:
 
 | Target role | Priority notes |
 | --- | --- |
-| RAN system architect | 01-1 → 01-2 → 01-3 → 08-1 → 12-1 |
-| Edge AI / cloud-edge-end architect | 08-2 → 10-1 → 10-2 → 13-1 → 07-2 |
-| Embedded / Linux platform | 07-3 → 07-1 → 07-2 → 12-1 → 08-1 → 13-1 |
-| WLAN / gateway | 04-1 → 04-2 → 04-3 → 06-1 → 07-3 |
-| Low-power / IoT devices | 04-2 → 06-1 → 01-4 → 07-1 |
-| Software / language foundation (any role) | 13-2 → 13-1 |
+| RAN system architect | 01-1 → 01-2 → 01-3 → 05-1 → 07-1 |
+| Edge AI / cloud-edge-end architect | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
+| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
+| WLAN / gateway | 02-1 → 02-2 → 02-3 → 03-1 → 04-3 |
+| Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 04-1 |
+| Software / language foundation (any role) | 08-2 → 08-1 |
 
 ---
 
@@ -75,20 +83,20 @@ Four cross-cutting threads run through the whole vault:
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
 │   ├── 01-3 AI-ML for RAN and O-RAN RIC.md
 │   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
-│   ├── 04-1 WLAN - Wi-Fi Generations Evolution.md
-│   ├── 04-2 WLAN - Power Saving Mechanisms and Evolution.md
-│   ├── 04-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
-│   ├── 06-1 Wireless Sensor Networks and Low-Power MAC.md
-│   ├── 07-1 Embedded Systems RTOS and Hardware Interfaces.md
-│   ├── 07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
-│   ├── 07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
-│   ├── 08-1 DPDK User Plane and 5G UPF.md
-│   ├── 08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
-│   ├── 10-1 LLM Inference Engines and xLLM.md
-│   ├── 10-2 Agent Systems and Edge Orchestration.md
-│   ├── 12-1 RISC-V for Communication Infrastructure.md
-│   ├── 13-1 Programming Languages Toolchain and Performance Engineering.md
-│   └── 13-2 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
+│   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
+│   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
+│   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
+│   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
+│   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
+│   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
+│   ├── 05-1 DPDK User Plane and 5G UPF.md
+│   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
+│   ├── 06-1 LLM Inference Engines and xLLM.md
+│   ├── 06-2 Agent Systems and Edge Orchestration.md
+│   ├── 07-1 RISC-V for Communication Infrastructure.md
+│   ├── 08-1 Programming Languages Toolchain and Performance Engineering.md
+│   └── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
 └── .workbuddy/                     Project working data (do not delete)
 ```
 
@@ -106,7 +114,7 @@ Four cross-cutting threads run through the whole vault:
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 21 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 04-1 WLAN generations, 04-2 WLAN power saving, 04-3 WLAN ecosystem, 06-1 WSN, 07-1 embedded RTOS, 07-2 Linux embedded, 07-3 embedded software architecture, 08-1 DPDK/UPF, 08-2 cloud-edge-end, 10-1 LLM inference and xLLM, 10-2 agent systems, 12-1 RISC-V, 13-1 languages and performance, 13-2 C and C++ — plus 19 primary standards repositories, 20 a reading order, and 21 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 21 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++ — plus 19 primary standards repositories, 20 a reading order, and 21 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -117,20 +125,20 @@ Four cross-cutting threads run through the whole vault:
 | **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP, HARQ, BSR, grant lifecycle, QoS mapping |
 | **01-3** | AI/ML for RAN and O-RAN | near-RT/non-RT RIC, xApp/rApp, DRL scheduling, sim-to-real |
 | **01-4** | Cellular IoT | RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS |
-| **04-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
-| **04-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
-| **04-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
-| **06-1** | WSN and low-power MAC | Clustering routing, UAV-assisted collection, TSCH, AoI |
-| **07-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
-| **07-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
-| **07-3** | Embedded software architecture | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
-| **08-1** | DPDK and 5G UPF | mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps |
-| **08-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
-| **10-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
-| **10-2** | Agent systems and edge orchestration | GRAFT, multi-device SLM mesh, safety-bounded execution |
-| **12-1** | RISC-V for communications infrastructure | Baseband clusters, software-defined PHY, H extension, L1/L2 interface |
-| **13-1** | Languages, toolchain and performance engineering | Build systems, Python, kernel-bypass selection, performance methodology |
-| **13-2** | C and C++ programming and STL | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
+| **02-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
+| **02-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
+| **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
+| **03-1** | WSN and low-power MAC | Clustering routing, UAV-assisted collection, TSCH, AoI |
+| **04-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
+| **04-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
+| **04-3** | Embedded software architecture | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
+| **05-1** | DPDK and 5G UPF | mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps |
+| **05-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
+| **06-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
+| **06-2** | Agent systems and edge orchestration | GRAFT, multi-device SLM mesh, safety-bounded execution |
+| **07-1** | RISC-V for communications infrastructure | Baseband clusters, software-defined PHY, H extension, L1/L2 interface |
+| **08-1** | Languages, toolchain and performance engineering | Build systems, Python, kernel-bypass selection, performance methodology |
+| **08-2** | C and C++ programming and STL | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
 
 ---
 
@@ -138,9 +146,9 @@ Four cross-cutting threads run through the whole vault:
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
 2. **Entry point**: `00 MOC` is the only navigation page. The other 18 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
-3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and `01-x` cellular, `04-x` WLAN, `06-x` low-power networking, `07-x` embedded systems software, `08-x` data plane and heterogeneous compute, `10-x` AI, `12-x` silicon, `13-x` programming. Group numbers are inherited from each group's original note, so they are not contiguous. The file name *is* the topic, so notes sort by number and are searchable by name.
+3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice. Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 69 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -176,18 +184,18 @@ Four cross-cutting threads run through the whole vault:
 | C/C++ standard status | mentions only "C/C++" | **C23 = ISO/IEC 9899:2024** (published 2024-10-31, `__STDC_VERSION__` = 202311L); **C++26 shipped by WG21 on 2026-03-28** (working draft N5046), to be published as ISO/IEC 14882:2026 |
 | AUTOSAR / MISRA versions | not covered | **AUTOSAR R25-11** is current (Release Event 2025-12-04); **MISRA C:2025** is the current C edition and supersedes MISRA C:2023; **MISRA C++:2023** (TC1:2026) targets C++17 — so a MISRA-conformant C++ project is not on C++20/23/26 |
 | TWT origin | often attributed to 802.11ax | It originated in **802.11ah-2016** (Wi-Fi HaLow) and was carried into 802.11ax. 802.11be then added **r-TWT**, which is a latency mechanism first and a power mechanism second |
-| 802.11bi | sometimes described as a wake-up-radio amendment | It is **Enhanced Privacy Protection**, approved for publication **2026-09-25** — see note 04-2. The wake-up radio amendment is **802.11ba-2021** |
+| 802.11bi | sometimes described as a wake-up-radio amendment | It is **Enhanced Privacy Protection**, approved for publication **2026-09-25** — see note 02-2. The wake-up radio amendment is **802.11ba-2021** |
 | r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
 
 **Update triggers**
 
 - 3GPP TSG plenary meetings (4 per year) → update 01-1/01-2/01-4
-- IEEE 802.11 WG sessions and WFA certification announcements → update 04-1/04-2/04-3
-- TGbn and TGbp ballot milestones, WFA power-management certifications → update 04-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
-- Linux mainline and LTS releases → update 13-1/07-2
-- xLLM / agent framework releases and papers → update 10-1/10-2
-- WG21 / WG14 meetings and GCC / Clang major releases → update 13-2
-- AUTOSAR releases (annual, each November), MISRA document revisions, Zephyr six-month releases and LTS branches → update 07-3
+- IEEE 802.11 WG sessions and WFA certification announcements → update 02-1/02-2/02-3
+- TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
+- Linux mainline and LTS releases → update 08-1/04-2
+- xLLM / agent framework releases and papers → update 06-1/06-2
+- WG21 / WG14 meetings and GCC / Clang major releases → update 08-2
+- AUTOSAR releases (annual, each November), MISRA document revisions, Zephyr six-month releases and LTS branches → update 04-3
 
 ---
 

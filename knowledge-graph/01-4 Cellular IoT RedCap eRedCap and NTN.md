@@ -15,6 +15,7 @@ aliases:
   - eRedCap
   - NR-Light
   - Non-Terrestrial Networks
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -32,6 +33,19 @@ last-updated: 2026-10-22
 | Full NR | Rel-15+ | 1 Gbps+ | up to 100 MHz FR1 / 400 MHz FR2 | 2–4 Rx | Smartphones, FWA |
 
 Design intent: give the IoT market a **continuous range of 5G device tiers** — full NR → RedCap → eRedCap → NB-IoT — all natively on 5G NR rather than dropping back to a separate LPWA radio.
+
+```mermaid
+flowchart LR
+    NR["Full NR<br/>~1 Gbps+ · 100 MHz<br/>smartphone / FWA"]
+    RC["RedCap · Rel-17<br/>~150 Mbps · 20 MHz · 2 Rx<br/>wearable · CPE"]
+    ERC["eRedCap · Rel-18<br/>~10 Mbps · 5 MHz baseband · 1 Rx HD-FDD<br/>Cat-1bis replacement"]
+    NB["NB-IoT / LTE-M<br/>~250 kbps – 1 Mbps · 180 kHz – 1.4 MHz<br/>LPWAN"]
+    AMB["Ambient IoT · Rel-19<br/>~1 µW peak · backscatter<br/>separate paradigm"]
+    NR -->|"fewer antennas,<br/>narrower BW"| RC -->|"1 Rx, HD-FDD,<br/>TBS limits"| ERC --> NB
+    NB -.->|"different radio paradigm,<br/>not a lower NR tier"| AMB
+```
+
+The dashed edge is the one to defend in an interview: the power axis continues down to Ambient IoT, but the *protocol* does not — Ambient IoT removes scrambling, interleaving, MIMO and L1 HARQ and does not descend from RedCap.
 
 ## 2. eRedCap in detail (Rel-18)
 
@@ -60,12 +74,38 @@ Design intent: give the IoT market a **continuous range of 5G device tiers** —
 
 ## 4. NTN — Non-Terrestrial Networks
 
+Two payload architectures, and they move the protocol boundary:
+
+```mermaid
+flowchart LR
+    subgraph transparent["Transparent payload — 'bent pipe'"]
+        UE1["UE"]
+        SAT1["Satellite<br/>RF filter + frequency conversion + amplification only"]
+        GW1["NTN Gateway<br/>gNB on the ground"]
+        CN1["5GC"]
+        UE1 <-->|"NR-Uu over service link"| SAT1
+        SAT1 <-->|"feeder link"| GW1 --> CN1
+    end
+    subgraph regenerative["Regenerative payload"]
+        UE2["UE"]
+        SAT2["Satellite<br/>full or partial gNB on board"]
+        GW2["NTN Gateway"]
+        CN2["5GC"]
+        UE2 <-->|"NR-Uu"| SAT2
+        SAT2 <-->|"feeder link / ISL"| GW2 --> CN2
+    end
+```
+
+Regenerative payloads move part of the gNB — potentially the whole DU — onto the satellite, which shortens the HARQ loop, enables inter-satellite links, and is a Rel-20 study topic. Transparent payloads keep the entire gNB on the ground, so the radio RTT includes the full feeder-link round trip.
+
 ### 4.1 What changes versus terrestrial NR
 - **Propagation delay**: GEO round-trip is on the order of hundreds of ms; LEO is far lower but still far above terrestrial. Feeder link delay adds on top for transparent payloads.
 - **Timing advance and uplink synchronisation**: the TA range and update rate must cover satellite motion; LEO introduces significant Doppler that must be pre-compensated using ephemeris.
 - **HARQ**: with long RTT, the HARQ RTT timer explodes. Options include disabling HARQ feedback for some traffic, increasing HARQ process counts, or leaning on RLC ARQ instead.
 - **Coverage extension**: NTN needs extra repetitions, longer PRACH formats, and relaxed timing requirements.
-- **Mobility**: the cell moves with the satellite; earth-fixed versus earth-moving beams changes the handover model entirely.
+- **Mobility**: the cell moves with the satellite; earth-fixed versus earth-moving beams changes the handover model entirely. With earth-fixed beams the UE stays in one cell while the satellite moves out of it, which produces periodic, predictable handover; with earth-moving beams the cell footprint sweeps the ground and the UE hands over continuously.
+- **Order-of-magnitude numbers worth being able to quote, with the caveat that they depend on orbit and elevation angle**: GEO one-way propagation is on the order of **120 ms** (≈ 36 000 km), LEO at 600 km is on the order of **a few ms one-way** before feeder link and processing are added, and LEO Doppler at S-band reaches **tens of kHz**. Precise values are elevation- and band-dependent — `VERIFY` before quoting a single number in an interview.
+- **Frequency**: NTN NR work targets the L and S bands (roughly 1.5–2.2 GHz) for handheld-class links, with Ka-band used for feeder links and fixed-satellite service backhaul.
 
 ### 4.2 L2 parameter impacts to be able to name
 - `harq-RTT-Timer`, number of HARQ processes, and whether HARQ is enabled at all.
@@ -108,6 +148,10 @@ A defensible minimal-change answer:
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
-- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
-- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
-- [[10-2 Agent Systems and Edge Orchestration]]
+- [[03-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
+- [[06-2 Agent Systems and Edge Orchestration]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -15,6 +15,7 @@ aliases:
   - UnifiedBus
   - network-defined-compute
   - superpod
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -24,7 +25,24 @@ last-updated: 2026-10-22
 
 The old model was static layering (device → edge → cloud, each with a fixed role). The 2026 direction is **per-task dynamic placement**: decide *per request* which device runs which sub-task, based on capability, current load, privacy and latency budget.
 
-See [[10-2 Agent Systems and Edge Orchestration]] for the concrete system (GRAFT) that demonstrates this.
+See [[06-2 Agent Systems and Edge Orchestration]] for the concrete system (GRAFT) that demonstrates this.
+
+```mermaid
+flowchart TD
+    REQ["Incoming task / request"]
+    D{"Placement decision<br/>per task, not per tier"}
+    END["End device<br/>lowest latency, privacy,<br/>smallest model"]
+    EDGE["Edge node<br/>medium model,<br/>tens of ms budget"]
+    CLOUD["Cloud<br/>full model,<br/>elastic compute"]
+    REQ --> D
+    D -->|"tight deadline ·<br/>private data · offline"| END
+    D -->|"moderate budget ·<br/>shared context"| EDGE
+    D -->|"heavy model ·<br/>no hard deadline"| CLOUD
+    END -.->|"split at layer k,<br/>send activations"| EDGE
+    EDGE -.->|"escalate"| CLOUD
+```
+
+What makes this hard is not the placement rule — it is that the split point, the fallback path and the merge protocol have to be correct under partial failure, which is the same problem as [[01-2 5G NR RAN Layer 2 Protocol Stack]]'s HARQ/ARQ layering, one abstraction level up.
 
 ## 2. The performance model that makes you credible
 
@@ -49,6 +67,28 @@ See [[10-2 Agent Systems and Edge Orchestration]] for the concrete system (GRAFT
 ## 3. Huawei UnifiedBus (also romanised as Lingqu) — a worked system-level case
 
 Presented at Huawei Connect 2026 (Shanghai, 17–19 September 2026) by Yang Chaobin (Huawei Executive Director, ICT BG CEO).
+
+```mermaid
+flowchart LR
+    subgraph pod["Superpod — unified global address space"]
+        CPU["CPU"]
+        NPU["NPU / Ascend"]
+        DDR["DDR pool<br/>NPU 'second memory'"]
+        SSD["SSD"]
+        UB["UnifiedBus<br/>TB/s · 2 µs RTT<br/>hardware-managed coherence"]
+        CPU <--> UB
+        NPU <--> UB
+        DDR <--> UB
+        SSD <--> UB
+    end
+    subgraph tiers["Interconnect tiers"]
+        T1["in-rack blade"]
+        T2["cross-rack device<br/>176 × 1.6T, 280T/chassis"]
+        T3["UBG switch · 1024 radix<br/>cluster scale"]
+        T1 --> T2 --> T3
+    end
+    UB --> T1
+```
 
 ### 3.1 Four stated characteristics
 1. **Protocol convergence with memory semantics** — more than ten interconnect protocols unified into the UnifiedBus protocol; interconnect bandwidth raised from the hundreds-of-GB/s level to the TB/s level; **RTT reduced from 7 µs to 2 µs**; global unified memory addressing inside the superpod.
@@ -119,7 +159,11 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 
 ## Related
 
-- [[10-1 LLM Inference Engines and xLLM]]
-- [[10-2 Agent Systems and Edge Orchestration]]
-- [[08-1 DPDK User Plane and 5G UPF]]
-- [[12-1 RISC-V for Communication Infrastructure]]
+- [[06-1 LLM Inference Engines and xLLM]]
+- [[06-2 Agent Systems and Edge Orchestration]]
+- [[05-1 DPDK User Plane and 5G UPF]]
+- [[07-1 RISC-V for Communication Infrastructure]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

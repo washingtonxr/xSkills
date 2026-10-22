@@ -15,6 +15,7 @@ aliases:
   - NR L2
   - MAC scheduler
   - L2 protocol stack
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -33,6 +34,27 @@ The permanent core of any L2 interview. See [[01-1 5G-Advanced and 6G Radio Acce
 
 Above them RRC (TS 38.331) controls configuration; below them PHY (TS 38.2xx) provides transport channels and timing.
 
+Downlink data path, with the unit handed across each boundary:
+
+```mermaid
+flowchart TD
+    subgraph cp["Control plane"]
+        RRC["RRC · TS 38.331<br/>configuration and reconfiguration"]
+    end
+    SDAP["SDAP · TS 37.324<br/>QoS flow → DRB · QFI marking<br/>unit: IP packet"]
+    PDCP["PDCP · TS 38.323<br/>ciphering · integrity · ROHC · reordering · duplication<br/>unit: PDCP SDU / PDU"]
+    RLC["RLC · TS 38.322<br/>segmentation · ARQ in AM · re-segmentation<br/>unit: RLC SDU / PDU"]
+    MAC["MAC · TS 38.321<br/>scheduling · HARQ · LCP · BSR · random access<br/>unit: MAC SDU / PDU / TB"]
+    PHY["PHY · TS 38.2xx<br/>transport channels · timing · HARQ PHY feedback"]
+    RRC -.->|"configures"| SDAP
+    RRC -.->|"configures"| PDCP
+    RRC -.->|"configures"| RLC
+    RRC -.->|"configures"| MAC
+    SDAP -->|"DRB"| PDCP -->|"RLC channel"| RLC -->|"logical channel"| MAC -->|"transport block"| PHY
+```
+
+The boundaries are the interview: each arrow is a different unit, a different buffer, and a different owner of a timer.
+
 ## 2. Numerology, slots and the scheduler time budget
 
 - Subcarrier spacing: **15 / 30 / 60 kHz in FR1**, **60 / 120 kHz in FR2**; additional options exist at higher bands.
@@ -50,6 +72,21 @@ Above them RRC (TS 38.331) controls configuration; below them PHY (TS 38.2xx) pr
 
 ### 3.2 Uplink grant lifecycle — the classic high-frequency question
 `SR (PUCCH) → grant → BSR → PUSCH`
+
+```mermaid
+sequenceDiagram
+    participant UE
+    participant gNB
+    Note over UE: data arrives on a logical channel,<br/>no valid grant
+    UE->>gNB: SR on PUCCH (per-LCG SR config)
+    gNB->>UE: UL grant (small, enough for BSR)
+    UE->>gNB: BSR MAC CE (regular BSR, per LCG)
+    gNB->>UE: UL grant with k2 offset
+    UE->>gNB: PUSCH: MAC PDU (LCP + padding BSR if room)
+    gNB->>UE: HARQ feedback / new grant
+```
+
+Total added latency before user data moves is roughly one SR period plus one PUSCH round trip — this is exactly what **configured grant** and **pre-scheduling** exist to remove.
 1. UE has data; if no valid grant, sends **Scheduling Request** on PUCCH.
 2. gNB grants a small initial grant (often enough only for a BSR).
 3. UE reports **BSR MAC CE** — short / short-truncated / long formats, per **Logical Channel Group (LCG)**; NR defines **4 LCGs**.
@@ -83,7 +120,17 @@ Above them RRC (TS 38.331) controls configuration; below them PHY (TS 38.2xx) pr
 ## 4. HARQ mechanics and timing
 
 - n+k timing: **k0** (DCI → PDSCH), **k1** (PDSCH → HARQ-ACK), **k2** (DCI → PUSCH).
-- Self-contained slot structure shortens feedback latency versus LTE.
+
+```mermaid
+flowchart LR
+    n0["slot n<br/>DCI on PDCCH"]
+    nk0["slot n + k0<br/>PDSCH"]
+    nk1["slot n + k0 + k1<br/>HARQ-ACK on PUCCH"]
+    n0 -->|"k0"| nk0 -->|"k1"| nk1
+    nk1 -->|"NACK → retransmission,<br/>soft-combine in HARQ buffer"| nk0
+```
+
+- Self-contained slot structure shortens feedback latency versus LTE: at 120 kHz SCS a slot is 0.125 ms, so k0/k1/k2 are counted in slots but cost microseconds each, which is why high-SCS configurations are used for URLLC.
 - HARQ entity per serving cell in CA; per-HARQ-process soft buffer.
 - HARQ is fast but bounded (limited retransmissions); RLC ARQ is the slower backstop with unbounded retransmission.
 - Interaction worth articulating: **HARQ below, ARQ above** — HARQ absorbs fast channel errors in ms, ARQ handles residual loss at tens of ms. Too much HARQ retransmission wastes PRBs; too little pushes load onto RLC and increases tail latency.
@@ -112,10 +159,23 @@ End-to-end QoS mapping is the most useful "system view" answer an L2 engineer ca
 
 `Application → QoS Flow (QFI, 5QI) → DRB (SDAP) → RLC channel → logical channel (MAC) → NG-U / GTP-U tunnel (UPF)`
 
+```mermaid
+flowchart LR
+    APP["Application / SDF"]
+    QF["QoS Flow<br/>QFI + 5QI"]
+    DRB["DRB<br/>SDAP mapping"]
+    LCH["Logical channel<br/>priority · PBR · BSD"]
+    PRB["PRB allocation<br/>MAC LCP output"]
+    UPF["UPF<br/>PDR / FAR / QER"]
+    APP --> QF --> DRB --> LCH --> PRB
+    QF -.->|"same 5QI, enforced on<br/>GTP-U tunnel"| UPF
+    PRB -.->|"NG-U"| UPF
+```
+
 - **5QI** characteristics: resource type (GBR / non-GBR / delay-critical GBR), priority level, packet delay budget (PDB), packet error rate (PER), averaging window, max data burst volume.
 - **ARP** (Allocation and Retention Priority) for admission, separate from scheduling priority.
 - **Reflective QoS (RQA / RQI)** lets the UE derive UL QoS flow → DRB mapping from DL marking.
-- On the core side the same QoS flow is enforced by UPF via **PDR/FAR/QER** — see [[08-1 DPDK User Plane and 5G UPF]].
+- On the core side the same QoS flow is enforced by UPF via **PDR/FAR/QER** — see [[05-1 DPDK User Plane and 5G UPF]].
 - Key interview point: RAN-side DRB/QoS flow mapping and UPF-side QoS enforcement are aligned within the 3GPP framework, but operate on **different time scales** (TTI/slot versus flow-level). Diagnosing whether a bottleneck is air-interface or user-plane requires separating those time scales.
 
 ## 8. Carrier aggregation and multi-connectivity
@@ -152,8 +212,12 @@ End-to-end QoS mapping is the most useful "system view" answer an L2 engineer ca
 
 ## Related
 
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
-- [[08-1 DPDK User Plane and 5G UPF]]
+- [[05-1 DPDK User Plane and 5G UPF]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

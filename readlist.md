@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.3
+version: 1.4
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -15,11 +15,13 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN;
-> `04-x` WLAN — `04-1` Wi-Fi generations, `04-2` power saving, `04-3` WFA/EasyMesh/prpl ecosystem;
-> `06-1` WSN; `07-x` embedded and systems software — `07-1` RTOS, `07-2` Linux embedded, `07-3` software architecture;
-> `08-x` data plane and heterogeneous compute — `08-1` DPDK/UPF, `08-2` cloud-edge-end;
-> `10-x` AI — `10-1` LLM inference, `10-2` agent systems; `12-1` RISC-V;
-> `13-x` programming — `13-1` toolchain and performance, `13-2` C and C++.
+> `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem;
+> `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;
+> `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture;
+> `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
+> `06-x` AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems;
+> `07-x` silicon and ISA — `07-1` RISC-V;
+> `08-x` programming — `08-1` toolchain and performance, `08-2` C and C++.
 > Sections `19`–`21` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
@@ -135,7 +137,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - Survey of XAI methods mapped onto the O-RAN architecture, plus use cases, security aspects and open challenges. The right citation when a discussion turns to "how do you make an AI scheduler trustworthy enough to deploy".
 - **[Paper · EN · ★★]** "End-to-End Learning for OFDM: From Neural Receivers to Pilotless Communication" (see §01-1)
   - The PHY-side evidence base that motivates putting AI inside the RAN at all.
-- **[Paper · EN · ★★]** "Age of Information: An Introduction and Survey" (see §06-1)
+- **[Paper · EN · ★★]** "Age of Information: An Introduction and Survey" (see §03-1)
   - Relevant here because AoI is one of the few metrics a learned scheduler can optimise directly, which classical proportional-fair scheduling never did.
 
 ### Standards and reports
@@ -160,7 +162,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - The best single overview of RedCap: what was reduced (bandwidth, MIMO layers, baseband complexity, DL modulation order, RF cost), the three use-case families (industrial sensors, wearables, video surveillance), and the coexistence problem with legacy NR. Covers coverage, capacity and energy-efficiency solutions plus a research roadmap.
 - **[Paper · EN · ★★]** "Positioning of RedCap Devices in 5G Networks" — F. Munier, Z. Xiong, R. Shreevastav, X. Jiang, Y. Lyazidi, D. Shrestha, C. Zhang, G. Lindmark, J. Nygren, S. Moloudi, S. Dwivedi, F. Gunnarsson · *IEEE Communications Magazine*, vol. 62, no. 8, pp. 110–116, 2024 · DOI 10.1109/MCOM.001.2300802
   - Ericsson-authored account of the Rel-18 positioning enhancement for RedCap — extending effective bandwidth by frequency hopping — with 3GPP channel-model simulation results. Concrete and recent.
-- **[Paper · EN · ★]** "Age of Information: An Introduction and Survey" (see §06-1)
+- **[Paper · EN · ★]** "Age of Information: An Introduction and Survey" (see §03-1)
   - Useful here because RedCap/eRedCap deployment targets are mostly status-update systems, where AoI is the more honest metric than throughput.
 
 ### Books
@@ -181,7 +183,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 ---
 
-## 04-1 · WLAN — Wi-Fi Generations Evolution
+## 02-1 · WLAN — Wi-Fi Generations Evolution
 
 
 ### Books
@@ -196,7 +198,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - **[Paper · EN · ★★★]** "Wi-Fi: Twenty-Five Years and Counting" — G. Geraci, F. Meneghello, F. Wilhelmi, D. López-Pérez, I. Val, L. Galati Giordano, C. Cordeiro, M. Ghosh, E. Knightly, B. Bellalta · *Proceedings of the IEEE*, vol. 113, no. 11, pp. 1290–1336, 2025 · arXiv:2507.09613
   - The first single tutorial to span 802.11b through 802.11bn, organised by *mechanism* rather than by generation: spectrum, PHY, MAC, multi-user, power save, multi-band aggregation, multi-AP coordination. The best long read for understanding why each generation looks the way it does, and the appendix covers what comes beyond 802.11bn (mmWave, sensing, AI/ML, security).
 - **[Paper · EN · ★★★]** "A Tutorial on Wi-Fi 8: The Journey to Ultra High Reliability" — A. Karamyshev, I. Levitsky, D. Bankov, E. Khorov · *Problems of Information Transmission*, vol. 61, no. 2, pp. 164–210, 2025 · DOI 10.1134/S003294602502005X
-  - Feature-by-feature treatment of 802.11bn: distributed-tone resource units, unequal modulation, prioritised and non-primary channel access, advanced roaming, and multi-AP coordination, with explicit targets (throughput across SINR levels, 95th-percentile latency, packet loss, power). The primary reference behind note 04-1's Wi-Fi 8 section.
+  - Feature-by-feature treatment of 802.11bn: distributed-tone resource units, unequal modulation, prioritised and non-primary channel access, advanced roaming, and multi-AP coordination, with explicit targets (throughput across SINR levels, 95th-percentile latency, packet loss, power). The primary reference behind note 02-1's Wi-Fi 8 section.
 - **[Paper · EN · ★★★]** "A Tutorial on IEEE 802.11ax High Efficiency WLANs" — E. Khorov, A. Kiryanov, A. Lyakhov, G. Bianchi · *IEEE Communications Surveys & Tutorials*, vol. 21, no. 1, pp. 197–216, 2019
   - The Wi-Fi 6 PHY and MAC reset in full detail: OFDMA resource units, the new numerology, trigger-based uplink, BSS colour, spatial reuse and TWT. Everything in Wi-Fi 7 and 8 sits on top of this.
 - **[Paper · EN · ★★]** "IEEE 802.11be: Wi-Fi 7 Strikes Back" — A. Garcia-Rodriguez, D. López-Pérez, L. Galati-Giordano, G. Geraci · *IEEE Communications Magazine*, vol. 59, no. 4, pp. 102–108, 2021
@@ -210,7 +212,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - **[Paper · EN · ★]** "Future Directions for Wi-Fi 8 and Beyond" — E. Reshef, C. Cordeiro · *IEEE Communications Magazine*, vol. 60, no. 10, pp. 50–55, 2022
   - Pre-802.11bn view of the market drivers and candidate directions that became the UHR brief.
 - **[Paper · EN · ★]** "Towards Wi-Fi 9: Vision, Requirements and Candidate Technologies"
-  - The WNG Standing Committee contributions on post-802.11bn direction: determinism over nominal rate, uplink asymmetry driven by AI workloads, AI-native PHY, deterministic MAC, Age-of-Information scheduling, and the LAN-controller-plus-APs AI architecture. Cited in note 04-1; verify the current citation before quoting.
+  - The WNG Standing Committee contributions on post-802.11bn direction: determinism over nominal rate, uplink asymmetry driven by AI workloads, AI-native PHY, deterministic MAC, Age-of-Information scheduling, and the LAN-controller-plus-APs AI architecture. Cited in note 02-1; verify the current citation before quoting.
 
 ### Standards
 
@@ -223,22 +225,22 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - **[Standard · ★]** **IEEE Std 802.11ax-2021** (Wi-Fi 6) · **IEEE Std 802.11ac-2013** (Wi-Fi 5) · **IEEE Std 802.11n-2009** (Wi-Fi 4)
   - Amendment texts for generational comparison at parameter level.
 - **[Standard · ★]** **IEEE Std 802.11bf-2025** — WLAN Sensing
-  - Relevant to the ISAC/sensing convergence discussed in note 04-1's future-generation section.
+  - Relevant to the ISAC/sensing convergence discussed in note 02-1's future-generation section.
 - **[Doc · ★★]** **IEEE 802.11 Working Group timelines and TGbn status pages**
   - The source for ballot and approval dates. Use these rather than secondary reporting when a date matters.
 
 ---
 
-## 04-2 · WLAN — Power Saving Mechanisms and Evolution
+## 02-2 · WLAN — Power Saving Mechanisms and Evolution
 
-Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item duplicates a reference already listed under **§04-1**, it is cross-referenced rather than repeated, with the specific part to read.
+Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item duplicates a reference already listed under **§02-1**, it is cross-referenced rather than repeated, with the specific part to read.
 
 ### Books
 
 - **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast · O'Reilly, 2005
   - The power-management chapters are still the clearest plain-English account of the PM bit, TIM/DTIM, PS-Poll and the beacon-synchronised model that every later mechanism is a reaction against. Read this before any paper on TWT, or the motivation will not land.
 - **[Book · EN · ★★]** *Next Generation Wireless LANs: 802.11n and 802.11ac*, 2nd ed. — Eldad Perahia, Robert Stacey · Cambridge University Press, 2013
-  - Listed in §04-1; for this note use its treatment of SMPS, operating-mode feedback and the power cost of MIMO chains.
+  - Listed in §02-1; for this note use its treatment of SMPS, operating-mode feedback and the power cost of MIMO chains.
 - **[Book · CN · ★]** 《802.11无线网络权威指南（第2版）》 — Matthew Gast · O'Reilly 中文版
   - Chinese edition of the Gast volume above, for the power-management and MAC chapters. `VERIFY` ISBN and edition year before citing.
 
@@ -249,11 +251,11 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Paper · EN · ★★★]** "What is Wrong/Right with IEEE 802.11n Spatial Multiplexing Power Save Feature?" — I. Pefkianakis, C.-Y. Li, S. Lu · *IEEE ICNP*, 2011
   - The paper that proves power and energy are different metrics. Measurements on real 802.11n hardware show ~2.5 W for a high-rate MIMO receiver, up to 1.15 W saved by SMPS, but also that a single chain can be worse per bit; their MRES algorithm beats SMPS by up to 37%, and optimal chain selection differs from the SMPS choice by up to 78.6% in per-bit energy.
 - **[Paper · EN · ★★★]** "A Tutorial on IEEE 802.11ax High Efficiency WLANs" — E. Khorov, A. Kiryanov, A. Lyakhov, G. Bianchi · *IEEE Communications Surveys & Tutorials*, vol. 21, no. 1, pp. 197–216, 2019
-  - Listed in §04-1. For this note it is the primary source on TWT: individual versus broadcast, implicit versus explicit, trigger-enabled service periods, and Opportunistic Power Save.
+  - Listed in §02-1. For this note it is the primary source on TWT: individual versus broadcast, implicit versus explicit, trigger-enabled service periods, and Opportunistic Power Save.
 - **[Paper · EN · ★★★]** "A Tutorial on Wi-Fi 8: The Journey to Ultra High Reliability" — A. Karamyshev, I. Levitsky, D. Bankov, E. Khorov · *Problems of Information Transmission*, vol. 61, no. 2, pp. 164–210, 2025 · DOI 10.1134/S003294602502005X
-  - Listed in §04-1. For this note, read its power-saving part: unavailability reporting, periodic and dynamic unavailability operation, dynamic power save, cross-link power save, and scheduled AP power save.
+  - Listed in §02-1. For this note, read its power-saving part: unavailability reporting, periodic and dynamic unavailability operation, dynamic power save, cross-link power save, and scheduled AP power save.
 - **[Paper · EN · ★★★]** "Wi-Fi: Twenty-Five Years and Counting" — G. Geraci, F. Meneghello, F. Wilhelmi, D. López-Pérez, I. Val, L. Galati Giordano, C. Cordeiro, M. Ghosh, E. Knightly, B. Bellalta · *Proceedings of the IEEE*, vol. 113, no. 11, pp. 1290–1336, 2025 · arXiv:2507.09613
-  - Listed in §04-1. Its power-saving section is the best single-source cross-generation comparison, because it is organised by mechanism rather than by amendment.
+  - Listed in §02-1. Its power-saving section is the best single-source cross-generation comparison, because it is organised by mechanism rather than by amendment.
 - **[Paper · EN · ★★★]** "R-TWT in Wi-Fi 7 and Beyond: Enabling Bounded Latency, Energy Efficiency, and Reliability" — E. Mozaffari Ahrar, F. Wilhelmi, L. Galati-Giordano, P. Imputato, M. Menth, S. Avallone · 2025
   - ns-3 evaluation of Restricted TWT across service types and network sizes: worst-case latency, energy, collision rate and throughput, versus legacy Power Saving Mode and DCF. Finds bounded latency for IoT and real-time traffic plus better energy efficiency, scaling with network size. `VERIFY` final publication venue.
 - **[Paper · EN · ★★]** "Multi-Link Scheduling with Restricted Target Wake Time in Wi-Fi 7" — D. Ergenç, M. Zakrzewski, F. Dressler · Telecommunication Networks Group, TU Berlin, 2026
@@ -304,12 +306,12 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 04-3 · WLAN Ecosystem — WFA, EasyMesh and prpl
+## 02-3 · WLAN Ecosystem — WFA, EasyMesh and prpl
 
 
 ### Books
 
-- **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast (see §04-1)
+- **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast (see §02-1)
   - The MAC and management-frame foundation that certification programs build on.
 
 ### Standards and program documents
@@ -331,7 +333,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 06-1 · Wireless Sensor Networks and Low-Power MAC
+## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
 
 ### Books
@@ -354,7 +356,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 07-1 · Embedded Systems, RTOS and Hardware Interfaces
+## 04-1 · Embedded Systems, RTOS and Hardware Interfaces
 
 
 ### Books
@@ -364,10 +366,10 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Book · EN · ★★]** *Making Embedded Systems: Design Patterns for Great Software*, 2nd ed. — Elecia White · O'Reilly, 2021
   - Practical patterns for resource-constrained firmware: state machines, hardware abstraction, debugging without a debugger, and how to structure code you can actually test on target.
 - **[Book · EN · ★★]** *Embedded Systems Architecture: Explore System-Level Design and Advanced Features* — Daniele Lacamera · Packt, 2nd ed. 2021
-  - System-level view: boot sequence, linker scripts and memory layout, interrupt and exception handling, RTOS integration, and the build/flash/debug flow. Good for connecting bare-metal mechanics to the Linux view in note 07-2.
+  - System-level view: boot sequence, linker scripts and memory layout, interrupt and exception handling, RTOS integration, and the build/flash/debug flow. Good for connecting bare-metal mechanics to the Linux view in note 04-2.
 - **[Book · EN · ★★★]** *Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications*, 3rd ed. — Giorgio C. Buttazzo · Springer, 2011
   - The rigorous treatment of schedulability analysis, rate-monotonic and EDF scheduling, priority inversion and aperiodic servers. This is what makes a "hard real-time" claim defensible rather than rhetorical.
-- **[Book · EN/CN · ★★]** *Computer Organization and Design RISC-V Edition* (see §12-1)
+- **[Book · EN/CN · ★★]** *Computer Organization and Design RISC-V Edition* (see §07-1)
   - For the cache-coherency, memory-barrier and DMA-consistency reasoning that embedded work depends on.
 
 ### Papers and documentation
@@ -383,7 +385,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 07-2 · Linux Embedded Development — Drivers, Applications and Core Subsystems
+## 04-2 · Linux Embedded Development — Drivers, Applications and Core Subsystems
 
 
 ### Books — driver development
@@ -405,12 +407,12 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - Concise, current-for-its-era account of process scheduling, the interrupt handler path, kernel synchronisation and the VFS. Written by a kernel contributor with an emphasis on *why* the code is shaped that way.
 - **[Book · EN · ★★]** *Linux Kernel Networking: Implementation and Theory* — Rami Rosen · Apress, 2013
   - The kernel network stack in detail: `sk_buff`, netfilter, the routing and neighbour subsystems, and the driver interface. Use alongside the DPDK material in §08.
-- **[Book · EN · ★]** *Understanding Linux Network Internals* — Christian Benvenuti · O'Reilly, 2005 (see §08-1)
+- **[Book · EN · ★]** *Understanding Linux Network Internals* — Christian Benvenuti · O'Reilly, 2005 (see §05-1)
 
 ### Books — system and application programming
 
 - **[Book · EN · ★★★]** *The Linux Programming Interface* — Michael Kerrisk · No Starch Press, 2010
-  - The definitive system-programming reference: processes, threads, IPC, signals, timers, file I/O, memory mapping, and sockets. Over 1500 pages, with every syscall documented against its behaviour. This is the book to own for the IPC and networking sections of note 07-2.
+  - The definitive system-programming reference: processes, threads, IPC, signals, timers, file I/O, memory mapping, and sockets. Over 1500 pages, with every syscall documented against its behaviour. This is the book to own for the IPC and networking sections of note 04-2.
 - **[Book · EN · ★★]** *Linux System Programming*, 2nd ed. — Robert Love · O'Reilly, 2013
   - Shorter and more opinionated, covering the same ground with more emphasis on writing correct and efficient code. Good complement to Kerrisk.
 - **[Book · EN/CN · ★★★]** *UNIX Network Programming, Vol. 1: The Sockets Networking API*, 3rd ed. — W. Richard Stevens, Bill Fenner, Andrew M. Rudoff · Chinese 《UNIX网络编程 卷1:套接字联网API(第3版)》, translated by 杨继张 · 人民邮电出版社, 2010 · ISBN 9787115228406 (2019 printing ISBN 9787115517791)
@@ -434,7 +436,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Doc · ★★★]** **Linux kernel Documentation/** (in-tree) — and in particular `core-api/`, `driver-api/`, `devicetree/bindings/`, `scheduler/`, `networking/` and `virt/`
   - The authoritative and current reference. Device tree bindings are the stable ABI; read them before writing or reviewing a binding.
 - **[Doc · ★★★]** **Yocto Project documentation** (mega-manual, BSP Developer's Guide, Kernel Development Manual) and **Buildroot user manual**
-  - The two build-system references that matter. Use the Yocto LTS release names recorded in note 07-2 when citing versions.
+  - The two build-system references that matter. Use the Yocto LTS release names recorded in note 04-2 when citing versions.
 - **[Doc · ★★]** **U-Boot documentation** and **Device Tree Specification** (devicetree.org)
   - Boot chain and hardware description. The DT spec is short; read it once properly.
 - **[Doc · ★★]** **cyclictest / rt-tests documentation** and the **PREEMPT_RT wiki**
@@ -442,7 +444,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 07-3 · Embedded Software Architecture — Patterns, Layering and Wireless System Structure
+## 04-3 · Embedded Software Architecture — Patterns, Layering and Wireless System Structure
 
 
 ### Books — architecture and design method
@@ -455,7 +457,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ### Books — execution models, scheduling and time-triggered design
 
-- **[Book · ★★★ · EN]** **Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications**, 3rd ed. — Giorgio C. Buttazzo, Springer, 2011. ISBN 978-1-4614-0676-1, DOI 10.1007/978-1-4614-0676-1 (Real-Time Systems Series, vol. 24). The standard text for the scheduling theory in note 07-3 §2.3: periodic and aperiodic task scheduling, fixed- and dynamic-priority servers, resource access protocols, limited-preemptive scheduling, overload handling, kernel and application design issues.
+- **[Book · ★★★ · EN]** **Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications**, 3rd ed. — Giorgio C. Buttazzo, Springer, 2011. ISBN 978-1-4614-0676-1, DOI 10.1007/978-1-4614-0676-1 (Real-Time Systems Series, vol. 24). The standard text for the scheduling theory in note 04-3 §2.3: periodic and aperiodic task scheduling, fixed- and dynamic-priority servers, resource access protocols, limited-preemptive scheduling, overload handling, kernel and application design issues.
 - **[Book · ★★ · EN]** **Real-Time Systems and Programming Languages**, 4th ed. — Alan Burns and Andy Wellings, Addison-Wesley, 2009. Broader than Buttazzo: covers the language and OS support for real-time (Ada, Real-Time Java, real-time POSIX, Ada/RT scheduling). Good for the "what does the platform actually give you" question.
 - **[Book · ★★ · EN]** **Patterns for Time-Triggered Embedded Systems: Building Reliable Applications with the 8051 Family of Microcontrollers** — Michael J. Pont, Addison-Wesley, 2001. ISBN 0-201-33138-1 / 9780201331387. The canonical catalogue of time-triggered architecture patterns (70+). Free PDF from the author's site. 8051-flavoured, which is dated — read it for the *patterns*, not the silicon.
 - **[Book · ★★★ · EN]** **The Engineering of Reliable Embedded Systems**, 2nd ed. — Michael J. Pont, SafeTTy Systems, 2016/2017. ISBN 978-0-9930355-3-1. The successor to PTTES and the one to cite for safety work: second-generation time-triggered architectures, with worked case studies targeting IEC 61508 SIL 2, IEC 60730 Class B, IEC 62304 Class C, ISO 26262 ASIL D and DO-178C Level A.
@@ -489,21 +491,21 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Standard · ★★ · EN]** **ISO 26262:2018** (2nd ed., December 2018) — *Road vehicles — Functional safety*. 12 parts; Part 4 system level, Part 5 hardware, Part 6 software, Part 9 ASIL-oriented analysis, Part 11 semiconductors, Part 12 motorcycles. ASIL A–D and QM from Severity/Exposure/Controllability; SPFM/LFM/PMHF targets.
 - **[Standard · ★★ · EN]** **IEC 61508** (2nd ed., 2010) — the parent functional-safety standard; SIL 1–4. Sector derivatives: IEC 61511 (process), IEC 62061/ISO 13849 (machinery), EN 5012x (rail), IEC 62304 (medical software), IEC 60730 (household), DO-178C (avionics).
 - **[Spec · ★★ · EN]** **OSEK/VDX Operating System Specification 2.2.1** (2003) — the static, configurable RTOS specification that AUTOSAR OS descends from. Worth knowing conceptually: it is where the "configuration rather than code" philosophy comes from.
-- **[Spec · ★★ · EN]** **ETSI TS 103859** (O-RAN.WG4.CUS.0) — O-RAN Fronthaul Control, User and Synchronization Plane. Defines the **7-2x** split, Category A/B O-RUs, eCPRI transport and IQ compression. The normative source for note 07-3 §6.3.
+- **[Spec · ★★ · EN]** **ETSI TS 103859** (O-RAN.WG4.CUS.0) — O-RAN Fronthaul Control, User and Synchronization Plane. Defines the **7-2x** split, Category A/B O-RUs, eCPRI transport and IQ compression. The normative source for note 04-3 §6.3.
 - **[Spec · ★ · EN]** **O-RAN.WG1 Architecture Description** and **O-RAN.WG3 (E2/E2SM)** — the architecture and near-RT RIC interface specs. See §18.
 - **[Spec · ★★ · EN]** **3GPP TS 38.401** — NG-RAN architecture description, including the CU/DU split. `VERIFY` the F1/E1 part numbers before quoting them.
 
 ### Documentation and code
 
 - **[Doc · ★★★ · EN]** **Zephyr Project documentation** — `docs.zephyrproject.org`. Releases, devicetree, Kconfig, power management, and MCUboot. Current stable **4.4.0** (2026-04-14); **3.7.0** is LTS3 (2024-07-26, EOL 2029-07-27); LTS4 planned as 5.0 (Oct 2027). Read the *release and migration guides* — they are the best available example of how a serious embedded project manages long-term compatibility.
-- **[Code · ★★ · EN]** **MCUboot** — open-source secure bootloader for 32-bit MCUs, integrated with Zephyr. Study it for the A/B update, image format, signature verification and swap/overwrite strategies described in note 07-3 §9.
+- **[Code · ★★ · EN]** **MCUboot** — open-source secure bootloader for 32-bit MCUs, integrated with Zephyr. Study it for the A/B update, image format, signature verification and swap/overwrite strategies described in note 04-3 §9.
 - **[Code · ★★ · EN]** **QP / QP/C / QP/C++** (Quantum Leaps) — the open-source active-object and hierarchical state machine framework behind Samek's book. Read `qpc` source for a production-quality HSM dispatcher and event queue implementation in C.
-- **[Code · ★ · EN]** **FreeRTOS kernel** — `freertos.org`; see §07. Read its `port.c` for the PendSV context-switch mechanics that the execution model in note 07-3 §2 depends on.
+- **[Code · ★ · EN]** **FreeRTOS kernel** — `freertos.org`; see §07. Read its `port.c` for the PendSV context-switch mechanics that the execution model in note 04-3 §2 depends on.
 - **[Doc · ★ · EN]** **MCUboot / RAUC / SWUpdate / Mender documentation** — three different answers to the same update problem; comparing them is the fastest way to internalise what is *essential* in an OTA architecture versus what is implementation detail.
 
 ---
 
-## 08-1 · DPDK User Plane and 5G UPF
+## 05-1 · DPDK User Plane and 5G UPF
 
 
 ### Books
@@ -533,7 +535,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 08-2 · Cloud-Edge-End Collaboration and Heterogeneous Computing
+## 05-2 · Cloud-Edge-End Collaboration and Heterogeneous Computing
 
 
 ### Books
@@ -563,23 +565,23 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ### Documentation and vendor literature
 
 - **[Doc · ★★★]** **UnifiedBus (灵衢) documentation — unifiedbus.com**
-  - Primary source for the Huawei interconnect discussed in note 08-2: **《灵衢基础规范 2.0》** (UB Base Specification — architecture, protocol and programming models), **《灵衢固件规范 2.0》** (firmware architecture and interfaces), **《灵衢使能操作系统参考设计 2.0》** (UB OS Component), and **《基于灵衢的超节点参考架构白皮书》** (SuperPoD reference architecture: bus-level interconnect, unified protocol, peer-to-peer coordination, full-resource pooling, large-scale networking, high availability). UB Base Specification 2.1 adds 224/256 Gbit/s rates, reliable rerouting and lower multi-path latency. The 2.0 specifications were opened at HUAWEI CONNECT 2025 on 18 September 2025.
+  - Primary source for the Huawei interconnect discussed in note 05-2: **《灵衢基础规范 2.0》** (UB Base Specification — architecture, protocol and programming models), **《灵衢固件规范 2.0》** (firmware architecture and interfaces), **《灵衢使能操作系统参考设计 2.0》** (UB OS Component), and **《基于灵衢的超节点参考架构白皮书》** (SuperPoD reference architecture: bus-level interconnect, unified protocol, peer-to-peer coordination, full-resource pooling, large-scale networking, high availability). UB Base Specification 2.1 adds 224/256 Gbit/s rates, reliable rerouting and lower multi-path latency. The 2.0 specifications were opened at HUAWEI CONNECT 2025 on 18 September 2025.
 - **[Doc · ★★]** **昇腾 950 NPU 架构白皮书** (Ascend 950 NPU Architecture White Paper)
   - Chip-level detail: on-chip memory bandwidth and capacity, 72× HiLink ports at up to 112 Gbps, the UB2.0 protocol with URMA asynchronous copy and UB Memory global load/store semantics, PCIe GEN5 x16 reuse, and 2×400 Gbps UBoE for carrying UB over Ethernet.
 - **[Doc · ★★]** **Ascend CANN documentation** (Huawei heterogeneous compute architecture)
   - Runtime, graph and operator-level interfaces for the NPU software stack.
 - **[Doc · ★]** **ODCC (Open Data Center Committee) technical reports**
-  - Chinese-industry server and datacentre architecture specifications, useful for the standards-body perspective in note 08-2.
+  - Chinese-industry server and datacentre architecture specifications, useful for the standards-body perspective in note 05-2.
 
 ---
 
-## 10-1 · LLM Inference Engines and xLLM
+## 06-1 · LLM Inference Engines and xLLM
 
 
 ### Papers
 
 - **[Paper · EN · ★★★]** "xLLM Technical Report" — xLLM team (JD.com) · arXiv:2510.14686, 2025
-  - The primary reference for the framework in note 10-1: the service–engine decoupled architecture, optimisation for Chinese AI accelerators (Ascend NPU, Cambricon MLU, Moore Threads GPU, Hygon DCU, MetaX MACA, Iluvatar CoreX), and hybrid KV cache management built on Mooncake with intelligent offloading and prefetching. Battle-tested at scale in JD.com's retail business, which is the strongest available evidence for the engineering claims.
+  - The primary reference for the framework in note 06-1: the service–engine decoupled architecture, optimisation for Chinese AI accelerators (Ascend NPU, Cambricon MLU, Moore Threads GPU, Hygon DCU, MetaX MACA, Iluvatar CoreX), and hybrid KV cache management built on Mooncake with intelligent offloading and prefetching. Battle-tested at scale in JD.com's retail business, which is the strongest available evidence for the engineering claims.
 - **[Paper · EN · ★★★]** "Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving" — R. Qin et al. · *USENIX FAST 2025* · arXiv:2407.00079
   - The KV-cache-centric disaggregated design: separating prefill and decode clusters, and treating KV cache as a first-class schedulable resource with a global pool. Directly the substrate xLLM's hybrid KV cache builds on.
 - **[Paper · EN · ★★★]** "Efficient Memory Management for Large Language Model Serving with PagedAttention" — W. Kwon et al. · *ACM SOSP 2023* · arXiv:2309.06180
@@ -614,13 +616,13 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 10-2 · Agent Systems and Edge Orchestration
+## 06-2 · Agent Systems and Edge Orchestration
 
 
 ### Papers
 
 - **[Paper · EN · ★★★]** "gRPC-Routed Agent Framework for Tasking (GRAFT)" · CAIS '26 · DOI 10.1145/3786335.3813216
-  - The specific paper behind note 10-2: sessioned gRPC routing across heterogeneous personal devices, capability-aware task routing in a small-language-model agent mesh. Note that GRAFT is an overloaded acronym — cite the DOI, not the name.
+  - The specific paper behind note 06-2: sessioned gRPC routing across heterogeneous personal devices, capability-aware task routing in a small-language-model agent mesh. Note that GRAFT is an overloaded acronym — cite the DOI, not the name.
 - **[Paper · EN · ★★★]** "A Survey on Large Language Model based Autonomous Agents" — L. Wang et al. · arXiv:2308.11432
   - The standard taxonomy for agent systems: construction (profile/memory/planning/action), evaluation and application, with an explicit agent-society discussion. Use it to place any specific agent framework on a map.
 - **[Paper · EN · ★★]** "The Rise and Potential of Large Language Model Based Agents: A Survey" — Z. Xi et al. · arXiv:2309.07864
@@ -649,7 +651,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 12-1 · RISC-V for Communication Infrastructure
+## 07-1 · RISC-V for Communication Infrastructure
 
 
 ### Books and specifications
@@ -675,12 +677,12 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 13-1 · Languages, Toolchain and Performance Engineering
+## 08-1 · Languages, Toolchain and Performance Engineering
 
 
 ### Books
 
-- **[Book · EN · ★★★]** *Computer Systems: A Programmer's Perspective*, 3rd ed. — Bryant, O'Halloran (see §08-2)
+- **[Book · EN · ★★★]** *Computer Systems: A Programmer's Perspective*, 3rd ed. — Bryant, O'Halloran (see §05-2)
   - Memory hierarchy, cache behaviour, linking, and the cost model behind every performance claim. If you only read one performance book, read this.
 - **[Book · EN · ★★★]** *Systems Performance: Enterprise and the Cloud*, 2nd ed. — Brendan Gregg · Addison-Wesley, 2020
   - The methodology: the USE method, workload characterisation, drill-down analysis, and the counterintuitive results that come from measuring before theorising. Covers CPU, memory, file systems, disk and network.
@@ -697,7 +699,7 @@ Supports note `04-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 13-2 · C and C++ Programming — Language Features, STL and Systems Practice
+## 08-2 · C and C++ Programming — Language Features, STL and Systems Practice
 
 
 Supports vault note `16`. Note that §13 covers toolchain, profiling and performance engineering; this section is the language itself.
@@ -721,7 +723,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
   - The most complete single-volume tutorial, rewritten for C++11. Use it as the reference for the core language — types, classes, templates, the standard library — and supplement it for C++17/20/23.
 - **[Book · EN/CN · ★★★]** *The C++ Programming Language*, 4th ed. — Bjarne Stroustrup · Addison-Wesley, 2013 · ISBN 9780321563842 · Chinese 《C++程序设计语言(特别版)》 translated by 裘宗燕 · 机械工业出版社 · ISBN 9787111102029
   - The language from its author. Less tutorial, more "what the abstraction means and what it costs" — which is the framing interviewers reward.
-- **[Book · EN · ★★★]** *Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14* — Scott Meyers · O'Reilly, 2014 (see §13-1)
+- **[Book · EN · ★★★]** *Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14* — Scott Meyers · O'Reilly, 2014 (see §08-1)
   - Type deduction, `auto`, move semantics, smart pointers and lambda correctness. Pair it with *Effective C++*, 3rd ed. (ISBN 9780321334879, Chinese 《Effective C++ 改善程序与设计的55个具体做法》, 机械工业出版社) for the pre-C++11 core.
 - **[Book · EN · ★★]** *A Tour of C++*, 3rd ed. — Bjarne Stroustrup · Addison-Wesley, 2022
   - The shortest accurate overview of modern C++ as a whole language, covering C++20 and C++23 in ~250 pages. Read this first if your C++ knowledge stopped at C++11.
@@ -762,7 +764,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 - **[Paper · ★★]** *"A Tour of C++"* / Stroustrup's **"The Design and Evolution of C++"** and **"Thriving in a Crowded and Changing World: C++ 2006–2020"** (ACM HOPL IV, 2020)
   - The history is useful: knowing *why* a feature exists (compatibility, zero-overhead, evolving hardware) is what lets you defend a language choice under questioning.
-- **[Paper · ★★]** *"Memory Ordering in C++"* and Paul E. McKenney's **perfbook** (see §13-1)
+- **[Paper · ★★]** *"Memory Ordering in C++"* and Paul E. McKenney's **perfbook** (see §08-1)
   - The memory model is the part of C++ most people get wrong. Read the model, not the rules of thumb.
 - **[Doc · ★]** **CppCon talks** on `std::execution` (senders/receivers), reflection (P2996), and `std::simd` — the fastest route to C++26 material, since no book covers it yet.
 
@@ -804,7 +806,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 | Week | Focus | Reading |
 | --- | --- | --- |
 | 1 | Anchor the map | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV |
-| 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §04-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique |
+| 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique |
 | 2b | Language layer (do this once, whatever your track) | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large |
 | 2c | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion |
 | 3 | Future direction | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025) |
@@ -823,7 +825,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §04-1/§04-2/§04-3; Linux mainline and LTS releases for §13-1/§07-2; xLLM, Mooncake and agent-framework releases for §10-1/§10-2; RISC-V International ratifications for §12-1; **WG21/WG14 meetings and GCC/Clang major releases for §13-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §07-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §04-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification.
 
 ---
 

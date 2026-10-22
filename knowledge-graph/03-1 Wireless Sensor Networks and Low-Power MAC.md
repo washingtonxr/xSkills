@@ -14,6 +14,7 @@ aliases:
   - LEACH
   - duty cycling
   - AoI
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -37,11 +38,44 @@ last-updated: 2026-10-22
 | HEED | Clustering by residual energy + intra-cluster communication cost | Better distribution of heads |
 | TEEN / APTEEN | Threshold-sensitive, event-driven reporting | Good for event detection, bad for periodic monitoring |
 
+```mermaid
+flowchart TD
+    subgraph c1["Cluster 1"]
+        n1["node"] --> ch1["cluster head<br/>aggregates · TDMA schedule"]
+        n2["node"] --> ch1
+        n3["node"] --> ch1
+    end
+    subgraph c2["Cluster 2"]
+        n4["node"] --> ch2["cluster head"]
+        n5["node"] --> ch2
+    end
+    ch1 -->|"long hop, highest drain"| SINK["Sink / gateway"]
+    ch2 --> SINK
+    ch1 -.->|"head role rotates<br/>LEACH: random · DEEC: residual energy"| n1
+```
+
+The failure mode of every protocol in this family is visible here: the cluster head spends its own energy on two jobs — intra-cluster aggregation **and** the long hop to the sink — so whichever node holds that role dies first. Rotation is the entire point, and the difference between LEACH and DEEC is only *how the next holder is chosen*.
+
 Critique to offer: these are **energy-balancing heuristics under idealised radio models**. They rarely survive contact with real duty-cycled MACs, asymmetric links and node heterogeneity. They remain valuable as the vocabulary, not as deployable code.
 
 ## 3. Where the field actually moved: UAV-enabled WSN
 
 - **Core insight**: instead of paying multi-hop relay energy, move the sink to the data. A UAV flies to (or near) sensor clusters and collects on demand.
+
+```mermaid
+flowchart LR
+    A["Cluster A<br/>nodes asleep"]
+    B["Cluster B"]
+    C["Cluster C"]
+    UAV["UAV collector<br/>flies the route, hovers, collects"]
+    SINK["Ground sink"]
+    UAV -->|"1 · wake beacon"| A
+    UAV -->|"2 · single-hop bulk upload"| A
+    UAV -->|"3 · hover + collect"| B
+    UAV -->|"4 · hover + collect"| C
+    UAV -->|"5 · return and offload"| SINK
+    A -.->|"flight energy ≫ radio energy:<br/>trajectory dominates the budget"| UAV
+```
 - Why it wins: it converts an exponential multi-hop energy cost into a single-hop uplink plus a mobility energy cost paid by a platform that is already flying.
 - Sub-problems that make it a real engineering topic:
   - **Trajectory optimisation** — visiting order, hover points, altitude versus link budget
@@ -51,6 +85,20 @@ Critique to offer: these are **energy-balancing heuristics under idealised radio
 - Reported effect (typical of the literature): coordinated sleep plus proximity collection can cut standby current dramatically — figures above **90% reduction in standby current** are commonly claimed. *(Literature-level claim; VERIFY against the specific paper before quoting.)*
 
 ## 4. Low-power MAC design space
+
+The choice is a function of traffic rate, synchronisation cost and latency requirement — not of fashion:
+
+```mermaid
+flowchart TD
+    Q1{"Is a global time base<br/>affordable?"}
+    Q1 -->|"yes, and latency must<br/>be deterministic"| TSCH["Scheduled / deterministic<br/>802.15.4e TSCH · 6TiSCH<br/>WirelessHART · ISA100.11a"]
+    Q1 -->|"no, or nodes are<br/>mostly asleep"| Q2{"Traffic rate high enough<br/>to justify an always-on<br/>wake-up receiver?"}
+    Q2 -->|"yes"| WUR["Wake-up radio<br/>sub-mW listener, main radio off<br/>cf. 3GPP LP-WUS"]
+    Q2 -->|"no — very low duty"| LPL["Duty-cycled contention<br/>B-MAC · X-MAC · ContikiMAC<br/>low-power listening"]
+    TSCH --> W1["Watch: schedule distribution<br/>and re-sync cost"]
+    WUR --> W2["Watch: false wakes and<br/>the WUR's own current"]
+    LPL --> W3["Watch: preamble length vs<br/>overhearing vs latency"]
+```
 
 ### 4.1 Duty-cycled contention MACs
 - **B-MAC** — long preamble, asynchronous low-power listening (LPL)
@@ -78,10 +126,20 @@ Critique to offer: these are **energy-balancing heuristics under idealised radio
 
 ## 6. Freshness: Age of Information (AoI)
 
-- AoI measures **the time elapsed since the newest update at the receiver was generated** — not throughput, not latency of a single packet.
+- AoI measures **the time elapsed since the newest update at the receiver was generated** — not throughput, not latency of a single packet. Formally, at time *t* with the newest received update generated at *u(t)*: **Δ(t) = t − u(t)**. Time-average AoI is the area under Δ(t) over the horizon divided by that horizon; **peak AoI** is the maximum just before each delivery.
+- Consequence that is easy to miss: AoI is minimised by **evenly spaced, small, fresh** updates — batching to raise throughput *raises* average AoI, and a long queue is pure waste because a packet that arrives stale carries no value.
+
+```mermaid
+flowchart LR
+    G["update generated<br/>at t0"]
+    D["delivered<br/>at t0 + latency"]
+    R["age ramps<br/>linearly after delivery"]
+    N["next update resets age"]
+    G -->|"in flight: age still grows"| D --> R --> N --> G
+```
 - Relevant because both 802.11 "next-gen" discussions and industrial sensing are shifting from "how many bits" to "how stale is the state".
 - Scheduling for AoI changes policy: it favours fresh, small, evenly-spaced updates over batched large transfers, and it penalises queues.
-- See [[04-1 WLAN - Wi-Fi Generations Evolution]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
+- See [[02-1 WLAN - Wi-Fi Generations Evolution]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
 
 ## 7. The embedded-system hard question
 
@@ -96,7 +154,7 @@ Answer shape:
 - Account for **worst-case wake cost**: oscillator stabilisation, PLL lock, RX ramp, and cache/PMU restore — these are often larger than the intended RX window.
 - Budget the join/re-synchronisation cost: a node that loses sync may burn more energy re-acquiring than it saved sleeping.
 
-See [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
+See [[04-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 ## Anchors — verified facts
 
@@ -109,6 +167,10 @@ See [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
 ## Related
 
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
-- [[04-1 WLAN - Wi-Fi Generations Evolution]]
-- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the Wi-Fi answer to the same duty-cycling problem: TWT, TIM segmentation, wake-up radio, ambient power
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[02-1 WLAN - Wi-Fi Generations Evolution]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the Wi-Fi answer to the same duty-cycling problem: TWT, TIM segmentation, wake-up radio, ambient power
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

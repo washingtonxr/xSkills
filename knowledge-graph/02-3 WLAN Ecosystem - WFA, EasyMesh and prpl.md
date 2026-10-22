@@ -17,12 +17,13 @@ aliases:
   - IEEE 1905.1
   - prplMesh
   - prplOS
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
 # WLAN Ecosystem — WFA Certification, EasyMesh and the prpl Stack
 
-Certification, multi-AP control and gateway software. For the PHY/MAC generation-by-generation technology, see [[04-1 WLAN - Wi-Fi Generations Evolution]].
+Certification, multi-AP control and gateway software. For the PHY/MAC generation-by-generation technology, see [[02-1 WLAN - Wi-Fi Generations Evolution]].
 
 ## 1. Wi-Fi Alliance and the certification layers
 
@@ -36,6 +37,26 @@ Certification, multi-AP control and gateway software. For the PHY/MAC generation
 ## 2. EasyMesh (WFA Multi-AP)
 
 ### 2.1 Architecture
+```mermaid
+flowchart TD
+    CTRL["EasyMesh Controller<br/>policy: channel · steering · topology · backhaul"]
+    subgraph agents["Agents"]
+        AG1["Agent 1<br/>configures radios, reports measurements"]
+        AG2["Agent 2"]
+        AG3["Agent 3"]
+    end
+    CTRL <-->|"IEEE 1905.1 CMDU<br/>topology discovery + control"| AG1
+    CTRL <-->|"IEEE 1905.1 CMDU"| AG2
+    CTRL <-->|"IEEE 1905.1 CMDU"| AG3
+    AG1 <-->|"wireless or Ethernet backhaul"| AG2
+    subgraph dp["Data plane — NOT the control plane"]
+        H["hostapd / wpa_supplicant<br/>Multi-AP flags: fronthaul BSS,<br/>backhaul BSS, backhaul STA"]
+    end
+    AG1 --- H
+    AG2 --- H
+    AG3 --- H
+```
+
 - **Controller + Agent**. The Controller owns policy — channel selection, client/band steering, backhaul optimisation, topology. Agents configure radios, report measurements and execute steering.
 - The control plane rides **IEEE 1905.1**, using **CMDU** messages for topology discovery and control. 1905.1 sits *above* Wi-Fi and Ethernet, so it works across heterogeneous links.
 - Data plane: **hostapd / wpa_supplicant** carry Multi-AP flags (fronthaul BSS, backhaul BSS, backhaul STA). **The control plane is not provided by hostapd alone** — this is a common misconception.
@@ -65,6 +86,33 @@ EasyMesh releases **R1 through R5**, with **R6 in development** in prplMesh; the
 
 ## 3. prpl Foundation stack
 
+```mermaid
+flowchart TD
+    subgraph lcm["prpl LCM — containerised microservices"]
+        C1["upgrades · feature rollout · third-party services"]
+    end
+    subgraph sw["prplMesh — EasyMesh Controller + Agent"]
+        M1["1905.1 stack"]
+        M2["modular TLV library"]
+        M3["topology API"]
+        M4["platform abstraction"]
+    end
+    subgraph os["prplOS — OpenWrt-derived base"]
+        O1["hostapd / wpa_supplicant"]
+        O2["data model · UCI"]
+        O3["Linux kernel + Wi-Fi driver stack"]
+    end
+    HAL["HAL — SoC portability<br/>Qualcomm · Intel · MaxLinear"]
+    HW["Wi-Fi SoC / radio hardware"]
+    C1 --- sw
+    M1 --> O1
+    M4 --> HAL --> HW
+    O1 --> O3 --> HW
+    M1 --> M2 --> M3
+```
+
+Two properties matter: prplMesh **does not supply** the driver stack, hostapd or the data model — it consumes them — and the HAL is what makes one mesh codebase portable across SoC vendors.
+
 - **prplOS** — an OpenWrt-derived, operator/manufacturer-grade platform. Backed by operators (Orange, Vodafone, Verizon, AT&T) and vendors (Huawei, Nokia, TP-Link, ZTE, Qualcomm). Not generally downloadable for home routers; tied to ISP projects.
 - **prplMesh** — open-source, carrier-grade EasyMesh implementation:
   - Implements **both Controller and Agent**; buildable as either or both.
@@ -82,7 +130,29 @@ EasyMesh releases **R1 through R5**, with **R6 in development** in prplMesh; the
 
 ## 4. Where Wi-Fi 8 multi-AP coordination stresses this stack
 
-The design questions this ecosystem must answer:
+The design questions this ecosystem must answer. The first one is a **time-scale** question, and drawing it makes the gap obvious:
+
+```mermaid
+flowchart LR
+    subgraph slow["Policy loop — seconds to minutes"]
+        P1["Coordination set formation"]
+        P2["Capability exchange"]
+        P3["Scheduling policy"]
+        P4["Cross-AP TWT schedule"]
+    end
+    subgraph fast["Per-TXOP loop — microseconds to milliseconds"]
+        F1["Co-SR power decision"]
+        F2["Co-BF null steering"]
+        F3["Shared-TXOP resource split"]
+    end
+    EASY["EasyMesh Controller<br/>over IEEE 1905.1"]
+    MAC["MAC / driver southbound<br/>no standardised interface today"]
+    slow --> EASY
+    fast --> MAC
+    EASY -.->|"gap: no standard<br/>fast southbound"| MAC
+```
+
+Everything on the left can be expressed in today's data model; everything on the right needs an interface into the MAC that the ecosystem does not yet standardise. That gap is the most defensible thing to say about Wi-Fi 8 in a system-architecture interview.
 
 - **Where does coordination signalling live?** Coordination that is *policy* (coordination set formation, capability exchange, scheduling policy) belongs in the EasyMesh Controller over 1905.1. Coordination that must meet **per-TXOP deadlines** — Co-SR power decisions, Co-BF null steering — cannot ride a control plane with 1905.1 latency. It needs a faster southbound path into the MAC, which today has no standardised form.
 - **How does MAPC coexist with MLO TID-to-link mapping?** TTLM is **intra-STA** (which of a device's links carries which traffic); multi-AP coordination is **inter-BSS** (which AP transmits when). They compose, and the conflict is **airtime budgeting across the two mechanisms**.
@@ -108,8 +178,12 @@ The design questions this ecosystem must answer:
 
 ## Related
 
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
-- [[04-1 WLAN - Wi-Fi Generations Evolution]]
-- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
-- [[10-2 Agent Systems and Edge Orchestration]]
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
+- [[02-1 WLAN - Wi-Fi Generations Evolution]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[06-2 Agent Systems and Edge Orchestration]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -14,6 +14,7 @@ aliases:
   - EdgeQ
   - HeartStream
   - many-core cluster
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -38,6 +39,23 @@ The research framing to know: RISC-V baseband SoC work explicitly targets **clos
 - Presented at **ESSERC 2025** (IEEE European Solid-State Electronics Research Conference), Munich, **8–11 September 2025**; DOI **10.1109/ESSERC66193.2025.11214075**; also **arXiv:2509.08608**.
 - Authors: Yichao Zhang, Marco Bertuletti, Sergio Mazzola, Samuel Riedel, Luca Benini — **IIS, ETH Zürich** and **DEI, University of Bologna**.
 - Open-source lineage: **github.com/pulp-platform/mempool** (the PULP MemPool cluster).
+
+```mermaid
+flowchart TD
+    subgraph cluster["HeartStream cluster — 64 RISC-V cores, shared L1"]
+        CORE["64 RISC-V cores<br/>complex MAC · div/sqrt · SIMD<br/>hardware-managed systolic queues"]
+        L1["Shared L1 · 256 × 1 KiB banks<br/>204.8 GBps · 1–5 cycle interconnect"]
+        CORE <--> L1
+    end
+    subgraph offload["Not on general-purpose cores"]
+        FEC["FEC · LDPC / Polar"]
+        DFE["DFE · CFR · DPD"]
+    end
+    L2["L2 control logic · MAC/RLC/PDCP<br/>on the cluster"]
+    L1 --> L2
+    L2 -.->|"descriptor queues"| FEC
+    L2 -.->|"descriptor queues"| DFE
+```
 
 Measured / claimed characteristics:
 - **64 RISC-V cores**, shared-L1 memory organised as **256 × 1 KiB banks**, **204.8 GBps** L1 bandwidth, hierarchical low-latency interconnect (**1–5 cycles**).
@@ -70,11 +88,23 @@ Why this matters to an L2 engineer: the numbers are stated against **real base-s
 
 > If L2 runs on RISC-V general-purpose cores and L1 runs on domain accelerators, what must the interface guarantee?
 
+```mermaid
+flowchart LR
+    L2["L2 software<br/>RISC-V general-purpose cores"]
+    Q1["Work queue<br/>versioned, self-describing descriptors"]
+    ACC["L1 accelerator<br/>FEC · FFT · channel estimation"]
+    Q2["Completion queue<br/>timestamp · status · error code"]
+    MEM["Shared memory / buffer pool<br/>explicit ownership transfer"]
+    L2 -->|"submit"| Q1 --> ACC -->|"complete"| Q2 --> L2
+    MEM <--> ACC
+    MEM <--> L2
+```
+
 Answer across four dimensions:
 
 **a) Interface semantics**
 - Descriptor-based work submission (queue in, completion queue out) rather than register-level hand-holding.
-- Explicit ownership transfer: who owns the buffer at each point, and when is it safe to recycle. This is the same contract as an `mbuf` pool — see [[08-1 DPDK User Plane and 5G UPF]].
+- Explicit ownership transfer: who owns the buffer at each point, and when is it safe to recycle. This is the same contract as an `mbuf` pool — see [[05-1 DPDK User Plane and 5G UPF]].
 - Versioned, self-describing descriptors so accelerator firmware and L2 software can evolve independently.
 
 **b) Cache coherency**
@@ -85,7 +115,7 @@ Answer across four dimensions:
 **c) Real-time scheduling**
 - L1 work has hard deadlines tied to slot/symbol timing; L2 has slot-to-multi-slot deadlines.
 - Needs: bounded worst-case execution time for the L2 path, priority-aware descriptor queues, and **isolation** so a burst of L3/control work cannot starve an L1 deadline.
-- Interrupt/completion latency must be bounded — which is exactly the PendSV-style deferral argument from [[07-1 Embedded Systems RTOS and Hardware Interfaces]].
+- Interrupt/completion latency must be bounded — which is exactly the PendSV-style deferral argument from [[04-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 **d) Observability and fallback**
 - Per-descriptor timestamps and completion/error codes, because debugging a miss-rate regression across an L1/L2 boundary without timestamps is guesswork.
@@ -118,11 +148,15 @@ Answer across four dimensions:
 
 ## Related
 
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
-- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
+- [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]]
-- [[08-1 DPDK User Plane and 5G UPF]]
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
+- [[05-1 DPDK User Plane and 5G UPF]]
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
-- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — H extension, AIA and IOMMU in the Linux virtualization stack
+- [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — H extension, AIA and IOMMU in the Linux virtualization stack
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

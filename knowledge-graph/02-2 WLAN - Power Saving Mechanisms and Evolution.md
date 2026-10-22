@@ -3,7 +3,7 @@ title: "WLAN — Power Saving Mechanisms and Evolution"
 type: domain-note
 domain: wlan
 group: "04"
-series: "04-2"
+series: "02-2"
 tags:
   - wlan
   - wifi
@@ -24,12 +24,13 @@ aliases:
   - SMPS
   - AP Power Save
   - WUR
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
 # WLAN — Power Saving Mechanisms and Evolution
 
-Companion to [[04-1 WLAN - Wi-Fi Generations Evolution]]. That note asks *how fast and how reliably*; this one asks **at what energy cost**, and treats power saving as its own evolutionary line rather than a footnote under each generation.
+Companion to [[02-1 WLAN - Wi-Fi Generations Evolution]]. That note asks *how fast and how reliably*; this one asks **at what energy cost**, and treats power saving as its own evolutionary line rather than a footnote under each generation.
 
 The through-line: every generation has attacked a *different* term of the same energy equation, and the ones that failed failed because they optimised the wrong term.
 
@@ -469,9 +470,13 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 
 ## Related
 
-- [[04-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
-- [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
-- [[06-1 Wireless Sensor Networks and Low-Power MAC]] — the non-Wi-Fi low-power MAC tradition: TSCH, duty cycling, AoI
+- [[02-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
+- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
+- [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the non-Wi-Fi low-power MAC tradition: TSCH, duty cycling, AoI
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS and eRedCap: the cellular answer to the same battery problem
-- [[07-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — how a power policy is layered: host policy vs firmware state machine vs RF capability
+- [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — how a power policy is layered: host policy vs firmware state machine vs RF capability
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

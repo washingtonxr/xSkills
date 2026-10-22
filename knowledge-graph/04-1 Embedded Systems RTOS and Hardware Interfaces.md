@@ -17,6 +17,7 @@ aliases:
   - PendSV
   - priority inversion
   - interrupt handling
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -28,10 +29,28 @@ last-updated: 2026-10-22
 - **Fixed-priority preemptive scheduling** by default; equal-priority tasks round-robin under time slicing if configured.
 - `configMAX_PRIORITIES` bounds the priority count; a **higher number = higher priority**.
 - **Tick**: periodic SysTick interrupt drives the time base; `configTICK_RATE_HZ` sets it. Every tick the scheduler checks for a higher-priority ready task.
-- **Tickless idle** (`configUSE_TICKLESS_IDLE`) suppresses the tick during idle to allow deep sleep — essential for the low-power designs in [[06-1 Wireless Sensor Networks and Low-Power MAC]].
+- **Tickless idle** (`configUSE_TICKLESS_IDLE`) suppresses the tick during idle to allow deep sleep — essential for the low-power designs in [[03-1 Wireless Sensor Networks and Low-Power MAC]].
 
 ### 1.2 Task state machine
 `Running → Ready → Blocked → Suspended`
+
+```mermaid
+stateDiagram-v2
+    [*] --> Ready: task created
+    Ready --> Running: highest priority ready
+    Running --> Ready: preempted by higher priority, or time slice expires
+    Running --> Blocked: vTaskDelay · queue/semaphore wait
+    Blocked --> Ready: timeout · event arrives
+    Running --> Suspended: vTaskSuspend
+    Blocked --> Suspended: vTaskSuspend
+    Suspended --> Ready: vTaskResume
+    Running --> [*]: vTaskDelete
+    note right of Suspended
+        not time-driven:
+        only vTaskResume
+        brings it back
+    end note
+```
 - **Running** — currently executing (one per core).
 - **Ready** — able to run, waiting for a core.
 - **Blocked** — waiting on a time event (delay) or a synchronisation event (queue/semaphore/notification).
@@ -42,6 +61,25 @@ last-updated: 2026-10-22
 On ARM Cortex-M, the exception model provides **SysTick** (periodic tick), **SVC** (supervisor call, used to start the scheduler from privileged context), and **PendSV** (a pended, lowest-priority system-level exception).
 
 **The problem PendSV solves**: a context switch must not run *inside* a higher-priority ISR, or it would delay other interrupts and could be re-entered. PendSV is therefore **pended** during a tick or ISR and only executes **after all other ISRs complete**, at the lowest exception priority. This makes the context switch atomic and safely deferred.
+
+```mermaid
+sequenceDiagram
+    participant HW as Peripheral IRQ
+    participant NVIC
+    participant PendSV
+    participant Tasks
+    HW->>NVIC: high-priority interrupt (e.g. radio)
+    NVIC->>Tasks: ISR runs: read + clear hardware,<br/>xQueueSendFromISR
+    NVIC->>PendSV: set PENDSV bit, request switch
+    HW->>NVIC: second interrupt, higher priority
+    NVIC->>NVIC: preempts, runs to completion
+    Note over NVIC,PendSV: all ISRs finished
+    NVIC->>PendSV: PendSV exception taken (lowest priority)
+    PendSV->>Tasks: save context, switch stack, restore context
+    Tasks->>Tasks: high-priority task runs the scheduling decision
+```
+
+The invariant this buys: **interrupt latency is bounded by the ISRs themselves**, and the scheduler's cost is paid once, at the end of the burst.
 
 Why it matters for a wireless stack: the context-switch cost lands *after* the interrupt burst, so **ISR latency is bounded independently of how long the scheduler takes**. If you instead make scheduling decisions inside the interrupt handler, you break that property.
 
@@ -75,7 +113,7 @@ Correct pattern: ISR does the minimum (read/clear hardware, push to a queue usin
 - **Software timers** — run in the timer service (daemon) task; callback context is a task, not an ISR.
 - **Critical sections** — `taskENTER_CRITICAL` / `taskEXIT_CRITICAL` disable interrupts; keep them very short, especially with a radio running.
 - **MPU support** — memory protection for safety-critical or certified designs.
-- **SMP FreeRTOS** — core affinity for multi-core parts; relevant to the heterogeneous-core discussion in [[12-1 RISC-V for Communication Infrastructure]].
+- **SMP FreeRTOS** — core affinity for multi-core parts; relevant to the heterogeneous-core discussion in [[07-1 RISC-V for Communication Infrastructure]].
 
 ## 2. Bus and peripheral interfaces
 
@@ -122,7 +160,7 @@ Correct pattern: ISR does the minimum (read/clear hardware, push to a queue usin
 The strongest cross-domain answer you can give here:
 
 - **RTOS message queues** typically copy small fixed-size items, or pass pointers. Passing pointers is cheap but hands you lifetime-ownership problems.
-- **DPDK `rte_mempool`** solves the same problem with pre-allocated, NUMA-aware, per-core-cached `mbuf` pools — see [[08-1 DPDK User Plane and 5G UPF]].
+- **DPDK `rte_mempool`** solves the same problem with pre-allocated, NUMA-aware, per-core-cached `mbuf` pools — see [[05-1 DPDK User Plane and 5G UPF]].
 - **DPAA / DPDK on embedded multi-core** adds hardware buffer pools and queue managers.
 - The tradeoff is identical in both worlds: **pre-allocation and pooling eliminates allocation jitter and fragmentation at the cost of fixed memory commitment.** On a constrained device that commitment is the whole design question.
 
@@ -130,6 +168,16 @@ The strongest cross-domain answer you can give here:
 
 - **Top half (ISR)**: acknowledge hardware, minimal bookkeeping, hand off.
 - **Bottom half**: deferred processing — tasklet/workqueue in Linux, or a high-priority RTOS task.
+```mermaid
+flowchart TD
+    IRQ["Hardware interrupt"]
+    TOP["Top half — ISR<br/>acknowledge · latch timestamp ·<br/>push descriptor to lock-free queue<br/>bounded WCET, no scheduling policy"]
+    BOT["Bottom half — high-priority task<br/>MAC scheduling decision<br/>bounded budget, may block"]
+    BEST["Best-effort tasks<br/>L3 · management · logging"]
+    IRQ --> TOP --> BOT --> BEST
+    TOP -.->|"never do policy here"| TOP
+```
+
 - Mapping onto a wireless stack:
   - L1 processing has the hardest deadline (slot/symbol) → ISR or dedicated accelerator completion interrupt
   - L2 scheduling decision belongs in a high-priority task with a bounded budget, not in the ISR
@@ -146,11 +194,15 @@ The strongest cross-domain answer you can give here:
 
 ## Related
 
-- [[07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layer above: execution models, HSM, time-triggered vs event-triggered, safety cases built on these primitives
-- [[13-2 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
-- [[08-1 DPDK User Plane and 5G UPF]]
-- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
-- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
-- [[12-1 RISC-V for Communication Infrastructure]]
-- [[13-1 Programming Languages Toolchain and Performance Engineering]]
-- [[07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model
+- [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layer above: execution models, HSM, time-triggered vs event-triggered, safety cases built on these primitives
+- [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
+- [[05-1 DPDK User Plane and 5G UPF]]
+- [[03-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
+- [[07-1 RISC-V for Communication Infrastructure]]
+- [[08-1 Programming Languages Toolchain and Performance Engineering]]
+- [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

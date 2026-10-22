@@ -27,23 +27,25 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
 - Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
 - Fixed note body shape: knowledge points → **Anchors** → **Related**.
-- Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view).
+- Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view); every note is expected to carry them in its structural sections (architecture, data path, timing, decision logic), not just in passing.
+- Bulk renumbering recipe: two-phase `git mv` (old → `__tmp__` → final) to avoid filename collisions, then one regex pass with `(?<![\d\-])(\d{2})-(\d)(?!\d)` and a lookup dict — single pass avoids chained rewrites, and the lookbehind protects dates and version strings.
 
-## Note numbering scheme `GG-x` (decided 2026-10-22)
+## Note numbering scheme `GG-x` (renumbered 2026-10-22)
 
-Group number `GG` is inherited from the group's original top-level note, so group
-numbers are intentionally **not contiguous**:
+Group number `GG` is **sequential from `01` and contiguous** — an earlier scheme
+inherited numbers from each group's original top-level note and left gaps; that was
+replaced on request. Group order follows the signal path outward:
 
 | Group | Domain | Notes |
 | --- | --- | --- |
 | `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) |
-| `04-x` | WLAN | 04-1 generations · 04-2 power saving · 04-3 ecosystem (WFA/EasyMesh/prpl) |
-| `06-x` | Low-power and sensor networking | 06-1 WSN and low-power MAC |
-| `07-x` | Embedded and systems software | 07-1 RTOS and hardware interfaces · 07-2 Linux embedded · 07-3 software architecture |
-| `08-x` | Data plane and heterogeneous compute | 08-1 DPDK/UPF · 08-2 cloud-edge-end |
-| `10-x` | AI inference and agent systems | 10-1 LLM inference/xLLM · 10-2 agent systems |
-| `12-x` | Silicon and ISA | 12-1 RISC-V |
-| `13-x` | Programming languages and practice | 13-1 toolchain and performance · 13-2 C and C++ |
+| `02-x` | WLAN | 02-1 generations · 02-2 power saving · 02-3 ecosystem (WFA/EasyMesh/prpl) |
+| `03-x` | Low-power and sensor networking | 03-1 WSN and low-power MAC |
+| `04-x` | Embedded and systems software | 04-1 RTOS and hardware interfaces · 04-2 Linux embedded · 04-3 software architecture |
+| `05-x` | Data plane and heterogeneous compute | 05-1 DPDK/UPF · 05-2 cloud-edge-end |
+| `06-x` | AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems |
+| `07-x` | Silicon and ISA | 07-1 RISC-V |
+| `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ |
 
 `readlist.md` sections use the **same** `GG-x` numbers (sections 19–21 are the
 standards repositories, reading order, and maintenance). Renumbering a note means

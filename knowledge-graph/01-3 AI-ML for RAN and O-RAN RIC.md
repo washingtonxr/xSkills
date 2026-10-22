@@ -14,6 +14,7 @@ aliases:
   - near-RT RIC
   - non-RT RIC
   - RAN intelligence
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
@@ -30,6 +31,31 @@ Where the "AI trainer" credential and the "L2 protocol stack" experience actuall
 
 ## 2. O-RAN RIC architecture
 
+```mermaid
+flowchart TD
+    subgraph SMO["SMO — Service Management and Orchestration"]
+        NONRT["Non-RT RIC<br/>rApps · training · policy<br/>loop > 1 s"]
+        DL["Data lake / KPI history"]
+    end
+    NRTRIC["Near-RT RIC<br/>xApps · inference only<br/>loop 10 ms – 1 s"]
+    subgraph RAN["O-RAN nodes"]
+        CU["O-CU"]
+        DU["O-DU"]
+        RU["O-RU"]
+    end
+    NONRT -->|"A1 · policy · model"| NRTRIC
+    NONRT -->|"O1 · management"| CU
+    NONRT -->|"O1 · management"| DU
+    NRTRIC -->|"E2 · E2SM-RC control"| CU
+    NRTRIC -->|"E2 · E2SM-RC control"| DU
+    CU -->|"E2 · E2SM-KPM telemetry"| NRTRIC
+    DU -->|"E2 · E2SM-KPM telemetry"| NRTRIC
+    DU -->|"Open Fronthaul"| RU
+    DL --> NONRT
+```
+
+The one fact that settles most architectural arguments: **only inference runs in the near-RT RIC.** Training, policy generation and model management are non-RT functions.
+
 | | Non-RT RIC | Near-RT RIC |
 | --- | --- | --- |
 | Location | Inside SMO (Service Management and Orchestration) | Network edge / regional cloud |
@@ -44,6 +70,25 @@ Where the "AI trainer" credential and the "L2 protocol stack" experience actuall
 - **E2SM-NI**, **E2SM-CCC** — additional service models for specific control domains.
 
 ### Model lifecycle
+
+```mermaid
+sequenceDiagram
+    participant DL as Data lake
+    participant rApp as Non-RT RIC rApp
+    participant xApp as Near-RT RIC xApp
+    participant DU as O-DU / O-CU
+    DL->>rApp: historical KPIs, traces, UE distribution
+    rApp->>rApp: train / retrain, evaluate offline
+    rApp->>xApp: deploy model + policy over A1
+    loop near-RT loop, 10 ms – 1 s
+        DU->>xApp: E2SM-KPM indication
+        xApp->>xApp: inference
+        xApp->>DU: E2SM-RC control action
+    end
+    DU->>DL: KPI feedback
+    Note over rApp,xApp: drift detected → retrain → redeploy
+```
+
 1. rApp trains / retrains on historical data from the data lake.
 2. Model is deployed to the near-RT RIC via **A1**.
 3. xApp performs inference inside the near-RT loop.
@@ -97,6 +142,19 @@ Good answer shape: put **fast per-slot resource decisions in MAC** (small model 
 ## 6. Verification methodology
 
 The credible ladder for AI in the RAN:
+
+```mermaid
+flowchart LR
+    S1["1 · Simulation<br/>calibrated channel + traffic models"]
+    S2["2 · Field data replay<br/>recorded KPI traces through the controller"]
+    S3["3 · Shadow mode<br/>AI recommends, rule scheduler acts"]
+    S4["4 · Hardware-in-the-loop<br/>real DU/RU + channel emulator"]
+    S5["5 · Limited live cell<br/>automatic fallback armed"]
+    S1 --> S2 --> S3 --> S4 --> S5
+    S3 -.->|"divergence exceeds budget"| S2
+    S5 -.->|"guardrail trip"| S4
+```
+
 1. **Simulation** — system-level simulator with calibrated channel and traffic models.
 2. **Field data replay** — recorded KPI traces and UE distributions fed back through the controller.
 3. **Shadow mode** — the AI controller observes and recommends, the rule controller acts; divergence is measured.
@@ -119,5 +177,9 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
-- [[12-1 RISC-V for Communication Infrastructure]]
-- [[10-2 Agent Systems and Edge Orchestration]]
+- [[07-1 RISC-V for Communication Infrastructure]]
+- [[06-2 Agent Systems and Edge Orchestration]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

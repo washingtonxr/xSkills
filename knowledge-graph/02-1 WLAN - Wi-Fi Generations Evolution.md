@@ -25,12 +25,13 @@ aliases:
   - VHT
   - HT
   - UHR
+copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 last-updated: 2026-10-22
 ---
 
 # WLAN — Wi-Fi Generations Evolution (Wi-Fi 4 → Wi-Fi 8 → Wi-Fi 9)
 
-Full generational reference. Ecosystem, certification and mesh software live in [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+Full generational reference. Ecosystem, certification and mesh software live in [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
 
 ## 0. Generation map
 
@@ -45,6 +46,19 @@ Full generational reference. Ecosystem, certification and mesh software live in 
 | Wi-Fi 9 | post-802.11bn | TBA | +60 GHz / light | TBA | TBA | TBA | not the point | **Determinism + AI-native** |
 
 The strategic arc: **rate (Wi-Fi 4/5) → efficiency (Wi-Fi 6) → latency (Wi-Fi 7) → reliability (Wi-Fi 8) → determinism (Wi-Fi 9)**.
+
+```mermaid
+flowchart LR
+    W4["Wi-Fi 4 · 802.11n · 2009<br/>MIMO + aggregation<br/>design goal: raw rate"]
+    W5["Wi-Fi 5 · 802.11ac · 2013<br/>160 MHz + 256-QAM + DL MU-MIMO<br/>design goal: wider and denser"]
+    W6["Wi-Fi 6 · 802.11ax · 2021<br/>OFDMA + UL MU-MIMO + TWT<br/>design goal: dense-deployment efficiency"]
+    W7["Wi-Fi 7 · 802.11be · 2024<br/>320 MHz + 4096-QAM + MLO + r-TWT<br/>design goal: multi-gigabit + bounded latency"]
+    W8["Wi-Fi 8 · 802.11bn · ~2028<br/>multi-AP coordination + DRU/ELR<br/>design goal: ultra-high reliability"]
+    W9["Wi-Fi 9 · post-bn<br/>60 GHz / light, AI-native<br/>design goal: determinism"]
+    W4 --> W5 --> W6 --> W7 --> W8 --> W9
+```
+
+Note what stops growing after Wi-Fi 7: channel width, modulation order and stream count are all maxed out. Every Wi-Fi 8 gain therefore has to come from **scheduling and coordination**, not from the PHY headline numbers — which is exactly why Wi-Fi 8 is a reliability release.
 
 ---
 
@@ -302,6 +316,34 @@ Approximately **25% improvement in each of three dimensions**, targeted at the *
 
 Legacy Wi-Fi treats every BSS as an independent contender. UHR makes neighbouring APs cooperate. Schemes:
 
+```mermaid
+flowchart TD
+    subgraph baseline["Baseline — independent contention"]
+        A1["AP1"] -.->|"defers"| A2["AP2"]
+    end
+    subgraph cosr["Co-SR — coordinated spatial reuse"]
+        B1["Sharing AP1"] -->|"transmit at a<br/>coordinated power"| S1["its STA"]
+        B2["Shared AP2"] -->|"announces TXOP +<br/>acceptable interference"| S2["its STA"]
+        B1 <-.->|"power budget"| B2
+    end
+    subgraph cobf["Co-BF — coordinated beamforming"]
+        C1["AP1"] -->|"null steered toward<br/>AP2's STA"| T1["its STA"]
+        C2["AP2"] -->|"null steered toward<br/>AP1's STA"| T2["its STA"]
+        C1 <-.->|"CSI / steering intent"| C2
+    end
+    subgraph cotdma["Co-TDMA / Co-OFDMA — shared TXOP"]
+        D1["AP1 wins contention<br/>and shares the TXOP"]
+        D1 -->|"time or frequency slice"| D2["AP2"]
+        D2 --> D3["AP2 STAs"]
+        D1 --> D4["AP1 STAs"]
+    end
+    subgraph jt["Joint transmission"]
+        E1["AP1 + AP2"] -->|"coherent transmission"| F1["one STA"]
+    end
+```
+
+The four schemes are a ladder: each removes one more source of waste, and each demands one more thing from the APs — a power agreement, then CSI, then a shared TXOP scheduler, then phase synchronisation.
+
 **Co-SR (Coordinated Spatial Reuse)**
 - A sharing AP reuses resources of a shared AP's TXOP with **coordinated transmit power**.
 - Design detail: the shared AP announces the TXOP and acceptable interference level; the sharing AP computes the power at which it can transmit without harming the shared AP's receivers, then schedules its own STAs at that power.
@@ -376,6 +418,18 @@ Legacy Wi-Fi treats every BSS as an independent contender. UHR makes neighbourin
 
 Each step widens the scope of coordination: **one link → one AP to many users → many users across frequency and space → many links → many APs.**
 
+```mermaid
+flowchart LR
+    L1["Wi-Fi 4<br/>one link<br/>SU-MIMO"]
+    L2["Wi-Fi 5<br/>one AP → 4 users<br/>DL MU-MIMO"]
+    L3["Wi-Fi 6<br/>users × frequency × space<br/>OFDMA + UL/DL MU-MIMO"]
+    L4["Wi-Fi 7<br/>links × bands<br/>MLO"]
+    L5["Wi-Fi 8<br/>APs<br/>multi-AP coordination"]
+    L1 --> L2 --> L3 --> L4 --> L5
+```
+
+Read the chain as an argument about *what the scheduler is allowed to know and control*: by Wi-Fi 8 it must know and control the airtime of neighbouring BSSs, which is why the feature depends on an inter-AP control channel and on the ecosystem software covered in [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+
 ### 6.3 The efficiency-mechanism chain
 `Frame aggregation (Wi-Fi 4: amortise MAC overhead) → wider channels + higher QAM (Wi-Fi 5: more bits per Hz) → OFDMA + spatial reuse (Wi-Fi 6: share airtime, reduce deferral) → MRU + puncturing (Wi-Fi 7: stop wasting spectrum) → multi-AP coordination (Wi-Fi 8: stop wasting airtime between APs)`
 
@@ -383,7 +437,7 @@ Each step widens the scope of coordination: **one link → one AP to many users 
 `Nothing explicit (Wi-Fi 4/5) → BSS Color / OBSS_PD reduces deferral (Wi-Fi 6) → MLO redundancy and fast link switch (Wi-Fi 7) → coordinated scheduling removes inter-BSS contention, DRU/ELR extend coverage (Wi-Fi 8)`
 
 ### 6.5 Design-theme summary per generation
-- **Wi-Fi 4**: make thePHY fast; discover that MAC overhead is now the bottleneck.
+- **Wi-Fi 4**: make the PHY fast; discover that MAC overhead is now the bottleneck.
 - **Wi-Fi 5**: widen and densify; discover that spectrum and client form factors cap it.
 - **Wi-Fi 6**: stop optimising peak rate; optimise airtime sharing and dense-deployment behaviour.
 - **Wi-Fi 7**: add enough raw capability for VR/XR and add per-flow latency tools.
@@ -461,8 +515,12 @@ AI features must demonstrate benefits that justify their **computational complex
 
 ## Related
 
-- [[04-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
-- [[04-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
-- [[06-1 Wireless Sensor Networks and Low-Power MAC]]
-- [[10-2 Agent Systems and Edge Orchestration]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
+- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+- [[03-1 Wireless Sensor Networks and Low-Power MAC]]
+- [[06-2 Agent Systems and Edge Orchestration]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
+
+---
+
+Copyright (c) 2026 Washington Ruan. All rights reserved.

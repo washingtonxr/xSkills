@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.3
+version: 1.4
 sibling: README.md
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -37,6 +37,14 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 ## 二、快速开始：推荐阅读路径
 
+```mermaid
+flowchart LR
+    MOC["00 MOC<br/>建立地图"] --> ROLE["按岗位选读 3–5 篇笔记"]
+    ROLE --> SRC["readlist.md<br/>查阅一手资料"]
+    SRC --> MOCK["skills-draft.cn.md<br/>A/B/C/D 四组自测"]
+    MOCK --> SPRINT["48 小时冲刺<br/>只看 Anchors"]
+```
+
 | 阶段 | 做什么 | 目标产出 |
 | --- | --- | --- |
 | 1. 建立地图 | 通读 `knowledge-graph/00 MOC ...` | 掌握统一心智模型与领域导航 |
@@ -49,12 +57,12 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 | 目标岗位 | 优先笔记 |
 | --- | --- |
-| RAN 系统架构师 | 01-1 → 01-2 → 01-3 → 08-1 → 12-1 |
-| 边缘 AI / 端边云架构师 | 08-2 → 10-1 → 10-2 → 13-1 → 07-2 |
-| 嵌入式 / Linux 平台 | 07-3 → 07-1 → 07-2 → 12-1 → 08-1 → 13-1 |
-| WLAN / 网关方向 | 04-1 → 04-2 → 04-3 → 06-1 → 07-3 |
-| 低功耗 / IoT 设备方向 | 04-2 → 06-1 → 01-4 → 07-1 |
-| 软件 / 语言基础（任何岗位都要过一遍） | 13-2 → 13-1 |
+| RAN 系统架构师 | 01-1 → 01-2 → 01-3 → 05-1 → 07-1 |
+| 边缘 AI / 端边云架构师 | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
+| 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
+| WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 03-1 → 04-3 |
+| 低功耗 / IoT 设备方向 | 02-2 → 03-1 → 01-4 → 04-1 |
+| 软件 / 语言基础（任何岗位都要过一遍） | 08-2 → 08-1 |
 
 ---
 
@@ -75,20 +83,20 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
 │   ├── 01-3 AI-ML for RAN and O-RAN RIC.md
 │   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
-│   ├── 04-1 WLAN - Wi-Fi Generations Evolution.md
-│   ├── 04-2 WLAN - Power Saving Mechanisms and Evolution.md
-│   ├── 04-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
-│   ├── 06-1 Wireless Sensor Networks and Low-Power MAC.md
-│   ├── 07-1 Embedded Systems RTOS and Hardware Interfaces.md
-│   ├── 07-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
-│   ├── 07-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
-│   ├── 08-1 DPDK User Plane and 5G UPF.md
-│   ├── 08-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
-│   ├── 10-1 LLM Inference Engines and xLLM.md
-│   ├── 10-2 Agent Systems and Edge Orchestration.md
-│   ├── 12-1 RISC-V for Communication Infrastructure.md
-│   ├── 13-1 Programming Languages Toolchain and Performance Engineering.md
-│   └── 13-2 C and C++ Programming - Language Features, STL and Systems Practice.md
+│   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
+│   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
+│   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
+│   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
+│   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
+│   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
+│   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
+│   ├── 05-1 DPDK User Plane and 5G UPF.md
+│   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
+│   ├── 06-1 LLM Inference Engines and xLLM.md
+│   ├── 06-2 Agent Systems and Edge Orchestration.md
+│   ├── 07-1 RISC-V for Communication Infrastructure.md
+│   ├── 08-1 Programming Languages Toolchain and Performance Engineering.md
+│   └── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
 └── .workbuddy/                    项目工作数据（勿删）
 ```
 
@@ -106,7 +114,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 21 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、04-1 WLAN 代际、04-2 WLAN 节能、04-3 WLAN 生态、06-1 WSN、07-1 嵌入式 RTOS、07-2 Linux 嵌入式、07-3 嵌入式软件架构、08-1 DPDK/UPF、08-2 端边云、10-1 LLM 推理与 xLLM、10-2 Agent、12-1 RISC-V、13-1 语言与性能、13-2 C/C++，另附 19 一手标准库、20 阅读顺序、21 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 21 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、07-1 RISC-V、08-1 语言与性能、08-2 C/C++，另附 19 一手标准库、20 阅读顺序、21 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -117,20 +125,20 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP、HARQ、BSR、grant 生命周期、QoS 映射 |
 | **01-3** | AI/ML for RAN 与 O-RAN | near-RT/non-RT RIC、xApp/rApp、DRL 调度、sim-to-real |
 | **01-4** | 蜂窝 IoT | RedCap 分级、eRedCap、NTN、Ambient IoT、LP-WUS |
-| **04-1** | WLAN 代际演进 | Wi-Fi 4→9、MLO、OFDMA、UHR、多 AP 协同、逐特性设计细节 |
-| **04-2** | **WLAN 节能技术** | 能耗方程与四类机制族；Legacy PS/PS-Poll、U-APSD、SMPS、VHT TXOP PS 与 OM Control、802.11ah 的 TWT/RAW/TIM 分段、802.11ax TWT 与 trigger-enabled SP、802.11ba 唤醒无线电、802.11be r-TWT、802.11bn AP Power Save / DPS / 跨链路节能、802.11bp 环境供能——含逐代机制对比表、Mermaid 图、实现分层与失效模式 |
-| **04-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
-| **06-1** | WSN 与低功耗 MAC | 分簇路由、UAV 采集、TSCH、AoI |
-| **07-1** | 嵌入式 RTOS | FreeRTOS、PendSV、I2C/SPI/UART/CAN、DMA、缓存一致性 |
-| **07-2** | Linux 嵌入式开发 | 启动链、设备树、驱动、IPC、网络栈、虚拟化、PREEMPT_RT |
-| **07-3** | 嵌入式软件架构 | 分层与 HAL/BSP 划分、执行模型（超级循环 / 时间触发 / RTOS / 主动对象）、调度理论、HSM 与事件驱动、设计模式、数据所有权与邮箱接口、无线协议栈切分（L1/L2 边界、CU/DU、O-RAN 7-2x）、内存与功耗架构、OTA 与回滚、ISO 26262 / IEC 61508 安全架构 |
-| **08-1** | DPDK 与 5G UPF | mbuf/mempool、PFCP、PDR/FAR/QER、QoS 执行、小包 pps |
-| **08-2** | 端边云协同与异构算力 | UnifiedBus、内存池化、MFU、RDMA |
-| **10-1** | LLM 推理引擎与 xLLM | KV Cache、PagedAttention、量化、算子融合、prefill/decode |
-| **10-2** | Agent 系统与边缘编排 | GRAFT、多设备 SLM mesh、安全边界执行 |
-| **12-1** | RISC-V 通信基础设施 | 基带集群、软件定义 PHY、H 扩展、L1/L2 接口 |
-| **13-1** | 语言、工具链与性能工程 | 构建系统、Python、内核旁路选型、性能方法论 |
-| **13-2** | C/C++ 编程与 STL | C23/C++26 语言特性、模板与编译期计算、内存模型与并发、STL 容器/迭代器/算法、系统级惯用法与 UB 清单 |
+| **02-1** | WLAN 代际演进 | Wi-Fi 4→9、MLO、OFDMA、UHR、多 AP 协同、逐特性设计细节 |
+| **02-2** | **WLAN 节能技术** | 能耗方程与四类机制族；Legacy PS/PS-Poll、U-APSD、SMPS、VHT TXOP PS 与 OM Control、802.11ah 的 TWT/RAW/TIM 分段、802.11ax TWT 与 trigger-enabled SP、802.11ba 唤醒无线电、802.11be r-TWT、802.11bn AP Power Save / DPS / 跨链路节能、802.11bp 环境供能——含逐代机制对比表、Mermaid 图、实现分层与失效模式 |
+| **02-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
+| **03-1** | WSN 与低功耗 MAC | 分簇路由、UAV 采集、TSCH、AoI |
+| **04-1** | 嵌入式 RTOS | FreeRTOS、PendSV、I2C/SPI/UART/CAN、DMA、缓存一致性 |
+| **04-2** | Linux 嵌入式开发 | 启动链、设备树、驱动、IPC、网络栈、虚拟化、PREEMPT_RT |
+| **04-3** | 嵌入式软件架构 | 分层与 HAL/BSP 划分、执行模型（超级循环 / 时间触发 / RTOS / 主动对象）、调度理论、HSM 与事件驱动、设计模式、数据所有权与邮箱接口、无线协议栈切分（L1/L2 边界、CU/DU、O-RAN 7-2x）、内存与功耗架构、OTA 与回滚、ISO 26262 / IEC 61508 安全架构 |
+| **05-1** | DPDK 与 5G UPF | mbuf/mempool、PFCP、PDR/FAR/QER、QoS 执行、小包 pps |
+| **05-2** | 端边云协同与异构算力 | UnifiedBus、内存池化、MFU、RDMA |
+| **06-1** | LLM 推理引擎与 xLLM | KV Cache、PagedAttention、量化、算子融合、prefill/decode |
+| **06-2** | Agent 系统与边缘编排 | GRAFT、多设备 SLM mesh、安全边界执行 |
+| **07-1** | RISC-V 通信基础设施 | 基带集群、软件定义 PHY、H 扩展、L1/L2 接口 |
+| **08-1** | 语言、工具链与性能工程 | 构建系统、Python、内核旁路选型、性能方法论 |
+| **08-2** | C/C++ 编程与 STL | C23/C++26 语言特性、模板与编译期计算、内存模型与并发、STL 容器/迭代器/算法、系统级惯用法与 UB 清单 |
 
 ---
 
@@ -138,9 +146,9 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
 2. **入口**：`00 MOC` 是唯一导航页，其余 18 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
-3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，`01-x` 移动通信、`04-x` WLAN、`06-x` 低功耗组网、`07-x` 嵌入式系统软件、`08-x` 数据面与异构算力、`10-x` AI、`12-x` 芯片与指令集、`13-x` 编程语言。组号沿用各组原始编号，因此不连续。文件名即主题，便于按编号排序与按名检索。
+3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 69 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---
@@ -176,18 +184,18 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 | C/C++ 标准现状 | 仅提及 "C/C++" | **C23 = ISO/IEC 9899:2024**（2024-10-31 发布，`__STDC_VERSION__` = 202311L）；**C++26 由 WG21 于 2026-03-28 定稿**（工作草案 N5046），待发布为 ISO/IEC 14882:2026 |
 | AUTOSAR / MISRA 版本 | 未涉及 | **AUTOSAR R25-11** 为当前版本（2025-12-04 发布会）；**MISRA C:2025** 为 C 语言现行版并取代 MISRA C:2023；**MISRA C++:2023**（TC1:2026）面向 C++17 —— 因此符合 MISRA 的 C++ 项目并不在 C++20/23/26 上 |
 | TWT 的出处 | 常被归为 802.11ax | 实为 **802.11ah-2016**（Wi-Fi HaLow）首创，后引入 802.11ax；802.11be 又增加 **r-TWT**，它首先是时延机制、其次才是节能机制 |
-| 802.11bi | 有时被说成唤醒无线电 | 实为 **Enhanced Privacy Protection**，**2026-09-25** 批准发布（见笔记 04-2）；唤醒无线电修订版是 **802.11ba-2021** |
+| 802.11bi | 有时被说成唤醒无线电 | 实为 **Enhanced Privacy Protection**，**2026-09-25** 批准发布（见笔记 02-2）；唤醒无线电修订版是 **802.11ba-2021** |
 | r-TWT 落地情况 | 常被当作 Wi-Fi 7 已有能力 | r-TWT 在 802.11be 中为**可选**特性，且**不在 Wi-Fi CERTIFIED 7 强制要求内**；2026 年 CWNP 综述指出在售客户端与 AP 未声明支持。引用前按 `VERIFY` 处理 |
 
 **更新触发点**
 
 - 3GPP TSG 全会（每年 4 次）→ 更新 01-1/01-2/01-4
-- IEEE 802.11 WG 与 WFA 认证公告 → 更新 04-1/04-2/04-3
-- TGbn / TGbp 投票里程碑、WFA 功耗相关认证 → 更新 04-2（AP Power Save 仍为草案特性，P802.11bp 处于 D1.0 WG 投票）
-- Linux kernel 主线与 LTS 发布 → 更新 13-1/07-2
-- xLLM / Agent 框架的版本与论文 → 更新 10-1/10-2
-- WG21 / WG14 会议与 GCC、Clang 大版本发布 → 更新 13-2
-- AUTOSAR 年度发布（每年 11 月）、MISRA 文档修订、Zephyr 半年发布与 LTS 分支 → 更新 07-3
+- IEEE 802.11 WG 与 WFA 认证公告 → 更新 02-1/02-2/02-3
+- TGbn / TGbp 投票里程碑、WFA 功耗相关认证 → 更新 02-2（AP Power Save 仍为草案特性，P802.11bp 处于 D1.0 WG 投票）
+- Linux kernel 主线与 LTS 发布 → 更新 08-1/04-2
+- xLLM / Agent 框架的版本与论文 → 更新 06-1/06-2
+- WG21 / WG14 会议与 GCC、Clang 大版本发布 → 更新 08-2
+- AUTOSAR 年度发布（每年 11 月）、MISRA 文档修订、Zephyr 半年发布与 LTS 分支 → 更新 04-3
 
 ---
 
