@@ -1,45 +1,47 @@
 ---
-title: 个人背景与任务说明
-lang: zh-CN
+title: Personal Background and Task Statement
+lang: en
 category: profile
+version: 1.0
+sibling: background.cn.md
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
-# 个人背景与任务说明
+# Personal Background and Task Statement
 
-## 一、背景信息
+## 1. Background
 
-> 西电通信工程硕士，持有国家中级工程师、高级 AI 训练师证书，IEEE 会员，历任通信软件、嵌入式软件、无线协议栈工程师与系统架构师；深耕 5G RAN L2、WLAN/WFA、IoT、WSN、嵌入式软件、AI/ML、云与边缘计算领域，持续跟进 6G、新一代 WLAN、端边云协同、xLLM、Agent、通信异构融合算法等前沿技术与产业落地；熟悉 C/C++、Python、Linux/RTOS、ARM/RISC-V/x86/FPGA 软硬件开发、Verilog HDL、DPDK、prpl 框架及无线通信协议规范，擅长基于"问题"的解决方案设计、性能调优、算法落地，同时参与新技术预研、实现、立项与行业标准研究工作；具备中英双语办公、跨国团队的研发和技术管理经验。未来将持续跟进信息技术通信 + 异构算力 + AI 的交叉融合领域，深耕技术积淀，致力成长为该领域资深专家工程师。
+> MSc in Communication Engineering from Xidian University; holder of the National Intermediate Engineer title and the Senior AI Trainer certification; IEEE member; my roles have progressed through communications software engineer, embedded software engineer, wireless protocol stack engineer, and system architect. I have deep experience in 5G RAN L2, WLAN/WFA, IoT, WSN, embedded software, AI/ML, and cloud and edge computing, and I continuously track frontier technologies and their industrial deployment in 6G, next-generation WLAN, cloud-edge-end collaboration, xLLM, Agents, and heterogeneous convergence algorithms for communications. I am proficient in C/C++, Python, Linux/RTOS, ARM/RISC-V/x86/FPGA hardware and software development, Verilog HDL, DPDK, the prpl framework, and wireless communication protocol specifications. I am strong at problem-driven solution design, performance tuning, and algorithm deployment, while also taking part in new-technology pre-research, implementation, project initiation, and industry standards research. I work bilingually in Chinese and English and have R&D and technical management experience in cross-national teams. Going forward, I will keep following the intersection of information and communication technology + heterogeneous computing + AI, deepen my technical foundation, and work toward becoming a senior expert engineer in this field.
 
-### 1.1 结构化拆解
+### 1.1 Structured breakdown
 
-| 维度 | 内容 |
+| Dimension | Content |
 | --- | --- |
-| 学历 | 西安电子科技大学（西电）通信工程硕士 |
-| 资质证书 | 国家中级工程师；高级 AI 训练师 |
-| 学术身份 | IEEE 会员 |
-| 任职轨迹 | 通信软件工程师 → 嵌入式软件工程师 → 无线协议栈工程师 → 系统架构师 |
-| 深耕领域 | 5G RAN L2、WLAN/WFA、IoT、WSN、嵌入式软件、AI/ML、云与边缘计算 |
-| 前沿跟踪 | 6G、新一代 WLAN、端边云协同、xLLM、Agent、通信异构融合算法及其产业落地 |
-| 技术栈 | C/C++、Python、Linux/RTOS、ARM/RISC-V/x86/FPGA 软硬件开发、Verilog HDL、DPDK、prpl 框架、无线通信协议规范 |
-| 能力特长 | 基于"问题"的解决方案设计、性能调优、算法落地 |
-| 研究职责 | 新技术预研、实现、立项与行业标准研究 |
-| 协作属性 | 中英双语办公，跨国团队的研发与技术管理经验 |
-| 未来方向 | 持续跟进 ICT + 异构算力 + AI 的交叉融合，成长为该领域资深专家工程师 |
+| Education | MSc in Communication Engineering, Xidian University |
+| Certifications | National Intermediate Engineer (title); Senior AI Trainer (certification) |
+| Academic affiliation | IEEE member |
+| Role trajectory | Communications software engineer -> embedded software engineer -> wireless protocol stack engineer -> system architect |
+| Core domains | 5G RAN L2, WLAN/WFA, IoT, WSN, embedded software, AI/ML, cloud and edge computing |
+| Frontier tracking | 6G, next-generation WLAN, cloud-edge-end collaboration, xLLM, Agents, heterogeneous convergence algorithms for communications, and their industrial deployment |
+| Technology stack | C/C++, Python, Linux/RTOS, ARM/RISC-V/x86/FPGA hardware and software development, Verilog HDL, DPDK, the prpl framework, wireless communication protocol specifications |
+| Strengths | Problem-driven solution design, performance tuning, algorithm deployment |
+| Research responsibilities | New-technology pre-research, implementation, project initiation, industry standards research |
+| Collaboration profile | Bilingual (CN/EN) working environment; R&D and technical management experience in cross-national teams |
+| Future direction | Continue following the ICT + heterogeneous compute + AI intersection and grow into a senior expert engineer in the field |
 
-## 二、任务要求
+## 2. Task statement
 
-1. **准备一份面试题纲**：围绕上述背景，形成可直接在面试中使用的提问与应答框架。
-2. **准备一份详细的知识框架**：覆盖每个涉及领域，且每个领域均更新到最新知识。
-3. **信息真实有效**：所有事实、标准编号、时间节点、平台与芯片名称必须可核实。
-4. **输出一份 Word 文档**：按可复制的目录结构组织，便于面试前快速扫读。
+1. **Prepare an interview question outline** — a question-and-answer framework usable directly in interviews, built around the background above.
+2. **Prepare a detailed knowledge framework** — covering every domain involved, with each domain updated to the latest available knowledge.
+3. **All information must be true and verifiable** — every fact, specification number, timeline milestone, and platform/chipset name must be checkable.
+4. **Output a Word document** — organised by a copy-pasteable structure for fast scanning before an interview.
 
-## 三、配套文档
+## 3. Companion documents
 
-- 知识框架与面试题纲详见 [[skills-draft]]（`skills-draft.md`）
-- 英文版本见 `background.en.md` 与 `skills-draft.en.md`
-- 分领域知识点笔记见 `knowledge-graph/` 目录
+- Knowledge framework and interview outline: `skills-draft.md`
+- Chinese versions: `background.cn.md`, `skills-draft.cn.md`
+- Per-domain knowledge notes: the `knowledge-graph/` directory
 
 ---
 

@@ -114,6 +114,7 @@ Data path sketch:
 
 ## Related
 
+- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
 - [[02 5G NR RAN Layer 2 Protocol Stack]]
 - [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
 - [[12 RISC-V for Communication Infrastructure]]

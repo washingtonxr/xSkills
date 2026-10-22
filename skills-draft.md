@@ -1,334 +1,336 @@
 ---
-title: 2026 通信 × 算力 × AI 交叉领域知识框架与面试题纲
-lang: zh-CN
+title: 2026 Knowledge Framework and Interview Outline for the Communications x Compute x AI Intersection
+lang: en
 category: interview-prep
 version: 1.0
+sibling: skills-draft.cn.md
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
-# 2026 通信 × 算力 × AI 交叉领域知识框架与面试题纲
+# 2026 Knowledge Framework and Interview Outline
+## Communications x Compute x AI
 
-> 本文档按"知识框架 → 面试题纲 → 文档产出"三层组织。所有标准编号、时间节点与平台名称为可核实的事实锚点，面试前建议优先核对。
-
----
-
-## 第一部分：知识框架
-
-### 1. 5G-A / 6G 无线接入与协议栈
-
-#### 1.1 5G-A（Rel-19/20）的"AI 空口原生化"与 RedCap 演进
-
-- **Rel-19 的核心定位**：2025 年底冻结，确立 **5G-A 商用变现基础**，重点方向包括 **AI 空口原生化、RedCap 卫星直连、弹性网络拓扑**。AI 不再只是网管外挂，而是进入空口链路自适应、波束管理、定位等环节。
-
-- **RedCap → eRedCap 的"极致轻量化 + NTN 融合"**：eRedCap 被视为 **LTE Cat 1/1bis** 在 5G 生态中的自然继任者，2026 年芯片侧已出现支持 **NTN（GEO/LEO）** 的 eRedCap 平台。
-  - 面试中需要能说清：eRedCap 的**带宽、天线数、UE 复杂度下降**带来了哪些 L2 调度约束的变化（如 **HARQ 进程数、盲检次数、上行覆盖与 grant 粒度的权衡**）。
-
-- **网络节能与 AI 的耦合**：5G-A 节能从"符号/通道/小区关断"向 **"一站一策"的 AI 策略生成**演进，核心是用话务预测和多目标优化在低负荷与高负荷之间切换能效模式。
-
-#### 1.2 6G：Rel-21 作为"第一个 6G 版本"的实质含义
-
-- **时间线**：3GPP 于 **2025 年**启动 6G 标准制定，**Rel-21 是第一个 6G 规范版本**，目标 **2029 年完成标准、2030 年具备商用能力**。**Rel-20** 是 5G-A 收尾与 6G 研究启动的"跨世代桥梁"，Rel-21 进入实质标准化。
-
-- **6G 场景与需求已定型**：TSG SA 的 6G 用例与业务需求研究（**TR 22.870**）和 RAN 的 6G 场景与需求研究（**TR 38.914**）已完成结项或达到高完成度，6G 无线技术研究进入 **"关键技术收敛阶段"**。收敛方向集中在 **波形、调制、信道编码、带宽和网络架构接口**，产业界倾向"继承成熟框架 + 保留必要创新空间"。
-
-- **最先可能商用的 6G 特性**（业界研判第一梯队）：
-  1. **ISAC（通感一体）** —— 已在 Rel-19/20 完成基础通感研究，Rel-21 将 6G 原生 ISAC 纳入基线；
-  2. **AI 原生内建** —— 被 SA2 的 6G 架构研究作为核心能力，Rel-21 把 AI 能力固化进架构（无线链路 AI 优化、故障自愈、AI 资源调度、**AI-DPD** 等）；
-  3. **U6G 中频段 ELAA**；
-  4. **NTN 增强**。
-
-- **面试关联**：作为 L2/系统架构背景，需要能讨论"AI 原生"对协议栈分层的影响——
-  - AI 决策放在 **MAC 调度器内部**还是**跨层控制器**？
-  - 模型生命周期管理如何与 **O-RAN 的 near-RT/non-RT RIC** 对齐？
-  - 训练/推理算力放在 **DU、CU 还是边缘云**？
-
-#### 1.3 5G RAN L2 的"变"与"不变"
-
-- **不变的骨架**：
-  - MAC 调度仍然是**每个 slot 决定 PDSCH/PUSCH 资源分配**的核心功能；
-  - 上行 grant 生命周期（**SR → BSR → PUSCH**，configured grant 的预分配与激活）仍是面试高频追问点；
-  - RLC/PDCP 的 **ARQ、重排序、安全、头压缩**等机制依旧是 L2 的基本盘。
-
-- **正在变的层面**：
-  1. **L1/L2 信令驱动的快速移动性** —— Rel-18 已重点关注仅基于 L1/L2 信令的跨小区快速切换，减少 RRC 层介入带来的中断，直接触及 MAC/PHY 测量与切换决策的耦合。
-  2. **AI/ML 进入 L2 调度** —— DQN 等 RL 方法用于 massive MIMO 波束选择和资源分配，multi-agent DRL 用于功率分配，L3 的多层管理 agent 做负载均衡和干扰协调。
-     - 必须能回答：**"RL 调度器与传统 PF/EXP 规则调度器各自的适用边界"**，以及 **"训练环境（sim-to-real gap）和在线推理时延如何约束调度周期"**。
-  3. **载波聚合与多连接下的 L2 复杂度** —— 5G-A 的 CA 增强、上行增强、多载波调度对 **HARQ 实体管理、buffer 状态上报和跨载波调度时序**提出更细的约束。
+> This document is organised in three layers: **knowledge framework -> interview outline -> document production**. All specification numbers, timeline milestones and platform names are verifiable fact anchors; verify them before the interview.
 
 ---
 
-### 2. WLAN / WFA 与短距无线
+## Part I. Knowledge Framework
 
-#### 2.1 Wi-Fi 7（802.11be）的工程成熟与 Wi-Fi 8（802.11bn）的定位切换
+### 1. 5G-Advanced / 6G Radio Access and Protocol Stack
 
-- **Wi-Fi 7 仍是 2026 年的商用主力**：核心是 **320 MHz、4096-QAM、MLO**，追求 EHT 和低时延。在嵌入式/网关侧，**MLO 的链路选择、TID-to-link mapping、多链路安全与节能模式**是实际落地中的难点。
+#### 1.1 5G-Advanced (Rel-19/20): "AI-native air interface" and RedCap evolution
 
-- **Wi-Fi 8 的官方标准状态**：
-  - IEEE **802.11bn（Wi-Fi 8）Draft 1.0** 于 **2025 年 8 月**发布；
-  - 目标不是峰值速率，而是 **Ultra-High Reliability（UHR）**——尾时延、无缝漫游、多 AP 协同、高密度下的确定性体验；
-  - **Wi-Fi Alliance 认证预计 2028 年**完成，但芯片厂商在 **CES 2026** 已发布"Wi-Fi 8-ready"产品，量产时间点指向 **2026 年夏季**；
-  - 面试中需要区分**"标准完成度"与"市场宣传节奏"**，并说明为什么在标准未冻结前做预标准产品存在**互操作和特性裁剪风险**。
+- **Positioning of Rel-19**: frozen at the end of **2025**, it establishes the **commercial monetisation baseline for 5G-Advanced**. Focus areas include the **AI-native air interface, RedCap satellite direct connectivity, and elastic network topology**. AI is no longer a bolt-on network-management add-on; it enters link adaptation, beam management, and positioning.
 
-- **Wi-Fi 8 的关键技术方向**：**多 AP 协同（Co-SR/Co-BF）**、动态资源调度、**增强型长距（ELR/DRU）**，目标是将 **P99 时延降至 Wi-Fi 7 的约 1/6**、IoT 覆盖拓宽约 **2 倍**。从 L2/MAC 视角，这涉及**多 AP 间的调度协调信令、BSS 间干扰管理和 TWT 的跨 AP 扩展**。
+- **RedCap -> eRedCap: "extreme lightweighting + NTN convergence"**: eRedCap is seen as the natural successor of **LTE Cat 1/1bis** within the 5G ecosystem, and by **2026** chipset platforms supporting **NTN (GEO/LEO)** eRedCap have appeared.
+  - In an interview you must be able to explain what the reduction in **bandwidth, antenna count and UE complexity** does to L2 scheduling constraints — for example **HARQ process count, number of blind decodes, and the trade-off between uplink coverage and grant granularity**.
 
-- **Wi-Fi 9 的早期研讨**：WNG 已在 **2026 年**讨论 **802.11bnext** 的 scope，核心驱动是 **AI-native 应用、沉浸式娱乐、工业自动化与机器人**；技术主题包括 **AI-native PHY、确定性 MAC、增强上行、Age-of-Information 调度、汽车特定需求**。这说明 WLAN 的下一代竞争点正在从"吞吐"转向**"确定性 + AI 流量特征适配"**。
+- **Coupling of network energy saving and AI**: 5G-A energy saving is evolving from "symbol/channel/cell shutdown" toward AI-generated **"one policy per site"**. The core is using traffic prediction and multi-objective optimisation to switch energy-efficiency modes between low-load and high-load periods.
 
-#### 2.2 WFA 认证与 prpl 框架的工程交叉
+#### 1.2 6G: what "Rel-21 as the first 6G release" actually means
 
-- **prpl 的定位**：
-  - **prplWrt** 是基于 OpenWrt 的企业级/运营商级开源框架；
-  - **prplMesh** 是面向 **EasyMesh** 的开源实现，支持 OpenWrt、RDK-B 和多 SoC 平台，通过 **HAL** 做硬件抽象；
-  - prplMesh 直接驱动 **hostapd / wpa_supplicant**，在 vanilla OpenWrt 上通过 **NL80211 backend** 部署。
+- **Timeline**: 3GPP started 6G standardisation in **2025**; **Rel-21 is the first 6G specification release**, targeting **standard completion in 2029 and commercial readiness by 2030**. **Rel-20** is the cross-generation bridge that closes out 5G-A and launches 6G study work; Rel-21 enters substantive standardisation.
 
-- **面试可追问点**：
-  1. 在运营商网关场景中，prplMesh 的**控制器/代理架构**如何与 EasyMesh 的 multi-AP 协同对齐？
-  2. **prpl LCM 容器化微服务**对 Wi-Fi 网关软件升级和功能解耦的实际价值？
-  3. 若 Wi-Fi 8 的 multi-AP 协调特性落地，prpl 框架需要在**管理面/控制面**做哪些扩展？
+- **6G scenarios and requirements are settled**: the TSG SA 6G use-case and service-requirement study (**TR 22.870**) and the RAN 6G scenario and requirement study (**TR 38.914**) have been completed or are at a high degree of completion, and 6G radio technology study has entered the **"key technology convergence phase"**. Convergence centres on **waveform, modulation, channel coding, bandwidth, and network architecture interfaces**, with industry leaning toward "inherit mature frameworks + keep necessary room for innovation".
 
----
+- **6G features most likely to be commercialised first** (industry's first tier):
+  1. **ISAC (Integrated Sensing and Communication)** — basic sensing/communication study completed in Rel-19/20; Rel-21 brings native 6G ISAC into the baseline;
+  2. **Built-in AI-native capability** — treated as a core capability in the SA2 6G architecture study; Rel-21 fixes AI capability into the architecture (radio link AI optimisation, fault self-healing, AI resource scheduling, **AI-DPD**, and so on);
+  3. **U6G mid-band ELAA**;
+  4. **NTN enhancement**.
 
-### 3. IoT / WSN / 嵌入式
+- **Interview relevance**: coming from an L2/system-architecture background, you must be able to discuss how "AI-native" affects protocol stack layering —
+  - Do AI decisions live **inside the MAC scheduler** or in a **cross-layer controller**?
+  - How does model lifecycle management align with the **O-RAN near-RT/non-RT RIC**?
+  - Does training/inference compute sit in the **DU, the CU, or the edge cloud**?
 
-#### 3.1 蜂窝 IoT 的"eRedCap + NTN"双线
+#### 1.3 What changes and what does not in 5G RAN L2
 
-- eRedCap 与 NTN 的融合是 **2026 年 IoT 芯片侧最明确的产品化信号之一**。
-  - **ALT1350 / ALT1550** 等平台同时支持 **NB-IoT、NTN（Iridium 的 3GPP 标准 NTN 服务）和 eRedCap**，面向 D2D 与低功耗广域场景；
-  - **Nordic nRF91 系列**也在同一路线图上叠加 **LTE-M/NB-IoT、NTN 和 5G eRedCap**。
+- **The unchanging skeleton**:
+  - MAC scheduling is still the core function that **decides PDSCH/PUSCH resource allocation every slot**;
+  - The uplink grant lifecycle (**SR -> BSR -> PUSCH**, plus configured grant pre-allocation and activation) is still a high-frequency interview follow-up;
+  - RLC/PDCP mechanisms — **ARQ, reordering, security, header compression** — remain the L2 fundamentals.
 
-- **面试需要说清**：
-  1. NTN 的**时序/覆盖扩展（HARQ、定时提前、馈线时延）**如何改变 eRedCap 的 **MAC/RLC 参数配置**？
-  2. 卫星链路的 **long RTT** 对 IoT 小包业务的 **TCP/应用层重传策略**意味着什么？
-
-#### 3.2 WSN 的低功耗范式迁移
-
-- 经典分簇路由（**LEACH / DEEC**）仍然是理解 WSN 能量均衡的基线，但 2026 年的工程焦点已转向 **UAV-enabled WSN**：
-  - 用无人机**按需抵近收集**，规避多跳中继的指数级能耗衰减（**每跳转发约占总能耗 30%–50%**）；
-  - 配合**传感器协同休眠**可将待机电流降低 **90% 以上**。
-
-- **与背景衔接**：嵌入式 RTOS 下的**低功耗调度、无线唤醒（Wake-up Radio）与 MAC 层 duty-cycle 的协同**，仍然是面试中检验"是否真正做过资源受限系统"的硬问题。
-
-#### 3.3 RTOS / 嵌入式通信设备的面试硬核
-
-- **高频考点**：**I2C 总线仲裁与上拉电阻、SPI/UART/DMA、CAN 总线**，以及 **FreeRTOS 任务调度、优先级翻转、PendSV 触发机制、任务状态迁移、队列/信号量/互斥锁的差异**。
-
-- **加分项**：能把这些底层机制与通信设备场景绑定——
-  - **DPAA/DPDK** 在嵌入式多核上的 buffer 管理，与 RTOS 消息队列在**"零拷贝"目标下的取舍**；
-  - **中断上半部/下半部**与无线协议栈**实时性要求**的对应关系。
+- **What is changing**:
+  1. **Fast mobility driven by L1/L2 signalling** — Rel-18 already focused on cross-cell fast handover based purely on L1/L2 signalling, reducing the interruption caused by RRC-layer involvement; this directly touches the coupling between MAC/PHY measurement and handover decision.
+  2. **AI/ML entering L2 scheduling** — RL methods such as DQN are used for massive MIMO beam selection and resource allocation, multi-agent DRL for power allocation, and L3 multi-layer management agents for load balancing and interference coordination.
+     - You must be able to answer: **"what are the respective applicability boundaries of an RL scheduler versus a conventional PF/EXP rule-based scheduler"**, and **"how do the training environment (sim-to-real gap) and online inference latency constrain the scheduling period"**.
+  3. **L2 complexity under carrier aggregation and multi-connectivity** — 5G-A CA enhancement, uplink enhancement, and multi-carrier scheduling impose finer constraints on **HARQ entity management, buffer status reporting, and cross-carrier scheduling timing**.
 
 ---
 
-### 4. 云 / 边缘 / 端边云协同与异构算力
+### 2. WLAN / WFA and Short-Range Wireless
 
-#### 4.1 端边云协同的最新工程抽象
+#### 2.1 Engineering maturity of Wi-Fi 7 (802.11be) and the repositioning of Wi-Fi 8 (802.11bn)
 
-- 2026 年的趋势是从**"静态分层"走向任务级动态编排**。
+- **Wi-Fi 7 is still the commercial mainstay in 2026**: the core is **320 MHz, 4096-QAM and MLO**, pursuing EHT and low latency. On the embedded/gateway side, **MLO link selection, TID-to-link mapping, multi-link security and power-saving modes** are the real deployment difficulties.
 
-- **GRAFT** 是一个有代表性的系统：
-  - 用 **sessioned gRPC 控制面**在异构个人设备（**Apple laptop、Snapdragon X Elite、Samsung 手机、Arduino Q**）之间做 **capability-aware policy routing**；
-  - 按 **CPU/GPU/NPU** 分发推理任务，**在无云条件下完成跨设备 SLM 协作**，并保持每个 worker 在**显式输入预算**内；
-  - 关键观察：**小 mesh 的瓶颈不是单设备算力，而是轻量级本地编排**；端到端时间由**最慢的并行 worker**决定，而非文档总大小。
+- **Official standard status of Wi-Fi 8**:
+  - IEEE **802.11bn (Wi-Fi 8) Draft 1.0** was released in **August 2025**;
+  - The target is not peak rate but **Ultra-High Reliability (UHR)** — tail latency, seamless roaming, multi-AP coordination, deterministic experience under high density;
+  - **Wi-Fi Alliance certification is expected around 2028**, but chip vendors had already announced "Wi-Fi 8-ready" products at **CES 2026**, with mass production pointed at **summer 2026**;
+  - In interviews you must separate **"standard completeness" from "marketing cadence"**, and explain why building pre-standard products before the standard is frozen carries **interoperability and feature-truncation risk**.
 
-- **模型分区与可靠性**：**DNN partitioning** 在端设备上做 dependable inference 的研究仍在推进，目标是在不依赖云的情况下通过分区实现实时 AI，但**分区点和回退策略的工程复杂度很高**。
+- **Key technology directions for Wi-Fi 8**: **multi-AP coordination (Co-SR/Co-BF)**, dynamic resource scheduling, and **enhanced long range (ELR/DRU)**, targeting roughly **1/6 of Wi-Fi 7's P99 latency** and roughly **2x wider IoT coverage**. From an L2/MAC viewpoint this involves **scheduling coordination signalling between APs, inter-BSS interference management, and cross-AP extension of TWT**.
 
-- **L2/协议栈视角的切入**：端边云协同中的"控制面信令"本质上与 RAN 的调度信令有同构性——
-  - **任务路由 ≈ 调度决策**
-  - **budget ≈ 资源配额**
-  - **同步 barrier ≈ HARQ/ARQ 的时序约束**
+- **Early discussion of Wi-Fi 9**: the WNG discussed the scope of **802.11bnext** in **2026**, driven by **AI-native applications, immersive entertainment, industrial automation and robotics**; technical themes include **AI-native PHY, deterministic MAC, enhanced uplink, Age-of-Information scheduling, and automotive-specific requirements**. This shows the next-generation WLAN battleground shifting from "throughput" to **"determinism + adaptation to AI traffic characteristics"**.
 
-  面试中如果能做这种类比，会显著区别于纯 AI Infra 背景的候选人。
+#### 2.2 Where WFA certification and the prpl framework intersect in engineering
 
-#### 4.2 异构算力与"网络定义算力"
+- **Positioning of prpl**:
+  - **prplWrt** is an enterprise/carrier-grade open-source framework built on OpenWrt;
+  - **prplMesh** is an open-source implementation targeting **EasyMesh**, supporting OpenWrt, RDK-B and multiple SoC platforms, with hardware abstraction through a **HAL**;
+  - prplMesh drives **hostapd / wpa_supplicant** directly and is deployed on vanilla OpenWrt through the **NL80211 backend**.
 
-- **华为灵衢（UnifiedBus）2026 的公开信息**是一个很好的"系统级异构协同"案例：
-  - 将**十余种互联协议归一**，互联带宽从**百 GB 级提升至 TB 级**，**RTT 从 7 μs 压缩至 2 μs**；
-  - 支持**超节点内全局内存统一编址**，CPU、NPU、内存、SSD 通过灵衢直接互联，CPU/NPU 资源可灵活配比；
-  - 做**分层分级 Transformer 硬加速**（解耦 Attention 与 FFN，**AF 分离部署**）；
-  - **千亿级/数千维向量检索性能翻番**，**10T 大模型训练对单卡 HBM 的容量需求下降**。
-
-- **ODCC 的视角**：万卡级智算集群的痛点被概括为**"聚合异构算力、破解带宽瓶颈、时延抖动、运维复杂"**，**端网协同的新型 RDMA 协议**和**内存池化**被视为下一阶段方向。
-
-- **面试中需要建立的因果链**：异构算力融合的性能瓶颈不只是 FLOPS，而是 **互联带宽 × 内存语义 × 调度粒度**的乘积。能用量化方式解释——
-  - **"为什么内存池化能提升 MFU"**
-  - **"为什么算子融合在 memory-bound 阶段有效、在 compute-bound 阶段收益递减"**
-
-  是高级岗位的关键区分点。
-
-#### 4.3 DPDK / 用户面 / 边缘转发
-
-- **DPDK 在 5G UPF 和边缘转发中的核心价值**仍然是：**绕过内核协议栈**、用 **rte_mempool 预分配 mbuf**、减少内存拷贝、做 **CPU 核绑定的亲和性调度**。开源 UPF（如 **free5GC**）基于 DPDK 实现 **PDR/FAR/QER** 的流表匹配和 QoS 执行。
-
-- **边缘场景的新问题**：**64B 小包转发、延迟抖动和混合流量下的 AQM 策略**，比纯吞吐更考验设计；**DPDK + HDB Interface** 等方案在边缘转发平面上的对比数据也显示，**小包场景的收益和代价需要分开评估**。
-
-- **与 L2 经验的结合**：UPF 的 **QoS flow 映射**与 RAN 侧的 **DRB/QoS flow 映射**在 3GPP 框架内是端到端对齐的；面试中可以讨论**"当 RAN 调度器与 UPF 的 QoS 执行存在时间尺度不匹配时，如何定位是空口瓶颈还是用户面瓶颈"**。
+- **Interview follow-ups**:
+  1. In carrier gateway scenarios, how does the prplMesh **controller/agent architecture** align with EasyMesh multi-AP coordination?
+  2. What is the practical value of **prpl LCM containerised microservices** for Wi-Fi gateway software upgrades and functional decoupling?
+  3. If Wi-Fi 8 multi-AP coordination features land, what extensions does the prpl framework need in its **management and control planes**?
 
 ---
 
-### 5. xLLM / Agent / 端侧推理
+### 3. IoT / WSN / Embedded
 
-#### 5.1 xLLM 的技术定位与面试可追问深度
+#### 3.1 The twin track of "eRedCap + NTN" in cellular IoT
 
-**xLLM** 是京东开源的高性能**纯 C++ LLM 推理框架**，目标是在端侧和实时场景中消除 **Python 运行时开销和 GC 卡顿**，直接在底层硬件上优化算子。核心技术特征包括：
+- The convergence of eRedCap and NTN is **one of the clearest productisation signals on the IoT chipset side in 2026**.
+  - Platforms such as **ALT1350 / ALT1550** simultaneously support **NB-IoT, NTN (Iridium's 3GPP-standard NTN service) and eRedCap**, targeting D2D and low-power wide-area scenarios;
+  - **Nordic's nRF91 series** is on the same roadmap, layering **LTE-M/NB-IoT, NTN and 5G eRedCap**.
 
-| 技术特征 | 说明 |
+- **Interview requirements**:
+  1. How does NTN **timing/coverage extension (HARQ, timing advance, feeder link delay)** change eRedCap **MAC/RLC parameter configuration**?
+  2. What does the **long RTT** of a satellite link mean for the **TCP/application-layer retransmission strategy** of IoT small-packet traffic?
+
+#### 3.2 The low-power paradigm shift in WSN
+
+- Classic clustering routing (**LEACH / DEEC**) remains the baseline for understanding WSN energy balance, but by 2026 the engineering focus has shifted to **UAV-enabled WSN**:
+  - Using drones for **on-demand proximity collection** to avoid the exponential energy decay of multi-hop relaying (**each forwarding hop accounts for roughly 30%-50% of total energy consumption**);
+  - Combined with **cooperative sensor sleeping**, standby current can be cut by **more than 90%**.
+
+- **Connection to the background**: low-power scheduling under an embedded RTOS, and the coordination between **Wake-up Radio** and **MAC-layer duty cycling**, are still the hard questions that test whether someone has genuinely built resource-constrained systems.
+
+#### 3.3 RTOS / embedded communication device interview hardcore
+
+- **High-frequency topics**: **I2C bus arbitration and pull-up resistors, SPI/UART/DMA, CAN bus**, plus **FreeRTOS task scheduling, priority inversion, the PendSV trigger mechanism, task state transitions, and the differences between queues, semaphores and mutexes**.
+
+- **Bonus points**: being able to bind these low-level mechanisms to communications equipment scenarios —
+  - **Buffer management of DPAA/DPDK on embedded multicore** versus the trade-offs of RTOS message queues under a **"zero-copy"** goal;
+  - The correspondence between **interrupt top half / bottom half** and the **real-time requirements** of a wireless protocol stack.
+
+---
+
+### 4. Cloud / Edge / Cloud-Edge-End Collaboration and Heterogeneous Computing
+
+#### 4.1 The latest engineering abstraction of cloud-edge-end collaboration
+
+- The 2026 trend is moving from **"static layering"** to **task-level dynamic orchestration**.
+
+- **GRAFT** is a representative system:
+  - It uses a **sessioned gRPC control plane** to do **capability-aware policy routing** across heterogeneous personal devices (**Apple laptop, Snapdragon X Elite, Samsung phone, Arduino Q**);
+  - It distributes inference tasks by **CPU/GPU/NPU**, completes **cross-device SLM collaboration with no cloud involved**, and keeps every worker within an **explicit input budget**;
+  - Key observation: **the bottleneck of a small mesh is not single-device compute but lightweight local orchestration**; end-to-end time is determined by the **slowest parallel worker**, not by total document size.
+
+- **Model partitioning and dependability**: research on **DNN partitioning** for dependable inference on end devices continues, with the goal of real-time AI through partitioning without cloud dependence — but the **engineering complexity of partition-point selection and fallback strategy is high**.
+
+- **Where the L2/protocol-stack view enters**: the "control-plane signalling" in cloud-edge-end collaboration is structurally isomorphic to RAN scheduling signalling —
+  - **Task routing ~ scheduling decision**
+  - **Budget ~ resource quota**
+  - **Synchronisation barrier ~ timing constraint of HARQ/ARQ**
+
+  Being able to make that analogy in an interview clearly differentiates you from a pure AI-infrastructure candidate.
+
+#### 4.2 Heterogeneous computing and "network-defined compute"
+
+- **Huawei's UnifiedBus (Lingqu) public information for 2026** is a good case of system-level heterogeneous coordination:
+  - It unifies **more than ten interconnect protocols**, raises interconnect bandwidth from the **hundred-GB class to the TB class**, and compresses **RTT from 7 us to 2 us**;
+  - It supports **globally unified memory addressing within a super-node**; CPU, NPU, memory and SSD interconnect directly through UnifiedBus, with CPU/NPU resources flexibly ratioed;
+  - It performs **hierarchical tiered Transformer hardware acceleration** (decoupling Attention and FFN, with **AF disaggregated deployment**);
+  - **Hundred-billion-scale / thousand-dimension vector retrieval performance doubles**, and the **per-card HBM capacity requirement for 10T-scale model training drops**.
+
+- **The ODCC view**: the pain points of 10k-card intelligent computing clusters are summarised as **"aggregating heterogeneous compute, breaking the bandwidth bottleneck, latency jitter, and operational complexity"**, with **new end-network-coordinated RDMA protocols** and **memory pooling** seen as the next-stage direction.
+
+- **The causal chain to establish in interviews**: the performance bottleneck of heterogeneous compute convergence is not FLOPS alone, but the product of **interconnect bandwidth x memory semantics x scheduling granularity**. Being able to explain quantitatively —
+  - **"why memory pooling raises MFU"**
+  - **"why operator fusion pays off in the memory-bound regime but shows diminishing returns in the compute-bound regime"**
+
+  is a key differentiator for senior roles.
+
+#### 4.3 DPDK / user plane / edge forwarding
+
+- **The core value of DPDK in 5G UPF and edge forwarding** remains: **bypassing the kernel protocol stack**, **pre-allocating mbufs with rte_mempool**, reducing memory copies, and doing **CPU core-pinning affinity scheduling**. Open-source UPFs (for example **free5GC**) implement **PDR/FAR/QER** flow-table matching and QoS enforcement on top of DPDK.
+
+- **New problems in edge scenarios**: **64-byte small-packet forwarding, latency jitter, and AQM policy under mixed traffic** test a design more than pure throughput; comparison data for approaches such as **DPDK + HDB Interface** on the edge forwarding plane also shows that **the benefit and the cost in small-packet scenarios must be evaluated separately**.
+
+- **Connection to L2 experience**: UPF **QoS flow mapping** and RAN-side **DRB/QoS flow mapping** are aligned end to end within the 3GPP framework; in interviews you can discuss **"when the RAN scheduler and UPF QoS enforcement operate on mismatched timescales, how do you determine whether the bottleneck is the air interface or the user plane"**.
+
+---
+
+### 5. xLLM / Agent / On-Device Inference
+
+#### 5.1 Technical positioning of xLLM and interview follow-up depth
+
+**xLLM** is a high-performance **pure C++ LLM inference framework** open-sourced by JD.com, targeting the removal of **Python runtime overhead and GC stalls** in on-device and real-time scenarios, optimising operators directly against the underlying hardware.
+
+| Technical feature | Description |
 | --- | --- |
-| **KV Cache 管理** | 减少重复计算，提升长文本生成速度 |
-| **量化支持** | FP16 / INT8 等，在精度损失可控的前提下压缩内存占用 |
-| **算子融合** | 将多个逐元素/矩阵运算合并为单一 kernel，减少 memory-bound 阶段的读写次数 |
-| **手动内存控制** | 避免 Python GC 带来的尾延迟抖动 |
+| **KV Cache management** | Reduces redundant computation and speeds up long-text generation |
+| **Quantisation support** | FP16 / INT8 and others, compressing memory footprint with controllable accuracy loss |
+| **Operator fusion** | Merges multiple element-wise/matrix operations into a single kernel to reduce read/write traffic in the memory-bound phase |
+| **Manual memory control** | Avoids the tail-latency jitter caused by Python GC |
 
-- **2026 年路线图**：全模态支持、适配国产芯片、企业版本，以及支持 **DeepSeek-V3/R1、Qwen3/Qwen3-MoE** 等模型。
+- **2026 roadmap**: full-modality support, adaptation to domestic chips, an enterprise edition, and support for models such as **DeepSeek-V3/R1** and **Qwen3/Qwen3-MoE**.
 
-- **面试追问方向**：
-  1. **"KV Cache 为什么只缓存 K 和 V 而不缓存 Q？"** —— 考察对 decoder self-attention 计算图的理解。
-  2. **"PagedAttention / prefix caching 在端侧内存受限场景下与连续 KV Cache 的取舍"** —— 端侧没有数据中心的大显存，碎片化和预分配的权衡不同。
-  3. **"算子融合在 prefill 阶段和 decode 阶段的收益差异"** —— decode 阶段是 memory-bound，融合收益更显著；prefill 阶段更偏 compute-bound。
+- **Interview follow-up directions**:
+  1. **"Why does KV Cache cache only K and V, not Q?"** — tests understanding of the decoder self-attention computation graph.
+  2. **"The trade-off of PagedAttention / prefix caching versus contiguous KV Cache in memory-constrained on-device scenarios"** — on-device has no datacentre-class large memory, so the fragmentation versus pre-allocation trade-off is different.
+  3. **"The difference in operator-fusion benefit between prefill and decode"** — decode is memory-bound, so fusion pays off more; prefill is more compute-bound.
 
-#### 5.2 Agent 在边缘/端侧的编排形态
+#### 5.2 Agent orchestration form at the edge / on device
 
-- **GRAFT** 代表了**"多设备 SLM Agent mesh"**的方向：不是单设备跑一个大模型，而是把结构化任务路由到多个异构设备上的小模型，**coordinator 做分区和 merge**，**safety-bounded remote execution** 和 **per-request telemetry** 是核心工程构件。
+- **GRAFT** represents the direction of a **"multi-device SLM Agent mesh"**: instead of running one large model on a single device, structured tasks are routed to small models across multiple heterogeneous devices, with a **coordinator doing partitioning and merging**; **safety-bounded remote execution** and **per-request telemetry** are the core engineering components.
 
-- **与通信的结合点**：Agent 的任务路由可以映射到 RAN 的调度和切片框架——
-  - **设备能力 ≈ UE capability**
-  - **policy routing ≈ RRM 策略**
-  - **budget ≈ 资源配额**
+- **The connection to communications**: Agent task routing can be mapped onto RAN scheduling and slicing frameworks —
+  - **Device capability ~ UE capability**
+  - **Policy routing ~ RRM policy**
+  - **Budget ~ resource quota**
 
-  面试中如果能从"通信系统工程师"视角指出 Agent 编排的**时延确定性、信令开销和故障回退**问题，会比纯 AI 应用背景的候选人更有区分度。
-
----
-
-### 6. RISC-V 与通信基础设施
-
-- RISC-V 正在从**"MCU/嵌入式"**向**"通信基带 + 边缘 AI"**渗透。2026 年有代表性的工作包括：
-  - **64 核 RISC-V 共享内存集群**（**12 nm FinFET，410 GFLOP/s，204.8 GBps**），面向 **B5G/6G AI 增强 O-RAN**，支持脉动执行；
-  - **EdgeQ** 的统一 4G/5G 平台在单芯片中集成**基带、AI 加速、CPU 和网络功能**，基于 RISC-V 架构，支持**软件定义 PHY 和 O-RAN**。
-
-- **更深层的信号**：**比科奇（Picocom）**等基带芯片公司推出基于 RISC-V 的 **5G-NR/NTN 双模卫星回传方案**；RISC-V 基带 SoC 的研究目标是在 **GPP 可编程性与 ASIC 能效之间压缩鸿沟**（有工作报道从约 **10³× 压缩到约 10× 量级**）。
-
-- **面试中的架构判断**：RISC-V 在基带中的核心卖点是**可编程性 + 开放生态**，但 L1 的高能效需求仍然需要**领域专用加速器（FEC、DFE、脉动阵列）**。作为 L2/系统架构背景，需要能讨论——
-  - **"L2 协议栈跑在 RISC-V 通用核上时，与 L1 加速器之间的接口语义、缓存一致性和调度实时性如何保证"**
-
-  这是 6G O-RAN 和云化 RAN 都可能追问的交叉题。
+  If you can point out, from a communications-system-engineer perspective, the **latency determinism, signalling overhead, and failure-fallback** problems of Agent orchestration, you will stand out more than a candidate with a pure AI-application background.
 
 ---
 
-## 第二部分：面试题纲
+### 6. RISC-V and Communications Infrastructure
 
-> 以下题纲按 **"简历深挖 — 技术纵深 — 前沿判断 — 系统设计"** 四层组织。每个问题后标注了考察意图和可接受的回答锚点。
+- RISC-V is penetrating from **"MCU/embedded"** into **"communication baseband + edge AI"**. Representative work in 2026 includes:
+  - A **64-core RISC-V shared-memory cluster** (**12 nm FinFET, 410 GFLOP/s, 204.8 GBps**) aimed at **B5G/6G AI-enhanced O-RAN**, supporting systolic execution;
+  - **EdgeQ's** unified 4G/5G platform, which integrates **baseband, AI acceleration, CPU and networking functions** in a single chip based on the RISC-V architecture, supporting **software-defined PHY and O-RAN**.
 
-### A. 简历深挖与基础验证（预计 15–20 分钟）
+- **A deeper signal**: baseband chip companies such as **Picocom** have launched RISC-V based **5G-NR/NTN dual-mode satellite backhaul solutions**; the research goal of RISC-V baseband SoCs is to compress the gap between **GPP programmability and ASIC energy efficiency** (some work reports compressing it from roughly **10^3x** to the order of **10x**).
 
-| 编号 | 问题 | 考察意图 | 回答锚点 |
+- **Architectural judgement for interviews**: the core selling point of RISC-V in baseband is **programmability plus an open ecosystem**, but the high energy-efficiency demand of L1 still requires **domain-specific accelerators (FEC, DFE, systolic arrays)**. Coming from an L2/system-architecture background, you need to be able to discuss —
+  - **"When the L2 protocol stack runs on general-purpose RISC-V cores, how are the interface semantics, cache coherency, and scheduling real-time behaviour with the L1 accelerator guaranteed"**
+
+  This is a cross-domain question that both 6G O-RAN and cloudified RAN interviews are likely to ask.
+
+---
+
+## Part II. Interview Question Outline
+
+> Organised in four layers: **"resume deep-dive — technical depth — frontier judgement — system design"**. Each question is annotated with its assessment intent and an acceptable answer anchor.
+
+### A. Resume deep-dive and basic verification (approx. 15-20 minutes)
+
+| No. | Question | Assessment intent | Answer anchor |
 | --- | --- | --- | --- |
-| **A1** | 你在 5G RAN L2 中负责的调度器，具体处理的是哪种业务混合场景？PF 权重、HARQ 时序、BSR 上报周期是怎么配置的？ | 验证 L2 经验的真实颗粒度 | 能说出具体参数范围、slot 级时序约束、遇到过的一次调度异常及定位过程 |
-| **A2** | 载波聚合场景下，你的调度器如何处理跨载波调度时序和 HARQ 实体管理？ | CA 是 L2 面试高频区 | 跨载波 PDCCH 的 CIF 字段、HARQ 进程数与 RTT 的约束、上行 grant 的载波选择逻辑 |
-| **A3** | 你用 DPDK 做用户面/转发面的具体工作是什么？rte_mempool 的尺寸和 NUMA 绑定策略怎么定的？ | 验证 DPDK 是否真做过 | mbuf 大小、mempool cache 大小、核绑与 RSS/RPS 的配合、小包场景的 pps 基线 |
-| **A4** | prplMesh 或 prplWrt 上你改动过哪一层？hostapd 的 NL80211 接口与 EasyMesh 控制消息之间的映射关系能否描述一下？ | 验证 WLAN 网关/嵌入式经验 | prplMesh controller/agent 分工、NL80211 命令路径、与 802.11k/v/r 的关联 |
-| **A5** | 你提到的"AI 训练师"证书对应的实际训练/调优经验是什么？用过哪些 RL 或 DRL 做资源分配？ | 区分"证书"与"实操" | 环境建模、reward 设计、sim-to-real 的 gap、推理时延对调度周期的影响 |
+| **A1** | For the scheduler you owned in 5G RAN L2, what specific traffic-mix scenario did it handle? How were PF weights, HARQ timing, and the BSR reporting period configured? | Verify the real granularity of L2 experience | Concrete parameter ranges, slot-level timing constraints, and one scheduling anomaly encountered plus the localisation process |
+| **A2** | In a carrier aggregation scenario, how did your scheduler handle cross-carrier scheduling timing and HARQ entity management? | CA is a high-frequency L2 interview area | The CIF field in cross-carrier PDCCH, the constraint between HARQ process count and RTT, and the carrier selection logic for uplink grants |
+| **A3** | What exactly did you do with DPDK on the user plane / forwarding plane? How did you decide the rte_mempool size and NUMA binding strategy? | Verify whether DPDK experience is real | mbuf size, mempool cache size, cooperation between core pinning and RSS/RPS, and the pps baseline in small-packet scenarios |
+| **A4** | Which layer did you modify in prplMesh or prplWrt? Can you describe the mapping between hostapd's NL80211 interface and EasyMesh control messages? | Verify WLAN gateway/embedded experience | Division of labour between prplMesh controller and agent, the NL80211 command path, and the relationship to 802.11k/v/r |
+| **A5** | What actual training/tuning experience corresponds to your "AI Trainer" certificate? Which RL or DRL methods have you used for resource allocation? | Separate "certificate" from "hands-on" | Environment modelling, reward design, the sim-to-real gap, and the impact of inference latency on the scheduling period |
 
-### B. 技术纵深（预计 20–25 分钟）
+### B. Technical depth (approx. 20-25 minutes)
 
-#### B1. 5G-A / 6G 与 AI 空口
+#### B1. 5G-A / 6G and the AI air interface
 
-1. Rel-19 的**"AI 空口原生化"**与 Rel-18 的 **AI/ML for NR** 相比，本质区别是什么？如果让你在 MAC 调度器中引入一个在线学习的权重调整器，你会怎样设计训练/推理的算力放置和更新频率？
-2. Rel-21 将 **AI 原生内建**作为 6G 核心架构能力。你认为"AI 原生"与当前 **O-RAN RIC 的"外挂式"智能**有什么结构性差异？L2 协议栈需要暴露哪些新的测量/控制接口？
-3. **ISAC** 被普遍认为是最先可能商用的 6G 特性之一。从 L2 调度角度看，通感一体带来的资源竞争（**感知波形 vs 通信波形**）应该在哪一层做仲裁？MAC 需要新增什么样的 grant 类型或优先级语义？
+1. What is the essential difference between Rel-19's **"AI-native air interface"** and Rel-18's **AI/ML for NR**? If you had to introduce an online-learning weight adjuster into the MAC scheduler, how would you design the placement of training/inference compute and the update frequency?
+2. Rel-21 makes **AI-native** a core architectural capability of 6G. What structural difference do you see between "AI-native" and the **"bolt-on" intelligence of today's O-RAN RIC**? What new measurement/control interfaces does the L2 protocol stack need to expose?
+3. **ISAC** is widely considered one of the first commercially viable 6G features. From an L2 scheduling perspective, at which layer should the resource competition introduced by integrated sensing and communication (**sensing waveform vs communication waveform**) be arbitrated? What new grant types or priority semantics does MAC need?
 
 #### B2. WLAN
 
-1. Wi-Fi 8 的核心 KPI 从吞吐转向 **UHR（尾时延、多 AP 协同）**。如果你的网关要支持多 AP 协同调度，控制信令应该放在 **prplMesh 的哪一层**？与 Wi-Fi 7 MLO 的 **TID-to-link mapping** 如何共存？
-2. Wi-Fi 9（**802.11bnext**）的研讨已经把 **AI-native PHY** 和**确定性 MAC** 作为主题。你认为"AI-native PHY"在工程上最可能先落地的是哪一部分——信道估计、波束管理，还是 CSI 压缩反馈？理由是什么？
+1. Wi-Fi 8's core KPI shifts from throughput to **UHR (tail latency, multi-AP coordination)**. If your gateway must support multi-AP coordinated scheduling, at which layer of **prplMesh** should the control signalling live? How does it coexist with Wi-Fi 7 MLO **TID-to-link mapping**?
+2. Wi-Fi 9 (**802.11bnext**) discussions already treat **AI-native PHY** and **deterministic MAC** as themes. Which part of "AI-native PHY" do you think lands in engineering first — channel estimation, beam management, or CSI compression feedback? Why?
 
-#### B3. IoT / 嵌入式 / RISC-V
+#### B3. IoT / embedded / RISC-V
 
-1. eRedCap 与 NTN 融合后，卫星链路的 **long RTT** 对 **HARQ 进程数和 RLC ARQ 重传定时器**会产生什么影响？如果让你在现有 L2 协议栈上做最小改动来支持 eRedCap NTN，你会改哪些参数/状态机？
-2. RISC-V 基带 SoC 的卖点是"可编程性"。从 L2 工程师角度，你更愿意把调度器跑在 **RISC-V 通用核**上还是**专用加速器**上？接口和实时性上分别需要什么保证？
-3. FreeRTOS 中 **PendSV** 的存在解决了什么问题？如果在一个无线协议栈的"中断上下文"中直接做 MAC 调度决策，会引入什么风险？
+1. After eRedCap and NTN converge, what is the impact of the satellite link's **long RTT** on **HARQ process count and the RLC ARQ retransmission timer**? If you had to make the minimal change to an existing L2 stack to support eRedCap NTN, which parameters/state machines would you change?
+2. The selling point of a RISC-V baseband SoC is programmability. From an L2 engineer's perspective, would you rather run the scheduler on **general-purpose RISC-V cores** or on a **dedicated accelerator**? What guarantees are needed on the interface and on real-time behaviour respectively?
+3. What problem does the existence of **PendSV** in FreeRTOS solve? If you made MAC scheduling decisions directly in the "interrupt context" of a wireless protocol stack, what risks would that introduce?
 
-#### B4. 端边云 / xLLM / Agent / 异构算力
+#### B4. Cloud-edge-end / xLLM / Agent / heterogeneous compute
 
-1. xLLM 用**纯 C++** 消除 Python 运行时开销，代价是什么？在端侧模型迭代频繁的场景下，C++ 框架的模型接入成本与 Python 生态的灵活性如何权衡？
-2. KV Cache 的 **PagedAttention** 在端侧设备上与数据中心场景的核心差异是什么？如果端侧只有 **8 GB 内存、模型权重占 4 GB**，你会如何设定 KV block size 和 prefix caching 策略？
-3. GRAFT 的观察是**"小 mesh 的瓶颈不是单设备算力，而是本地编排"**。如果把 GRAFT 的任务路由看作一种"调度器"，它与 5G MAC 调度器的同构性和本质差异分别是什么？
-4. 灵衢架构把 **RTT 从 7 μs 压到 2 μs**、做**全局内存统一编址**。从协议栈工程师视角，这种内存语义对上层分布式推理框架的"哪些抽象可以消失、哪些抽象反而更重要"？
+1. xLLM uses **pure C++** to remove Python runtime overhead — what is the cost? In a scenario where on-device models iterate frequently, how do you weigh the model onboarding cost of a C++ framework against the flexibility of the Python ecosystem?
+2. What is the core difference between **PagedAttention** for KV Cache on end devices versus in datacentre scenarios? If the device has only **8 GB of memory and model weights occupy 4 GB**, how would you set the KV block size and the prefix caching strategy?
+3. GRAFT's observation is that **"the bottleneck of a small mesh is not single-device compute but local orchestration"**. If you treat GRAFT's task routing as a kind of "scheduler", what are its structural similarities to and essential differences from a 5G MAC scheduler?
+4. The UnifiedBus architecture compresses **RTT from 7 us to 2 us** and provides **globally unified memory addressing**. From a protocol-stack engineer's perspective, which abstractions in an upper-layer distributed inference framework can disappear under such memory semantics, and which abstractions become more important instead?
 
-### C. 前沿判断与系统设计（预计 20–25 分钟）
+### C. Frontier judgement and system design (approx. 20-25 minutes)
 
-#### C1. 场景设计题（选一，视面试岗位方向）
+#### C1. Scenario design questions (choose one, depending on the target role)
 
-**设计题 1：设计一个"eRedCap NTN 终端 + 边缘 AI Agent"的端到端系统**
+**Design 1: Design an end-to-end system of "eRedCap NTN terminal + edge AI Agent"**
 
-- 终端只有**单天线、半双工、上行受限**；
-- Agent 需要在本地完成**语音意图识别**，并在必要时将**压缩后的语义特征**上传到边缘；
-- 请给出 **L2 调度策略、端侧推理的资源预算、以及端边之间的语义传输格式**。
-- *考察：IoT 协议约束 + 端侧推理 + 语义通信思维的交叉。*
+- The terminal has a **single antenna, is half-duplex, and is uplink-limited**;
+- The Agent must complete **speech intent recognition** locally and, when necessary, upload **compressed semantic features** to the edge;
+- Provide the **L2 scheduling strategy, the on-device inference resource budget, and the semantic transmission format** between device and edge.
+- *Assessment: the intersection of IoT protocol constraints + on-device inference + semantic communication thinking.*
 
-**设计题 2：在一个支持 Wi-Fi 8 多 AP 协同的企业网关中**
+**Design 2: In an enterprise gateway supporting Wi-Fi 8 multi-AP coordination**
 
-- 同时存在 **XR、工业机器人和海量传感器**三类流量；
-- **prplMesh 的控制面和 Wi-Fi MAC 调度面如何分工**，才能同时满足 XR 的尾时延、机器人的确定性周期和传感器的低功耗？
-- *考察：WLAN 架构 + 调度 + 低功耗设计。*
+- Three traffic classes coexist: **XR, industrial robots, and massive sensors**;
+- How should the **prplMesh control plane and the Wi-Fi MAC scheduling plane** divide responsibility so as to simultaneously satisfy XR tail latency, robot deterministic periodicity, and sensor low power?
+- *Assessment: WLAN architecture + scheduling + low-power design.*
 
-**设计题 3：用 RISC-V 通用核 + 领域加速器实现一个 5G L2 用户面转发 slice（包含 PDCP/RLC/GTP-U）**
+**Design 3: Implement a 5G L2 user-plane forwarding slice (including PDCP/RLC/GTP-U) on general-purpose RISC-V cores plus domain accelerators**
 
-- 请画出**数据通路**，说明 **DPDK 或等效用户态 I/O、内存池、核间无锁队列、以及 QoS 执行点**的位置选择。
-- *考察：DPDK + L2 协议栈 + RISC-V 平台的软硬协同。*
+- Draw the **data path** and explain the placement choices for **DPDK or equivalent userspace I/O, memory pools, lock-free inter-core queues, and the QoS enforcement point**.
+- *Assessment: DPDK + L2 protocol stack + hardware/software co-design on a RISC-V platform.*
 
-#### C2. 开放性判断题
+#### C2. Open judgement questions
 
-1. 你认为 **2026–2028 年**，"通信 + 异构算力 + AI"交叉领域**最被低估的瓶颈**是什么？是互联带宽、内存语义、调度实时性、还是模型/协议的验证方法学？给出你的排序和理由。
-2. 如果你的团队要同时跟踪 **3GPP Rel-21、IEEE 802.11bn 和 xLLM/Agent** 三条线，你会如何设计一个最小可用的**"技术雷达 + 原型验证"机制**，避免预研与产品化脱节？
+1. For **2026-2028**, which bottleneck in the "communications + heterogeneous compute + AI" intersection do you think is **most underestimated**: interconnect bandwidth, memory semantics, scheduling real-time behaviour, or model/protocol verification methodology? Give your ranking and reasoning.
+2. If your team must track **3GPP Rel-21, IEEE 802.11bn, and xLLM/Agent** simultaneously, how would you design a minimal viable **"technology radar + prototype validation"** mechanism to prevent pre-research from decoupling from productisation?
 
-### D. 反问环节建议
+### D. Suggested questions to ask the interviewer
 
-1. 询问团队在当前 **5G-A/6G 预研中，AI 决策的验证方法**：是靠仿真、现网数据回放，还是有硬件在环的测试床？
-2. 询问**"系统架构师"角色在跨协议栈（RAN + 端侧 + 边缘）决策中的实际权限边界**：是定义接口，还是直接对性能 KPI 负责？
-
----
-
-## 第三部分：Word 文档生成
-
-> 由于当前环境无法直接输出 .docx 二进制文件，建议按以下结构在 Word 中生成，耗时约 10 分钟。
-
-### 文档结构
-
-**标题**：通信 × 异构算力 × AI 交叉领域面试准备——知识框架与题纲（2026）
-
-#### 第一部分：个人背景与岗位匹配摘要（半页）
-
-1. 用 **5–6 行**概括核心标签：5G RAN L2 + WLAN/WFA + 嵌入式/RTOS + AI/ML + 端边云 + xLLM/Agent + 异构算力。
-2. 列出 **3 个"交叉叙事"卖点**：
-   - 能从 **MAC 调度器的时序约束**出发理解端边云任务编排的实时性边界；
-   - 同时具备 **DPDK 用户面性能调优**和 **prpl/OpenWrt 网关软件栈**经验，适合"通信基础设施 + 边缘智能"的系统架构岗；
-   - 对 **RISC-V 基带可编程性与 L2 协议栈的接口权衡**有架构级判断。
-
-#### 第二部分：知识框架
-
-- 直接使用上文**第一部分**，保留层级标题和 2026 年事实锚点；
-- 建议在 Word 中使用**"标题 1/2/3"样式**，每个条目下用 **2–3 个子弹点**；
-- **关键标准编号、时间节点、芯片/平台名称用加粗**，方便面试前快速扫读。
-
-#### 第三部分：面试题纲
-
-- 直接使用上文**第二部分**表格和问题列表；
-- 表格建议设为**"浅色网格"样式**；问题列表用编号段落；
-- 在**"回答锚点"列**中，用 **1–2 个关键词**提示自己即可，不要写完整答案。
-
-#### 第四部分：面试前 48 小时速查清单（1 页）
-
-- **5 个必须能脱口而出的数字**：Rel-21 第一个 6G 版本 / 2029 完成标准 / 2030 商用；Wi-Fi 8 Draft 1.0 2025-08；eRedCap 与 NTN 融合的芯片时间点；灵衢 RTT 2 μs；xLLM 纯 C++ / KV Cache / 算子融合。
-- **3 个必须能画出的图**：5G L2 上行 grant 生命周期；端边云 Agent 任务路由与 RAN 调度的同构图；RISC-V 基带中 L2 通用核与 L1 加速器的接口框图。
-- **2 个必须准备的反问**：团队 AI 决策的验证方法；架构师角色的 KPI 边界。
-
-#### 第五部分：参考事实锚点（便于核实）
-
-6G Rel-21 时间线与 AI 原生/ISAC 定位；Wi-Fi 8 UHR 与 802.11bn Draft 1.0；eRedCap + NTN 芯片进展；xLLM 技术特征；RISC-V 基带与 EdgeQ；灵衢异构协同；DPDK UPF；prplMesh 架构。
+1. Ask how the team validates AI decisions in its current **5G-A/6G pre-research**: simulation, live-network data replay, or a hardware-in-the-loop testbed?
+2. Ask what the actual authority boundary of the **"system architect" role** is in cross-protocol-stack decisions (**RAN + device side + edge**): does it define interfaces, or is it directly accountable for performance KPIs?
 
 ---
 
-## 附：收窄建议
+## Part III. Word Document Generation
 
-如果目标岗位更偏向 **"RAN 系统架构师"** 还是 **"边缘 AI / 端边云架构师"** ，可以把设计题和追问链进一步收窄，去掉偏离方向的条目，让题纲更聚焦。
+> Because the environment cannot emit a binary .docx directly, generate it in Word following the structure below, which takes about 10 minutes.
+
+### Document structure
+
+**Title**: Interview Preparation for the Communications x Heterogeneous Compute x AI Intersection — Knowledge Framework and Question Outline (2026)
+
+#### Section 1: Personal background and role-fit summary (half a page)
+
+1. Use **5-6 lines** to summarise the core tags: 5G RAN L2 + WLAN/WFA + embedded/RTOS + AI/ML + cloud-edge-end + xLLM/Agent + heterogeneous compute.
+2. List **3 "cross-domain narrative" selling points**:
+   - You can start from the **timing constraints of a MAC scheduler** to understand the real-time boundary of cloud-edge-end task orchestration;
+   - You have both **DPDK user-plane performance tuning** and **prpl/OpenWrt gateway software stack** experience, fitting a "communications infrastructure + edge intelligence" system architect role;
+   - You have architecture-level judgement on the trade-offs between **RISC-V baseband programmability** and the **L2 protocol stack interface**.
+
+#### Section 2: Knowledge framework
+
+- Reuse **Part I** above directly, keeping the heading hierarchy and the 2026 fact anchors;
+- Use **"Heading 1/2/3" styles** in Word, with **2-3 bullet points** under each entry;
+- **Bold** the key standard numbers, timeline milestones, and chip/platform names so they can be scanned quickly before the interview.
+
+#### Section 3: Interview question outline
+
+- Reuse the tables and question lists from **Part II** above;
+- Set tables to the **"light grid" style**; use numbered paragraphs for question lists;
+- In the **"Answer anchor" column**, note only **1-2 keywords** as a reminder to yourself; do not write out full answers.
+
+#### Section 4: 48-hour pre-interview quick-reference checklist (one page)
+
+- **5 numbers to quote from memory**: Rel-21 is the first 6G release / standard complete 2029 / commercial 2030; Wi-Fi 8 Draft 1.0 in 2025-08; the chipset timeline for eRedCap and NTN convergence; UnifiedBus RTT of 2 us; xLLM pure C++ / KV Cache / operator fusion.
+- **3 diagrams to draw from memory**: the 5G L2 uplink grant lifecycle; the isomorphic diagram of cloud-edge-end Agent task routing versus RAN scheduling; the interface block diagram between L2 general-purpose cores and the L1 accelerator in a RISC-V baseband.
+- **2 questions to ask back**: how the team validates AI decisions; the KPI boundary of the architect role.
+
+#### Section 5: Reference fact anchors (for verification)
+
+6G Rel-21 timeline and the positioning of AI-native/ISAC; Wi-Fi 8 UHR and 802.11bn Draft 1.0; eRedCap + NTN chipset progress; xLLM technical features; RISC-V baseband and EdgeQ; UnifiedBus heterogeneous coordination; DPDK UPF; prplMesh architecture.
+
+---
+
+## Appendix: Narrowing suggestion
+
+If the target role leans more toward **"RAN system architect"** or **"edge AI / cloud-edge-end architect"**, the design questions and follow-up chains can be narrowed further, removing off-target items and making the outline more focused.
 
 ---
 

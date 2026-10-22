@@ -50,7 +50,8 @@ Carrying this analogy into interviews is the differentiator versus a pure AI-inf
 - [[15 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — boot chain, device tree, kernel drivers, IPC, network stack, KVM/containers, PREEMPT_RT
 - [[08 DPDK User Plane and 5G UPF]] — mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps
 - [[12 RISC-V for Communication Infrastructure]] — baseband clusters, EdgeQ, software-defined PHY, L1/L2 interface
-- [[13 Programming Languages Toolchain and Performance Engineering]] — C/C++, Python, Linux, Verilog HDL, DPDK, profiling
+- [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, Python, Linux, Verilog HDL, profiling
+- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — C23/C++26 language features, templates, memory model, STL containers and algorithms, systems idioms
 
 ### AI and edge intelligence
 - [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — UnifiedBus, memory pooling, MFU, RDMA
@@ -63,6 +64,19 @@ Carrying this analogy into interviews is the differentiator versus a pure AI-inf
 2. **Memory semantics.** KV cache, memory pooling, and UnifiedBus global addressing are the same battle fought at three layers.
 3. **Interface semantics.** L1 accelerator ↔ L2 general-purpose core, NPU ↔ CPU, coordinator ↔ worker — the boundary always costs more than the compute.
 4. **Verification methodology.** Simulation → data replay → hardware-in-the-loop is the only credible path for both AI schedulers and AI-native PHY.
+
+## Companion documents (outside this vault)
+
+This vault is opened at `knowledge-graph/`, so the source documents in the parent directory are **not** visible to Obsidian and cannot be wikilinked. They are plain-text references:
+
+| Document | Purpose |
+| --- | --- |
+| `README.md` / `README.cn.md` | Project overview, reading path, directory structure, conventions, fact-checking strategy |
+| `background.md` / `background.cn.md` | Profile, role trajectory, domains, tech stack, and the original task statement |
+| `skills-draft.md` / `skills-draft.cn.md` | The 2026 knowledge framework plus interview question groups A/B/C/D |
+| `readlist.md` | Books, papers, standards and reports, sectioned to mirror this vault's note numbering |
+
+Naming convention: English is the default filename (no suffix); Chinese versions carry `.cn`.
 
 ## Conventions used in this vault
 

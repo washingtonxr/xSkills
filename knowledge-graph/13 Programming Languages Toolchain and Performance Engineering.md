@@ -121,6 +121,7 @@ The discipline that distinguishes senior from mid-level:
 
 ## Related
 
+- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — the language-level counterpart: C23/C++26 features, templates, memory model, STL
 - [[08 DPDK User Plane and 5G UPF]]
 - [[12 RISC-V for Communication Infrastructure]]
 - [[07 Embedded Systems RTOS and Hardware Interfaces]]

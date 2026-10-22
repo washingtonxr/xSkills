@@ -148,6 +148,7 @@ Collaborating labs: THU-MIG (BNRist, Tsinghua), USTC Cloudlab, Beihang HiPO, PKU
 
 ## Related
 
+- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — C++17/20 engine code, dtype dispatch via templates, `std::simd` kernels, `mdspan` tensors
 - [[09 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
 - [[11 Agent Systems and Edge Orchestration]]
 - [[12 RISC-V for Communication Infrastructure]]

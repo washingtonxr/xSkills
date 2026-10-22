@@ -628,7 +628,8 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 
 ## Related
 
-- [[13 Programming Languages Toolchain and Performance Engineering]] — C/C++, build systems, kernel-bypass options, profiling method
+- [[13 Programming Languages Toolchain and Performance Engineering]] — build systems, kernel-bypass options, profiling method
+- [[16 C and C++ Programming - Language Features, STL and Systems Practice]] — kernel C conventions, `container_of`, user-space C/C++ for drivers' tools and daemons
 - [[07 Embedded Systems RTOS and Hardware Interfaces]] — when RTOS beats Linux; OpenAMP/rpmsg/remoteproc heterogeneous pairing
 - [[08 DPDK User Plane and 5G UPF]] — VFIO, hugepages, core isolation, NAPI bypass
 - [[12 RISC-V for Communication Infrastructure]] — H extension, AIA, IOMMU on RISC-V targets

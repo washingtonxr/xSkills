@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.0
+version: 1.1
 last-updated: 2026-10-22
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,12 +11,13 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 16 notes in `knowledge-graph/`. Sections are numbered to match:
+> This file supports the 17 notes in `knowledge-graph/`. Sections are numbered to match:
 > `01` = 5G-Advanced and 6G Radio Access, `02` = NR RAN L2, `03` = AI/ML for RAN and O-RAN RIC,
 > `04` = WLAN Generations, `05` = RedCap/eRedCap/NTN, `06` = WSN, `07` = Embedded RTOS,
 > `08` = DPDK/UPF, `09` = Cloud-Edge-End, `10` = LLM Inference, `11` = Agent Systems,
-> `12` = RISC-V, `13` = Languages and Performance, `14` = WLAN Ecosystem, `15` = Linux Embedded.
-> Sections `16`–`18` collect primary standards repositories, a reading order, and maintenance notes.
+> `12` = RISC-V, `13` = Languages and Performance, `14` = WLAN Ecosystem, `15` = Linux Embedded,
+> `16` = C and C++ Programming.
+> Sections `17`–`19` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -542,7 +543,77 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 ---
 
-## 16 · Primary Standards and Specification Repositories
+## 16 · C and C++ Programming — Language Features, STL and Systems Practice
+
+Supports vault note `16`. Note that §13 covers toolchain, profiling and performance engineering; this section is the language itself.
+
+### Books — C
+
+- **[Book · EN/CN · ★★★]** *The C Programming Language*, 2nd ed. — Brian W. Kernighan, Dennis M. Ritchie · Prentice Hall, 1988 · ISBN 9780131103627 · Chinese 《C程序设计语言(第2版·新版)》, translated by 徐宝文, 李志 · 机械工业出版社, 2004 · ISBN 9787111128069 (典藏版 reissue ISBN 9787111617945)
+  - Written by the language's designer. Still the clearest account of pointers, arrays and the preprocessor — and still thin on the parts the standard later changed. Read it for the model, then read a modern text for C11/C23.
+- **[Book · EN · ★★★]** *Modern C* — Jens Gustedt · Manning, 2019 (2nd ed. 2022, freely available online)
+  - The modern replacement for K&R: written by a WG14 member and organised around C17/C23 rather than C89. Covers `stdint.h`, atomics, alignment, `_Generic`, and the undefined-behaviour traps that K&R never had to warn about. **This is the C book to read if you already know C.**
+- **[Book · EN · ★★]** *C Programming: A Modern Approach*, 2nd ed. — K. N. King · W. W. Norton, 2008 · ISBN 9780393979503
+  - The best teaching text on the language: exhaustive, precise about the standard, and unusually good on the "why is this undefined" questions.
+- **[Book · EN · ★★]** *Expert C Programming: Deep C Secrets* — Peter van der Linden · Prentice Hall, 1994 · ISBN 9780131774292
+  - Old, but the chapters on array/pointer equivalence, declaration parsing, and linker/memory layout still explain things no current book does as well.
+- **[Book · EN · ★]** *21st Century C*, 2nd ed. — Ben Klemens · O'Reilly, 2014
+  - How to write C as it is actually written now: build tooling, unit testing with a real framework, and using the standard library instead of reinventing it.
+
+### Books — C++ language
+
+- **[Book · EN/CN · ★★★]** *C++ Primer*, 5th ed. — Stanley B. Lippman, Josée Lajoie, Barbara E. Moo · Addison-Wesley, 2012 · ISBN 9780321714114 · Chinese 《C++ Primer 中文版(第5版)》, translated by 王刚, 杨巨峰 · 电子工业出版社, 2013 · ISBN 9787121155352
+  - The most complete single-volume tutorial, rewritten for C++11. Use it as the reference for the core language — types, classes, templates, the standard library — and supplement it for C++17/20/23.
+- **[Book · EN/CN · ★★★]** *The C++ Programming Language*, 4th ed. — Bjarne Stroustrup · Addison-Wesley, 2013 · ISBN 9780321563842 · Chinese 《C++程序设计语言(特别版)》 translated by 裘宗燕 · 机械工业出版社 · ISBN 9787111102029
+  - The language from its author. Less tutorial, more "what the abstraction means and what it costs" — which is the framing interviewers reward.
+- **[Book · EN · ★★★]** *Effective Modern C++: 42 Specific Ways to Improve Your Use of C++11 and C++14* — Scott Meyers · O'Reilly, 2014 (see §13)
+  - Type deduction, `auto`, move semantics, smart pointers and lambda correctness. Pair it with *Effective C++*, 3rd ed. (ISBN 9780321334879, Chinese 《Effective C++ 改善程序与设计的55个具体做法》, 机械工业出版社) for the pre-C++11 core.
+- **[Book · EN · ★★]** *A Tour of C++*, 3rd ed. — Bjarne Stroustrup · Addison-Wesley, 2022
+  - The shortest accurate overview of modern C++ as a whole language, covering C++20 and C++23 in ~250 pages. Read this first if your C++ knowledge stopped at C++11.
+- **[Book · EN · ★★]** *C++ Templates: The Complete Guide*, 2nd ed. — David Vandevoorde, Nicolai M. Josuttis, Douglas Gregor · Addison-Wesley, 2017 · ISBN 9780321714121
+  - Everything about templates: deduction, specialisation, variadics, SFINAE, trait and policy-based design, and compile-time cost. The book to own if templates appear in your job description.
+- **[Book · EN/CN · ★★]** *Inside the C++ Object Model* — Stanley B. Lippman · Addison-Wesley, 1996 · Chinese 《深度探索C++对象模型》, translated by 侯捷 · 华中科技大学出版社, 2001 · ISBN 9787560924182
+  - How virtual functions, inheritance, and object layout are actually implemented — vptr/vtable placement, the cost of multiple and virtual inheritance. Answers "what does a virtual call really cost" at the representation level.
+- **[Book · EN · ★★]** *C++ Software Design* — Klaus Iglberger · Addison-Wesley, 2022
+  - Design-level C++: value semantics, type erasure, CRTP, policy-based design, and *when not to use inheritance*. Strong on the patterns that replace OOP in performance-sensitive code.
+- **[Book · EN · ★]** *C++23 — The Complete Guide* and *C++ Move Semantics — The Complete Guide* — Nicolai M. Josuttis · C++20 and C++17 volumes also exist; all freely available online
+  - Feature-by-feature guides to a single standard, with compiler-support tables. The fastest way to check "which standard did X arrive in".
+
+### Books — STL and standard library
+
+- **[Book · EN/CN · ★★★]** *The C++ Standard Library: A Tutorial and Reference*, 2nd ed. — Nicolai M. Josuttis · Addison-Wesley, 2012 · ISBN 9780321623218 · Chinese 《C++标准库(第2版)》, translated by 侯捷, 孟岩 · 华中科技大学出版社
+  - The STL reference with explanations: every container, iterator, algorithm and functor, plus the trade-offs. If you need one STL book, this is it.
+- **[Book · EN/CN · ★★★]** 《STL源码剖析》 (The Annotated STL Sources) — 侯捷 · 华中科技大学出版社, 2002 · ISBN 9787560926995
+  - A source-level walkthrough of the SGI/STLPort implementation: allocators and memory pools, iterator traits, the sequence containers, red-black tree and hash table, algorithms, functors and adapters. Reading the implementation is how you learn *why* `vector` beats `list` and what a traits mechanism is for. Based on a pre-C++11 implementation, so read it for mechanism, not for API.
+- **[Book · EN · ★★]** *Effective STL: 50 Specific Ways to Improve Your Use of the Standard Template Library* — Scott Meyers · Addison-Wesley, 2001 · ISBN 9780201749625
+  - Dated in places (no move semantics), still the sharpest writing on container selection, iterator invalidation, and the algorithm-vs-hand-written-loop decision.
+- **[Book · EN · ★]** *Hands-On Design Patterns with C++*, 2nd ed. — Fedor Pikus · Packt, 2022
+  - C++-specific patterns including CRTP, type erasure, the policy pattern and lock-free structures, with performance measurements.
+
+### Standards and committee documents
+
+- **[Standard · ★★★]** **ISO/IEC 9899:2024** (C23) — WG14. Closest free draft: **N3220**. `__STDC_VERSION__` = `202311L`
+- **[Standard · ★★★]** **ISO/IEC 14882:2026** (C++26) — WG21. Working draft **N5046**, shipped by WG21 on **28 March 2026**
+- **[Spec · ★★★]** **WG21 papers** (`open-std.org/jtc1/sc22/wg21/docs/papers`), and **WG14 papers** (`open-std.org/jtc1/sc22/wg14`). Key C++26 papers: **P2996** reflection · **P2900** contracts · **P2300** `std::execution` · **P1928** `std::simd` · **P1673** `std::linalg` · **P0843** `std::inplace_vector` · **P0447** `std::hive` · **P3471** library hardening · **P2795** erroneous behaviour · **P1306** expansion statements · **P2530** hazard pointers · **P2545** RCU · **P0429** `flat_map` · **P1222** `flat_set` · **P1967** `#embed`
+  - Read the paper, not the blog post. Each one states the problem, the design alternatives considered, and the cost — which is exactly what an interviewer asks about.
+- **[Doc · ★★★]** **cppreference.com** — the de facto standard library reference, with per-standard version markers and per-compiler support tables
+- **[Doc · ★★]** **C++ Core Guidelines** — Bjarne Stroustrup, Herb Sutter · `isocpp.github.io/CppCoreGuidelines`, with the associated GSL
+  - The closest thing to a house style for modern C++: ownership, lifetime, interfaces, error handling and performance, each with a stated rationale.
+- **[Doc · ★★]** **GCC C++ status page** (`gcc.gnu.org/projects/cxx-status.html`) and **libc++/libstdc++ implementation status pages**
+  - Where to check whether a feature you want to quote is actually available in your compiler version.
+- **[Doc · ★]** **Compiler Explorer** (`godbolt.org`) — for checking codegen, especially whether a construct vectorises or allocates
+
+### Papers and talks
+
+- **[Paper · ★★]** *"A Tour of C++"* / Stroustrup's **"The Design and Evolution of C++"** and **"Thriving in a Crowded and Changing World: C++ 2006–2020"** (ACM HOPL IV, 2020)
+  - The history is useful: knowing *why* a feature exists (compatibility, zero-overhead, evolving hardware) is what lets you defend a language choice under questioning.
+- **[Paper · ★★]** *"Memory Ordering in C++"* and Paul E. McKenney's **perfbook** (see §13)
+  - The memory model is the part of C++ most people get wrong. Read the model, not the rules of thumb.
+- **[Doc · ★]** **CppCon talks** on `std::execution` (senders/receivers), reflection (P2996), and `std::simd` — the fastest route to C++26 material, since no book covers it yet.
+
+---
+
+## 17 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -565,7 +636,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 17 · Suggested Reading Order
+## 18 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -573,6 +644,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 | --- | --- | --- |
 | 1 | Anchor the map | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV |
 | 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial |
+| 2b | Language layer (do this once, whatever your track) | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large |
 | 3 | Future direction | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025) |
 | 4 | Consolidate | Each note's **Anchors** section; the correction table in `README.md` §7; re-read only what you cannot state from memory |
 
@@ -583,12 +655,12 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 18 · Verification and Maintenance
+## 19 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01/§02/§05; IEEE 802.11 working group and Wi-Fi Alliance announcements for §04/§14; Linux mainline and LTS releases for §13/§15; xLLM, Mooncake and agent-framework releases for §10/§11; RISC-V International ratifications for §12.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01/§02/§05; IEEE 802.11 working group and Wi-Fi Alliance announcements for §04/§14; Linux mainline and LTS releases for §13/§15; xLLM, Mooncake and agent-framework releases for §10/§11; RISC-V International ratifications for §12; **WG21/WG14 meetings and GCC/Clang major releases for §16** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release.
 
 ---
 
