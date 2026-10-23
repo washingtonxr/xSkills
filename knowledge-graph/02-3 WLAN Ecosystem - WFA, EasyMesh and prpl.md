@@ -182,6 +182,7 @@ Everything on the left can be expressed in today's data model; everything on the
 - [[02-1 WLAN - Wi-Fi Generations Evolution]]
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what the mesh control plane sits on top of: forwarding fast paths, PPE/WED offload, and why a bridged AP needs flow tracking
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what certification actually mandates in the join sequence: WPA3 and PMF, SAE with H2E, and how an EasyMesh controller's steer maps onto a BSS transition
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 
