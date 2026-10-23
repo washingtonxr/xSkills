@@ -627,6 +627,10 @@ PTK    = PRF-X(PMK-R1, ANonce, SNonce, AP address, STA address)
   FTIE so both sides can prove which key they used.
 - The **mobility domain** identifier and the PMK-R0 name are what let a station move between APs
   without redoing 802.1X.
+- The **4-way handshake is skipped as well**: the Reassociation Response carries the GTK inside the
+  FTE, encrypted with the KEK derived from PMK-R1. That is why FT is two frames rather than six —
+  and why a full 4-way handshake after a successful FT authentication is a symptom of fallback, not
+  normal operation.
 
 ```mermaid
 sequenceDiagram
@@ -647,7 +651,7 @@ sequenceDiagram
     end
     S->>N: Reassociation Request — FTIE, RSN IE
     N-->>S: Reassociation Response — status 0, new AID
-    Note over S,N: 4-way handshake confirms the pre-derived PTK<br/>and delivers the new GTK
+    Note over S,N: No 4-way handshake on the FT path —<br/>the GTK arrives in the FTE of the response
 ```
 
 The three amendments are usually deployed together and should be described together:
@@ -878,6 +882,9 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
   WPA3 and PMF requirements, and how a mesh controller steers a station between agents
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what happens to the first data frame
   after the controlled port opens, and where the 4-way handshake sits when it is offloaded to firmware
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — FT at ESS scale: where R0KH sits, the
+  over-the-DS encapsulation the station never sees, the five ways FT fails, and the steering and
+  healing mechanisms this join sequence enables
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the
   same state machine as an architectural pattern: explicit states, deferred events, and a protocol
   layer that must not block

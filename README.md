@@ -2,9 +2,9 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.7
+version: 1.8
 sibling: README.cn.md
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (24 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (25 notes)**.
 
 ---
 
@@ -60,7 +60,8 @@ flowchart LR
 | RAN system architect | 01-1 → 01-2 → 01-3 → 05-1 → 07-1 |
 | Edge AI / cloud-edge-end architect | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
 | Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
-| WLAN / gateway | 02-1 → 02-2 → 02-3 → 03-1 → 04-3 |
+| WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-4 → 03-1 → 04-3 |
+| WLAN security / client stack | 02-5 → 02-6 → 02-1 → 02-3 → 08-2 |
 | Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 04-1 |
 | Software / language foundation (any role) | 08-2 → 08-3 → 08-1 |
 | Algorithm modelling or DSP prototyping | 08-4 → 08-5 → 08-3 |
@@ -78,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 24 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 25 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -89,6 +90,7 @@ flowchart LR
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
 │   ├── 02-4 WLAN - Packet TX-RX Datapath and Offload Evolution.md
 │   ├── 02-5 WLAN - STA-AP Discovery, Authentication and Association.md
+│   ├── 02-6 WLAN - Multi-AP Roaming, Healing and Steering.md
 │   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
 │   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
 │   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
@@ -120,7 +122,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 26 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 24 primary standards repositories, 25 a reading order, and 26 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 27 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 25 primary standards repositories, 26 a reading order, and 27 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -136,6 +138,7 @@ flowchart LR
 | **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
 | **02-4** | **WLAN packet datapath and offload** | End-to-end TX (socket → qdisc/AQL → mac80211 header/TID/SN/crypto → descriptor → EDCA/A-MPDU → PHY) and RX (sync → MPDU delimiter scan → FCS/address/decrypt → reorder buffer → DMA/NAPI/GRO → TCP) with byte-level accounting; the five offload planes (per-packet assists, FullMAC vs SoftMAC vs hybrid, AP flow offload with PPE/NSS/Runner and WED, kernel bypass, control plane); MLO reordering; power-save interaction; a symptom→layer debugging table |
 | **02-5** | **WLAN discovery, authentication and association** | The join sequence phase by phase: passive/active scanning and 6 GHz discovery (RNR, PSC, FILS Discovery, no wildcard probes), the three MLME states and their reason codes, Open System vs Shared Key vs SAE (Dragonfly, H2E, Dragonblood) vs OWE vs 802.1X/EAP, association and the AID, the PMK→PMK-R0/R1→PTK key hierarchy and each 4-way message, PMF/SA Query, FT with 802.11k/v and FILS, MLO setup with per-STA profiles, the hostapd/wpa_supplicant/mac80211 split, and a symptom→phase debugging table |
+| **02-6** | **WLAN multi-AP roaming, healing and steering** | Why 802.11 leaves the roam decision to the station, and what the network can do about it: the four transition variants and their cost (full join / PMKSA caching / FT / FILS), 802.11k Neighbor and Beacon Reports, one end-to-end transition sequence, FT at ESS scale (R0KH placement, `0x890D` over-the-DS remote frames, five field failures, what the data plane has to rebuild), steering by BTM / MBO / assoc control / EasyMesh client steering with the decision function and its ping-pong failure, mesh healing as a backhaul state machine with topology repair and channel change, MLO at MLD granularity, and Wi-Fi 8 SMD / MAPC |
 | **03-1** | WSN and low-power MAC | Clustering routing, UAV-assisted collection, TSCH, AoI |
 | **04-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
 | **04-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
@@ -156,10 +159,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 23 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 24 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 69 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 113 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---

@@ -2,9 +2,9 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.7
+version: 1.8
 sibling: README.md
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（24 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（25 篇笔记）**。
 
 ---
 
@@ -60,7 +60,8 @@ flowchart LR
 | RAN 系统架构师 | 01-1 → 01-2 → 01-3 → 05-1 → 07-1 |
 | 边缘 AI / 端边云架构师 | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
 | 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
-| WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 03-1 → 04-3 |
+| WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-4 → 03-1 → 04-3 |
+| WLAN 安全 / 客户端协议栈方向 | 02-5 → 02-6 → 02-1 → 02-3 → 08-2 |
 | 低功耗 / IoT 设备方向 | 02-2 → 03-1 → 01-4 → 04-1 |
 | 软件 / 语言基础（任何岗位都要过一遍） | 08-2 → 08-3 → 08-1 |
 | 算法建模 / DSP 原型验证 | 08-4 → 08-5 → 08-3 |
@@ -78,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，24 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，25 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -89,6 +90,7 @@ flowchart LR
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
 │   ├── 02-4 WLAN - Packet TX-RX Datapath and Offload Evolution.md
 │   ├── 02-5 WLAN - STA-AP Discovery, Authentication and Association.md
+│   ├── 02-6 WLAN - Multi-AP Roaming, Healing and Steering.md
 │   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
 │   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
 │   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
@@ -120,7 +122,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 26 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 24 一手标准库、25 阅读顺序、26 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 27 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 25 一手标准库、26 阅读顺序、27 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -136,6 +138,7 @@ flowchart LR
 | **02-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
 | **02-4** | **WLAN 收发包流程与 offload** | 端到端发送路径（socket → qdisc/AQL → mac80211 填头/TID/SN/加密 → 描述符 → EDCA/A-MPDU → PHY）与接收路径（同步 → MPDU 定界符扫描 → FCS/地址过滤/解密 → 重排缓冲 → DMA/NAPI/GRO → TCP），含逐字节开销核算；五类 offload 平面（单包加速、FullMAC/SoftMAC/混合、AP 转发 offload 与 PPE/NSS/Runner/WED、内核旁路、控制面）；MLO 重排；节能与数据面交互；"症状 → 定位层"排查表 |
 | **02-5** | **WLAN 发现、鉴权与关联** | 逐阶段拆解入网流程：被动/主动扫描与 6 GHz 发现（RNR、PSC、FILS Discovery、禁止通配 Probe）、MLME 三状态与原因码、Open System/Shared Key/SAE（Dragonfly、H2E、Dragonblood）/OWE/802.1X-EAP 对比、关联与 AID、PMK→PMK-R0/R1→PTK 密钥体系与四次握手逐报文、PMF 与 SA Query、FT 与 802.11k/v、FILS、MLO 多链路建立与 per-STA profile、hostapd/wpa_supplicant/mac80211 分工，以及"症状 → 阶段"排查表 |
+| **02-6** | **WLAN 多 AP 漫游、自愈与引导** | 为什么 802.11 把漫游决策留给终端，以及网络侧能做什么：四种切换方式的代价对比（完整入网 / PMKSA 缓存 / FT / FILS）、802.11k 的 Neighbor Report 与 Beacon Report、一次端到端切换的逐帧时序、ESS 尺度的 FT（R0KH 部署位置、`0x890D` over-the-DS 转发帧、五类现网失效、切换后数据面要重建什么）、BTM / MBO / assoc control / EasyMesh 客户端引导的决策函数与乒乓问题、以回程状态机为核心的 mesh 自愈（拓扑修复与信道切换）、MLD 粒度的 MLO 引导，以及 Wi-Fi 8 的 SMD 与 MAPC |
 | **03-1** | WSN 与低功耗 MAC | 分簇路由、UAV 采集、TSCH、AoI |
 | **04-1** | 嵌入式 RTOS | FreeRTOS、PendSV、I2C/SPI/UART/CAN、DMA、缓存一致性 |
 | **04-2** | Linux 嵌入式开发 | 启动链、设备树、驱动、IPC、网络栈、虚拟化、PREEMPT_RT |
@@ -156,10 +159,10 @@ flowchart LR
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 23 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+2. **入口**：`00 MOC` 是唯一导航页，其余 24 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 69 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 113 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---

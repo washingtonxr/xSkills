@@ -9,7 +9,7 @@ tags:
   - ai
   - computing
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 owner-background: Xidian MS in Communication Engineering; National Intermediate Engineer; Senior AI Trainer; IEEE member; ex cellular software / embedded software / wireless protocol stack engineer and system architect
 ---
 
@@ -54,7 +54,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | Group | Domain | Notes |
 | --- | --- | --- |
 | `01-x` | Cellular and mobile communications | 01-1 … 01-4 |
-| `02-x` | WLAN | 02-1 … 02-5 |
+| `02-x` | WLAN | 02-1 … 02-6 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-3 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
@@ -82,6 +82,7 @@ flowchart LR
         w3["02-3 WFA · EasyMesh · prpl"]
         w4["02-4 Packet TX/RX datapath and offload"]
         w5["02-5 Discovery, auth and association"]
+        w6["02-6 Roaming, healing and steering"]
     end
     subgraph g3["03 · Low-power / sensor"]
         s1["03-1 WSN and low-power MAC"]
@@ -116,7 +117,8 @@ flowchart LR
     w1 --> w2 --> w3
     w3 --> w4
     w4 --> w5
-    w5 --> e3
+    w5 --> w6
+    w6 --> e3
     w4 --> e2
     w2 --> s1 --> e1
     e1 --> e2 --> e3
@@ -146,6 +148,7 @@ flowchart LR
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification, Multi-AP control plane, prplMesh/prplOS
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — end-to-end TX/RX path (socket → qdisc → mac80211 → descriptor → EDCA/A-MPDU/Block Ack → PHY, and back through reorder/decrypt/GRO), the five planes of offload (per-packet assists, FullMAC vs SoftMAC, AP flow offload and WED, kernel bypass, control-plane), MLO reordering, and how to localise a fault in the path
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence phase by phase: scanning and 6 GHz discovery (RNR, PSC, FILS Discovery), the MLME state machine, Open System vs SAE vs OWE vs 802.1X/EAP, association and the AID, the PMK→PTK key hierarchy and the 4-way handshake, PMF and SA Query, FT/k/v and FILS roaming, MLO setup, and a symptom-to-phase debugging table
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the multi-AP control loop: why 802.11 leaves the roam decision to the station, 802.11k discovery and 802.11r at ESS scale (R0KH placement, over-the-DS encapsulation, the failure taxonomy), steering by BTM / MBO / assoc control / EasyMesh with the decision function and its ping-pong problem, mesh healing as a backhaul state machine with topology repair and channel change, MLO at MLD granularity, and Wi-Fi 8 SMD as the first standard answer
 
 ### 03 · Low-power and sensor networking
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — clustering, UAV-assisted collection, TSCH, AoI

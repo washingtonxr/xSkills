@@ -18,7 +18,7 @@ aliases:
   - prplMesh
   - prplOS
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # WLAN Ecosystem — WFA Certification, EasyMesh and the prpl Stack
@@ -70,7 +70,10 @@ flowchart TD
 - **Traffic separation** — separate SSIDs (guest, IoT, main) coexist with isolated forwarding paths.
 
 ### 2.3 Release maturity
-EasyMesh releases **R1 through R5**, with **R6 in development** in prplMesh; the Wi-Fi 7-era generation aligns with R6.
+EasyMesh releases **R1 through R6**. **v6.0** was announced in **August 2024** and became mandatory for
+newly tested mesh devices from **31 December 2024**; it is the Wi-Fi 7-era release, adding AP/bSTA MLD
+configuration and MLO topology and link metrics. prplMesh **6.0.1** implements R6, with most of the R6
+work having landed early in the 5.1–5.2 line.
 
 ### 2.4 Do not conflate these
 | Technology | What it is | Layer |
@@ -170,7 +173,7 @@ Everything on the left can be expressed in today's data model; everything on the
 
 ## Anchors — verified facts
 
-- EasyMesh: **Controller + Agent**, control plane over **IEEE 1905.1 (CMDU)**, data-plane Multi-AP flags in hostapd/wpa_supplicant; releases **R1–R5, R6 in development**.
+- EasyMesh: **Controller + Agent**, control plane over **IEEE 1905.1 (CMDU)**, data-plane Multi-AP flags in hostapd/wpa_supplicant; releases **R1–R6** — v6.0 announced **August 2024**, mandatory for newly tested devices from **31 December 2024**.
 - prplMesh: **Controller + Agent**, targets **prplOS/OpenWrt and RDK-B**, **HAL** for SoC portability, **TLV library**, IEEE 1905.1 stack, CI validation against the WFA EasyMesh test suite; based on an **Intel-contributed** full mesh solution; prpl Foundation + Broadband Forum collaboration.
 - **WPA3 required on 6 GHz**; PMF mandatory on Wi-Fi 6+.
 - **802.11s** uses HWMP for L2 path selection; combining it with a bridge risks loops unless STP or a routing protocol is used.
@@ -183,6 +186,7 @@ Everything on the left can be expressed in today's data model; everything on the
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what the mesh control plane sits on top of: forwarding fast paths, PPE/WED offload, and why a bridged AP needs flow tracking
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what certification actually mandates in the join sequence: WPA3 and PMF, SAE with H2E, and how an EasyMesh controller's steer maps onto a BSS transition
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the message-by-message detail behind this controller: client steering, association control, backhaul steering, and where the 1905.1 policy stops and 802.11 begins
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 

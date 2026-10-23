@@ -26,7 +26,7 @@ aliases:
   - HT
   - UHR
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # WLAN — Wi-Fi Generations Evolution (Wi-Fi 4 → Wi-Fi 8 → Wi-Fi 9)
@@ -518,6 +518,7 @@ AI features must demonstrate benefits that justify their **computational complex
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what each generation's features cost in the packet path: where A-MPDU, BA, MLO reordering and coordination land in the host/device split
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — which generation introduced which part of the join sequence: 11i, 11w, 11r/k/v, 11ai, 11ax 6 GHz discovery, 11be multi-link setup
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what those features are for once there are many APs: 11k/v/r as one transition system, 11be MLD-level BTM and link reconfiguration, 11bn SMD as the first standard answer to client-controlled roaming
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
 - [[06-2 Agent Systems and Edge Orchestration]]
