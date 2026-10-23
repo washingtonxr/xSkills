@@ -714,6 +714,7 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 ## Related
 
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the features this datapath exists to carry
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what sits at the bottom of the TX path this note traces: EDCA queueing, FQ-CoDel and AQL inside `mac80211`, the three places a Wi-Fi queue hides, and why the per-TXOP decision lands in firmware
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — where the datapath stops, and how the AP buffers
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification of aggregation/QoS features, mesh forwarding, open AP software stacks
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what happens before the first packet: the join sequence, and where the 4-way handshake sits when it is offloaded to firmware

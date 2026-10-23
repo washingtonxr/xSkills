@@ -1012,6 +1012,7 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 ## Related
 
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where EasyMesh sits among WFA certifications, the
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the layer below channel selection and steering: airtime fairness per BSS, and the observation that no cross-AP scheduling exists before Wi-Fi 8 coordination
   prpl stack (prplOS / prplMesh / prpl LCM), and the "do not conflate" table against 802.11k/v/r/s
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what EasyMesh can only *request*: the roam
   decision belongs to the station, BTM is one actuator, and association control is the blunt one

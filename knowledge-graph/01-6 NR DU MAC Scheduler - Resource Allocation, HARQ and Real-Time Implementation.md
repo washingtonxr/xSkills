@@ -1108,6 +1108,7 @@ flowchart TD
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the layer this note implements: what MAC is specified to do, the
   LCP and BSR summaries, and the QoS chain that the scheduler is the last hop of
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — where the UE contexts the scheduler
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the sharpest contrast case: a scheduler handed a slot by a grant, versus one that must win a contended medium before it can schedule anything at all
   consumes come from: Msg1 to Msg4, the RAR, and §10's gNB-side RAR assembly and grant sizing
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — the near-RT RIC and the xApps that consume scheduler KPIs and
   propose parameter changes on the other side of the E2 interface

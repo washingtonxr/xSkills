@@ -856,6 +856,7 @@ ride an IEEE 1905.1 control plane.
 ## Related
 
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence this note
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what steering is trying to influence: the per-station airtime accounting and the fact that the roam decision still belongs to the client's own access process
   assumes: the MLME states, the PMK→PMK-R0→PMK-R1→PTK chain, and the FT exchange described in
   isolation rather than at ESS scale
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation contributed which mechanism:

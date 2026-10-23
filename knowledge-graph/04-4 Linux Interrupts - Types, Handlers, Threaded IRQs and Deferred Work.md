@@ -804,6 +804,7 @@ Method, in order:
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — why inference latency inherits interrupt latency, and why an NPU completion interrupt is still an interrupt
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — measuring the cost: `perf`, tracing, and the kernel-bypass options that eliminate the interrupt path
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the consumer of the isolation this note enables: a per-slot thread that cannot afford an interrupt, a softirq or a workqueue run in its path
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the other real-time wireless deadline: not a slot but a SIFS, which is why the Wi-Fi MAC's per-TXOP decision cannot live on a host CPU at all
 
 ---
 

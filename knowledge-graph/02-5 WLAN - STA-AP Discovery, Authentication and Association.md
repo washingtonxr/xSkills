@@ -873,6 +873,7 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
 ## Related
 
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced which part of this
+- [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what association makes possible: the AID and Block Ack session a scheduler needs before a station is a candidate, and the EML capabilities it must respect
   sequence: 11i for RSNA, 11w for PMF, 11r/k/v for transition, 11ai for FILS, 11ax for 6 GHz
   discovery and TWT, 11be for multi-link setup
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what association promises about buffering:
