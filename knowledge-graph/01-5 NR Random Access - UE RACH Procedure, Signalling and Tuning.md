@@ -55,25 +55,47 @@ common source of wrong answers in interviews on this topic.
 ### 1.2 Architecture: who does what
 
 ```mermaid
-flowchart TB
-    subgraph ue["UE"]
-        RRC_U["RRC<br/>builds the CCCH SDU carried by Msg3<br/>reads SIB1 RACH-ConfigCommon"]
-        MAC_U["MAC · TS 38.321<br/>counters · RAR parsing · contention resolution<br/>RESOURCE SELECTION happens here"]
-        PHY_U["PHY<br/>ZC preamble generation · PRACH occasion<br/>open-loop power · timing advance"]
-        RRC_U --> MAC_U --> PHY_U
-    end
-    subgraph gnb["gNB"]
-        PHY_N["L1 in the DU<br/>PRACH correlator · preamble detection<br/>timing advance estimation"]
-        MAC_N["MAC in the DU<br/>RAR assembly · grants · TC-RNTI allocation<br/>contention resolution CE"]
-        RRC_N["RRC in the CU-CP<br/>RRCSetup / RRCResume / RRCReject<br/>masterCellGroup authored by the DU"]
-        PHY_N --> MAC_N
-        MAC_N -->|"F1-C"| RRC_N
-    end
-    PHY_U -->|"Msg1 / MsgA on PRACH"| PHY_N
-    PHY_N -->|"Msg2 / MsgB on PDSCH, DCI scrambled by RA-RNTI or MSGB-RNTI"| PHY_U
-    PHY_U -->|"Msg3 on PUSCH"| PHY_N
-    PHY_N -->|"Msg4 on PDSCH, DCI scrambled by TC-RNTI"| PHY_U
+sequenceDiagram
+    autonumber
+    participant UR as UE RRC
+    participant UM as UE MAC
+    participant UP as UE PHY
+    participant NL as gNB L1 in the DU
+    participant NM as gNB MAC in the DU
+    participant NR as gNB RRC in the CU-CP
+    Note over UR,UP: UE side — walked through in §9
+    Note over NL,NR: gNB side — walked through in §10
+    UR->>UM: initiate · the trigger comes from §2<br/>RACH-ConfigCommon was read from SIB1
+    UM->>UM: resource selection · §3<br/>carrier · RA type · SSB · group · preamble draw
+    UM->>UP: transmit on the selected RO<br/>spatial filter of the SSB · open-loop power
+    UP->>NL: Msg1 · PRACH preamble
+    NL->>NL: correlate · detect the preamble index<br/>estimate the timing advance from the peak
+    NL->>NM: RAPID · TA · the RO it arrived in
+    NM->>NM: compute the RA-RNTI of that RO<br/>allocate a TC-RNTI · size the Msg3 grant blind
+    NM->>NL: RAR MAC PDU
+    NL->>UP: Msg2 · DCI 1_0 scrambled by RA-RNTI<br/>RAR on PDSCH · no HARQ feedback
+    UP->>UM: DCI and PDSCH decoded
+    UM->>UM: RAPID matches → apply the TA<br/>store the TC-RNTI · read the 27-bit grant
+    UM->>UR: request the CCCH SDU
+    UR-->>UM: CCCH SDU · its first 48 bits are what Msg4 echoes
+    UM->>UP: Msg3 in slot n + k2 + Δ
+    UP->>NL: Msg3 · PUSCH
+    NL->>NM: decoded CCCH SDU
+    NM->>NR: F1-C · INITIAL UL RRC MESSAGE TRANSFER
+    NR->>NR: admit the UE · authorise masterCellGroup
+    NR-->>NM: F1-C · DL RRC MESSAGE TRANSFER · RRCSetup
+    NM->>NM: build the UE Contention Resolution<br/>Identity CE from the first 48 bits
+    NM->>NL: Msg4 PDU
+    NL->>UP: Msg4 · DCI scrambled by TC-RNTI + PDSCH
+    UP->>UM: decoded
+    UM->>UM: identity matches → promote TC-RNTI to C-RNTI
+    UM->>UR: Random Access successfully completed
+    UR->>UP: RRCSetupComplete on SRB1 · first NAS message
 ```
+
+Read the participant list, not just the arrows: the vertical order is the layering, and the two sides are
+not mirror images of each other. The UE ends in RRC because a finished RACH hands the connection upward; the
+gNB ends in RRC because the CU-CP is what actually authors the answer.
 
 Three consequences worth stating out loud:
 
@@ -319,11 +341,15 @@ From attempt 4 onward the UE is at maximum power and further ramping changes not
 `preambleTransMax` are, in link-budget terms, identical retries: they only help against collisions and fading,
 not against pathloss.
 
-> **`PREAMBLE_POWER_RAMPING_COUNTER` is not incremented when the UE changes its spatial filter** — i.e. when it
-> selects a different SSB between attempts. That is correct (the new beam's pathloss is a fresh estimate, not an
-> under-estimate to correct), but a UE oscillating between two marginal beams can burn through `preambleTransMax`
-> at almost constant power. In a log this looks like ten attempts at the same power, which is easy to misread as
-> a broken ramping configuration.
+> **`PREAMBLE_POWER_RAMPING_COUNTER` is a counter of *transmissions*, not of *failures*, and it has four
+> conditions.** TS 38.321 clause 5.1.3 increments it for each preamble only when all four hold: the transmission
+> counter is already greater than one, the SSB or CSI-RS **has not changed** since the last attempt, the PHY has
+> **not** sent lower layers' "suspend power ramping counter" notification, and no LBT failure was reported for
+> the last attempt. The second is the one that matters in the field: a UE that switches beam between attempts
+> deliberately does not ramp, because the new beam's pathloss is a fresh estimate rather than an under-estimate
+> to correct. The consequence is that a UE oscillating between two marginal beams can burn through
+> `preambleTransMax` at almost constant power — in a log this looks like ten attempts at the same power, which
+> is easy to misread as a broken ramping configuration. See §9.3 for the full counter walk-through.
 
 Two more counters worth knowing: `PREAMBLE_TRANSMISSION_COUNTER` starts at 1 and the procedure is declared a
 failure at `preambleTransMax + 1`; `PREAMBLE_BACKOFF` starts at 0 ms and is set only from a Backoff Indicator in
@@ -431,7 +457,7 @@ step size at 30 kHz = 16 x 64 / 2 = 512 T_c ≈ 0.26 µs ≈ 39 m of range resol
 ```
 
 The maximum `T_A` of 3846 corresponds to roughly 1 ms of advance at 15 kHz, i.e. about 150 km of one-way path —
-which is why NTN needs a separate **common TA** on top (§11).
+which is why NTN needs a separate **common TA** on top (§13).
 
 ## 6. Msg3 — the first scheduled uplink transmission
 
@@ -485,8 +511,8 @@ sequenceDiagram
     N->>A: Msg4 PDCCH (TC-RNTI) + PDSCH with<br/>UE Contention Resolution Identity MAC CE<br/>= first 48 bits of the decoded CCCH SDU
     N->>B: same MAC CE on the same PDSCH
     A->>A: identity matches -> RA successful<br/>TC-RNTI promoted to C-RNTI, Msg3 buffer flushed
-    B->>B: identity does not match -> contention lost<br/>discard TC-RNTI, flush Msg3 HARQ buffer,<br/>restart from Msg1 WITHOUT ramping power
-    Note over B: the preamble was received fine,<br/>so ramping would only add interference
+    B->>B: identity does not match -> contention lost<br/>discard TC-RNTI, flush Msg3 HARQ buffer,<br/>restart from Msg1
+    Note over B: whether B ramps is decided by the four<br/>conditions of 5.1.3, not by why it failed
 ```
 
 Two mechanisms exist, depending on what Msg3 carried:
@@ -497,9 +523,16 @@ Two mechanisms exist, depending on what Msg3 carried:
 - **C-RNTI MAC CE (already in RRC_CONNECTED)**: resolution is **implicit**. Successful reception of a PDCCH
   addressed to the UE's own C-RNTI *is* the confirmation, and no CE is needed.
 
-Losers restart from Msg1 **without** incrementing `PREAMBLE_POWER_RAMPING_COUNTER` — their preamble was received
-fine, so ramping further would only raise interference. That detail is the tell that separates "collision" from
-"coverage" in a log.
+A losing UE increments `PREAMBLE_TRANSMISSION_COUNTER`, flushes the Msg3 HARQ buffer and restarts from Msg1. It
+gets **no** exemption from power ramping: the ramping counter is incremented in clause 5.1.3 on the four
+transmission conditions alone, with no carve-out for contention-resolution losses, so a loser that stays on the
+same beam ramps exactly like a UE that missed the RAR. The widespread claim that "losers do not ramp" is wrong.
+What is true is the narrower rule in §4.4 — no ramping when the *beam* changes — and that rule applies to both
+kinds of failure equally.
+
+That also removes a tempting shortcut: **you cannot tell a collision from a coverage miss by power**. The tell
+for a collision is the sequence — a RAR that arrived, a Msg3 that was sent, and then a mismatch or a timer
+expiry — not anything in the power column.
 
 `ra-ContentionResolutionTimer` (sf8 … sf64, typically sf64 subframes) bounds the wait for Msg4 and starts after
 the Msg3 transmission. On expiry the UE flushes the Msg3 HARQ buffer, increments the preamble counter, applies
@@ -532,7 +565,7 @@ sequenceDiagram
             U->>U: TC-RNTI promoted to C-RNTI<br/>Random Access successfully completed
             U->>N: RRCSetupComplete on SRB1 carrying the first NAS message
         else identity mismatch or timer expiry
-            U->>U: discard TC-RNTI, flush Msg3 HARQ buffer<br/>back off, restart from Msg1 (no power ramp)
+            U->>U: discard TC-RNTI, flush Msg3 HARQ buffer<br/>back off, restart from Msg1<br/>ramping follows the four conditions of 5.1.3
         end
     else no RAR within the window
         U->>U: increment PREAMBLE_TRANSMISSION_COUNTER<br/>ramp power, back off, redraw a preamble, retry
@@ -543,7 +576,234 @@ sequenceDiagram
 MAC then hands a single indication — *Random Access problem* — to RRC, which decides what it means using the
 trigger from §2.
 
-## 9. 2-step random access (Rel-16)
+## 9. The procedure as the UE runs it
+
+Sections 4 to 8 told the story message by message. The next two sections retell the same procedure from inside
+one side at a time, because that is the shape the questions take in interviews and in log analysis: *"walk me
+through what the UE does"* and *"what does the gNB actually know at each step"* have two different answers, and
+neither of them is the message list.
+
+### 9.1 What the UE tracks
+
+Every variable below is per serving cell and per active BWP, and all of them are reset when the procedure is
+initiated:
+
+| Variable | Set at initiation | Incremented or changed when |
+| --- | --- | --- |
+| `PREAMBLE_TRANSMISSION_COUNTER` | 1 | Unsuccessful RAR reception, unsuccessful contention resolution, or an LBT failure with no `lbt-FailureRecoveryConfig` |
+| `PREAMBLE_POWER_RAMPING_COUNTER` | 1 | Each retransmission, **only if** all four conditions of clause 5.1.3 hold (§4.4) |
+| `PREAMBLE_POWER_RAMPING_STEP` | `powerRampingStep` | Overridden by `powerRampingStepHighPriority` for prioritised random access |
+| `SCALING_FACTOR_BI` | 1 | Overridden by `scalingFactorBI` for prioritised random access |
+| `PREAMBLE_BACKOFF` | 0 ms | Set from a Backoff Indicator in a received RAR |
+| `PREAMBLE_RECEIVED_TARGET_POWER` | recomputed per attempt | Before every preamble transmission |
+| `RA_TYPE` | 4-stepRA or 2-stepRA | Forced to 4-stepRA once `msgA-TransMax` MsgA attempts are spent |
+
+The asymmetry is the point. The transmission counter counts **attempts** and is what eventually declares
+failure; the ramping counter counts **retransmissions on an unchanged beam** and is what decides transmit
+power. They move together most of the time and diverge exactly when the UE changes beam — which is why NR
+needs two counters where LTE had one.
+
+### 9.2 The UE's state machine
+
+```mermaid
+flowchart TD
+    I["Initiation · 5.1.1<br/>flush the Msg3 buffer · both counters to 1<br/>BFR overrides the power and attempt parameters"]
+    I --> BAR{"Access barring check<br/>passes on the selected cell?"}
+    BAR -->|no| STALL["The procedure never starts<br/>no attempt is counted, nothing appears in a trace"]
+    BAR -->|yes| RS["Resource selection · 5.1.2 and §3<br/>carrier · RA type · feature set · SSB · group · preamble draw"]
+    RS --> TX["Transmission · 5.1.3 and §4<br/>recompute the target power · apply the ramping rule<br/>transmit on the RO with the SSB spatial filter"]
+    TX --> W["Start ra-ResponseWindow at the first PDCCH occasion<br/>at least one symbol after the last symbol of the preamble"]
+    W --> M{"DCI 1_0 with this UE's RA-RNTI,<br/>carrying a RAPID equal to PREAMBLE_INDEX?"}
+    M -->|"no · window expires"| F1["RAR reception not successful"]
+    M -->|yes| OK["The UE may stop the window early<br/>apply the TA · store the TC-RNTI · take the UL grant<br/>set PREAMBLE_BACKOFF from the BI if present"]
+    OK --> M3["Msg3 in slot n + k2 + Δ<br/>CCCH SDU, or a C-RNTI MAC CE if already connected"]
+    M3 --> CT["Start ra-ContentionResolutionTimer<br/>RESTART it at each Msg3 HARQ retransmission"]
+    CT --> P{"Resolution seen before it expires?"}
+    P -->|"CCCH SDU · PDCCH to the TC-RNTI carrying a CR CE<br/>whose 48 bits match the SDU sent"| WIN["C-RNTI = TC-RNTI · discard the TC-RNTI<br/>finish demultiplexing · successfully completed"]
+    P -->|"C-RNTI MAC CE · PDCCH to the C-RNTI, and for a<br/>MAC or RRC-initiated procedure also a new-transmission grant"| WIN
+    P -->|"any other PDCCH, or nothing before expiry"| F2["Contention Resolution not successful<br/>discard the TC-RNTI · flush the Msg3 HARQ buffer"]
+    F1 --> C1["PREAMBLE_TRANSMISSION_COUNTER += 1"]
+    F2 --> C1
+    C1 --> CHK{"= preambleTransMax + 1?"}
+    CHK -->|"yes · on the SpCell"| RAP["Indicate a Random Access problem to RRC<br/>RRC maps it to a consequence using the trigger"]
+    CHK -->|"yes · on an SCell"| SCF["Unsuccessfully completed<br/>no RRC indication at all"]
+    CHK -->|no| BO["Back off a uniform random time in 0 .. PREAMBLE_BACKOFF<br/>check CFRA availability during the backoff"]
+    BO --> RS
+```
+
+### 9.3 Step by step
+
+**Before anything: barring, and the one-procedure rule.** Access barring is evaluated in the UE from broadcast
+information, so a barred UE never starts and never increments a counter. There is no "failed RACH" to see —
+UAC problems present as UEs that look idle, which is a common misdiagnosis. Then the one-procedure rule (§2):
+if a second trigger arrives while one is running, whether to continue or restart is left to UE implementation,
+with the spec's own example being an SI request.
+
+**Initiation (5.1.1).** Flush the Msg3 buffer, set both counters to 1, set the ramping step and the BI scaling
+factor. If the trigger was beam failure recovery and `beamFailureRecoveryConfig` is configured for the active
+UL BWP, the UE additionally starts `beamFailureRecoveryTimer` and **replaces** `powerRampingStep`,
+`preambleReceivedTargetPower` and `preambleTransMax` with the BFR versions. BFR is the one case where the
+cell's ordinary RACH parameters are overridden wholesale by a second set.
+
+**Resource selection (5.1.2, §3).** Carrier, RA type, feature set, SSB, group, then a uniform random draw of the
+preamble. On an SCell this path is not available at all: the preamble index comes from a PDCCH order.
+
+**Transmission (5.1.3, §4).** Recompute `PREAMBLE_RECEIVED_TARGET_POWER`, apply the four-condition ramping
+rule, compute the RA-RNTI, transmit. If an LBT failure comes back and `lbt-FailureRecoveryConfig` is
+configured, the UE reselects resources and tries again **without** counting an attempt; without that
+configuration the attempt is counted. This is the only failure that can be absorbed for free.
+
+**Waiting for Msg2 (5.1.4, §5).** The window starts at the first PDCCH occasion at least one symbol after the
+last symbol of the preamble, and — a detail that bites in mixed-numerology deployments — its length in slots is
+measured with the **SCS of the Type1-PDCCH CSS**, not the SCS of the BWP the RAR will be scheduled in. The UE
+monitors PDCCH while the window runs **regardless of any measurement gap**. There is no HARQ for the RAR. On a
+RAR carrying its own RAPID the UE may stop the window early; it does not have to wait it out.
+
+**On a RAPID match.** Apply the TA, start or restart `timeAlignmentTimer`, store the TC-RNTI, set
+`PREAMBLE_BACKOFF` from the BI if one is present, and take the UL grant. The spec itself flags one trap here:
+if, within a single procedure, the grant given for the *same* preamble group differs in size from the first
+grant allocated in that procedure, **UE behaviour is undefined**. That is a concrete reason for the gNB to keep
+its Msg3 grant sizing deterministic — see §10.3.
+
+**Msg3 (§6).** Transmit in slot n + k2 + Δ with the TA applied.
+
+**Waiting for Msg4 (5.1.5, §7).** Start `ra-ContentionResolutionTimer`, and **restart it at each Msg3 HARQ
+retransmission**, in the first symbol after the end of that transmission. Monitor PDCCH regardless of
+measurement gaps. This restart has a consequence that is easy to miss: the effective Msg4 deadline is the timer
+counted from the **last** Msg3 (re)transmission, not the first. A gNB that NACKs Msg3 and drives two
+retransmissions therefore buys itself considerably more wall-clock time to produce Msg4 than a naive reading of
+`ra-ContentionResolutionTimer` suggests.
+
+**On failure.** Both kinds of failure — RAR and contention — land in the same place: increment the transmission
+counter, and at `preambleTransMax + 1` indicate *Random Access problem* to RRC. On the SpCell this becomes an
+RRC consequence; on an SCell the procedure is simply considered unsuccessfully completed, with no RRC
+indication at all.
+
+**Ending (5.1.6).** On success the C-RNTI is set to the TC-RNTI value and the TC-RNTI is discarded; dedicated
+CFRA resources are released **except** the BFR ones, which are kept; and the Msg3 HARQ buffer is flushed.
+
+### 9.4 What the UE does differently in 2-step
+
+- The window is `msgB-ResponseWindow` (sl1 … sl320) and the RNTI is the MSGB-RNTI.
+- On a `fallbackRAR`, the UE may stop `msgB-ResponseWindow` as soon as RAR reception is considered successful —
+  it does not have to wait out the window before sending Msg3.
+- A fallback is a Msg3 retransmission of the MsgA payload on the granted PUSCH, not a new preamble: no
+  re-draw, no new occasion, and the attempt budget is already spent.
+- Once `msgA-TransMax` MsgA attempts are used, `RA_TYPE` is set to 4-stepRA and the procedure continues as
+  4-step with part of `preambleTransMax` already consumed. The two counters are separate but the budget is
+  shared (§11).
+
+## 10. The procedure as the gNB runs it
+
+### 10.1 Four things the gNB must work out, in order
+
+For each PRACH occasion the gNB resolves, in this order:
+
+1. **Was a preamble transmitted at all** — a correlation decision against a vendor-internal threshold.
+2. **Which preamble** — the RAPID, which is the only identity it obtains.
+3. **How far away the transmitter is** — the TA, from the position of the correlation peak.
+4. **How much uplink the transmitter will need** — inferred from the preamble group, never told.
+
+Everything after that is provisional. The gNB addresses an *occasion*, not a device, and it will not learn
+which device answered until Msg3 arrives.
+
+### 10.2 The gNB's processing chain
+
+```mermaid
+flowchart TD
+    CFG["Cell configuration<br/>root sequences · N_CS · SSB-to-RO mapping<br/>group A or B split · CFRA partitions"]
+    CFG --> OCC["Every configured PRACH occasion<br/>L1 correlates the configured roots and cyclic shifts"]
+    OCC --> DET{"Correlation peak above<br/>the vendor-internal detection threshold?"}
+    DET -->|no| DROP["Nothing is reported upward<br/>from the gNB's point of view the UE does not exist<br/>the UE will ramp and retry"]
+    DET -->|yes| PD["RAPID from the sequence and shift<br/>TA from the position of the peak<br/>received power · the Rx beam it arrived on"]
+    PD --> RNTI["Compute the RA-RNTI of that RO<br/>one RAR PDU answers the whole occasion"]
+    RNTI --> ALLOC["Per detected RAPID allocate a TC-RNTI<br/>not a value already in use as a C-RNTI<br/>colliding UEs get the SAME one — that is the mechanism"]
+    ALLOC --> GRANT["Size the Msg3 grant from the preamble group<br/>group A → the minimum that fits an unsegmentable CCCH SDU<br/>group B → larger, because the UE said it has the headroom"]
+    GRANT --> BI{"Congested?"}
+    BI -->|yes| BI1["Prepend the BI subPDU<br/>it must be the FIRST subPDU in the PDU"]
+    BI -->|no| BI0["No BI subPDU<br/>which means PREAMBLE_BACKOFF = 0 ms"]
+    BI1 --> SCHED
+    BI0 --> SCHED
+    SCHED["Schedule DCI 1_0 scrambled by the RA-RNTI<br/>on the Type1-PDCCH CSS, within the UE's window<br/>the RAR PDSCH is sized blind — no CQI exists yet"]
+    SCHED --> M3W{"Msg3 arrives on the granted PUSCH<br/>and decodes?"}
+    M3W -->|"does not decode"| NOM3["HARQ-retransmit Msg3 if there is time<br/>otherwise no Msg4 · the UE's CR timer expires<br/>and it restarts from Msg1"]
+    M3W -->|decodes| CR["Build the CR CE from the first 48 bits<br/>of the decoded CCCH SDU<br/>for initial access, ask the CU-CP for RRCSetup"]
+    CR --> MSG4["Msg4 · DCI scrambled by the TC-RNTI<br/>every UE holding that TC-RNTI reads the same PDSCH<br/>the CE is what discriminates"]
+    MSG4 --> ACK{"HARQ-ACK for the Msg4 PDSCH?"}
+    ACK -->|ACK| DONE["The TC-RNTI is now a C-RNTI<br/>the UE is schedulable"]
+    ACK -->|"NACK or nothing"| RETX["Retransmit Msg4<br/>the UE's CR timer bounds how many chances there are,<br/>and it restarts at each Msg3 retransmission"]
+```
+
+### 10.3 Step by step
+
+**Detection (L1, in the DU).** The correlator searches the configured root sequences and cyclic shifts in every
+configured RO. A peak above the detection threshold yields a RAPID, a TA from its position, a received power,
+and — in a beamformed cell — the Rx beam the arrival was strongest on, which is the only uplink spatial
+information the gNB has before Msg3. The threshold is vendor-internal and is the single most common cause of
+"the network never heard us"; anything below it is not reported at all, so the distinction between "never
+heard" and "heard but not answered" exists only inside the DU.
+
+**RAR assembly (MAC, in the DU).** One RAR MAC PDU answers one RA-RNTI, that is, one occasion. It may carry
+several MAC RARs — one per preamble the gNB detected in that occasion — plus RAPID-only subPDUs for on-demand
+SI requests, where the RAPID *is* the acknowledgement. The BI subPDU, if included, must be the **first**
+subPDU; RAPID subPDUs sit between it and the padding, and padding goes last. For each detected RAPID the gNB
+allocates a TC-RNTI and sizes a Msg3 grant from the preamble group — group A gets the minimum that fits an
+unsegmentable CCCH SDU, group B gets more. In a collision the gNB hands the colliding UEs the **same** TC-RNTI
+and the **same** grant: that is not a bug, it is the mechanism by which only one Msg3 decodes and the
+collision becomes resolvable.
+
+**Scheduling the RAR.** DCI format 1_0 with CRC scrambled by the RA-RNTI, in the Type1-PDCCH CSS, within the
+UE's `ra-ResponseWindow`. The RAR PDSCH is scheduled entirely blind — the gNB has no channel-quality
+information for this UE whatsoever — and it carries no HARQ. The gNB's only evidence that the RAR landed is
+that no preamble comes back and that a Msg3 arrives. This is also why the gNB is the only side that can
+distinguish "RAR not sent because it was never scheduled" from "RAR sent but not received"; in a trace you
+recover that only by comparing the DU's scheduling decisions against the UE's view.
+
+**Msg3.** The gNB knows the TA from Msg1, so it can in principle decode. If Msg3 does not decode, the gNB can
+HARQ-retransmit it, and each retransmission restarts the UE's `ra-ContentionResolutionTimer` (§9.3) — a
+retransmission buys the gNB time and costs the UE nothing in its timer, which is the opposite of how HARQ
+usually affects latency.
+
+**Msg4.** On a decoded CCCH SDU the DU MAC builds the UE Contention Resolution Identity MAC CE from its **first
+48 bits** and encapsulates whatever RRC message the CU-CP produced. The PDCCH is scrambled by the TC-RNTI,
+which every UE that drew that preamble holds, so the PDSCH is read by all of them and the CE is what
+discriminates. For initial access the CU-CP's contribution is `RRCSetup` — or `RRCReject` with `waitTime` —
+and the `masterCellGroup` inside it is authored by the DU. The gNB then watches for the HARQ-ACK on the Msg4
+PDSCH; a missing or negative ACK means Msg4 is retransmitted, with the UE's timer bounding how many chances
+it gets.
+
+**Across the F1 interface.** L1 and MAC sit in the DU; RRC sits in the CU-CP. The CCCH SDU travels up as an
+INITIAL UL RRC MESSAGE TRANSFER and the answer comes down as a DL RRC MESSAGE TRANSFER. The consequence for
+field work: a slow or broken F1-C path shows up as Msg4 arriving **after** `ra-ContentionResolutionTimer`
+expired, which looks exactly like a collision at the air interface if you only have a UE-side trace.
+
+### 10.4 What each side knows that the other does not
+
+This table is the payoff of the two sections, and most RACH troubleshooting is an argument about which row you
+are in.
+
+| The gNB knows | The gNB does not |
+| --- | --- |
+| The RAPID, and the TA | Which UE sent it |
+| The received preamble power | The UE's pathloss estimate, hence its real transmit power |
+| The Rx beam the arrival was strongest on | Which downlink beam the UE selected |
+| After Msg3, how many UEs collided | Before Msg3, that any collision happened |
+| Whether the RAR was scheduled at all | Whether the RAR arrived, until Msg3 shows up |
+
+| The UE knows | The UE does not |
+| --- | --- |
+| Its own identity and why it is transmitting | Who else drew the same preamble |
+| The downlink pathloss | Whether the gNB detected it at all |
+| Whether the RAR was addressed to it | The gNB's detection threshold |
+| After Msg4, whether it won | Before Msg4, that it is about to lose |
+
+The intersection is worth stating plainly: **nobody** knows, at the moment of Msg1, that a collision has
+occurred. The gNB learns it when two UEs answer one grant; the UE learns it when its identity is not echoed.
+Every RACH optimisation is therefore either a bet on the collision probability or a reaction to a collision
+that has already happened — which is exactly the split between the parameter knobs in §15 and the closed-loop
+xApp in [[01-3 AI-ML for RAN and O-RAN RIC]].
+
+## 11. 2-step random access (Rel-16)
 
 2-step exists to remove a round trip: the preamble and the Msg3-equivalent payload are sent together, before any
 timing advance has been applied and before any grant has been received. It is selected when
@@ -593,7 +853,7 @@ Practical points:
 - 2-step is also what makes random access tolerable in **unlicensed spectrum**: every round trip is another
   listen-before-talk gamble.
 
-## 10. Contention-free random access and the special-purpose variants
+## 12. Contention-free random access and the special-purpose variants
 
 CFRA is not a different procedure — it is the same procedure with the ambiguity removed. Because the gNB knows
 which UE owns preamble index *n*, detecting *n* is itself the identification, so the RAR can carry the real
@@ -632,7 +892,7 @@ Details that matter:
   Over-provisioning CBRA in a cell with heavy inbound mobility starves CFRA and quietly pushes handovers onto
   contention-based access.
 
-## 11. Variants that move the procedure
+## 13. Variants that move the procedure
 
 | Variant | What changes | Where |
 | --- | --- | --- |
@@ -665,7 +925,7 @@ The most confusing field report in NTN: because differential delay is worst at *
 PRACH configuration fails in a band around the horizon and works fine in the middle of the pass — the same UE in
 the same place succeeds and fails on a cycle set by the orbit.
 
-## 12. Latency budget and what dominates it
+## 14. Latency budget and what dominates it
 
 | Variant | Messages | Typical time to a usable UL grant |
 | --- | --- | --- |
@@ -678,7 +938,7 @@ retry is needed at all. A cell with a high collision rate spends far more time i
 preamble transmission. That is why most RACH optimisation work is about **collision probability and RAR
 delivery**, not about shortening the messages.
 
-## 13. Tuning knobs
+## 15. Tuning knobs
 
 | Parameter | Range | What it controls | Symptom when wrong |
 | --- | --- | --- | --- |
@@ -698,7 +958,7 @@ delivery**, not about shortening the messages.
 | `rsrp-ThresholdSSB` | RSRP range | Which SSBs are eligible | Too high → UEs pick weak beams by the "any SSB" fallback and fail |
 | `cellSpecificKoffset` (NTN) | 0–1023 ms | Scheduling causality | Too small → Msg3 schedules that cannot be met |
 
-## 14. Troubleshooting
+## 16. Troubleshooting
 
 ### 14.1 A layered decision tree
 
@@ -718,7 +978,7 @@ flowchart TD
     C3 -->|yes| C4{"Did Msg3 get through?"}
     C4 -->|no| D4["Msg3 grant too small or MCS too aggressive<br/>check group B selection with inadequate headroom"]
     C4 -->|yes| C5{"Did Msg4 echo this UE's identity?"}
-    C5 -->|no| D5["Pure collision<br/>UE restarts without ramping — expected at some rate"]
+    C5 -->|no| D5["Pure collision<br/>the UE restarts, and ramps if it kept the beam<br/>expected at some rate — judge the rate"]
     C5 -->|yes| OK["Success: TC-RNTI promoted to C-RNTI"]
 ```
 
@@ -752,7 +1012,7 @@ flowchart TD
 | RAR received, RAPID never matches, high load | Preamble collisions | More preambles per SSB or more ROs; check `totalNumberOfRA-Preambles` |
 | RAR and RAPID fine, Msg3 never decoded | Grant too small for the actual Msg3, or MCS too aggressive in marginal coverage | `ra-Msg3SizeGroupA`, group B headroom, Msg3 MCS |
 | Msg4 arrives, identity mismatch | Contention lost — normal at some rate | Judge the rate, not the event |
-| Ten attempts at the same power | Spatial filter changed between attempts, so the ramping counter is suppressed; or `P_CMAX` clipping | SSB reselection in the trace; `preambleReceivedTargetPower` vs pathloss |
+| Ten attempts at the same power | Spatial filter changed between attempts, so the ramping counter is suppressed; or the PHY sent the power-ramping-suspension notification because `P_CMAX` was reached; or `powerRampingStep` = dB0; or LBT failures (NR-U) | SSB reselection in the trace; `preambleReceivedTargetPower` vs pathloss; `lbt-FailureRecoveryConfig` |
 | Handover shows contention resolution | CFRA resources were unavailable at the target | `rach-ConfigDedicated` in `reconfigurationWithSync`; CFRA preamble budget |
 | High fallbackRAR rate, low failure rate | `msgA-RSRP-Threshold` too permissive for the coverage | RSRP distribution of 2-step attempts vs the threshold |
 | Access works mid-cell, fails at the edge | Cell dimensioned smaller than deployed; or NTN geometry at low elevation | PRACH format radius assumption; NTN `cellSpecificKoffset` and window offsets |
@@ -760,7 +1020,7 @@ flowchart TD
 | Preamble transmitted but never detected (NTN) | Pre-compensation wrong or absent | GNSS fix validity, ephemeris freshness, `ta-Common`, `epochTime` |
 | Msg3 stalls after the RAR (NTN) | `cellSpecificKoffset` too small for this cell | K_offset versus service-link RTT plus common TA |
 
-## 15. Anchors
+## 17. Anchors
 
 Facts below are checkable against the specifications named; anything I could not confirm is marked `VERIFY`.
 
@@ -779,6 +1039,20 @@ Facts below are checkable against the specifications named; anything I could not
   layout; `successRAR` is 88 bits (11 octets) including a 48-bit UE Contention Resolution Identity.
 - **UL grant** = 27 bits: frequency hopping (1) + frequency RA (14) + time RA (4) + MCS (4) + TPC (3) +
   CSI request (1).
+- **`PREAMBLE_POWER_RAMPING_COUNTER`** (clause 5.1.3) is incremented for each preamble transmission only when
+  **all four** hold: `PREAMBLE_TRANSMISSION_COUNTER` > 1; the SSB or CSI-RS **has not** changed since the last
+  attempt; the PHY **has not** sent the "suspend power ramping counter" notification; and no LBT failure was
+  reported for the last attempt. **There is no carve-out for contention-resolution losses** — a UE that loses
+  contention and keeps its beam ramps exactly like one that missed the RAR.
+- **`ra-ContentionResolutionTimer`** (clause 5.1.5) is started once Msg3 is transmitted and **restarted at each
+  Msg3 HARQ retransmission**, in the first symbol after the end of that transmission; the UE monitors PDCCH
+  while it runs **regardless of any measurement gap**.
+- **RAR MAC PDU ordering** (clause 6.1.5): the BI subPDU, if present, must be the **first** subPDU; RAPID
+  subPDUs can be placed anywhere between it and the padding; padding, if present, goes **last**, and its
+  presence and length are implicit from the TB size.
+- **Msg3 grant sizing** (clause 5.1.4, NOTE): if within one Random Access procedure the UL grant given for the
+  same group of contention-based preambles differs in size from the first grant allocated in that procedure,
+  **UE behaviour is undefined**.
 - **Timing advance**: N_TA = T_A · 16 · 64 / 2^µ in units of T_c, T_c = 1/(480 000 · 4096) s ≈ 0.509 ns;
   T_A range 0–3846. At 30 kHz, one step is 512 T_c ≈ 0.26 µs ≈ 39 m.
 - **Msg3 timing**: slot n + k2 + Δ, with Δ = 2/3/4/6 slots for µ = 0/1/2/3 (TS 38.214 Table 6.1.2.1.1-5).
@@ -808,7 +1082,7 @@ Facts below are checkable against the specifications named; anything I could not
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — the two extremes of this procedure: RedCap UEs with their own
   RA resource partition and Msg3 repetitions, and NTN where the UE must pre-compensate timing before Msg1
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — RACH optimisation is one of the canonical closed-loop use cases: the
-  xApp observes preamble collisions, RAR success rate and fallback rate, and retunes the parameters in §13
+  xApp observes preamble collisions, RAR success rate and fallback rate, and retunes the parameters in §15
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the same problem one domain over: contention-based
   shared-channel access with no prior timing or power knowledge, and a very different set of trade-offs
 
@@ -819,7 +1093,12 @@ Facts below are checkable against the specifications named; anything I could not
 1. 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*, v17.3.0 (ETSI TS 138 321 V17.3.0,
    2023-01). <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/17.03.00_60/ts_138321v170300p.pdf>
    — clauses 5.1 (random access), 6.2.3 and 6.2.3a (MAC RAR, fallbackRAR, successRAR), 7.2–7.4. The primary
-   source for every field size, counter and table in this note.
+   source for every field size, counter and table in this note. The counter and timer rules behind §9 and §10
+   were re-checked against v17.14.0 (2025-10),
+   <https://www.etsi.org/deliver/etsi_ts/138300_138399/138321/17.14.00_60/ts_138321v171400p.pdf> — clause 5.1.3
+   (the four power-ramping conditions), 5.1.4 (RAR reception, including the NOTE that leaves UE behaviour
+   undefined when the Msg3 grant size changes), 5.1.5 (contention resolution and the timer restart), 5.1.6
+   (completion), 6.1.5 (RAR MAC PDU ordering).
 2. 3GPP. *TS 38.300 — NR; Overall description; Stage 2*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138300/>
    — clause 9.2.6 lists the events that initiate random access; clause 16 covers NTN.
 3. 3GPP. *TS 38.211 — Physical channels and modulation*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138211/>
@@ -845,7 +1124,9 @@ Facts below are checkable against the specifications named; anything I could not
     — the two contention-resolution mechanisms, the backoff valve, and the MsgA/MsgB fallback story.
 11. lte5ghub. *Random Access (4-step & 2-step) in 5G NR*. <https://lte5ghub.com/random-access>
     — trigger-to-RRC-consequence table, RA-RNTI worked example, the shared MsgA/preamble budget pitfall, the
-    spatial-filter ramping rule, and the log-reading checklist adapted in §14.
+    spatial-filter ramping rule, and the log-reading checklist adapted in §16. **Secondary source**: the
+    ramping rules taken from here were re-checked against TS 38.321 clause 5.1.3, and one of them is corrected
+    in §9.3 and in the Anchors.
 12. lte5ghub. *TS 38.331: RRC Connection Procedures in 5G NR*. <https://lte5ghub.com/rrc-procedures>
     — `establishmentCause` semantics, T300/T302, `RRCReject` and `waitTime`.
 13. lte5ghub. *TS 38.331: RRC States (Idle / Inactive / Connected) in 5G NR*. <https://lte5ghub.com/rrc-states>
@@ -861,7 +1142,7 @@ Facts below are checkable against the specifications named; anything I could not
     — the Rel-17 TA formula with common TA, UE self-estimated TA and K_offset, and the MAC CE timing
     relationship with K_mac during beam failure recovery.
 17. ShareTechnote. *NTN — Random Access*. <https://www.sharetechnote.com/html/NTN/NTN_RACH.html>
-    — which TR 38.821 candidate solutions survived into Rel-17, and the NTN RACH symptom table used in §14.3.
+    — which TR 38.821 candidate solutions survived into Rel-17, and the NTN RACH symptom table used in §16.3.
 18. i TecSpec. *TR 38.822 §6.1.4 — NR_NTN_solutions (L1 feature list)*. <https://itecspec.com/3gpp/38.822/s/6.1.4>
     — `uplinkPreCompensation-r17` and the mandatory GNSS-based TA and frequency pre-compensation.
 19. NTT DOCOMO Technical Journal, Vol. 24 No. 3. *Special Articles on 3GPP Release 17 Standardization

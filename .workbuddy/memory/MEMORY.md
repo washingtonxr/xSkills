@@ -57,6 +57,8 @@ renumbering its readlist section too.
 - Anything not independently confirmed is marked **`VERIFY`**, never asserted.
 - `[[wikilinks]]` are deliberate — a link means the two concepts get argued about together in interviews.
 - Source documents stay faithful to the original draft; **corrected facts live in the Anchors sections**, and the README §7 table records source-vs-verified discrepancies.
+- **Verify procedural claims against the clause, not the secondary sources.** Collected blog sources repeat errors verbatim — every popular RACH write-up claims contention-resolution losers do not ramp power, and TS 38.321 clause 5.1.3 shows they do. When a new section will restate an existing claim, re-check the clause first.
+- Structural diagrams follow the question: an "architecture / who does what" view is a **sequenceDiagram with the layers as participants** (the vertical order is the layering, the horizontal arrows are the messages), not a flowchart of boxes.
 - Copyright line `Copyright (c) 2026 Washington Ruan. All rights reserved.` appears in frontmatter and footer of every file.
 - Frontmatter: `title`, `lang`, `category`, `last-updated`, `copyright`, plus `sibling` for bilingual pairs and `version` for documents with revision history.
 

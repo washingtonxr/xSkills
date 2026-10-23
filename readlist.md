@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.12
+version: 1.13
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -162,6 +162,8 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 - **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*, v17.3.0 (ETSI TS 138 321 V17.3.0, 2023-01). <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/17.03.00_60/ts_138321v170300p.pdf>
   - The normative text for this note: clause 5.1 (random access), 5.1.1b–5.1.1d (feature-based resource partitioning), 6.2.3 and 6.2.3a (MAC RAR, fallbackRAR, successRAR), 7.2 (Backoff Parameter values), 7.3 (DELTA_PREAMBLE), 7.4 (PRACH Mask Index). Read the clause 5.1 state machine once end to end before reading anything else about RACH.
+- **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*, v17.14.0 (ETSI TS 138 321 V17.14.0, 2025-10). <https://www.etsi.org/deliver/etsi_ts/138300_138399/138321/17.14.00_60/ts_138321v171400p.pdf>
+  - The same clause 5.1 in a later release, and the version to check against before quoting a counter rule. It settles the two facts this note had to correct: the four conditions under which `PREAMBLE_POWER_RAMPING_COUNTER` is incremented (5.1.3 — attempt counter above one, SSB/CSI-RS unchanged, no power-ramping-suspension notification from lower layers, no LBT failure), and the restart of `ra-ContentionResolutionTimer` at each Msg3 HARQ retransmission (5.1.5). Clause 6.1.5 carries the RAR MAC PDU ordering rule (BI first, padding last), and the NOTE in 5.1.4 is the one that leaves UE behaviour undefined when the Msg3 grant size changes within a procedure.
 - **[Standard · ★★★]** 3GPP. *TS 38.211 — Physical channels and modulation*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138211/>
   - PRACH in clause 6.3.3: the preamble format tables (6.3.3.1-1 and 6.3.3.1-2), sequence generation, and the three time-domain configuration tables 6.3.3.2-2 (FR1 FDD/SUL), 6.3.3.2-3 (FR1 TDD) and 6.3.3.2-4 (FR2).
 - **[Standard · ★★★]** 3GPP. *TS 38.213 — Physical layer procedures for control*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138213/>

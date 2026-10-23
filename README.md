@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.12
+version: 1.13
 sibling: README.cn.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -138,7 +138,7 @@ flowchart LR
 | **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP, HARQ, BSR, grant lifecycle, QoS mapping |
 | **01-3** | AI/ML for RAN and O-RAN | near-RT/non-RT RIC, xApp/rApp, DRL scheduling, sim-to-real |
 | **01-4** | Cellular IoT | RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS |
-| **01-5** | **NR random access (RACH)** | The full UE random-access procedure: MAC-level triggers and what each failure means at RRC, RA-type and feature-partitioned resource selection (RedCap/SDT/NSAG/Msg3 repetition), PRACH formats 0–3 and A1–C2 with their CP-implied cell radii, open-loop power and the ramping rules, RA-RNTI and MSGB-RNTI arithmetic, the RAR MAC PDU and the Backoff Indicator table, Msg3 scheduling (`k2 + Δ`) and payloads, contention resolution, 2-step MsgA/MsgB with successRAR and fallbackRAR, CFRA and beam failure recovery, the SDT / NTN / RedCap variants, a latency budget, every tuning knob, and a layered troubleshooting tree with a symptom table |
+| **01-5** | **NR random access (RACH)** | The full UE random-access procedure: MAC-level triggers and what each failure means at RRC, RA-type and feature-partitioned resource selection (RedCap/SDT/NSAG/Msg3 repetition), PRACH formats 0–3 and A1–C2 with their CP-implied cell radii, open-loop power and the ramping rules, RA-RNTI and MSGB-RNTI arithmetic, the RAR MAC PDU and the Backoff Indicator table, Msg3 scheduling (`k2 + Δ`) and payloads, contention resolution, 2-step MsgA/MsgB with successRAR and fallbackRAR, CFRA and beam failure recovery, the SDT / NTN / RedCap variants, a latency budget, every tuning knob, and a layered troubleshooting tree with a symptom table — **plus the whole procedure retold from each side: §9 is the UE's state machine and counters, §10 the gNB's detection, RAR assembly and CU-DU split, and §10.4 tabulates what each side knows that the other does not** |
 | **02-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
 | **02-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
 | **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
@@ -172,7 +172,7 @@ flowchart LR
 2. **Entry point**: `00 MOC` is the only navigation page. The other 29 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 174 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 176 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -211,6 +211,7 @@ flowchart LR
 | 802.11bi | sometimes described as a wake-up-radio amendment | It is **Enhanced Privacy Protection**, approved for publication **2026-09-25** — see note 02-2. The wake-up radio amendment is **802.11ba-2021** |
 | r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
 | Linux bottom halves | "tasklet is the fast deferred-work mechanism" | Tasklets are **deprecated**. The API was modernised around 5.9 and the replacement is **WQ_BH**, merged for **6.9** with `system_bh_wq` and `system_bh_highpri_wq`; it runs in softirq context, may not sleep and requires `max_active = 0`. The tasklet API still exists and conversion is ongoing — see note 04-4 |
+| Power ramping after a contention loss | "a UE that loses contention restarts from Msg1 without ramping power" | It **does** ramp. TS 38.321 clause 5.1.3 increments `PREAMBLE_POWER_RAMPING_COUNTER` on four transmission conditions only — the attempt counter is above one, the SSB/CSI-RS is unchanged, the PHY has not sent the power-ramping-suspension notification, and no LBT failure was reported — with **no carve-out for contention-resolution losses**. The narrow statement that is true is the beam rule: no ramping when the beam changes, whatever the cause. Note that this also removes a common shortcut — collisions cannot be told apart from coverage misses by the power column — see note 01-5 §9.3 |
 
 **Update triggers**
 

@@ -217,7 +217,7 @@ flowchart LR
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
-- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the MAC procedure this note only lists: Msg1 to Msg4, MSGA/MSGB, RA-RNTI, the RAR MAC PDU, and the counters and windows that a MAC implementation must keep
+- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the MAC procedure this note only lists: Msg1 to Msg4, MSGA/MSGB, RA-RNTI, the RAR MAC PDU, and the counters and windows that a MAC implementation must keep; §9 walks the UE-side counters and §10 walks the gNB-side RAR assembly
 
 ---
 

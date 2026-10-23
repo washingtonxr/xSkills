@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.12
+version: 1.13
 sibling: README.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -138,7 +138,7 @@ flowchart LR
 | **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP、HARQ、BSR、grant 生命周期、QoS 映射 |
 | **01-3** | AI/ML for RAN 与 O-RAN | near-RT/non-RT RIC、xApp/rApp、DRL 调度、sim-to-real |
 | **01-4** | 蜂窝 IoT | RedCap 分级、eRedCap、NTN、Ambient IoT、LP-WUS |
-| **01-5** | **NR 随机接入（RACH）** | UE 随机接入全流程：MAC 层触发事件及其在 RRC 层的含义、RA 类型与按特性划分的接入资源选择（RedCap / SDT / NSAG / Msg3 重复）、PRACH 格式 0–3 与 A1–C2 及其 CP 隐含的小区半径、开环功率与功率爬坡规则、RA-RNTI 与 MSGB-RNTI 计算、RAR MAC PDU 与 Backoff Indicator 表、Msg3 调度（`k2 + Δ`）与载荷、竞争解决、两步接入 MsgA/MsgB 与 successRAR / fallbackRAR、CFRA 与波束失败恢复、SDT / NTN / RedCap 变体、时延预算、全部可调参数，以及分层排障决策树与症状对照表 |
+| **01-5** | **NR 随机接入（RACH）** | UE 随机接入全流程：MAC 层触发事件及其在 RRC 层的含义、RA 类型与按特性划分的接入资源选择（RedCap / SDT / NSAG / Msg3 重复）、PRACH 格式 0–3 与 A1–C2 及其 CP 隐含的小区半径、开环功率与功率爬坡规则、RA-RNTI 与 MSGB-RNTI 计算、RAR MAC PDU 与 Backoff Indicator 表、Msg3 调度（`k2 + Δ`）与载荷、竞争解决、两步接入 MsgA/MsgB 与 successRAR / fallbackRAR、CFRA 与波束失败恢复、SDT / NTN / RedCap 变体、时延预算、全部可调参数，以及分层排障决策树与症状对照表——**并分别从两侧重述同一流程：§9 是 UE 侧状态机与计数器，§10 是 gNB 侧的前导检测、RAR 组装与 CU-DU 分工，§10.4 列出双方各自知道而对方不知道的信息** |
 | **02-1** | WLAN 代际演进 | Wi-Fi 4→9、MLO、OFDMA、UHR、多 AP 协同、逐特性设计细节 |
 | **02-2** | **WLAN 节能技术** | 能耗方程与四类机制族；Legacy PS/PS-Poll、U-APSD、SMPS、VHT TXOP PS 与 OM Control、802.11ah 的 TWT/RAW/TIM 分段、802.11ax TWT 与 trigger-enabled SP、802.11ba 唤醒无线电、802.11be r-TWT、802.11bn AP Power Save / DPS / 跨链路节能、802.11bp 环境供能——含逐代机制对比表、Mermaid 图、实现分层与失效模式 |
 | **02-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
@@ -172,7 +172,7 @@ flowchart LR
 2. **入口**：`00 MOC` 是唯一导航页，其余 29 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 174 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 176 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---
@@ -211,6 +211,7 @@ flowchart LR
 | 802.11bi | 有时被说成唤醒无线电 | 实为 **Enhanced Privacy Protection**，**2026-09-25** 批准发布（见笔记 02-2）；唤醒无线电修订版是 **802.11ba-2021** |
 | r-TWT 落地情况 | 常被当作 Wi-Fi 7 已有能力 | r-TWT 在 802.11be 中为**可选**特性，且**不在 Wi-Fi CERTIFIED 7 强制要求内**；2026 年 CWNP 综述指出在售客户端与 AP 未声明支持。引用前按 `VERIFY` 处理 |
 | Linux 下半部机制 | "tasklet 就是快速下半部" | tasklet 已**弃用**。API 在 5.9 前后完成现代化改造，替代者是 **WQ_BH**，于 **6.9** 合入（含 `system_bh_wq` 与 `system_bh_highpri_wq`），运行在 softirq 上下文、不可睡眠且要求 `max_active = 0`；tasklet API 仍在，转换工作尚未完成——见笔记 04-4 |
+| 竞争解决失败后的功率爬坡 | "竞争失败的 UE 从 Msg1 重来且不爬坡" | 实际**会**爬坡。TS 38.321 第 5.1.3 节对 `PREAMBLE_POWER_RAMPING_COUNTER` 的递增只设四个条件——传输计数大于 1、SSB/CSI-RS 未变更、物理层未发出功率爬坡暂停通知、上一次传输无 LBT 失败——**没有为竞争解决失败开任何例外**。真正成立的是更窄的那条：换波束才不爬坡，与失败原因无关。这也否掉了一个常用捷径：碰撞与覆盖不足**无法靠功率列区分**——见笔记 01-5 §9.3 |
 
 **更新触发点**
 
