@@ -26,7 +26,7 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 - `knowledge-graph/` is the Obsidian vault root — open *that* folder, not the project root.
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
 - Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
-- Fixed note body shape: knowledge points → **Anchors** → **Related** → **References**; the big domain notes (01-5/01-6/02-7/02-8/06-3/04-4/04-5) all close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
+- Fixed note body shape: knowledge points → **Anchors** → **Related** → **References**; the big domain notes (01-5/01-6/01-7/02-7/02-8/06-3/04-4/04-5/04-6) all close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
 - Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view); every note is expected to carry them in its structural sections (architecture, data path, timing, decision logic), not just in passing.
 - Bulk renumbering recipe: two-phase `git mv` (old → `__tmp__` → final) to avoid filename collisions, then one regex pass with `(?<![\d\-])(\d{2})-(\d)(?!\d)` and a lookup dict — single pass avoids chained rewrites, and the lookbehind protects dates and version strings.
 
@@ -38,10 +38,10 @@ replaced on request. Group order follows the signal path outward:
 
 | Group | Domain | Notes |
 | --- | --- | --- |
-| `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) · 01-5 NR random access (RACH) · 01-6 NR DU MAC scheduler |
+| `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) · 01-5 NR random access (RACH) · 01-6 NR DU MAC scheduler · 01-7 NR HARQ with the LTE comparison |
 | `02-x` | WLAN | 02-1 generations · 02-2 power saving · 02-3 ecosystem (WFA/EasyMesh/prpl) · 02-4 TX/RX datapath and offload · 02-5 discovery, authentication and association · 02-6 roaming, healing and steering · 02-7 EasyMesh operation, tuning and troubleshooting · 02-8 scheduling, EDCA, OFDMA, airtime |
 | `03-x` | Low-power and sensor networking | 03-1 WSN and low-power MAC |
-| `04-x` | Embedded and systems software | 04-1 RTOS and hardware interfaces · 04-2 Linux embedded · 04-3 software architecture · 04-4 Linux interrupts · 04-5 concurrency, processes, threads and IPC |
+| `04-x` | Embedded and systems software | 04-1 RTOS and hardware interfaces · 04-2 Linux embedded · 04-3 software architecture · 04-4 Linux interrupts · 04-5 concurrency, processes, threads and IPC · 04-6 device drivers (model, probe, data path, power, bring-up) |
 | `05-x` | Data plane and heterogeneous compute | 05-1 DPDK/UPF · 05-2 cloud-edge-end |
 | `06-x` | Machine learning, AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems · 06-3 machine learning foundations (read first) |
 | `07-x` | Silicon and ISA | 07-1 RISC-V |

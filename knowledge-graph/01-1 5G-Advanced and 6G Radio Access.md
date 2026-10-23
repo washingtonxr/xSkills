@@ -168,6 +168,7 @@ flowchart LR
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the procedure every release keeps tuning: 2-step RACH from Rel-16, feature-partitioned RA resources and SDT from Rel-17, and LTM from Rel-18 where a mobility event may run with no RACH at all
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the retransmission mechanism each release keeps retuning: the 32-process and feedback-disabled extensions that Rel-17 added for very long round trips, and the attempt to make a round trip shorter than the latency budget
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — where a release's scheduling features have to land: the PDCCH and PUCCH budgets, the HARQ process count, and the per-slot deadline that bounds every AI-assisted variant
 - [[07-1 RISC-V for Communication Infrastructure]]
 

@@ -170,6 +170,7 @@ Data path sketch:
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — VFIO, hugepages, IRQ affinity, core isolation underneath the PMD
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the kernel driver a PMD bypasses: what VFIO replaces, what the DMA and IOMMU arguments of §8.5 look like when you keep the kernel in the loop, and the IRQ affinity a PMD takes over
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — what polling is the alternative to: the interrupt path, MSI-X per-queue affinity, and the coalescing and isolation tuning that a PMD replaces
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency model a PMD deliberately opts out of, and the shared-memory ring plus doorbell pattern it keeps
 

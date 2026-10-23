@@ -700,6 +700,7 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 
 ## Related
 
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the deep treatment of §3: the device model, matching and probe ordering, devres, one lifecycle state machine, the char-device and interrupt data paths, DMA ownership, runtime PM, the bus-by-bus anatomy, framework selection and a bring-up method with a symptom table
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the deep treatment of §3.7: interrupt types, controllers, the generic IRQ layer, threaded IRQs, deferred work, and tuning and troubleshooting
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the deep treatment of §4.1, §4.5 and §5: the privilege boundary, execution contexts, the process and thread models, futex-based ITC and the full IPC decision logic
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the architecture layer: HAL/BSP separation, execution models, OTA/rollback design, safety and partitioning rationale

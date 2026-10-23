@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.15
+version: 1.17
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,11 +11,11 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 32 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
+> This file supports the 34 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
 > vault's domain groups:  
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,  
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH),  
-> `01-6` NR DU MAC scheduler;  
+> `01-6` NR DU MAC scheduler, `01-7` NR HARQ and its comparison with LTE, `04-6` device drivers;  
 > `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,  
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,  
 > `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting,  
@@ -29,7 +29,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `07-x` silicon and ISA — `07-1` RISC-V;  
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,  
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.  
-> Sections `30`–`32` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `34`–`36` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number  
 > rather than by `[[wikilink]]`.
@@ -227,6 +227,61 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - K_offset, the HARQ enhancement, and the NTN mobility triggers, explained from an operator's point of view.
 - **[Doc · ★]** lte5ghub. *TS 38.331: RRC States (Idle / Inactive / Connected)*. <https://lte5ghub.com/rrc-states>
   - Why a completed random access no longer implies a state transition once SDT is enabled — the KPI trap worth knowing before you read a drive-test report.
+
+## 01-7 · NR HARQ — Retransmission Flow, Timelines and LTE Comparison
+
+### Standards
+
+- **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/>
+  - Clause 5.3.2 the DL HARQ entity and process behaviour, 5.4.1 the UL HARQ entity with the configured-grant process-ID formula and `configuredGrantTimer`, 5.7 the DRX retransmission timers. The normative source for every state machine in the note.
+- **[Standard · ★★★]** 3GPP. *TS 38.214 — Physical layer procedures for data*, v18.9.0 (ETSI TS 138 214 V18.9.0). <https://www.etsi.org/deliver/etsi_ts/138200_138299/138214/18.09.00_60/ts_138214v180900p.pdf>
+  - Clause 5.1 the 16-process maximum, the 32-process capability and the default of 8; 5.1.7.2 CBG reception with CBGTI and CBGFI; 6.1 the UL figure of 16; Tables 5.3-1 and 6.4-1 the N1 and N2 processing times.
+- **[Standard · ★★★]** 3GPP. *TS 38.212 — Multiplexing and channel coding*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138212/>
+  - Clause 5.4.2 rate matching: the circular buffer, the RV start index `k0`, and limited buffer rate matching with `Ncb = min(N, Nref)` and `R_LBRM = 2/3`. The arithmetic in §8 of the note comes from here.
+- **[Standard · ★★★]** 3GPP. *TS 38.213 — Physical layer procedures for control*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138213/>
+  - Clause 9.1 the HARQ-ACK codebook determination, 9.2.1 PUCCH resource sets, 9.2.3 the PDSCH-to-HARQ-ACK timing and the DCI 1_0 k1 table, 9.2.5 UCI multiplexing onto PUSCH.
+- **[Standard · ★★]** 3GPP. *TS 38.331 — Radio Resource Control (RRC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138331/>
+  - `nrofHARQ-ProcessesForPDSCH` and its `v1700` extension, `dl-DataToUL-ACK`, `pdsch-TimeDomainAllocationList`, `pusch-TimeDomainAllocationList`, `ConfiguredGrantConfig` with `repK` and `repK-RV`, `downlinkHARQ-FeedbackDisabled-r17`, `cellSpecificKoffset-r17`.
+- **[Standard · ★★]** 3GPP. *TS 36.321 — E-UTRA; MAC protocol specification*. <https://www.etsi.org/deliver/etsi_TS/136300_136399/136321/>
+  - The LTE side: the synchronous uplink HARQ operation, the PHICH-driven non-adaptive retransmission, and `maxHARQ-Tx`. Read it next to TS 38.321 §5.4.1 and the whole comparison becomes obvious.
+- **[Standard · ★★]** 3GPP. *TS 36.213 — E-UTRA; Physical layer procedures*. <https://www.etsi.org/deliver/etsi_TS/136300_136399/136213/>
+  - The TDD HARQ-ACK timing tables, the PHICH resource mapping from the lowest PRB index and the DMRS cyclic shift, and the maximum number of HARQ processes per UL/DL configuration.
+- **[Standard · ★★]** 3GPP. *TS 36.212 — E-UTRA; Multiplexing and channel coding*. <https://www.etsi.org/deliver/etsi_TS/136300_136399/136212/>
+  - Clause 5.1.4.1.2: the turbo circular buffer `Kw = 3·K_Pi`, `N_IR` and `N_cb = min(floor(N_IR / C), Kw)`. The direct ancestor of NR's `Ncb`.
+- **[Standard · ★]** 3GPP. *TS 36.306 — E-UTRA; UE radio access capabilities*, v14.2.0. <https://www.etsi.org/deliver/etsi_ts/136300_136399/136306/14.02.00_60/ts_136306v140200p.pdf>
+  - Table 4.1-1: `N_soft` per UE category — 250,368 for category 1, 1,827,072 for category 4, 35,982,720 for category 8.
+- **[Standard · ★]** 3GPP. *TS 38.306 — UE radio access capabilities*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138306/>
+  - The rate expression the NR soft-buffer capability is derived from, and the 16- versus 32-process capability signalling.
+- **[Standard · ★]** 3GPP. *TR 38.821 — Solutions for NR to support non-terrestrial networks (NTN)*. <https://www.etsi.org/deliver/etsi_tr/138800_138899/138821/>
+  - The delay ladder that motivates 32 processes, `K_offset`, and per-process HARQ feedback disabling.
+
+### Books
+
+- **[Book · ★★★ · EN]** *5G NR: The Next Generation Wireless Access Technology*, 2nd ed. — Erik Dahlman, Stefan Parkvall, Johan Sköld · Academic Press, 2021 · ISBN 978-0-12-822320-8
+  - Chapters 13 and 14: retransmission protocols and scheduling. The authors were in the room when the PHICH was deleted, and this is where the reasoning is written down rather than inferred.
+- **[Book · ★★★ · EN]** *4G: LTE-Advanced Pro and The Road to 5G*, 3rd ed. — Erik Dahlman, Stefan Parkvall, Johan Sköld · Academic Press, 2016 · ISBN 978-0-12-804575-6
+  - The LTE half of the comparison by the same three authors: the synchronous uplink design, the PHICH, the 8 ms round trip and the 1 ms subframe grid that produced it.
+- **[Book · ★★ · EN]** *LTE — The UMTS Long Term Evolution: From Theory to Practice*, 2nd ed. — Stefania Sesia, Issam Toufik, Matthew Baker · Wiley, 2011 · ISBN 978-0-470-69716-0
+  - Turbo rate matching, the HARQ process model and the TDD HARQ timing tables at a level of detail the specifications assume rather than explain.
+
+### Papers and technical documentation
+
+- **[Doc · ★★★ · EN]** lte5ghub. *HARQ — Downlink and Uplink in 5G NR*. <https://lte5ghub.com/harq>
+  - The process-count discussion with the 8-process default, the NDI pipeline, the worked k1 example, the LBRM consequence and the Rel-17 long-round-trip mechanisms, all in one page.
+- **[Doc · ★★★ · EN]** lte5ghub. *Scheduling and HARQ timing (n+4) in LTE*. <https://lte5ghub.com/lte-td-allocation>
+  - The 8 ms uplink round trip walked around the clock, and an explicit statement of LTE's two HARQ styles versus NR's single one.
+- **[Doc · ★★ · EN]** lte5ghub. *PUSCH — Uplink Shared Channel in LTE*. <https://lte5ghub.com/lte-pusch>
+  - The PHICH, non-adaptive versus adaptive retransmission, and how UCI is punctured onto PUSCH next to the DMRS.
+- **[Doc · ★★ · EN]** ShareTechnote. *5G/NR — Channel Coding: code block group*. <https://www.sharetechnote.com/html/5G/5G_CBG.html>
+  - The `PDSCH-CodeBlockGroupTransmission` ASN.1, `maxCodeBlockGroupsPerTransportBlock`, and the roles of CBGTI and CBGFI.
+- **[Doc · ★★ · EN]** ShareTechnote. *5G NR LDPC rate matching, TS 38.212 §5.4.2*. <https://www.sharetechnote.com/html/WebProgramming/Websim_LdpcRatematch.html>
+  - An interactive simulation of the circular buffer, the `k0` formula and the BG1/BG2 RV offset tables — the fastest way to make §8 of the note concrete.
+- **[Doc · ★★ · EN]** 5G/6G Academy. *5G from orbit: NTN engineering and the direct-to-device race*. <https://www.5g6gacademy.com/whitepapers/pdf/wp08-ntn-direct-to-device.pdf>
+  - The TR 38.821 delay ladder from 12.89 ms for a regenerative LEO at 600 km to 541.46 ms for a transparent GEO, and what each rung breaks first.
+- **[Doc · ★ · EN]** 3GPP. *EP4250626 — Communication in the presence of uplink-downlink configuration change*. <https://data.epo.org/publication-server/>
+  - The LTE per-configuration HARQ process tables for both directions, and why an UL/DL reconfiguration is a HARQ event that resizes every soft buffer.
+- **[Doc · ★ · EN]** USPTO. *US10911187 — User equipment provision of enhanced capability information for HARQ processing*. <https://uspto.report/patent/grant/10,911,187>
+  - Why soft-buffer size is proportional to data rate times HARQ RTT, and why a higher peak rate forces a choice between fewer processes and a lower rate.
 
 ## 02-1 · WLAN — Wi-Fi Generations Evolution
 
@@ -1007,6 +1062,64 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
+## 04-6 · Linux Device Drivers — Model, Probe, Data Path, Power and Bring-Up
+
+### Books
+
+- **[Book · ★★★ · EN]** **Linux Device Drivers**, 3rd ed. — Jonathan Corbet, Alessandro Rubini, Greg Kroah-Hartman · O'Reilly, 2005 · ISBN 978-0-596-00590-7 · free at `lwn.net/Kernel/LDD3/`
+  - The narrative account of the character driver, the device model and the interrupt path. Specific APIs have moved on — `cdev` replaced the old registration, devres removed the teardown ladder, threaded IRQs changed the interrupt story — so read it for the model and check every call against `Documentation/`.
+- **[Book · ★★★ · EN]** **Linux Kernel Development**, 3rd ed. — Robert Love · Addison-Wesley, 2010 · ISBN 978-0-672-32946-3
+  - The device model, interrupts and bottom halves, and kernel synchronisation at exactly the depth §3, §7 and §12 of the note need. The shortest correct route into the driver core.
+- **[Book · ★★ · EN]** **Essential Linux Device Drivers** — Sreekrishnan Venkateswaran · Prentice Hall, 2008 · ISBN 978-0-13-239655-4
+  - The bus-by-bus tour: I2C, SPI, PCI, USB, video, audio and the kernel classes. The practical counterpart to §10 and §11.
+- **[Book · ★★ · EN]** **Professional Linux Kernel Architecture** — Wolfgang Mauerer · Wrox, 2008 · ISBN 978-0-470-34343-2
+  - `struct device`, kobjects, sysfs internals and the power-management framework at reference depth.
+- **[Book · ★★ · EN]** **Linux Device Drivers Development** — John Madieu · Packt, 2017 · ISBN 978-1-78439-512-8
+  - Modern-API coverage: device tree, regmap, IIO and the `devm_*` idioms of §4, written against a recent kernel.
+- **[Book · ★★ · EN]** **Embedded Linux Primer: A Practical Real-World Approach**, 2nd ed. — Christopher Hallinan · Prentice Hall, 2010 · ISBN 978-0-13-701782-9
+  - Board bring-up, bootloaders and the device-tree-to-probe path from the embedded side rather than the maintainer side.
+- **[Book · ★ · EN]** **Mastering Embedded Linux Programming**, 3rd ed. — Frank Vasquez, Chris Simmonds · Packt, 2021 · ISBN 978-1-78995-253-9
+  - Build systems, root filesystems and the cold-board-to-shell workflow that §14 assumes.
+
+### Kernel documentation — the primary source, always
+
+- **[Doc · ★★★ · EN]** **The Linux Kernel documentation** — `docs.kernel.org`
+  - `driver-api/driver-model/` (overview, `device`, `driver`, `bus`, `class`, `devres`, `platform`), `driver-api/pm/` (`runtime_pm`, `devices`, `drivers`), `core-api/` (locking, `genericirq`, `dma-api`, `dma-api-howto`), `devicetree/` (`usage-model`, `bindings`, `overlay-notes`), `process/` (`submitting-patches`, `coding-style`, `stable-api-nonsense`).
+- **[Doc · ★★★ · EN]** **Documentation/admin-guide/devices.txt**
+  - The registry of statically assigned major and minor numbers, and the note that 384-511 is reserved for dynamic assignment. The source of §6.1 and of the Anchors.
+- **[Doc · ★★★ · EN]** **Linux man-pages** — `man7.org/linux/man-pages/`
+  - `open(2)`, `read(2)`, `ioctl(2)`, `poll(2)`, `mmap(2)`, `close(2)`, `udev(7)`, `sysfs(5)`, `signal(7)` — the userspace half of every contract in §6.
+- **[Code · ★★★ · EN]** **Bootlin Elixir cross-referencer** — `elixir.bootlin.com/linux/latest/source`
+  - The fastest way to check whether the API you are about to cite still exists and what its current signature is.
+- **[Doc · ★★ · EN]** **Documentation/trace/ftrace.rst** and **Documentation/admin-guide/dynamic-debug-howto.rst**
+  - The normative versions of the two tools in §14.2 that you will actually use during bring-up.
+
+### Standards and specifications
+
+- **[Standard · ★★★ · EN]** **Devicetree Specification** — `devicetree.org/specifications/`
+  - The normative text behind `compatible`, `reg`, `interrupts`, `#address-cells`, and the binding rules quoted in §4.1 — including why `compatible` is a list ordered most-specific-first.
+- **[Standard · ★★ · EN]** **PCI Express Base Specification** — `pcisig.com`
+  - Configuration space, BARs and MSI/MSI-X: everything that makes §10.3 different from the rest of the note.
+- **[Standard · ★★ · EN]** **IEEE Std 1275-1994 / Open Firmware** — the ancestor of the device tree and of the `compatible` property's semantics.
+- **[Standard · ★ · EN]** **ACPI Specification** — `uefi.org`
+  - The non-DT discovery path and `_DSD` device properties: the server counterpart to §4.1.
+
+### Papers, talks and articles
+
+- **[Paper · ★★★ · EN]** Corbet, J. **"The managed resource API"** — LWN, 2007 · `lwn.net/Articles/222860/`
+  - Why devres exists and what it covers; §4.3 in three pages.
+- **[Paper · ★★★ · EN]** **"Driver Core: devtmpfs — kernel-maintained tmpfs-based /dev"** — LWN, 2009 · `lwn.net/Articles/345480/`
+  - Kay Sievers' own description of the mechanism and of the intended division of labour with udev, quoted in §3.2.
+- **[Paper · ★★★ · EN]** Corbet, J. **"Deferred driver probing"** — LWN, 2011 · `lwn.net/Articles/450460/`
+  - The OLPC camera problem that produced `-EPROBE_DEFER`: the anecdote that makes §3.4 memorable.
+- **[Paper · ★★★ · EN]** Kannan, S. **"fw_devlink: Device dependency tracking"** — Linux Plumbers Conference 2024 · `lpc.events/event/18/contributions/1734/`
+  - What the four `fw_devlink` modes do, how many DT properties are parsed, and how the deferred-probe timeout now extends itself when a new driver registers.
+- **[Paper · ★★ · EN]** Kleine-König, U. **"[PATCH] platform: Make platform_driver::remove() return void"** — LKML, May 2024 · `lore.kernel.org/all/20240527083416.1177106-2-u.kleine-koenig@pengutronix.de/`
+  - The commit message states the reason better than any secondary source: the old return value was ignored by the driver core, and drivers wrote error handling that could not work.
+- **[Paper · ★★ · EN]** **"Rust in the Linux kernel"** — `rust-for-linux.com`, and LWN's **"The (successful) end of the kernel Rust experiment"**
+  - The milestones in the Anchors: 6.1 infrastructure, the v6.8 ASIX PHY reference driver, and the December 2025 change of status. Worth knowing even if you write C, because it is where new driver abstractions are being built first.
+
+
 ## 05-1 · DPDK User Plane and 5G UPF
 
 ### Books
@@ -1478,7 +1591,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 32 · Primary Standards and Specification Repositories
+## 34 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1505,7 +1618,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 33 · Suggested Reading Order
+## 35 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -1525,7 +1638,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 34 · Verification and Maintenance
+## 36 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.

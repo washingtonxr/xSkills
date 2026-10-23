@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.15
+version: 1.17
 sibling: README.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（32 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（34 篇笔记）**。
 
 ---
 
@@ -57,9 +57,9 @@ flowchart LR
 
 | 目标岗位 | 优先笔记 |
 | --- | --- |
-| RAN 系统架构师 | 01-1 → 01-2 → 01-6 → 01-5 → 01-3 → 05-1 → 07-1 |
+| RAN 系统架构师 | 01-1 → 01-2 → 01-6 → 01-7 → 01-5 → 01-3 → 05-1 → 07-1 |
 | 边缘 AI / 端边云架构师 | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
-| 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
+| 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
 | WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 03-1 → 04-3 |
 | WLAN 安全 / 客户端协议栈方向 | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
 | 低功耗 / IoT 设备方向 | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，32 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，34 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -87,6 +87,7 @@ flowchart LR
 │   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
 │   ├── 01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning.md
 │   ├── 01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation.md
+│   ├── 01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison.md
 │   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
 │   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
@@ -101,6 +102,7 @@ flowchart LR
 │   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
 │   ├── 04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work.md
 │   ├── 04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC.md
+│   ├── 04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up.md
 │   ├── 05-1 DPDK User Plane and 5G UPF.md
 │   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
 │   ├── 06-1 LLM Inference Engines and xLLM.md
@@ -129,7 +131,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 34 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 32 一手标准库、33 阅读顺序、34 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 36 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 34 一手标准库、35 阅读顺序、36 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -142,6 +144,7 @@ flowchart LR
 | **01-4** | 蜂窝 IoT | RedCap 分级、eRedCap、NTN、Ambient IoT、LP-WUS |
 | **01-5** | **NR 随机接入（RACH）** | UE 随机接入全流程：MAC 层触发事件及其在 RRC 层的含义、RA 类型与按特性划分的接入资源选择（RedCap / SDT / NSAG / Msg3 重复）、PRACH 格式 0–3 与 A1–C2 及其 CP 隐含的小区半径、开环功率与功率爬坡规则、RA-RNTI 与 MSGB-RNTI 计算、RAR MAC PDU 与 Backoff Indicator 表、Msg3 调度（`k2 + Δ`）与载荷、竞争解决、两步接入 MsgA/MsgB 与 successRAR / fallbackRAR、CFRA 与波束失败恢复、SDT / NTN / RedCap 变体、时延预算、全部可调参数，以及分层排障决策树与症状对照表——**并分别从两侧重述同一流程：§9 是 UE 侧状态机与计数器，§10 是 gNB 侧的前导检测、RAR 组装与 CU-DU 分工，§10.4 列出双方各自知道而对方不知道的信息** |
 | **01-6** | **NR DU 侧 MAC 调度器** | 调度器在 DU 内的完整实现：CU/DU 切分与 7-2x 前传的四个平面及八种 C-plane section type、FAPI 的 L2/L1 接口与每时隙消息时序、调度器同时分配的四种资源、含 O-RAN T1a/T2a/Ta3/Ta4 时间窗与 k0/k1/k2 下限的每时隙时间预算、十二个内部模块、十一步决策流水线、两阶段 TD/FD 下行分配与排序策略及 TBS 计算、SR/BSR/授权的上行链路与配置授权、HARQ 进程状态机与 PUCCH 应答难题、PDCCH 与 CCE 预算及候选位置哈希、TDD 与 DRX、实时执行模型、KPI 体系与排障决策树 |
+| **01-7** | **NR HARQ · 与 LTE 对比** | 两代系统的重传机制全解：软缓冲区存什么、LLR 如何合并；每种 HARQ 方案都要回答的四个设计问题；NR 的实体与进程架构（缺省 8 进程、上限 16）；从 TB CRC、LDPC、速率匹配到 HARQ-ACK 判决的下行流水线；没有 PHICH、「下一个授权就是反馈」的上行流水线；k0/k1/k2 与 N1/N2 处理时延，以及算出来的 2.5 ms 往返对比 LTE 的 8 ms；三种 HARQ-ACK 码本与一个 type-2 DAI 算例；PUCCH 资源选择；CBGTI/CBGFI 的 CBG 重传；配置授权的推导进程号与 `configuredGrantTimer`；四个状态机；逐条对照的 NR 与 LTE 差异表（含 TDD 各配置的进程数表）；两代系统的软缓冲与 LBRM 计算；URLLC 与 NTN 的绕行方案；以及症状排查表 |
 | **02-1** | WLAN 代际演进 | Wi-Fi 4→9、MLO、OFDMA、UHR、多 AP 协同、逐特性设计细节 |
 | **02-2** | **WLAN 节能技术** | 能耗方程与四类机制族；Legacy PS/PS-Poll、U-APSD、SMPS、VHT TXOP PS 与 OM Control、802.11ah 的 TWT/RAW/TIM 分段、802.11ax TWT 与 trigger-enabled SP、802.11ba 唤醒无线电、802.11be r-TWT、802.11bn AP Power Save / DPS / 跨链路节能、802.11bp 环境供能——含逐代机制对比表、Mermaid 图、实现分层与失效模式 |
 | **02-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
@@ -156,6 +159,7 @@ flowchart LR
 | **04-3** | 嵌入式软件架构 | 分层与 HAL/BSP 划分、执行模型（超级循环 / 时间触发 / RTOS / 主动对象）、调度理论、HSM 与事件驱动、设计模式、数据所有权与邮箱接口、无线协议栈切分（L1/L2 边界、CU/DU、O-RAN 7-2x）、内存与功耗架构、OTA 与回滚、ISO 26262 / IEC 61508 安全架构 |
 | **04-4** | **Linux 中断** | 中断主题的完整展开（英文）：五个正交类型轴（同步/异步、可屏蔽/NMI 与 pseudo-NMI、电平/边沿、硬线 vs MSI-X、私有/共享/IPI）、三种中断控制器（ARM GICv2/v3/v4 含完整 INTID 映射与 ITS/LPI 模型、x86 IDT + LAPIC/IOAPIC/MSI、RISC-V PLIC 与 CLINT 对 AIA 的 APLIC/IMSIC）、通用中断层（`irq_desc`、`irq_chip`、`irq_domain`、五种流处理器、chained 与 nested 之别）、入口路径图、上半部清单（允许/禁止表）、四种下半部与十个固定 softirq 向量及 2 ms / 10 次重启的双重刹车、tasklet 的兴衰与 `WQ_BH`、SCHED_FIFO 优先级 50 的线程化中断、六个应用实例（NAPI、DMA 环形队列、GPIO 按键、IIO 触发、UIO/VFIO、rpmsg 门铃）、亲和性与隔离与合并的调优手段，以及症状到修法的排障表 |
 | **04-5** | **并发：内核态与用户态、进程、线程与 IPC** | 并发主题的完整展开：x86 特权环、ARM 异常级与 RISC-V 模式下的特权边界及各自能触碰什么；五种内核执行上下文与"能否睡眠/被抢占/访问用户内存"矩阵；四种抢占模型与 `preempt_count`；进程模型（`task_struct`、TGID 与 TID、`clone` 标志表、写时复制及其在无 MMU 系统上的缺失、生命周期与 PID 1）；线程（NPTL 1:1 对 LinuxThreads 对 NGPT、共享与私有清单、栈大小、每线程信号掩码）；内核线程及其命名；基于原子与 futex 的 ITC，含私有/共享键、robust 与 PI 变体以及一个无锁环形队列算例；七轴 IPC 对比与决策树、共享内存 + 门铃模式与 `SCM_RIGHTS`、"万物皆 fd"的事件循环、一个多进程守护进程实例；以及并发缺陷分类与 TSan / `lockdep` / `perf sched` 工具链 |
+| **04-6** | **设备驱动 · 模型、probe、数据通路、电源** | 面向嵌入式场景的驱动全景：驱动的五项职责与其所处的内核分层；字符/块/网络/IIO/hwmon 的选型；bus-device-driver-class 模型与 kobject、sysfs、uevent、devtmpfs；绑定流程与 `-EPROBE_DEFER`、`fw_devlink`；probe 的顺序约定与 `devm_*` 为何让 `remove()` 变空；一个生命周期状态机；字符设备完整 read 路径（`-ERESTARTSYS`、`O_NONBLOCK`）、ioctl 编码与 ABI、poll/fasync/mmap；中断驱动的数据通路与单次传输状态机；MMIO 与屏障；一致性/流式 DMA 与缓冲区归属状态机；使用真实 `rpm_status` 状态名的运行时 PM 与系统挂起回调顺序；platform 与 I2C/SPI/PCI 的驱动解剖及 regmap；框架选型树；加锁规则；内核到用户态接口决策；九步 bring-up 流程与十六行症状表；一份完整带注释的驱动；以及十个面试答案 |
 | **05-1** | DPDK 与 5G UPF | mbuf/mempool、PFCP、PDR/FAR/QER、QoS 执行、小包 pps |
 | **05-2** | 端边云协同与异构算力 | UnifiedBus、内存池化、MFU、RDMA |
 | **06-1** | LLM 推理引擎与 xLLM | KV Cache、PagedAttention、量化、算子融合、prefill/decode |
@@ -173,10 +177,10 @@ flowchart LR
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 29 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+2. **入口**：`00 MOC` 是唯一导航页，其余 31 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 208 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 253 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---

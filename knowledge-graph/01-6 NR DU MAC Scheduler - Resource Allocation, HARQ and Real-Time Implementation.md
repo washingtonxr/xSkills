@@ -1114,6 +1114,7 @@ flowchart TD
   propose parameter changes on the other side of the E2 interface
 - [[01-1 5G-Advanced and 6G Radio Access]] — the release map: which scheduling-relevant features arrived in
   which release, and the AI-native air interface question
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the fourth resource in full: what a HARQ process holds, the NDI and RV decision, the k1 and k2 floors from N1 and N2, the HARQ-ACK codebook and PUCCH resource problem, and the process-pool view of §8 in this note
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — the scheduling extremes: RedCap's reduced BWP and bandwidth,
   and NTN's 32 HARQ processes with per-process feedback disabling
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2

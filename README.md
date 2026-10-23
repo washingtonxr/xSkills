@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.15
+version: 1.17
 sibling: README.cn.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (32 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (34 notes)**.
 
 ---
 
@@ -57,9 +57,9 @@ flowchart LR
 
 | Target role | Priority notes |
 | --- | --- |
-| RAN system architect | 01-1 → 01-2 → 01-6 → 01-5 → 01-3 → 05-1 → 07-1 |
+| RAN system architect | 01-1 → 01-2 → 01-6 → 01-7 → 01-5 → 01-3 → 05-1 → 07-1 |
 | Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
-| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
+| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
 | WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 03-1 → 04-3 |
 | WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
 | Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 32 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 34 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -87,6 +87,7 @@ flowchart LR
 │   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
 │   ├── 01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning.md
 │   ├── 01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation.md
+│   ├── 01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison.md
 │   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
 │   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
@@ -101,6 +102,7 @@ flowchart LR
 │   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
 │   ├── 04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work.md
 │   ├── 04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC.md
+│   ├── 04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up.md
 │   ├── 05-1 DPDK User Plane and 5G UPF.md
 │   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
 │   ├── 06-1 LLM Inference Engines and xLLM.md
@@ -129,7 +131,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 34 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 01-6 NR DU MAC scheduler, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 02-8 Wi-Fi scheduling, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 32 primary standards repositories, 33 a reading order, and 34 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 36 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 01-6 NR DU MAC scheduler, 01-7 NR HARQ and its LTE comparison, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 02-8 Wi-Fi scheduling, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 04-6 device drivers, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 34 primary standards repositories, 35 a reading order, and 36 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -142,6 +144,7 @@ flowchart LR
 | **01-4** | Cellular IoT | RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS |
 | **01-5** | **NR random access (RACH)** | The full UE random-access procedure: MAC-level triggers and what each failure means at RRC, RA-type and feature-partitioned resource selection (RedCap/SDT/NSAG/Msg3 repetition), PRACH formats 0–3 and A1–C2 with their CP-implied cell radii, open-loop power and the ramping rules, RA-RNTI and MSGB-RNTI arithmetic, the RAR MAC PDU and the Backoff Indicator table, Msg3 scheduling (`k2 + Δ`) and payloads, contention resolution, 2-step MsgA/MsgB with successRAR and fallbackRAR, CFRA and beam failure recovery, the SDT / NTN / RedCap variants, a latency budget, every tuning knob, and a layered troubleshooting tree with a symptom table — **plus the whole procedure retold from each side: §9 is the UE's state machine and counters, §10 the gNB's detection, RAR assembly and CU-DU split, and §10.4 tabulates what each side knows that the other does not** |
 | **01-6** | **NR DU MAC scheduler** | The scheduler as a DU implements it: the CU/DU split and the 7-2x fronthaul with its four planes and eight C-plane section types, the FAPI L2/L1 interface and its per-slot message sequence, the four resources a scheduler allocates at once, the per-slot time budget with the O-RAN T1a/T2a/Ta3/Ta4 windows and the k0/k1/k2 floors, twelve internal modules, the eleven-step decision pipeline, the two-stage TD/FD downlink allocation with the ranking policies and the TBS computation, the SR/BSR/grant uplink chain and configured grants, the HARQ process state machine and the PUCCH acknowledgement problem, the PDCCH and CCE budgets with the candidate hash, TDD and DRX, the real-time execution model, the KPI set and a troubleshooting tree |
+| **01-7** | **NR HARQ · NR and LTE** | The retransmission mechanism end to end in both generations: what the soft buffer stores and how LLRs combine, the four design questions every HARQ scheme answers, the NR entity and process architecture with the 8-process default and 16-process maximum, the downlink pipeline from TB CRC through LDPC and rate matching to the HARQ-ACK verdict, the uplink pipeline with no PHICH where the next grant *is* the feedback, k0/k1/k2 with the N1/N2 processing times and a worked 2.5 ms round trip against LTE's 8 ms, the three HARQ-ACK codebooks with a worked type-2 DAI example, PUCCH resource selection, CBG retransmission with CBGTI and CBGFI, configured grants with the derived process ID and `configuredGrantTimer`, four state machines, the clause-level NR-versus-LTE comparison with the per-TDD-config process tables, soft-buffer and LBRM arithmetic for both systems, URLLC and NTN escape hatches, and a symptom table |
 | **02-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
 | **02-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
 | **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
@@ -156,6 +159,7 @@ flowchart LR
 | **04-3** | Embedded software architecture | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
 | **04-4** | **Linux interrupts** | The interrupt subject end to end in English: the five orthogonal type axes (synchronous/async, maskable/NMI and pseudo-NMI, level/edge, wire versus MSI-X, private/shared/IPI), the three controllers (ARM GICv2/v3/v4 with the full INTID map and ITS/LPI model, x86 IDT plus LAPIC/IOAPIC/MSI, RISC-V PLIC and CLINT versus the AIA with APLIC and IMSIC), the generic IRQ layer (`irq_desc`, `irq_chip`, `irq_domain`, the five flow handlers, chained versus nested), the entry path with Mermaid diagrams, top-half discipline with the permitted/forbidden table, the four bottom halves with the ten fixed softirq vectors and the 2 ms / 10-restart brakes, the rise and fall of tasklets versus `WQ_BH`, threaded IRQs at `SCHED_FIFO` priority 50, six worked applications (NAPI, DMA rings, GPIO keys, IIO triggers, UIO/VFIO, rpmsg doorbells), affinity and isolation and coalescing tuning, and a symptom-to-fix debugging table |
 | **04-5** | **Concurrency, kernel and user mode, processes, threads and IPC** | The concurrency subject end to end: the privilege boundary across x86 rings, ARM exception levels and RISC-V modes, and what each mode may touch; the five kernel execution contexts with the sleep/preempt/user-memory matrix; the four preemption models and `preempt_count`; the process model (`task_struct`, TGID versus TID, the `clone` flag table, copy-on-write and its absence on no-MMU systems, the lifecycle and PID 1); threads (NPTL 1:1 versus LinuxThreads versus NGPT, what is shared versus private, stack size, per-thread signal masks); kernel threads and their naming; ITC over atomics and the futex with private versus shared keying, robust and PI variants, and a worked lock-free ring; the seven-axis IPC comparison with a decision tree, the shared-memory-plus-doorbell pattern with `SCM_RIGHTS`, the fd-everything event loop, and a worked multi-process daemon; plus the bug taxonomy and the TSan/`lockdep`/`perf sched` toolchain |
+| **04-6** | **Device drivers · model, probe, data path, power** | The driver subject end to end for the embedded case: the five jobs a driver does and the kernel layering it sits in, char versus block versus net versus IIO versus hwmon and how to choose, the bus/device/driver/class model with kobjects, sysfs, uevent and devtmpfs, the binding flow and `-EPROBE_DEFER` and `fw_devlink`, probe ordering with `devm_*` and why `remove()` is empty, one lifecycle state machine, the full char-device read path with `-ERESTARTSYS` and `O_NONBLOCK`, ioctl encoding and ABI, poll/fasync/mmap, the interrupt-driven data path with a per-transfer state machine, MMIO and barriers, coherent versus streaming DMA and the buffer-ownership state machine, runtime PM with the real `rpm_status` states and the system-suspend callback order, platform versus I2C/SPI/PCI anatomy with regmap, the framework-selection tree, locking rules, the kernel-to-userspace interface decision, a nine-step bring-up flow with a sixteen-row symptom table, a complete annotated driver, and ten interview answers |
 | **05-1** | DPDK and 5G UPF | mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps |
 | **05-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
 | **06-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
@@ -173,10 +177,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 29 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 31 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 208 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 253 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -216,8 +220,8 @@ flowchart LR
 | r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
 | Linux bottom halves | "tasklet is the fast deferred-work mechanism" | Tasklets are **deprecated**. The API was modernised around 5.9 and the replacement is **WQ_BH**, merged for **6.9** with `system_bh_wq` and `system_bh_highpri_wq`; it runs in softirq context, may not sleep and requires `max_active = 0`. The tasklet API still exists and conversion is ongoing — see note 04-4 |
 | Power ramping after a contention loss | "a UE that loses contention restarts from Msg1 without ramping power" | It **does** ramp. TS 38.321 clause 5.1.3 increments `PREAMBLE_POWER_RAMPING_COUNTER` on four transmission conditions only — the attempt counter is above one, the SSB/CSI-RS is unchanged, the PHY has not sent the power-ramping-suspension notification, and no LBT failure was reported — with **no carve-out for contention-resolution losses**. The narrow statement that is true is the beam rule: no ramping when the beam changes, whatever the cause. Note that this also removes a common shortcut — collisions cannot be told apart from coverage misses by the power column — see note 01-5 §9.3 |
-
 | NR HARQ process count | "16 by default" | It is **8** when `nrofHARQ-ProcessesForPDSCH` is absent; 16 is the maximum, not the default. And more is not automatically better: every process holds a soft buffer and total UE soft-buffer memory is a capability, so n16 on a cell that only needs six can reduce the combining gain available to each retransmission — see note 01-6 §8.3 |
+
 **Update triggers**
 
 - 3GPP TSG plenary meetings (4 per year) → update 01-1/01-2/01-4

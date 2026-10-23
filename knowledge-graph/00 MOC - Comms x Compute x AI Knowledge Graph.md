@@ -53,10 +53,10 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 
 | Group | Domain | Notes |
 | --- | --- | --- |
-| `01-x` | Cellular and mobile communications | 01-1 … 01-6 |
+| `01-x` | Cellular and mobile communications | 01-1 … 01-7 |
 | `02-x` | WLAN | 02-1 … 02-8 |
 | `03-x` | Low-power and sensor networking | 03-1 |
-| `04-x` | Embedded and systems software | 04-1 … 04-5 |
+| `04-x` | Embedded and systems software | 04-1 … 04-6 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
 | `06-x` | Machine learning, AI inference and agent systems | 06-1 … 06-3 |
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
@@ -77,6 +77,7 @@ flowchart LR
         c4["01-4 RedCap · eRedCap · NTN"]
         c5["01-5 NR random access (RACH)"]
         c6["01-6 DU MAC scheduler"]
+        c7["01-7 HARQ · NR and LTE"]
     end
     subgraph g2["02 · WLAN"]
         w1["02-1 Wi-Fi generations"]
@@ -97,6 +98,7 @@ flowchart LR
         e3["04-3 Embedded software architecture"]
         e4["04-4 Linux interrupts"]
         e5["04-5 Concurrency, processes, threads, IPC"]
+        e6["04-6 Device drivers"]
     end
     subgraph g5["05 · Data plane and heterogeneous compute"]
         d1["05-1 DPDK / UPF"]
@@ -123,6 +125,9 @@ flowchart LR
     c4 --> c5
     c2 --> c6 --> c3
     c5 --> c6
+    c2 --> c7
+    c6 --> c7
+    c4 --> c7
     c2 --> e3
     c4 --> s1
     w1 --> w2 --> w3
@@ -141,6 +146,9 @@ flowchart LR
     e2 --> e4
     e2 --> e5
     e4 --> e5
+    e2 --> e6
+    e4 --> e6
+    e5 --> e6
     e5 --> d1
     e5 --> i2
     c2 --> d1 --> d2
@@ -166,6 +174,7 @@ flowchart LR
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — near-RT/non-RT RIC, xApps/rApps, DRL scheduling, sim-to-real
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the whole UE random-access procedure end to end: triggers and their RRC meaning, resource and RA-type selection, PRACH formats and open-loop power ramping, RA-RNTI and the RAR, Msg3 timing and payloads, contention resolution, 2-step MsgA/MsgB with fallback, CFRA and BFR, and the SDT / NTN / RedCap variants — then the same procedure retold from the UE side and from the gNB side, with what each side knows that the other does not
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the retransmission mechanism itself: what the soft buffer stores, how NDI and RV decide new versus retry, the k0/k1/k2 timing with N1 and N2, HARQ-ACK codebooks and CBG retransmission, the four state machines, and a clause-level NR-versus-LTE comparison with the eight things an LTE engineer has to unlearn
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the scheduler itself: the CU/DU split and the 7-2x fronthaul, the four resources it allocates at once, the per-slot time budget, twelve modules, the eleven-step pipeline, the two-stage DL allocation, the UL chain, HARQ and PUCCH and PDCCH budgets, TDD and DRX, and the real-time execution model
 
 ### 02 · WLAN
@@ -186,6 +195,7 @@ flowchart LR
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — boot chain, device tree, kernel drivers, IPC, network stack, KVM/containers, PREEMPT_RT
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — layering and HAL/BSP, execution models, HSM, design patterns, AUTOSAR, safety, OTA, wireless stack decomposition
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the interrupt subject end to end: the five orthogonal type axes (synchronous/async, maskable/NMI, level/edge, wire/MSI, private/shared/IPI), the three interrupt controllers (GICv2/v3/v4 with the full INTID map, x86 LAPIC/IOAPIC/IDT, RISC-V PLIC versus AIA), the generic IRQ layer (`irq_desc`/`irq_chip`/`irq_domain`/flow handlers), the entry path, top-half discipline, the four bottom halves with the ten fixed softirq vectors and the 2 ms/10-restart brakes, threaded IRQs at SCHED_FIFO 50, six worked applications from NAPI to rpmsg doorbells, and the tuning and debugging tables
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the driver subject end to end: the five jobs a driver does, the bus/device/driver model with sysfs and uevent and devtmpfs, matching and probe ordering with devres and `-EPROBE_DEFER`, one lifecycle state machine, the char-device read path and ioctl discipline, the interrupt-driven data path, MMIO and DMA with the buffer-ownership state machine, runtime PM using the real `rpm_status` names and the system-suspend callback order, platform versus I2C/SPI/PCI anatomy, the framework-selection tree, and a bring-up method with a symptom table
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency subject end to end: the privilege boundary across x86/ARM/RISC-V and what each mode may touch, the five kernel execution contexts and the sleep/preempt/user-memory matrix, the four preemption models, the process model (`task_struct`, TGID versus TID, `clone` flags, copy-on-write, lifecycle), threads (NPTL 1:1 versus LinuxThreads versus NGPT, what is shared, stack size, signals), kernel threads, ITC over atomics and the futex with its private/shared keying and robust-PI variants, the seven-axis IPC comparison and decision logic, the shared-memory-plus-doorbell pattern, the fd-everything event loop, a worked multi-process daemon, and the bug taxonomy with the toolchain
 
 ### 05 · Data plane and heterogeneous compute

@@ -657,11 +657,13 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — the RTOS and hardware mechanics this note's execution model sits on top of
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux-class counterpart: driver model, IPC, OTA, PREEMPT_RT, partitioning
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the kernel/hardware seam treated architecturally: a driver as the bottom of a stack, the lifecycle state machine of §5, and the framework-selection tree of §11 as a layering decision
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the mechanism behind the execution models in §2: what the top/bottom-half split actually costs, and why a threaded IRQ changes the layering decision
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the mechanism behind the layering in §1 and the lock-free handoffs in §4: which units should be processes, which threads, and what IPC choice the architecture implies
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language mechanisms used to express ports, HSMs and lock-free handoffs
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the L1/L2/L3 decomposition in §6.1 at spec level
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — where RAN intelligence is placed relative to the stack split
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the cleanest example of a mechanism that straddles §6.1's L1/L2 boundary: the state machine is MAC, the soft buffer is PHY memory, and the deadline is a slot
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the L1/L2 real-time boundary at full scale: the FAPI interface, the eleven-step per-slot pipeline, and the execution model that the layering in §1 has to support
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the wireless case for the split this note argues for: microsecond-scale decisions below any OS, policy above it, and the nearest thing Wi-Fi has to FAPI being vendor-internal
 - [[07-1 RISC-V for Communication Infrastructure]] — the silicon substrate for L1 acceleration and heterogeneous baseband

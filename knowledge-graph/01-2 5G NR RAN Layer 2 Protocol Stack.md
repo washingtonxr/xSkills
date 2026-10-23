@@ -218,6 +218,7 @@ flowchart LR
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the MAC procedure this note only lists: Msg1 to Msg4, MSGA/MSGB, RA-RNTI, the RAR MAC PDU, and the counters and windows that a MAC implementation must keep; §9 walks the UE-side counters and §10 walks the gNB-side RAR assembly
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the HARQ mechanism this note only lists: soft combining, NDI and RV, the k0/k1/k2 timing, HARQ-ACK codebooks and CBG retransmission, the four state machines, and why LTE's synchronous uplink and PHICH had to go
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the implementation of the MAC responsibilities this note only lists: the two-stage TD/FD allocation, the CCE and PUCCH budgets, HARQ process management, and the eleven-step per-slot pipeline that makes them fit
 
 ---

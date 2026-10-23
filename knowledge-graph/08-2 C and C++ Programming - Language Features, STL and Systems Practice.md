@@ -1004,6 +1004,7 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 - [[05-1 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — kernel C conventions, IPC, syscalls, PREEMPT_RT
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the kernel C idioms in their native habitat: `container_of`, `FIELD_GET`, `READ_ONCE`/`WRITE_ONCE`, and the barriers that make MMIO and DMA correct
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — where the C11/C++ memory model is applied: acquire/release pairs, the lock-free SPSC ring, and the futex that `std::mutex` and `pthread_mutex_t` share
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the context in which `READ_ONCE`/`WRITE_ONCE`, barriers and non-sleeping code actually matter
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — bare-metal C, DMA, cache coherency, `-fno-exceptions`

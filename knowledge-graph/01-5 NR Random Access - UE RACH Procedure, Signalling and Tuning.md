@@ -1084,6 +1084,7 @@ Facts below are checkable against the specifications named; anything I could not
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — RACH optimisation is one of the canonical closed-loop use cases: the
   xApp observes preamble collisions, RAR success rate and fallback rate, and retunes the parameters in §15
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the same problem one domain over: contention-based
+- [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — what Msg3 and Msg4 retransmissions actually are at MAC level: the process that holds them, the NDI that distinguishes a retry, and the timer that decides when RLC takes over
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — what the Msg2 and Msg4 grants arise from: the scheduler that has to size the Msg3 grant, reserve the PUCCH for the Msg4 acknowledgement, and absorb a new UE context into its per-slot candidate set
   shared-channel access with no prior timing or power knowledge, and a very different set of trade-offs
 

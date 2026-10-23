@@ -745,6 +745,7 @@ Method, in order:
 ## Related
 
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the sibling note: the hard-IRQ and bottom-half contexts referenced throughout §2 and §5
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where these primitives get used: which lock for which context in a driver, the five driver-specific concurrency failure modes, and the teardown race that a refcount on state rather than on the device prevents
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: the driver model, device tree, kernel locking primitives, and the IPC decision axes
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — the RTOS counterpart: task states, priority inversion, and the primitives that do not need a kernel/user split
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — turning this into a layering decision: which units are processes, which are threads, and where the event loop lives

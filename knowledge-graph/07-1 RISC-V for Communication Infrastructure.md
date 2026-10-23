@@ -157,6 +157,7 @@ Answer across four dimensions:
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the workload the silicon is shaped by: where the acceleration boundary sits between the scheduler, L1 and the 7-2x fronthaul
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — H extension, AIA and IOMMU in the Linux virtualization stack
+- [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the platform side of a driver port: PLIC versus AIA irqchips behind `platform_get_irq`, non-coherent DMA and the barrier discipline, and why the same C source needs review per architecture
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — where the AIA/APLIC/IMSIC drivers are described in full: the ratified June 2023 specification, the PLIC comparison, and the 6.10 merge
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the U/S/M privilege levels in the concurrency model, and the mailbox doorbell path between Linux and an RTOS core
 
