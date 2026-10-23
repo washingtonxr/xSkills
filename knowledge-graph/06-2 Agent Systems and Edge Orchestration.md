@@ -168,6 +168,8 @@ Design considerations:
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — the layer underneath an agent: learned models rather than hand-written policies, and the evaluation and drift discipline that decides whether an agent's behaviour is actually improving
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the on-box substrate for an agent's sandboxed tool execution: processes versus threads, IPC choice, capability passing by `SCM_RIGHTS`, and the crash-containment pattern that lets a supervisor restart a failed worker
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — why the edge device's interrupt and scheduling latency is the floor an agent's action loop cannot beat
 
 ---
 

@@ -16,7 +16,7 @@ aliases:
   - Linux performance
   - profiling
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Programming Languages, Toolchain and Performance Engineering
@@ -157,6 +157,8 @@ flowchart TD
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[06-1 LLM Inference Engines and xLLM]]
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]]
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the interrupt and softirq latency that the profiling and bypass discussion is measuring
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency and IPC model whose contention the profiler is attributing
 
 ---
 

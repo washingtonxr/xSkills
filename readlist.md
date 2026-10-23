@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.11
+version: 1.12
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,24 +11,25 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 28 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
-> vault's domain groups:
-> `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
-> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH);
-> `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,
-> `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,
-> `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting;
-> `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;
-> `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture;
-> `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
-> `06-x` machine learning, AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems,
-> `06-3` machine learning foundations;
-> `07-x` silicon and ISA — `07-1` RISC-V;
-> `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
-> `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
-> Sections `28`–`30` collect primary standards repositories, a reading order, and maintenance notes.
+> This file supports the 30 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
+> vault's domain groups:  
+> `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,  
+> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH);  
+> `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,  
+> `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,  
+> `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting;  
+> `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;  
+> `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture,
+> `04-4` Linux interrupts, `04-5` concurrency, processes, threads and IPC;  
+> `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;  
+> `06-x` machine learning, AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems,  
+> `06-3` machine learning foundations;  
+> `07-x` silicon and ISA — `07-1` RISC-V;  
+> `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,  
+> `08-4` MATLAB and Simulink, `08-5` Verilog HDL.  
+> Sections `30`–`32` collect primary standards repositories, a reading order, and maintenance notes.
 >
-> This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
+> This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number  
 > rather than by `[[wikilink]]`.
 
 ## How to read this file
@@ -43,13 +44,12 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 ## 01-1 · 5G-Advanced and 6G Radio Access
 
-
 ### Books
 
 - **[Book · EN/CN · ★★★]** *5G NR: The Next Generation Wireless Access Technology* — Erik Dahlman, Stefan Parkvall, Johan Sköld · Academic Press; 1st ed. 2018 (ISBN 9780128143230), 2nd ed. 2021 (ISBN 9780128223208)
   - Written by the Ericsson delegates who actually designed NR, so every mechanism is explained with the *reason* it was standardised, not just the result. The single best book for moving from "I know the parameter" to "I know why the parameter has this value". Chapters 13 (retransmission) and 14 (scheduling) are the L2 core.
 - **[Book · CN · ★★★]** 《5G NR标准:下一代无线通信技术》 — [Sweden] Erik Dahlman, Stefan Parkvall, Johan Sköld; translated by 朱怀松, 王剑, 刘阳 · 机械工业出版社, 2019 · ISBN 9787111624745
-  - Chinese translation of the first English edition. Widely used as the onboarding text in Chinese 5G R&D teams; useful when you need to quote standard terminology in Chinese and match it to the English term.
+  - Chinese translation of the first English edition. Widely used as the onboarding text in Chinese 5G R\&D teams; useful when you need to quote standard terminology in Chinese and match it to the English term.
 - **[Book · CN · ★★★]** 《5G-ADVANCED NR增强标准:下一代无线通信技术(原书第3版)》 — Erik Dahlman, Stefan Parkvall, Johan Sköld · 机械工业出版社
   - Chinese translation of the third edition. Adds the Rel-17/Rel-18 material that matters for a 5G-Advanced interview: spectrum above 52.6 GHz, network-controlled repeaters, RedCap, sidelink enhancements, positioning, MIMO evolution, **non-terrestrial networks (NTN)**, broadcast/multicast, duplex evolution, and 3GPP's AI/ML study. New chapters cover NR reduced-capability IoT, NR multicast/broadcast, and the NTN air-interface changes.
 - **[Book · EN · ★★]** *NR: The New 5G Radio Access Technology* — Ali Zaidi, Fredrik Athley, Jonas Medbo, Ulf Gustavsson, Giuseppe Durisi, Xiaoming Chen · Academic Press, 2018
@@ -58,6 +58,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - Broad implementation-oriented reference spanning L1 through RRC and the procedures. Best used as a lookup when you need the exact parameterisation of a procedure rather than a narrative.
 - **[Book · EN · ★]** *6G Wireless: The Communication Paradigm Beyond 2030* — edited by Faisal Tariq, Muhammad Khandaker, Imran Shafique Ansari · CRC Press, 2025 · ISBN 9781032252353
   - Tutorial-style edited volume covering IRS/RIS, UAV and aerial computing, THz, NOMA and RSMA, plus 6G security and blockchain-oriented IoT. Use it for breadth on the candidate-technology landscape; it is not a substitute for the 3GPP study items.
+
 - **[Book · EN · ★]** *LTE — The UMTS Long Term Evolution: From Theory to Practice*, 2nd ed. — Stefania Sesia, Issam Toufik, Matthew Baker · Wiley, 2011
   - Still the clearest exposition of the L2 architecture (MAC/RLC/PDCP), HARQ and scheduling that NR inherited. Read selectively for those chapters; NR changed the details, not the shape of the problems.
 
@@ -67,6 +68,9 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - Short, high-signal framing of the 6G debate: what actually differentiates 6G from 5G-A versus what is marketing. Ideal for the "why is 6G needed" opening question.
 - **[Paper · EN · ★★]** "A Vision of 6G Wireless Systems: Applications, Trends, Technologies, and Open Research Problems" — M. Z. Chowdhury, M. Shahjalal, S. Ahmed, Y. M. Jang · *IEEE Network*, vol. 34, no. 3, pp. 134–142, 2020
   - Systematic mapping of 6G use cases to enabling technologies, with the KPI table most 6G surveys reuse. Good for producing a requirements-to-technology chain on demand.
+
+
+
 - **[Paper · EN · ★★]** "End-to-End Learning for OFDM: From Neural Receivers to Pilotless Communication" — F. Aoudia, J. Hoydis · *IEEE Transactions on Wireless Communications*, vol. 21, no. 4, pp. 2759–2773, 2022
   - The canonical reference for the AI-native air interface argument. Shows a learned receiver beating a hand-designed one, and pushes to the endpoint where pilots are removed entirely. This is the paper to cite when the conversation reaches "is AI in the PHY real or hype".
 - **[Paper · EN · ★]** "Toward Massive, Ultra-Reliable, and Low-Latency Wireless Communication with Short Packets" — G. Durisi, T. Koch, P. Popovski · *Proceedings of the IEEE*, vol. 104, no. 9, pp. 1746–1766, 2016
@@ -90,7 +94,6 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
 ## 01-2 · 5G NR RAN Layer 2 Protocol Stack
-
 
 ### Books
 
@@ -121,44 +124,10 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - **[Spec · ★★]** **3GPP TS 23.501** — System architecture for the 5G System (Stage-2); **TS 23.503** — Policy and charging control framework
   - Needed for the QoS flow / QFI / 5QI model that L2 must enforce. Read §5.7 of 23.501 for the QoS architecture.
 
----
-
-## 01-3 · AI/ML for RAN and O-RAN RIC
 
 
-### Books
-
-- **[Book · EN · ★★★]** *Open RAN: Technology and Ecosystem* — Vladimir Yanover · Wiley, January 2025 · ISBN 9781394241149 · DOI 10.1002/9781394241170
-  - The most architecture-complete O-RAN reference. Explicit chapters on the Non-RT RIC and rApps, the A1 policy interface, Near-RT RIC functional procedures, the E2 service models (REPORT, INSERT, CONTROL, POLICY), xApp hosting, RAN decomposition, and **AI/ML support in the O-RAN architecture**. Written by an O-RAN contributor, so it reflects what the specs actually say.
-- **[Book · EN · ★★]** *Open RAN Explained: The New Era of Radio Networks* — Jyrki T. J. Penttinen, Michele Zarri, Dongwook Kim · Wiley, 2024 · ISBN 9781119847045
-  - Shorter and more accessible: network modularisation, RAN split options, deployment scenarios, and the GSMA/TIP/3GPP context around O-RAN. Read first if you are new to the topic; use Yanover for depth.
-
-### Papers
-
-- **[Paper · EN · ★★★]** "Managing O-RAN Networks: xApp Development From Zero to Hero" — J. F. Santos, A. Huff, D. Campos, K. V. Cardoso, C. B. Both, L. A. DaSilva · *IEEE Communications Surveys & Tutorials*, 2024
-  - A hands-on tutorial on building, onboarding, debugging and testing an xApp against the O-RAN Software Community stack: descriptor and schema files, RMR messaging, SDL storage, E2 service models, and E2Sim-based testing. This is what turns "I know what an xApp is" into "I have built one".
-- **[Paper · EN · ★★]** "Explainable AI in 6G O-RAN: A Tutorial and Survey on Architecture, Use Cases, Challenges, and Future Research" — B. Brik, H. Chergui, L. Zanzi, F. Devoti, A. Ksentini, M. S. Siddiqui, X. Costa-Pérez, C. Verikoukis · *IEEE Communications Surveys & Tutorials*, vol. 27, no. 5, pp. 2826–2859, 2024
-  - Survey of XAI methods mapped onto the O-RAN architecture, plus use cases, security aspects and open challenges. The right citation when a discussion turns to "how do you make an AI scheduler trustworthy enough to deploy".
-- **[Paper · EN · ★★]** "End-to-End Learning for OFDM: From Neural Receivers to Pilotless Communication" (see §01-1)
-  - The PHY-side evidence base that motivates putting AI inside the RAN at all.
-- **[Paper · EN · ★★]** "Age of Information: An Introduction and Survey" (see §03-1)
-  - Relevant here because AoI is one of the few metrics a learned scheduler can optimise directly, which classical proportional-fair scheduling never did.
-
-### Standards and reports
-
-- **[Spec · ★★★]** **3GPP TR 38.843** — "Study on AI/ML for NR air interface" (Rel-18)
-  - The 3GPP entry point for AI in the air interface: beam management, CSI compression feedback and positioning. Where the "AI-native air interface" conversation starts, and the baseline that Rel-19/Rel-21 work builds on.
-- **[Standard · ★★★]** **O-RAN Alliance specifications** — O-RAN.WG1 (Architecture Description), O-RAN.WG2 (A1AP, A1 policy), O-RAN.WG3 (E2AP, E2SM-KPM, E2SM-RC, E2SM-CCC), O-RAN.WG4 (Open Fronthaul), O-RAN.WG6 (Cloudification and Orchestration)
-  - The normative source. At minimum, know the architecture description and one E2 service model well enough to describe a subscription→indication→control loop concretely.
-- **[Doc · ★★]** **O-RAN Software Community (OSC)** — reference implementations of the Near-RT RIC, E2 interface and xApp framework
-  - The practical substrate for the "from zero to hero" tutorial above. Useful for getting real logs rather than simulated ones.
-- **[Doc · ★]** **O-RAN Alliance white paper "O-RAN: Towards an Open and Smart RAN"** (2018)
-  - Short founding-document framing: why openness, why intelligence, what the architecture was meant to enable.
-
----
 
 ## 01-4 · Cellular IoT — RedCap, eRedCap and NTN
-
 
 ### Papers
 
@@ -226,6 +195,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 - **[Doc · ★]** i TecSpec. *TR 38.822 §6.1.4 — NR_NTN_solutions*. <https://itecspec.com/3gpp/38.822/s/6.1.4>
   - The L1 feature list for NTN, including `uplinkPreCompensation-r17` and the mandatory GNSS-based TA and frequency pre-compensation.
 
+
 ### Implementation references and worked examples
 
 - **[Doc · ★★★]** lte5ghub. *Random Access (4-step & 2-step) in 5G NR*. <https://lte5ghub.com/random-access>
@@ -255,7 +225,6 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - Why a completed random access no longer implies a state transition once SDT is enabled — the KPI trap worth knowing before you read a drive-test report.
 
 ## 02-1 · WLAN — Wi-Fi Generations Evolution
-
 
 ### Books
 
@@ -314,6 +283,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - Listed in §02-1; for this note use its treatment of SMPS, operating-mode feedback and the power cost of MIMO chains.
 - **[Book · CN · ★]** 《802.11无线网络权威指南（第2版）》 — Matthew Gast · O'Reilly 中文版
   - Chinese edition of the Gast volume above, for the power-management and MAC chapters. `VERIFY` ISBN and edition year before citing.
+
 
 ### Papers
 
@@ -379,7 +349,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 02-3 · WLAN Ecosystem — WFA, EasyMesh and prpl
 
-
 ### Books
 
 - **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast (see §02-1)
@@ -402,53 +371,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Doc · ★]** **RDK-B (Reference Design Kit for Broadband)** documentation
   - The cable/telco gateway software stack; useful context for the operator-managed device world EasyMesh and prpl target.
 
----
-
-## 02-4 · WLAN — Packet TX/RX Datapath and Offload Evolution
-
-### Books
-
-- **[Book · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast, O'Reilly, 2005. ISBN 978-0-596-10052-0
-  - Still the clearest description of MAC frame formats, DCF/EDCA contention and the ACK machinery. Read chapter 3 (frames) and chapter 9 (MAC) before anything else here.
-- **[Book · ★★★]** *Next Generation Wireless LANs: 802.11n and 802.11ac*, 2nd ed. — Eldad Perahia and Robert Stacey, Cambridge University Press, 2013. ISBN 978-1-107-01676-7
-  - Written by the standard's editors: aggregation, Block Ack, and *why* the sizes and windows are what they are. The A-MPDU and BA chapters are the reference for this note.
-- **[Book · ★★★]** *Linux Device Drivers*, 3rd ed. — Jonathan Corbet, Alessandro Rubini, Greg Kroah-Hartman, O'Reilly, 2005, plus the current `Documentation/driver-api/`
-  - DMA mapping, interrupt handling and the `ndo_start_xmit` contract; the driver half of the TX path.
-- **[Book · ★★]** *Understanding Linux Network Internals* — Christian Benvenuti, O'Reilly, 2005. ISBN 978-0-596-00255-8
-  - Still the best explanation of NAPI, the RX softirq, and where an `skb` is allocated, cloned and freed.
-
-### Standards
-
-- **[Standard · ★★★]** **IEEE 802.11-2024** (published 28 April 2025) — the base standard. Clause 10 (MAC) and Clause 27 (aggregation and Block Ack) are the normative sources for every mechanism in this note.
-- **[Standard · ★★★]** **IEEE 802.11ax-2021** — extended compressed Block Ack (256-MPDU window), trigger-based UL, and the A-MPDU size increase.
-- **[Standard · ★★★]** **IEEE 802.11be-2024** (published 22 July 2025) — multi-link operation: per-link Block Ack, MLD-level reordering, and per-MLD security/replay state.
-- **[Standard · ★★]** **IEEE 802.11-2016 Clause 10.22 / Annex** for EDCA parameter sets, AIFS and CW ranges per access category.
-
-### Papers
-
-- **[Paper · ★★★]** Bianchi, G. "Performance Analysis of the IEEE 802.11 Distributed Coordination Function." *IEEE Journal on Selected Areas in Communications* 18(3), 2000, 535–547. DOI 10.1109/49.840210
-  - The analytical model that every backoff/window/CW argument descends from. Cite it when you claim contention efficiency.
-- **[Paper · ★★★]** Høiland-Jørgensen, T., Kazior, M., Täht, D., Hurtig, P., Brunström, A. "Ending the Anomaly: Achieving Low Latency and Airtime Fairness in WiFi." *USENIX ATC* 2017
-  - Airtime queue limits (AQL) and `fq_codel` on Wi-Fi: why byte-based queueing fails on an airtime-limited medium, and what the fix costs.
-- **[Paper · ★★]** Høiland-Jørgensen, T., Möller, J. D., Do, V.-H., Pradel, B., Németh, F. "The eXpress Data Path: Fast Programmable Packet Processing in the Operating System Kernel." *ACM CoNEXT* 2018
-  - AF_XDP and the boundary conditions under which kernel bypass actually pays.
-- **[Paper · ★★]** "MAC Level Throughput Comparison: 802.11ax vs. 802.11ac." arXiv:1803.10189
-  - Analytical treatment of A-MPDU size, the BA window, and why a 256-MPDU window needs extended BA to mean anything.
-
-### Implementation references
-
-- **[Code · ★★★]** Linux `net/mac80211/tx.c`, `rx.c`, `agg-tx.c`, `agg-rx.c`; `include/net/flow_offload.h`; `Documentation/networking/`
-  - The authoritative description of `ieee80211_subif_start_xmit`, `ieee80211_fast_tx`, `ieee80211_rx_reorder_ampdu`, `tid_ampdu_rx`, and the `ndo_flow_offload` fast-path API.
-- **[Code · ★★★]** `ath9k` / `mt76` (SoftMAC) versus `brcmfmac` (FullMAC) — read one of each
-  - The fastest way to internalise the `ieee80211_hw` + `ieee80211_ops` versus `cfg80211_ops` + command/event-mailbox distinction.
-- **[Doc · ★★]** OpenWrt, "Wireless Ethernet Dispatch (WED)" <https://openwrt.org/docs/guide-user/network/wifi/wed>
-  - How MediaTek's packet engine takes Wi-Fi frames directly (MT7622/MT7981/MT7986/MT7988), the `wed_enable=Y` switch, `/sys/kernel/debug/ppe0/bind`, and the documented loss of AQL.
-- **[Doc · ★★]** DPDK *Programmer's Guide* and FD.io *VPP* hostap plugin documentation
-  - The kernel-bypass end of the spectrum, and the concrete reason Wi-Fi has no upstream DPDK device class.
-- **[Doc · ★★]** `iw`, `hostapd` and `ethtool` documentation; kernel `Documentation/networking/napi.rst`, `scaling.rst`
-  - The measurement tools referenced in the symptom→layer table. `iw dev <dev> station dump` is where aggregation and BA state become visible.
-
----
 
 ## 02-5 · WLAN — STA/AP Discovery, Authentication and Association
 
@@ -510,6 +432,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Book · ★★]** *802.11ac: A Survival Guide* and *802.11n: A Survival Guide* — Matthew Gast, O'Reilly, 2013 / 2012
   - Short, and useful for how APs actually behave in dense deployments: channel width decisions, co-channel interference, and why raw RSSI comparisons mislead.
 
+
 ### Standards
 
 - **[Standard · ★★★]** IEEE Std 802.11k-2008 — *Radio Resource Measurement*
@@ -547,7 +470,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - A worked example of extending an existing mechanism (the Neighbor Report in a rejected association) to MLDs rather than inventing a new one — good material for a design-discussion interview.
 - **[Doc · ★★]** prpl Foundation. "Appendix: EasyMesh Standards Compliance," prplMesh wiki. <https://gitlab.com/prpl-foundation/prplmesh/prplMesh/-/wikis/Appendix-EasyMesh-Standards-Compliance>
   - Which prplMesh release implements which EasyMesh release, and which R6 features landed early. The practical map from spec version to code.
-- **[Doc · ★★]** HPE Aruba Networking. *Wi-Fi generations — design and deployment*. <https://www.arubanetworks.com/techdocs/aos/wifi-design-deploy/generations/_print>
+- **[Doc · ★★]** HPE Aruba Networking. *Wi-Fi generations — design and deployment*. <https://www.arubanetworks.com/techdocs/aos/wifi-design-deploy/generations/\_print>
   - The U-MAC / L-MAC split, MLD versus link addresses, BPCC, and link recommendation through BTM — a vendor doc that is unusually precise about MLO internals.
 - **[Code · ★★★]** `hostapd/src/ap/wnm_ap.c`, `rrm.c`, `neighbor_db.c`; `wpa_supplicant/wnm_sta.c`; `hostapd_cli bss_tm_req`, `set_neighbor`
   - The AP side and client side of BTM as implemented, including what happens when a client never answers. Faster than any book for the timeout behaviour.
@@ -599,7 +522,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ### Papers and practitioner material
 
-- **[Doc · ★★★]** NXP Semiconductors. *AN14996 — PBC method for Agent 2 and beyond onboarding over Wi-Fi*. <https://docs.nxp.com/bundle/AN14996/page/topics/pbc_method_for_agent_2_and_beyond_onboarding_over_.html>
+- **[Doc · ★★★]** NXP Semiconductors. *AN14996 — PBC method for Agent 2 and beyond onboarding over Wi-Fi*. <https://docs.nxp.com/bundle/AN14996/page/topics/pbc_method_for_agent_2_and_beyond_onboarding_over\_.html>
   - A runnable onboarding recipe: `systemctl start easymesh-agent`, `wpa_cli wps_pbc multi_ap=1` on the enrollee, `hostapd_cli wps_pbc` on the existing agent, then verify with `iw dev ... link`. Vendor documentation as a bring-up template.
 - **[Paper · ★★]** Rajamanickam, A. et al. "5G and Wi-Fi 7 Network Convergence with End-to-End Network Slicing." *NCTA Technical Papers*, 2024. <https://www.nctatechnicalpapers.com/Paper/2024/WLESS03_Rajamanickam_6573_paper/download>
   - How EasyMesh R6 (Multi-AP R6) is described in operator terms: Wi-Fi 7 integrated into the controller, 20–320 MHz configuration with static puncturing, MLO backhaul and MLO fronthaul, and MLD-level steering.
@@ -614,8 +537,8 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Doc · ★]** TP-Link Community. *Knowledge Base: EasyMesh*. <https://community.tp-link.com/en/home/forum/topic/660384>
   - Real field cases, including EasyMesh Ethernet backhaul failing behind a particular managed switch — exactly the multicast/VLAN class of fault described in §9 of the note.
 
-## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
+## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
 ### Books
 
@@ -638,7 +561,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ---
 
 ## 04-1 · Embedded Systems, RTOS and Hardware Interfaces
-
 
 ### Books
 
@@ -667,7 +589,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ---
 
 ## 04-2 · Linux Embedded Development — Drivers, Applications and Core Subsystems
-
 
 ### Books — driver development
 
@@ -727,7 +648,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 04-3 · Embedded Software Architecture — Patterns, Layering and Wireless System Structure
 
-
 ### Books — architecture and design method
 
 - **[Book · ★★★ · EN]** **Making Embedded Systems: Design Patterns for Great Software**, 2nd ed. — Elecia White, O'Reilly, 2024. ISBN 9781098151546. The most readable entry point into embedded architecture as a *design* discipline rather than a driver catalogue. Chapter 2 ("Creating a System Architecture") is the one to read before an interview; the second edition adds IoT/networked sensors, motors and data-handling strategy. Chapters on reducing RAM, code space and power are directly quotable.
@@ -786,8 +706,149 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 05-1 · DPDK User Plane and 5G UPF
+## 04-4 · Linux Interrupts — Types, Handlers, Threaded IRQs and Deferred Work
 
+> The general driver and kernel texts are in §04-2. This section lists the interrupt-specific sources: the three interrupt-controller specifications, the generic-IRQ and workqueue kernel documentation, the mailing-list record of the deferred-work conversion, and the real-time measurement tooling.
+
+### Standards — interrupt controllers
+
+- **[Spec · ★★★ · EN]** **Arm Generic Interrupt Controller Architecture Specification, GICv3 and GICv4** — Arm, **ARM IHI 0069** (`developer.arm.com`, free download)
+  - The normative source for the INTID map (SGI 0–15, PPI 16–31, SPI 32–1019, special 1020–1023, LPI 8192+), the Distributor / Redistributor / CPU-interface split, the ITS, the LPI configuration in memory tables, and GICv4 direct vLPI injection. Cite the document number, not a blog post.
+- **[Spec · ★★ · EN]** **Arm Generic Interrupt Controller Architecture Specification, GICv2** — Arm, **ARM IHI 0048**
+  - Still what a large number of shipping embedded SoCs implement; read it to see what v3 added and why.
+- **[Doc · ★★★ · EN]** **Learn the Architecture: Generic Interrupt Controller v3 and v4** — Arm developer documentation; the *Overview*, *Locality-specific Peripheral Interrupts* and *Virtualization* guides
+  - The readable entry point. The INTID table and the "dedicated signal versus message" figures quoted in note 04-4 follow it.
+- **[Spec · ★★ · EN]** **Intel 64 and IA-32 Architectures Software Developer's Manual, Volumes 3A and 3B** — Intel
+  - The chapters on the IDT, the Local APIC, the I/O APIC, MSI, and NMI/SMI/machine-check. The x86 ground truth for §3.2 of note 04-4.
+- **[Spec · ★★ · EN]** **PCI Express Base Specification** — PCI-SIG
+  - The MSI and MSI-X capability structures, the 32-vector / 2048-vector limits, and the MSI-X table and PBA layout.
+- **[Spec · ★★★ · EN]** **The RISC-V Advanced Interrupt Architecture, Version 1.0** — John Hauser (ed.); ratified by RISC-V International **June 2023**; document revision **2025-03-12**. `docs.riscv.org/reference/aia`
+  - Chapters 3 (IMSIC), 4 (APLIC), 5 (interrupts at M and S levels), 6 (virtual machines), 7 (IPIs), 8 (IOMMU support). Released under CC BY 4.0.
+- **[Spec · ★★ · EN]** **The RISC-V Instruction Set Manual, Volume II: Privileged Architecture**
+  - The base external-interrupt conventions (`mip`/`mie`, major interrupt numbers) that AIA extends.
+
+### Kernel documentation
+
+- **[Doc · ★★★ · EN]** **Linux `Documentation/core-api/irq/`** — `docs.kernel.org/core-api/irq/`
+  - The upstream description of the generic IRQ layer: `irq-domain.rst`, `irq-generic.rst`, and `concepts.rst` (which is where `irq_desc`, `irq_chip`, the flow handlers and chained versus nested chips are defined).
+- **[Doc · ★★★ · EN]** **Linux `Documentation/core-api/workqueue.rst`** — `docs.kernel.org/core-api/workqueue.html`
+  - The normative text for `WQ_BH`, `WQ_UNBOUND`, `WQ_HIGHPRI`, `WQ_CPU_INTENSIVE`, `WQ_MEM_RECLAIM`, and `@max_active` (maximum 512, default 256 when 0 is passed).
+- **[Doc · ★★ · EN]** **Linux `Documentation/admin-guide/IRQ-affinity.rst`** — `docs.kernel.org/admin-guide/IRQ-affinity.html`
+  - Affinity, `irqbalance`, and the interaction with CPU isolation.
+- **[Doc · ★★★ · EN]** **Linux `Documentation/admin-guide/kernel-parameters.txt`** — `docs.kernel.org/admin-guide/kernel-parameters.html`
+  - The authoritative list for `threadirqs`, `irqaffinity=`, `irqchip.gicv3_pseudo_nmi=`, `irqchip.gicv3_nolpi=`, `irqpoll`, `irqfixup`, `nmi_watchdog`.
+- **[Doc · ★★★ · EN]** **Linux `Documentation/core-api/real-time/differences.rst`** — added 2025
+  - The official statement of how PREEMPT_RT differs: sleeping locks, forced-threaded interrupts, and the "SCHED_FIFO priority 50" default.
+- **[Doc · ★★ · EN]** **Linux `Documentation/networking/napi.rst`** and **`Documentation/networking/scaling.rst`**
+  - The NAPI driver contract, and RSS / RPS / RFS / XPS.
+- **[Doc · ★★ · EN]** **Linux `Documentation/core-api/genericirq.rst`** (formerly `IRQ.txt`) and the in-tree **`Documentation/driver-api/irq`** material — the historical names are worth knowing because many secondary sources still cite them.
+
+### Papers and mailing-list records
+
+- **[Paper · ★★★ · EN]** Eric Dumazet, **"softirq: reduce latencies"** — LKML, 2013-01-03. `<lkml.iu.edu/hypermail/linux/kernel/1301.0/00627.html>`
+  - The patch that added the 2 ms time budget on top of the 10-restart limit. The commit message is the best short explanation of why the softirq loop needs a brake.
+- **[Paper · ★★★ · EN]** Tejun Heo, **"[PATCHSET wq/for-6.9] workqueue: Implement BH workqueue and convert several tasklet users"** — LKML, 2024-01-30; and **"[GIT PULL] workqueue changes for v6.9"**, 2024-03-11
+  - The primary record of why `WQ_BH` exists, what its constraints are, and what the conversion is expected to achieve.
+- **[Paper · ★★ · EN]** Julien Thierry, **"arm64: Enable the support of pseudo-NMIs"** — LKML, v6 2018-11 and v7 2018-12
+  - The series that introduced `CONFIG_ARM64_PSEUDO_NMI` and the boot parameter.
+- **[Paper · ★★ · EN]** Anup Patel, **"Linux RISC-V AIA Support"** (v12 v16) — LKML and Patchwork, 2024-01 to 2024-03
+  - The authoritative description of what APLIC and IMSIC each do in the kernel, and of their dependencies on the per-device MSI domain work.
+- **[Paper · ★ · EN]** The **tasklet-removal** discussions on LKML: Steven Rostedt's 2007 proposal, the 2019 2020 API-modernisation thread, and the 2024 `WQ_BH` decision
+  - Cited for the history of a decision, not for any number. Reading them is how you learn to say "deprecated, conversion ongoing" with a straight face.
+
+### Books
+
+- **[Book · ★★ · EN]** **Mastering Linux Device Driver Development** — John Madieu · Packt, January 2021 · ISBN 978-1-78934-204-8
+  - Chapter 1 (*Linux Kernel Concepts for Embedded Developers*) is the one that matters here: kernel locking helpers, work-deferral mechanisms and interrupt management, written against a recent kernel. Use it to check that a habit you learned from LDD3 still applies.
+- **[Book · ★★ · EN]** **Operating System Concepts**, 10th ed. — Abraham Silberschatz, Peter B. Galvin, Greg Gagne · Wiley, 2018 · ISBN 978-1-119-32091-3
+  - Chapter 12 (I/O systems) and the chapters on interrupts and scheduling. Use for the vocabulary that predates and outlives Linux: synchronous versus asynchronous, vectored versus polled, and the interrupt-handling model in general.
+
+### Tools
+
+- **[Tool · ★★★ · EN]** **rt-tests** — `cyclictest`, `hwlatdetect`, `osnoise`, `signaltest`. `wiki.linuxfoundation.org/realtime/documentation/`
+  - `cyclictest` for worst-case wakeup latency; `hwlatdetect` for SMI/SMM and other latencies the kernel cannot see.
+- **[Tool · ★★ · EN]** **trace-cmd and KernelShark** — recording and visualising IRQ entry/exit, softirq and scheduling events.
+- **[Tool · ★★ · EN]** **util-linux** — `irqtop` for a live sorted view of `/proc/interrupts`; `taskset` and `chrt` for affinity and priority.
+- **[Tool · ★★ · EN]** **perf** — `perf top/record/report`, `perf probe`, and the `irq:irq_handler_entry` / `irq:softirq_entry` tracepoints.
+
+---
+
+## 04-5 · Linux Concurrency — Kernel and User Mode, Processes, Threads and IPC
+
+> Kerrisk's *The Linux Programming Interface* is listed in §04-2 and remains the owner of the user-space API; this section collects the concurrency-specific material around it: the POSIX text, the futex primary sources, the memory-model theory, and the race and contention tooling.
+
+### Standards
+
+- **[Standard · ★★★ · EN]** **The Open Group Base Specifications, Issue 7 (POSIX.1-2017)** — `pubs.opengroup.org/onlinepubs/9699919799/`
+  - The normative text for processes, threads, mutexes, condition variables, and every IPC mechanism in §7 of note 04-5. Merrily paraphrased everywhere, so quote from here.
+- **[Standard · ★★★ · EN]** **IEEE Std 1003.1c-1995** — the POSIX threads amendment
+  - Where `pthread_create`, `pthread_mutex_t`, condition variables and thread-specific data come from.
+- **[Standard · ★★ · EN]** **ISO/IEC 9899:2018 (C17)** and the current **C23** — §7.17 `<stdatomic.h>` and the memory-model clauses
+  - The C-side view of `memory_order_*`; the enumeration is the same one C++ uses. **ISO/IEC 14882 (C++20 / C++23)** — `[[atomics.order]]` — is the C++ text.
+
+### Books — the API
+
+- **[Book · ★★★ · EN]** **Advanced Programming in the UNIX Environment**, 3rd ed. — W. Richard Stevens, Stephen A. Rago · Addison-Wesley, 2013 · ISBN 978-0-321-63773-4
+  - Chapters 8 (process control), 11 (threads), 12 (thread control) and 15 17 (IPC). The classic treatment of the process lifecycle, `fork`/`exec`/`wait`, and the original presentation of the pipe, FIFO, message-queue, semaphore and shared-memory mechanisms.
+- **[Book · ★★★ · EN]** **UNIX Network Programming, Volume 2: Interprocess Communications**, 2nd ed. — W. Richard Stevens · Prentice Hall, 1999 · ISBN 0-13-081081-9
+  - The most detailed treatment of POSIX IPC, Unix domain sockets, `SCM_RIGHTS` and shared memory available. Chapters 5, 12 and 15 are the sources for §7 of note 04-5; appendix A is the most useful IPC-mechanism comparison table ever printed.
+
+### Books — the theory and the primitives
+
+- **[Book · ★★★ · EN]** **Is Parallel Programming Hard, And, If So, What Can You Do About It?** — Paul E. McKenney (`perfbook`, continuously updated, free)
+  - The single most practical text on memory ordering, locking, lock-free techniques and deferred processing. Read the memory-ordering and counting chapters before designing anything lock-free, and the deferred-processing chapter before arguing about workqueues.
+- **[Book · ★★★ · EN]** **The Art of Multiprocessor Programming**, 2nd ed. — Maurice Herlihy, Nir Shavit · Morgan Kaufmann, 2020 · ISBN 978-0-12-397337-5 (1st ed. 2008, ISBN 978-0-12-370591-4)
+  - Linearisability, spin locks, concurrent queues and stacks. The correctness standards that make "my lock-free ring is fine" a checkable claim.
+- **[Book · ★★ · EN]** **Modern Operating Systems**, 4th ed. — Andrew S. Tanenbaum, Herbert Bos · Pearson, 2015 · ISBN 978-0-13-359162-0
+  - Chapters 2 (processes and threads), 6 (deadlock) and 7 for the OS-theory grounding: the dining philosophers, the readers-writers problem, and why IPC is presented as a scheduling problem.
+- **[Book · ★★ · EN]** **Operating System Concepts**, 10th ed. — Abraham Silberschatz, Peter B. Galvin, Greg Gagne · Wiley, 2018 · ISBN 978-1-119-32091-3
+  - Chapters 3 7: processes, threads, CPU scheduling and synchronisation.
+
+### Papers
+
+- **[Paper · ★★★ · EN]** Hubertus Franke, Rusty Russell, Matthew Kirkwood, **"Fuss, Futexes and Furwocks: Fast Userlevel Locking in Linux"** — *Ottawa Linux Symposium 2002*, pp. 479 495. `kernel.org/doc/ols/2002/ols2002-pages-479-495.pdf`
+  - The primary source for §6.3: the design, the earlier approaches it replaced, and the benchmarks that justified it.
+- **[Paper · ★★★ · EN]** Ulrich Drepper, **"Futexes Are Tricky"** — Red Hat
+  - The document to read before using a bare futex instead of a mutex. Its existence is the argument.
+- **[Paper · ★★ · EN]** Maged M. Michael and Michael L. Scott, **"Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms"** — *PODC 1996*
+  - The reference lock-free queue; the standard against which a hand-rolled ring should be measured.
+- **[Paper · ★★ · EN]** Lamport, L., **"Time, Clocks, and the Ordering of Events in a Distributed System"** — *Communications of the ACM* 21(7): 558 565, 1978
+  - The origin of the happens-before relation.
+- **[Paper · ★★ · EN]** Herlihy, M. and Wing, J. M., **"Linearizability: A Correctness Condition for Concurrent Objects"** — *ACM TOPLAS* 12(3): 463 492, 1990
+  - The correctness condition for concurrent objects.
+- **[Paper · ★★ · EN]** Adve, S. V. and Gharachorloo, K., **"Shared Memory Consistency Models: A Tutorial"** — *IEEE Computer* 29(12): 66 76, 1996
+  - Why relaxed ordering exists and what it permits.
+- **[Paper · ★★ · EN]** Silas Boyd-Wickizer et al., **"An Analysis of Linux Scalability to Many Cores"** — *OSDI 2010*
+  - The measurement that motivated a decade of per-CPU and lock-free kernel work.
+- **[Paper · ★★ · EN]** Tudor David, Rachid Guerraoui, Vasileios Trigonakis, **"Everything You Always Wanted to Know About Synchronization but Were Afraid to Ask"** — *SOSP 2013*
+  - A systematic empirical comparison; the antidote to "lock-free is faster".
+- **[Paper · ★★ · EN]** Hans-J. Boehm, **"Threads Cannot Be Implemented as a Library"** — *PLDI 2004*
+  - The argument that forced a memory model into C11 and C++11; the reason §6.2 of note 04-5 exists at all.
+
+### Documentation and code
+
+- **[Doc · ★★★ · EN]** **Linux man-pages** — `man7.org/linux/man-pages/`. The directly relevant pages: `futex(2)`, `futex(7)`, `clone(2)`, `clone3(2)`, `set_tid_address(2)`, `pthreads(7)`, `sched(7)`, `cgroups(7)`, `namespaces(7)`, `mq_overview(7)`, `sem_overview(7)`, `svipc(7)`, `shm_overview(7)`, `memfd_create(2)`, `eventfd(2)`, `signalfd(2)`, `timerfd_create(2)`, `pidfd_open(2)`, `io_uring(7)`, `unix(7)`, `epoll(7)`
+  - Maintained with authoritative VERSIONS sections, which is how you check when a syscall appeared without reading the git history.
+- **[Doc · ★★ · EN]** **Linux `Documentation/scheduler/`** and **`Documentation/locking/`** — `docs.kernel.org`
+  - Scheduler policies, EEVDF and `SCHED_DEADLINE`; and the kernel's own statement of its locking rules.
+- **[Code · ★★★ · EN]** **glibc NPTL sources** (`nptl/`) — in particular `pthread_mutex_lock.c` and `pthread_cond_wait.c`
+  - The actual implementation. Reading it alongside §6 is the fastest way to internalise why the uncontended path has no syscall.
+- **[Code · ★★ · EN]** **the kernel's `kernel/futex/`** — the `futex_q`, `futex_hash_bucket` and PI state machinery
+  - The kernel side of the primitive, including why private and shared futexes are keyed differently.
+
+### Tools
+
+- **[Tool · ★★★ · EN]** **ThreadSanitizer (TSan)** — GCC and Clang, `-fsanitize=thread`
+  - The default tool for data races. If you only add one thing to a concurrency test plan, add this.
+- **[Tool · ★★ · EN]** **rr** (`rr-project.org`) — record and replay
+  - Makes a racy failure deterministic, which is otherwise the hardest part of debugging concurrency.
+- **[Tool · ★★ · EN]** **valgrind / helgrind** — race and lock-order detection without a rebuild; slower, but it needs no instrumentation.
+- **[Tool · ★★ · EN]** **perf** (`perf sched record`, `perf sched latency`) and **trace-cmd / KernelShark** with the `sched_switch` and `sched_wakeup` tracepoints
+  - The visual timeline of who ran when, and who waited for whom.
+
+---
+
+## 05-1 · DPDK User Plane and 5G UPF
 
 ### Books
 
@@ -817,7 +878,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ---
 
 ## 05-2 · Cloud-Edge-End Collaboration and Heterogeneous Computing
-
 
 ### Books
 
@@ -858,7 +918,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 06-1 · LLM Inference Engines and xLLM
 
-
 ### Papers
 
 - **[Paper · EN · ★★★]** "xLLM Technical Report" — xLLM team (JD.com) · arXiv:2510.14686, 2025
@@ -898,7 +957,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ---
 
 ## 06-2 · Agent Systems and Edge Orchestration
-
 
 ### Papers
 
@@ -1031,7 +1089,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 07-1 · RISC-V for Communication Infrastructure
 
-
 ### Books and specifications
 
 - **[Spec · ★★★]** **The RISC-V Instruction Set Manual** — RISC-V International; Volume I: Unprivileged ISA, Volume II: Privileged Architecture
@@ -1057,7 +1114,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 08-1 · Languages, Toolchain and Performance Engineering
 
-
 ### Books
 
 - **[Book · EN · ★★★]** *Computer Systems: A Programmer's Perspective*, 3rd ed. — Bryant, O'Halloran (see §05-2)
@@ -1079,7 +1135,6 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ## 08-2 · C and C++ Programming — Language Features, STL and Systems Practice
 
-
 Supports vault note `16`. Note that §13 covers toolchain, profiling and performance engineering; this section is the language itself.
 
 ### Books — C
@@ -1087,7 +1142,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 - **[Book · EN/CN · ★★★]** *The C Programming Language*, 2nd ed. — Brian W. Kernighan, Dennis M. Ritchie · Prentice Hall, 1988 · ISBN 9780131103627 · Chinese 《C程序设计语言(第2版·新版)》, translated by 徐宝文, 李志 · 机械工业出版社, 2004 · ISBN 9787111128069 (典藏版 reissue ISBN 9787111617945)
   - Written by the language's designer. Still the clearest account of pointers, arrays and the preprocessor — and still thin on the parts the standard later changed. Read it for the model, then read a modern text for C11/C23.
 - **[Book · EN · ★★★]** *Modern C* — Jens Gustedt · Manning, 2019 (2nd ed. 2022, freely available online)
-  - The modern replacement for K&R: written by a WG14 member and organised around C17/C23 rather than C89. Covers `stdint.h`, atomics, alignment, `_Generic`, and the undefined-behaviour traps that K&R never had to warn about. **This is the C book to read if you already know C.**
+  - The modern replacement for K\&R: written by a WG14 member and organised around C17/C23 rather than C89. Covers `stdint.h`, atomics, alignment, `_Generic`, and the undefined-behaviour traps that K\&R never had to warn about. **This is the C book to read if you already know C.**
 - **[Book · EN · ★★]** *C Programming: A Modern Approach*, 2nd ed. — K. N. King · W. W. Norton, 2008 · ISBN 9780393979503
   - The best teaching text on the language: exhaustive, precise about the standard, and unusually good on the "why is this undefined" questions.
 - **[Book · EN · ★★]** *Expert C Programming: Deep C Secrets* — Peter van der Linden · Prentice Hall, 1994 · ISBN 9780131774292
@@ -1164,6 +1219,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
   - The measurement-first approach: profiling, memory, C extensions, multiprocessing, and when each one actually helps.
 - **[Book · ★]** *CPython Internals* — Anthony Shaw, Real Python, 2021. [EN]
   - Compiler pipeline, frames, the evaluation loop and object representation, written for people who want to reason about CPython rather than about Python.
+
 
 ### Documentation and specifications
 
@@ -1263,8 +1319,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 28 · Primary Standards and Specification Repositories
-
+## 30 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1291,19 +1346,18 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 29 · Suggested Reading Order
-
+## 31 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
-| Week | Focus | Reading |
-| --- | --- | --- |
-| 1 | Anchor the map | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV |
-| 2 | Your primary track | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique · WLAN datapath: §02-4 against `net/mac80211/tx.c` and `rx.c` — read the code once, it is the only way the host/device split becomes obvious · WLAN join sequence: §02-5 with a capture open, then Dragonblood before repeating any claim that SAE cannot be attacked |
-| 2b | Language layer (do this once, whatever your track) | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large |
-| 2c | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion |
-| 3 | Future direction | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025) |
-| 4 | Consolidate | Each note's **Anchors** section; the correction table in `README.md` §7; re-read only what you cannot state from memory |
+| Week | Focus                                                  | Reading                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Anchor the map                                         | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 2    | Your primary track                                     | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · interrupts: §04-4 — the Arm GICv3/v4 INTID table, then the IRQ-domain and workqueue docs · concurrency: §04-5 — McKenney perfbook memory-ordering chapters + the Franke/Russell OLS 2002 futex paper, then the "Fuss, Futexes and Furwocks" claims checked against glibc nptl/pthread_mutex_lock.c · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique · WLAN datapath: §02-4 against `net/mac80211/tx.c` and `rx.c` — read the code once, it is the only way the host/device split becomes obvious · WLAN join sequence: §02-5 with a capture open, then Dragonblood before repeating any claim that SAE cannot be attacked |
+| 2b   | Language layer (do this once, whatever your track)     | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| 2c   | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion                                                                                                                                                                                                                                                                                                                                                                                  |
+| 3    | Future direction                                       | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 4    | Consolidate                                            | Each note's **Anchors** section; the correction table in `README.md` §7; re-read only what you cannot state from memory                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 **Two rules that make this list productive rather than decorative:**
 
@@ -1312,13 +1366,12 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 30 · Verification and Maintenance
-
+## 32 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story. **for §06-3, track major scikit-learn, PyTorch and JAX releases, and new textbook editions** — the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026, and the practical rules of thumb (which model family wins on tabular data, what precision a given accelerator supports) are properties of the ecosystem rather than of the theory, so they move faster than the mathematics does.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story. **for §06-3, track major scikit-learn, PyTorch and JAX releases, and new textbook editions** **for §04-4, track Arm GIC specification revisions, RISC-V International AIA document revisions, and the mainline workqueue and deferred-work conversions** — the tasklet-to-WQ_BH migration changes which mechanism is correct for new code, the AIA document carries clarifications with each revision (v1.0 ratified June 2023, revision 2025-03-12), and the APLIC/IMSIC drivers only exist from Linux 6.10, so the controller you can rely on depends on the kernel you ship. **for §04-5, track the kernel fence (the per-CPU and scheduling primitives that land with each release), the glibc NPTL sources, and the sanitizer support in your toolchain** — the futex operations, the `clone3` flags and the fd-ified kernel objects (pidfd in 5.3, `waitid(P_PIDFD)` in 5.4, io_uring in 5.1) all have a minimum kernel version, and POSIX.1-2017 is stable while everything on top of it is not, so every "which primitive" answer needs a kernel and a toolchain version attached. — the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026, and the practical rules of thumb (which model family wins on tabular data, what precision a given accelerator supports) are properties of the ecosystem rather than of the theory, so they move faster than the mathematics does.
 
 ---
 

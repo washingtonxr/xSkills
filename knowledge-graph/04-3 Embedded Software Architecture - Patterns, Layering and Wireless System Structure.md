@@ -19,7 +19,7 @@ aliases:
   - Embedded Architecture Patterns
 version: 1.0
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 related-notes:
   - 07 Embedded Systems RTOS and Hardware Interfaces
   - 15 Linux Embedded Development - Drivers, Applications and Core Subsystems
@@ -657,6 +657,8 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — the RTOS and hardware mechanics this note's execution model sits on top of
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux-class counterpart: driver model, IPC, OTA, PREEMPT_RT, partitioning
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the mechanism behind the execution models in §2: what the top/bottom-half split actually costs, and why a threaded IRQ changes the layering decision
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the mechanism behind the layering in §1 and the lock-free handoffs in §4: which units should be processes, which threads, and what IPC choice the architecture implies
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language mechanisms used to express ports, HSMs and lock-free handoffs
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the L1/L2/L3 decomposition in §6.1 at spec level
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — where RAN intelligence is placed relative to the stack split

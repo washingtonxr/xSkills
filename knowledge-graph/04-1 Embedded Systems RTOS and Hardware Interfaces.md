@@ -203,6 +203,8 @@ flowchart TD
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — TinyML as an RTOS workload: quantised models on Cortex-M class parts, inference inside a task's deadline, and the memory budget that decides whether a model fits at all
 - [[08-1 Programming Languages Toolchain and Performance Engineering]]
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the Linux answer to the top/bottom-half split in §5: threaded IRQs at priority 50 versus a high-priority RTOS task, and the same "no policy in the ISR" rule enforced by different machinery
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the counterpart to §1.6: the same primitives (mutex with inheritance, queue, semaphore) on a kernel that also has a privilege boundary and a futex underneath them
 
 ---
 

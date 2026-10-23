@@ -1442,6 +1442,12 @@ Dated, checkable facts used in this note.
 - [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — the language this
   entire stack is written in: NumPy's strided arrays and broadcasting, which are what make the
   vectorised formulations above fast rather than merely correct
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency
+  model behind the data loading, batching and parallel training described above: ITC over shared
+  memory, the doorbell pattern for a producer/consumer pipeline, and the seven-axis IPC choice
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the NPU or accelerator
+  completion interrupt behind inference latency, and why its scheduling latency is the floor of the
+  inference SLO
 
 ---
 

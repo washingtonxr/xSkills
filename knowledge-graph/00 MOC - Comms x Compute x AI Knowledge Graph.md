@@ -56,7 +56,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | `01-x` | Cellular and mobile communications | 01-1 … 01-5 |
 | `02-x` | WLAN | 02-1 … 02-7 |
 | `03-x` | Low-power and sensor networking | 03-1 |
-| `04-x` | Embedded and systems software | 04-1 … 04-3 |
+| `04-x` | Embedded and systems software | 04-1 … 04-5 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
 | `06-x` | Machine learning, AI inference and agent systems | 06-1 … 06-3 |
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
@@ -93,6 +93,8 @@ flowchart LR
         e1["04-1 RTOS and hardware interfaces"]
         e2["04-2 Linux embedded"]
         e3["04-3 Embedded software architecture"]
+        e4["04-4 Linux interrupts"]
+        e5["04-5 Concurrency, processes, threads, IPC"]
     end
     subgraph g5["05 · Data plane and heterogeneous compute"]
         d1["05-1 DPDK / UPF"]
@@ -128,6 +130,11 @@ flowchart LR
     w4 --> e2
     w2 --> s1 --> e1
     e1 --> e2 --> e3
+    e2 --> e4
+    e2 --> e5
+    e4 --> e5
+    e5 --> d1
+    e5 --> i2
     c2 --> d1 --> d2
     d2 --> i1 --> i2
     i2 --> d2
@@ -168,6 +175,8 @@ flowchart LR
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — boot chain, device tree, kernel drivers, IPC, network stack, KVM/containers, PREEMPT_RT
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — layering and HAL/BSP, execution models, HSM, design patterns, AUTOSAR, safety, OTA, wireless stack decomposition
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the interrupt subject end to end: the five orthogonal type axes (synchronous/async, maskable/NMI, level/edge, wire/MSI, private/shared/IPI), the three interrupt controllers (GICv2/v3/v4 with the full INTID map, x86 LAPIC/IOAPIC/IDT, RISC-V PLIC versus AIA), the generic IRQ layer (`irq_desc`/`irq_chip`/`irq_domain`/flow handlers), the entry path, top-half discipline, the four bottom halves with the ten fixed softirq vectors and the 2 ms/10-restart brakes, threaded IRQs at SCHED_FIFO 50, six worked applications from NAPI to rpmsg doorbells, and the tuning and debugging tables
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency subject end to end: the privilege boundary across x86/ARM/RISC-V and what each mode may touch, the five kernel execution contexts and the sleep/preempt/user-memory matrix, the four preemption models, the process model (`task_struct`, TGID versus TID, `clone` flags, copy-on-write, lifecycle), threads (NPTL 1:1 versus LinuxThreads versus NGPT, what is shared, stack size, signals), kernel threads, ITC over atomics and the futex with its private/shared keying and robust-PI variants, the seven-axis IPC comparison and decision logic, the shared-memory-plus-doorbell pattern, the fd-everything event loop, a worked multi-process daemon, and the bug taxonomy with the toolchain
 
 ### 05 · Data plane and heterogeneous compute
 - [[05-1 DPDK User Plane and 5G UPF]] — mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps

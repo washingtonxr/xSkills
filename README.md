@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.11
+version: 1.12
 sibling: README.cn.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (28 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (30 notes)**.
 
 ---
 
@@ -58,8 +58,8 @@ flowchart LR
 | Target role | Priority notes |
 | --- | --- |
 | RAN system architect | 01-1 → 01-2 → 01-5 → 01-3 → 05-1 → 07-1 |
-| Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
-| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
+| Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
+| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 07-1 → 05-1 → 08-1 |
 | WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 03-1 → 04-3 |
 | WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
 | Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 28 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 30 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -97,6 +97,8 @@ flowchart LR
 │   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
 │   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
 │   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
+│   ├── 04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work.md
+│   ├── 04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC.md
 │   ├── 05-1 DPDK User Plane and 5G UPF.md
 │   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
 │   ├── 06-1 LLM Inference Engines and xLLM.md
@@ -125,7 +127,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 30 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 28 primary standards repositories, 29 a reading order, and 30 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 32 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 30 primary standards repositories, 31 a reading order, and 32 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -148,6 +150,8 @@ flowchart LR
 | **04-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
 | **04-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
 | **04-3** | Embedded software architecture | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
+| **04-4** | **Linux interrupts** | The interrupt subject end to end in English: the five orthogonal type axes (synchronous/async, maskable/NMI and pseudo-NMI, level/edge, wire versus MSI-X, private/shared/IPI), the three controllers (ARM GICv2/v3/v4 with the full INTID map and ITS/LPI model, x86 IDT plus LAPIC/IOAPIC/MSI, RISC-V PLIC and CLINT versus the AIA with APLIC and IMSIC), the generic IRQ layer (`irq_desc`, `irq_chip`, `irq_domain`, the five flow handlers, chained versus nested), the entry path with Mermaid diagrams, top-half discipline with the permitted/forbidden table, the four bottom halves with the ten fixed softirq vectors and the 2 ms / 10-restart brakes, the rise and fall of tasklets versus `WQ_BH`, threaded IRQs at `SCHED_FIFO` priority 50, six worked applications (NAPI, DMA rings, GPIO keys, IIO triggers, UIO/VFIO, rpmsg doorbells), affinity and isolation and coalescing tuning, and a symptom-to-fix debugging table |
+| **04-5** | **Concurrency, kernel and user mode, processes, threads and IPC** | The concurrency subject end to end: the privilege boundary across x86 rings, ARM exception levels and RISC-V modes, and what each mode may touch; the five kernel execution contexts with the sleep/preempt/user-memory matrix; the four preemption models and `preempt_count`; the process model (`task_struct`, TGID versus TID, the `clone` flag table, copy-on-write and its absence on no-MMU systems, the lifecycle and PID 1); threads (NPTL 1:1 versus LinuxThreads versus NGPT, what is shared versus private, stack size, per-thread signal masks); kernel threads and their naming; ITC over atomics and the futex with private versus shared keying, robust and PI variants, and a worked lock-free ring; the seven-axis IPC comparison with a decision tree, the shared-memory-plus-doorbell pattern with `SCM_RIGHTS`, the fd-everything event loop, and a worked multi-process daemon; plus the bug taxonomy and the TSan/`lockdep`/`perf sched` toolchain |
 | **05-1** | DPDK and 5G UPF | mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps |
 | **05-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
 | **06-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
@@ -165,10 +169,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 27 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 29 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 153 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 174 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -206,6 +210,7 @@ flowchart LR
 | TWT origin | often attributed to 802.11ax | It originated in **802.11ah-2016** (Wi-Fi HaLow) and was carried into 802.11ax. 802.11be then added **r-TWT**, which is a latency mechanism first and a power mechanism second |
 | 802.11bi | sometimes described as a wake-up-radio amendment | It is **Enhanced Privacy Protection**, approved for publication **2026-09-25** — see note 02-2. The wake-up radio amendment is **802.11ba-2021** |
 | r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
+| Linux bottom halves | "tasklet is the fast deferred-work mechanism" | Tasklets are **deprecated**. The API was modernised around 5.9 and the replacement is **WQ_BH**, merged for **6.9** with `system_bh_wq` and `system_bh_highpri_wq`; it runs in softirq context, may not sleep and requires `max_active = 0`. The tasklet API still exists and conversion is ongoing — see note 04-4 |
 
 **Update triggers**
 
@@ -213,7 +218,7 @@ flowchart LR
 - New 3GPP TS 38.321 / 38.331 versions and RAN1/RAN2 agreements on random access → update 01-5 (field sizes, counters, windows and parameter ranges are release-specific; TS 38.321 v17.3.0, 2023-01, is the quoted baseline)
 - IEEE 802.11 WG sessions and WFA certification announcements → update 02-1/02-2/02-3
 - TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
-- Linux mainline and LTS releases → update 08-1/04-2
+- Linux mainline and LTS releases → update 08-1/04-2/04-4/04-5 (the quoted baseline this cycle: PREEMPT_RT merged in 6.12, WQ_BH in 6.9, EEVDF in 6.6, clone3/pidfd_open in 5.3, RISC-V AIA drivers in 6.10)
 - xLLM / agent framework releases and papers → update 06-1/06-2
 - Major framework releases (scikit-learn, PyTorch, JAX) and textbook editions → update 06-3 (the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026)
 - WG21 / WG14 meetings and GCC / Clang major releases → update 08-2
@@ -221,6 +226,8 @@ flowchart LR
 - MATLAB / Simulink releases (March and September each year) and HDL / Embedded Coder capability changes → update 08-4
 - IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions → update 08-5
 - AUTOSAR releases (annual, each November), MISRA document revisions, Zephyr six-month releases and LTS branches → update 04-3
+- RISC-V International ratifications and the AIA document revisions, plus Arm GIC specification updates → update 04-4/07-1 (the quoted baseline: AIA v1.0 ratified June 2023, document revision 2025-03-12; APLIC/IMSIC drivers merged in Linux 6.10)
+- Workqueue and deferred-work conversions in mainline (the tasklet → WQ_BH migration), scheduler changes (EEVDF, sched_ext) and rt-tests releases → update 04-4/04-5
 - Wi-Fi Alliance Multi-AP / EasyMesh specification revisions and prplMesh releases → update 02-7 (v6.0 is current and has been mandatory for newly tested mesh devices since 2024-12-31; message and TLV numberings grow with each release)
 
 ---

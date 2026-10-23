@@ -21,7 +21,7 @@ aliases:
   - Yocto
   - Buildroot
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Linux Embedded Development — Drivers, Applications and Core Subsystems
@@ -249,6 +249,7 @@ Rules that interviewers probe:
 - **irqdomain** maps hardware IRQ numbers to Linux virtual IRQs; the GIC (ARM) or PLIC/AIA (RISC-V) is described in DT and handled by the irqchip driver.
 - **MSI/MSI-X** converts an interrupt into a memory write — essential for PCIe devices and for pinning interrupts to specific CPUs.
 - Affinity: `/proc/irq/<n>/smp_affinity`, `irqbalance` off on dataplane systems — see [[05-1 DPDK User Plane and 5G UPF]].
+- **The whole subject of interrupts has its own note**: [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] covers the type taxonomy, the GIC/x86/RISC-V controllers, the generic IRQ layer, the six deferred-work mechanisms and how to pick between them, threaded IRQs, affinity and coalescing tuning, and a symptom table for the field failures.
 
 ### 3.8 Timers and deferred work
 - `timer_setup()` + `mod_timer()` — jiffies-resolution, low-res timer API.
@@ -361,6 +362,7 @@ Reading an **Oops**: get the PC, the symbolised call trace, and the "Code:" line
 - **PID 1 semantics**: no default signal handlers, reaps orphans; a container's PID 1 that ignores `SIGTERM` is a well-known shutdown bug.
 - **Threads**: `pthread_create`, `pthread_attr_setstacksize` (default 8 MB is huge on embedded — set it explicitly), `pthread_setname_np`, `pthread_setaffinity_np`.
 - **Thread vs process** decision: process for isolation and independent restart, thread for shared memory and low-latency handoff. On embedded Linux with a small core count, a thread pool plus an event loop usually beats a process-per-connection design.
+- **The concurrency subject has its own note**: [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] covers the privilege boundary, the kernel execution contexts and what each may do, the `clone` flag semantics, NPTL's 1:1 model, the futex underneath every user-space lock, and the seven-axis IPC comparison.
 
 ### 4.2 Signals
 - `sigaction()` over `signal()`; never do real work in a handler — only set a `volatile sig_atomic_t` flag, write to a pipe, or `write()` to a self-pipe.
@@ -411,6 +413,9 @@ Reading an **Oops**: get the PC, the symbolised call trace, and the "Code:" line
 The single most useful way to answer an IPC question is along these axes: **direction**, **number of copies**, **does it cross the kernel**, **latency order**, **persistence**, **fd/credential passing**.
 
 ### 5.1 Mechanism comparison
+
+> This section is the summary. The full derivation — the decision axes, the private versus shared futex keying, the shared-memory-plus-doorbell pattern, fd passing, crash semantics, and a worked multi-process daemon — is in [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] §7.
+
 | Mechanism | Direction | Copies | Kernel crossing | Typical use | Notes |
 | --- | --- | --- | --- | --- | --- |
 | **Pipe / FIFO** | Unidirectional (pipe) / named (FIFO) | 1–2 | Yes (ring buffer in kernel) | Shell pipelines, producer/consumer | `pipe2(O_CLOEXEC\|O_NONBLOCK)`, capacity via `F_SETPIPE_SZ`; FIFO has a filesystem name |
@@ -695,6 +700,8 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 
 ## Related
 
+- [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the deep treatment of §3.7: interrupt types, controllers, the generic IRQ layer, threaded IRQs, deferred work, and tuning and troubleshooting
+- [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the deep treatment of §4.1, §4.5 and §5: the privilege boundary, execution contexts, the process and thread models, futex-based ITC and the full IPC decision logic
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the architecture layer: HAL/BSP separation, execution models, OTA/rollback design, safety and partitioning rationale
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, kernel-bypass options, profiling method
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — kernel C conventions, `container_of`, user-space C/C++ for drivers' tools and daemons
