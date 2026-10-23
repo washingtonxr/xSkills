@@ -861,6 +861,9 @@ ride an IEEE 1905.1 control plane.
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation contributed which mechanism:
   11k/v/r for transition, 11ai for FILS, 11ax for 6 GHz discovery, 11be for MLD-level BTM and link
   reconfiguration, 11bn for SMD and MAPC
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the control plane that
+  carries these steering messages: 1905.1 CMDUs, the Client Steering Request/BTM Report/Association
+  Control exchange with its real field semantics, plus the tuning knobs and the debugging method
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the controller/agent architecture the steering
   messages ride on, and what certification actually requires
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what has to be reprogrammed at the

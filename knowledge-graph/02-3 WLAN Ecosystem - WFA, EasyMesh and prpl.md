@@ -61,6 +61,10 @@ flowchart TD
 - The control plane rides **IEEE 1905.1**, using **CMDU** messages for topology discovery and control. 1905.1 sits *above* Wi-Fi and Ethernet, so it works across heterogeneous links.
 - Data plane: **hostapd / wpa_supplicant** carry Multi-AP flags (fronthaul BSS, backhaul BSS, backhaul STA). **The control plane is not provided by hostapd alone** — this is a common misconception.
 
+The protocol itself — 1905.1 CMDU mechanics, onboarding, AP-autoconfiguration, the measurement and
+steering messages, tuning and troubleshooting — is taken apart in
+[[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]].
+
 ### 2.2 What EasyMesh provides
 - **Automatic onboarding** — new devices provisioned with SSID, passphrase and radio settings via WPS or a wired connection; no per-device manual configuration.
 - **Credential synchronisation** — changing SSID or passphrase on the Controller propagates to all Agents.
@@ -187,6 +191,7 @@ Everything on the left can be expressed in today's data model; everything on the
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what the mesh control plane sits on top of: forwarding fast paths, PPE/WED offload, and why a bridged AP needs flow tracking
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what certification actually mandates in the join sequence: WPA3 and PMF, SAE with H2E, and how an EasyMesh controller's steer maps onto a BSS transition
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the message-by-message detail behind this controller: client steering, association control, backhaul steering, and where the 1905.1 policy stops and 802.11 begins
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the same Multi-AP control plane taken apart: 1905.1 CMDU and TLV numbers, PBC and DPP onboarding, AP-autoconfiguration M1/M2, the 4-address backhaul, the measurement families, and how to tune and debug a live network
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 

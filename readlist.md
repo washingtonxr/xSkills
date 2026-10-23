@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.8
+version: 1.9
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,13 +11,13 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 25 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
+> This file supports the 26 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN;
 > `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,
-> `02-6` multi-AP roaming, healing and steering;
+> `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting;
 > `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;
 > `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture;
 > `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
@@ -25,7 +25,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `07-x` silicon and ISA — `07-1` RISC-V;
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
-> Sections `25`–`27` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `26`–`28` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -489,6 +489,62 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - Where the client's own roam trigger actually lives, and why the network cannot see it.
 
 ---
+
+## 02-7 · WLAN — Wi-Fi EasyMesh: Operation, Tuning and Troubleshooting
+
+### Standards
+
+- **[Standard · ★★★]** Wi-Fi Alliance. *Wi-Fi EasyMesh Specification*, v1.0 (2018-06-18), v2.0 (2019-12-18, Profile-2), v3.0 (2020-12-07, Profile-3), v4.0 (2021-11-16), v5.0 (2022-12-08), v6.0 (2024). <https://www.wi-fi.org/discover-wi-fi/wi-fi-easymesh>
+  - The normative text for this note: onboarding, AP-autoconfiguration, channel selection, client steering, backhaul optimisation, link metrics, traffic separation, 1905-layer security, and the four-address rules. Use the revision table in the front matter to anchor any release claim you make in an interview.
+- **[Standard · ★★★]** IEEE Std 1905.1-2013 — *IEEE Standard for a Convergent Digital Home Network for Heterogeneous Technologies* (with 1905.1a-2014)
+  - The transport EasyMesh rides on: EtherType `0x893A`, the 8-octet CMDU header, TLV framing, neighbor versus relayed versus unicast transmission, and topology discovery. Notably it defines **no** forwarding or loop-prevention protocol — bridging is somebody else's problem.
+- **[Standard · ★★]** IEEE Std 802.11-2020 — *Wireless LAN Medium Access Control and Physical Layer Specifications*
+  - The four-address MAC header (clause 9), the vendor-specific element used by the Multi-AP IE, and the status and reason code tables that EasyMesh reuses for steering and backhaul rejections.
+- **[Standard · ★★]** Wi-Fi Alliance. *Wi-Fi Easy Connect Specification* — Device Provisioning Protocol (DPP)
+  - The Profile-3 onboarding path: bootstrapping, the authentication protocol, `netRole` values including the Multi-AP-specific `mapBackhaulSta` and `mapAgent`, CCE, and reconfiguration. Read the base DPP spec before the EasyMesh clauses that wrap it.
+- **[Standard · ★★]** Wi-Fi Alliance. *Wi-Fi Agile Multiband Specification* and *Wi-Fi Optimized Connectivity Specification*
+  - The MBO-OCE IE with the transition reason code and candidate preference, the Association Disallowed attribute, and RSSI-based association rejection. EasyMesh references both as the client-facing half of steering.
+- **[Standard · ★]** Wi-Fi Alliance. *Wi-Fi Simple Configuration (WSC) v2.0.5*
+  - The M1/M8 exchange EasyMesh extends with the Multi-AP Extension subelement, and the Authentication Types table to which Multi-AP adds `0x0040` (SAE).
+
+### Books
+
+- **[Book · ★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast, O'Reilly, 2005. ISBN 978-0-596-10052-0
+  - Still the clearest explanation of the four-address (WDS) frame format and why a station cannot bridge multiple MACs in three-address mode. Read it before debugging a wireless backhaul.
+- **[Doc · ★★]** Broadband Forum. *TR-069 Amendment 6 — CPE WAN Management Protocol* and *TR-181 Issue 2 — Device:2 Data Model*. <https://www.broadband-forum.org/technical/download>
+  - The remote management path: 1905.1 topology information is exposed through the device data model, which is how an operator's ACS actually sees an EasyMesh network. Reach for this when the question is "how is this managed at scale?" rather than "how does it work?".
+- **[Book · ★]** *Next Generation Wireless LANs: 802.11n and 802.11ac*, 2nd ed. — Eldad Perahia and Robert Stacey, Cambridge University Press, 2013. ISBN 978-1-107-01176-1
+  - Channelisation, operating classes and DFS/CAC mechanics — the physical reality behind the Channel Preference and Channel Selection exchanges.
+
+### Implementation references
+
+- **[Doc · ★★★]** J. Malinen et al. *hostapd / wpa_supplicant — README-MULTI-AP*. <https://android.googlesource.com/platform/external/wpa_supplicant_8/+/refs/heads/main/hostapd/README-MULTI-AP>
+  - The shortest accurate statement of scope: hostapd implements only WPS onboarding and backhaul link configuration; everything else belongs to a separate daemon. Also the `multi_ap=1/2/3` semantics, `multi_ap_backhaul_sta=1`, the per-bSTA VLAN, and the M1-to-M8 backhaul credential rule.
+- **[Doc · ★★★]** prpl Foundation. *prplMesh — Interface Tools*. <https://gitlab.com/prpl-foundation/prplmesh/prplMesh/-/wikis/Management-Interfaces-and-Tools/Interface-Tools>
+  - `prplmesh_cli`, `beerocks_cli`, `prplmesh_utils.sh` management modes, log locations and the topology visualiser. The practical answer to "how do I look inside a running EasyMesh network?"
+- **[Doc · ★★]** prpl Foundation. *prplMesh — Appendix: EasyMesh Standards Compliance*. <https://gitlab.com/prpl-foundation/prplmesh/prplMesh/-/wikis/Appendix-EasyMesh-Standards-Compliance>
+  - Maps prplMesh major versions to EasyMesh releases (1.x R1 … 6.x R6) and lists which features landed where. The best public evidence for what a release actually contains.
+- **[Code · ★★]** iopsys / Genexis. *map2.h — Multi-AP message and TLV definitions*. <https://dev.iopsys.eu/multi-ap/ieee1905/-/commit/c3bc7a76836f13f0c257907a036adad7c6497961>
+  - Concrete `#define` values for the CMDU types (`0x8000`–`0x8033`) and TLV types. Use it when you need a number on a slide; cross-check against the specification's own tables before quoting it.
+- **[Doc · ★★]** Wireshark. *IEEE 1905.1 dissector reference*. <https://www.wireshark.org/docs/dfref/i/ieee1905.html>
+  - The `ieee1905.cmdu.type` and `ieee1905.tlv.type` display filters. Without these, EasyMesh debugging is guesswork.
+
+### Papers and practitioner material
+
+- **[Doc · ★★★]** NXP Semiconductors. *AN14996 — PBC method for Agent 2 and beyond onboarding over Wi-Fi*. <https://docs.nxp.com/bundle/AN14996/page/topics/pbc_method_for_agent_2_and_beyond_onboarding_over_.html>
+  - A runnable onboarding recipe: `systemctl start easymesh-agent`, `wpa_cli wps_pbc multi_ap=1` on the enrollee, `hostapd_cli wps_pbc` on the existing agent, then verify with `iw dev ... link`. Vendor documentation as a bring-up template.
+- **[Paper · ★★]** Rajamanickam, A. et al. "5G and Wi-Fi 7 Network Convergence with End-to-End Network Slicing." *NCTA Technical Papers*, 2024. <https://www.nctatechnicalpapers.com/Paper/2024/WLESS03_Rajamanickam_6573_paper/download>
+  - How EasyMesh R6 (Multi-AP R6) is described in operator terms: Wi-Fi 7 integrated into the controller, 20–320 MHz configuration with static puncturing, MLO backhaul and MLO fronthaul, and MLD-level steering.
+- **[Doc · ★★]** Allion Labs. *2024 New Spec Update — August*. <https://www.allion.com/news-center/new_spec_202408>
+  - The dated third-party record of the WFA announcement: Wi-Fi EasyMesh Specification v6.0 and Test Plan v6.0, effective 2024-12-31 for newly tested mesh devices.
+- **[Doc · ★★]** Wi-Fi Alliance. *Wi-Fi CERTIFIED EasyMesh Technical Overview* (2022). <https://wi-fi.org/zh-hant/file/wi-fi-certified-easymesh-jishugaishu-2022>
+  - The marketing-level statement of what the programme covers — onboarding, channel and network management, AP reporting, path optimisation — useful for framing, not for protocol detail.
+- **[Doc · ★]** Comnect. *EasyMesh Is Not Just Mesh: Understanding the Evolution of Multi-AP Wi-Fi*. <https://comnect.com/service/pro_news_info.html?id=195>
+  - Release-by-release feature evolution R1→R6 and the recurring warning that "R6" is not a synonym for "Wi-Fi 7". Secondary source — verify individual claims against the specification.
+- **[Doc · ★]** Huawei. *How Do I Complete EasyMesh Networking on Routers?* <https://consumer.huawei.com/en/support/content/en-us16057841/>
+  - The three consumer onboarding methods (WPS button, wireless relay, Ethernet) and the placement guidance vendors give. Useful for understanding what users actually do before they call support.
+- **[Doc · ★]** TP-Link Community. *Knowledge Base: EasyMesh*. <https://community.tp-link.com/en/home/forum/topic/660384>
+  - Real field cases, including EasyMesh Ethernet backhaul failing behind a particular managed switch — exactly the multicast/VLAN class of fault described in §9 of the note.
 
 ## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
@@ -1042,7 +1098,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 25 · Primary Standards and Specification Repositories
+## 26 · Primary Standards and Specification Repositories
 
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
@@ -1070,7 +1126,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 26 · Suggested Reading Order
+## 27 · Suggested Reading Order
 
 
 **If you have 4 weeks before an interview:**
@@ -1091,13 +1147,13 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 27 · Verification and Maintenance
+## 28 · Verification and Maintenance
 
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story.
 
 ---
 

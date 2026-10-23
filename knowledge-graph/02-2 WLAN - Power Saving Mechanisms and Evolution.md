@@ -475,6 +475,7 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what association commits the AP to: the listen interval, the AID that indexes the TIM bitmap, and TWT agreements negotiated only after the station is associated
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — why a power-save client roams badly: it is asleep through the frames that would have triggered the decision, and a TWT agreement on the old AP does not travel with it
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the other side of the same problem: a controller steering on measurements of a client that is asleep, and TWT service periods published as anticipated channel usage
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the non-Wi-Fi low-power MAC tradition: TSCH, duty cycling, AoI
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS and eRedCap: the cellular answer to the same battery problem
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload

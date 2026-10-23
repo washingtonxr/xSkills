@@ -882,6 +882,9 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
   WPA3 and PMF requirements, and how a mesh controller steers a station between agents
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what happens to the first data frame
   after the controlled port opens, and where the 4-way handshake sits when it is offloaded to firmware
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management view of
+  this join sequence: onboarding delivers the credentials, AP-autoconfiguration creates the BSSs,
+  and the policy that decides whether a client gets steered into re-running it
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — FT at ESS scale: where R0KH sits, the
   over-the-DS encapsulation the station never sees, the five ways FT fails, and the steering and
   healing mechanisms this join sequence enables

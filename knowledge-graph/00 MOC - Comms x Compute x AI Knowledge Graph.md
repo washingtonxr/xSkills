@@ -54,7 +54,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | Group | Domain | Notes |
 | --- | --- | --- |
 | `01-x` | Cellular and mobile communications | 01-1 … 01-4 |
-| `02-x` | WLAN | 02-1 … 02-6 |
+| `02-x` | WLAN | 02-1 … 02-7 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-3 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
@@ -83,6 +83,7 @@ flowchart LR
         w4["02-4 Packet TX/RX datapath and offload"]
         w5["02-5 Discovery, auth and association"]
         w6["02-6 Roaming, healing and steering"]
+        w7["02-7 EasyMesh operation, tuning, troubleshooting"]
     end
     subgraph g3["03 · Low-power / sensor"]
         s1["03-1 WSN and low-power MAC"]
@@ -118,7 +119,8 @@ flowchart LR
     w3 --> w4
     w4 --> w5
     w5 --> w6
-    w6 --> e3
+    w6 --> w7
+    w7 --> e3
     w4 --> e2
     w2 --> s1 --> e1
     e1 --> e2 --> e3
@@ -146,6 +148,7 @@ flowchart LR
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — 802.11n/ac/ax/be/bn, Wi-Fi 4→9, MLO, OFDMA, UHR, multi-AP coordination
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — legacy PS / PS-Poll, U-APSD, SMPS, TXOP PS, TWT and r-TWT, wake-up radio, AP power save, ambient power
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification, Multi-AP control plane, prplMesh/prplOS
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the EasyMesh control plane end to end: what the Multi-AP specification does and does not standardise, releases v1.0→v6.0 and Profile-1/2/3, IEEE 1905.1 CMDU mechanics with the real message and TLV numbers, onboarding by WPS/PBC and by DPP, AP-autoconfiguration M1/M2, the four-address backhaul, the measurement families, channel selection and the three steering mechanisms, deployment trade-offs, every tunable policy field, and a layered troubleshooting method with a symptom table
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — end-to-end TX/RX path (socket → qdisc → mac80211 → descriptor → EDCA/A-MPDU/Block Ack → PHY, and back through reorder/decrypt/GRO), the five planes of offload (per-packet assists, FullMAC vs SoftMAC, AP flow offload and WED, kernel bypass, control-plane), MLO reordering, and how to localise a fault in the path
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence phase by phase: scanning and 6 GHz discovery (RNR, PSC, FILS Discovery), the MLME state machine, Open System vs SAE vs OWE vs 802.1X/EAP, association and the AID, the PMK→PTK key hierarchy and the 4-way handshake, PMF and SA Query, FT/k/v and FILS roaming, MLO setup, and a symptom-to-phase debugging table
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the multi-AP control loop: why 802.11 leaves the roam decision to the station, 802.11k discovery and 802.11r at ESS scale (R0KH placement, over-the-DS encapsulation, the failure taxonomy), steering by BTM / MBO / assoc control / EasyMesh with the decision function and its ping-pong problem, mesh healing as a backhaul state machine with topology repair and channel change, MLO at MLD granularity, and Wi-Fi 8 SMD as the first standard answer

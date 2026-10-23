@@ -718,6 +718,7 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification of aggregation/QoS features, mesh forwarding, open AP software stacks
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what happens before the first packet: the join sequence, and where the 4-way handshake sits when it is offloaded to firmware
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — why the datapath restarts on every roam: a new PN space, new Block Ack agreements, an FDB entry that has to move, and flow-offload state that has to be reprogrammed at the target AP
+- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management plane that never touches this datapath, and the one place they meet: the four-address wireless backhaul and the per-bSTA VLAN it implies
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — NAPI, DMA rings, device model, the kernel RX path in isolation
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — MAC/PHY split, FAPI, why the datapath is layered the way it is
 - [[05-1 DPDK User Plane and 5G UPF]] — the same fast-path/slow-path problem in a 5G UPF
