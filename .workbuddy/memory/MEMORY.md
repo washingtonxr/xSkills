@@ -43,11 +43,11 @@ replaced on request. Group order follows the signal path outward:
 | `03-x` | Low-power and sensor networking | 03-1 WSN and low-power MAC |
 | `04-x` | Embedded and systems software | 04-1 RTOS and hardware interfaces · 04-2 Linux embedded · 04-3 software architecture |
 | `05-x` | Data plane and heterogeneous compute | 05-1 DPDK/UPF · 05-2 cloud-edge-end |
-| `06-x` | AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems |
+| `06-x` | Machine learning, AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems · 06-3 machine learning foundations (read first) |
 | `07-x` | Silicon and ISA | 07-1 RISC-V |
 | `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ · 08-3 Python · 08-4 MATLAB/Simulink · 08-5 Verilog HDL |
 
-`readlist.md` sections use the **same** `GG-x` numbers (sections 27–29 are the
+`readlist.md` sections use the **same** `GG-x` numbers (sections 28–30 are the
 standards repositories, reading order, and maintenance). Renumbering a note means
 renumbering its readlist section too.
 

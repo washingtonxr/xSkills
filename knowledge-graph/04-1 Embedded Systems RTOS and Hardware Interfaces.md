@@ -18,7 +18,7 @@ aliases:
   - priority inversion
   - interrupt handling
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Embedded Systems, RTOS and Hardware Interfaces
@@ -200,6 +200,7 @@ flowchart TD
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
 - [[07-1 RISC-V for Communication Infrastructure]]
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — TinyML as an RTOS workload: quantised models on Cortex-M class parts, inference inside a task's deadline, and the memory budget that decides whether a model fits at all
 - [[08-1 Programming Languages Toolchain and Performance Engineering]]
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the Linux counterpart: PREEMPT_RT, OpenAMP/rpmsg, driver model
 

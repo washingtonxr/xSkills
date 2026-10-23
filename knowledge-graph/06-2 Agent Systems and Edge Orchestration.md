@@ -15,7 +15,7 @@ aliases:
   - task routing
   - agentic ai
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Agent Systems and Edge Orchestration
@@ -165,6 +165,7 @@ Design considerations:
 
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
 - [[06-1 LLM Inference Engines and xLLM]]
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — the layer underneath an agent: learned models rather than hand-written policies, and the evaluation and drift discipline that decides whether an agent's behaviour is actually improving
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
 

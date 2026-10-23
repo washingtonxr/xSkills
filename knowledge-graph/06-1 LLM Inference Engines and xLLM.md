@@ -16,7 +16,7 @@ aliases:
   - prefill and decode
   - continuous batching
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # LLM Inference Engines and xLLM
@@ -219,6 +219,7 @@ Collaborating labs: THU-MIG (BNRist, Tsinghua), USTC Cloudlab, Beihang HiPO, PKU
 ## Related
 
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — C++17/20 engine code, dtype dispatch via templates, `std::simd` kernels, `mdspan` tensors
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — the vocabulary this note assumes: what a model, a loss and an optimiser are, why attention is quadratic in sequence length, and where the KV-cache arithmetic in §7.3 comes from
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 - [[07-1 RISC-V for Communication Infrastructure]]

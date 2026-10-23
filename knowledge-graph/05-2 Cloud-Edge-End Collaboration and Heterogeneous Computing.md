@@ -16,7 +16,7 @@ aliases:
   - network-defined-compute
   - superpod
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Cloud-Edge-End Collaboration and Heterogeneous Computing
@@ -159,6 +159,7 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 
 ## Related
 
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — what the training and serving workloads actually are: parallelism strategies, precision, and the memory arithmetic that decides where a workload can run
 - [[06-1 LLM Inference Engines and xLLM]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 - [[05-1 DPDK User Plane and 5G UPF]]

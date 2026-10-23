@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.10
+version: 1.11
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,7 +11,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 27 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
+> This file supports the 28 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH);
@@ -21,11 +21,12 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;
 > `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture;
 > `05-x` data plane and heterogeneous compute — `05-1` DPDK/UPF, `05-2` cloud-edge-end;
-> `06-x` AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems;
+> `06-x` machine learning, AI inference and agent systems — `06-1` LLM inference, `06-2` agent systems,
+> `06-3` machine learning foundations;
 > `07-x` silicon and ISA — `07-1` RISC-V;
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
-> Sections `27`–`29` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `28`–`30` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -931,6 +932,103 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
+## 06-3 · Machine Learning — Foundations, Core Algorithms and Applications
+
+### Books
+
+- **[Book · ★★★]** Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani. *An Introduction to Statistical Learning with Applications in R*, 2nd ed. Springer, 2021. ISBN 978-1-0716-1417-4. <https://www.statlearning.com>
+  - The best first book. Chapters 2–8 cover what this note covers in §5 and §9, with labs. The Python edition (ISLP, 2023) exists if you would rather not read R. Free PDF from the authors.
+- **[Book · ★★★]** Aurélien Géron. *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow*, 3rd ed. O'Reilly, 2022. ISBN 978-1-098-12597-4
+  - The practical counterpart: a full project end to end, then trees, ensembles, dimensionality reduction, neural networks, CNNs, RNNs and attention, autoencoders/GANs/diffusion, and reinforcement learning. Its Appendix A "Machine Learning Project Checklist" is the checklist in §3.1 written out properly.
+- **[Book · ★★]** Trevor Hastie, Robert Tibshirani and Jerome Friedman. *The Elements of Statistical Learning*, 2nd ed. Springer, 2009. ISBN 978-0-387-84857-0. <https://hastie.su.domains/ElemStatLearn/>
+  - The graduate version of ISLR, and free. Read chapters 3 (linear methods), 7 (model assessment), 9 (additive models and trees), 10 (boosting) and 15 (random forests) when you need the derivation, not the recipe.
+- **[Book · ★★]** Christopher M. Bishop. *Pattern Recognition and Machine Learning*. Springer, 2006. ISBN 978-0-387-31073-2
+  - The probabilistic view: §5.3's bias–variance decomposition and §5.9's regularisation story are cleanest here. Dense, and worth owning once you have finished ISLR.
+- **[Book · ★★]** Kevin P. Murphy. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022. ISBN 978-0-262-04682-4. <https://probml.github.io/pml-book/book1.html>
+  - The modern replacement for Bishop at twice the length, with the deep-learning material Bishop predates. Free online.
+- **[Book · ★]** Ian Goodfellow, Yoshua Bengio and Aaron Courville. *Deep Learning*. MIT Press, 2016. ISBN 978-0-262-03561-3. <https://www.deeplearningbook.org>
+  - Chapters 6–8 (deep networks and optimisation) are still the reference for backpropagation and for why the tricks in §6.5 exist. The later chapters have aged.
+
+### Courses, guides and documentation
+
+- **[Doc · ★★★]** scikit-learn developers. *User Guide — Choosing the right estimator; Common pitfalls and recommended practices*. <https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html> · <https://scikit-learn.org/stable/common_pitfalls.html>
+  - The official flowchart for picking a model family, and the official statement of the preprocessing-leakage rule in §3.1. Short, and directly quotable in an interview.
+- **[Doc · ★★★]** Google. *Machine Learning Crash Course*. <https://developers.google.com/machine-learning/crash-course>
+  - The fastest route from zero to "I have trained something and I know what a learning rate is": gradient descent, generalisation, training sets, neural networks, embedding, and a fairness unit.
+- **[Doc · ★★★]** Google. *Rules of Machine Learning: Best Practices for ML Engineering*. <http://martin.zinkevich.org/rules_of_ml/rules_of_ml.pdf>
+  - Forty-three rules from people who shipped. It is where the advice in §2.2 ("start with a heuristic") and §12 ("keep the first model simple, design for iteration") comes from. Re-read it after your second project.
+- **[Doc · ★★]** PyTorch Foundation. *PyTorch Tutorials*. <https://pytorch.org/tutorials/>
+  - Enough to do weeks 1 and 4 of the learning path in §14: tensors and autograd, then a classifier, then transfer learning.
+- **[Doc · ★★]** Aston Zhang, Zack Lipton, Mu Li, Alex Smola et al. *Dive into Deep Learning*. <https://d2l.ai>
+  - One book-sized site with runnable code for every architecture in §7, including the convolutional output-size arithmetic and the attention implementation. Use it as the worked-code companion.
+- **[Doc · ★]** Google. *Machine Learning Glossary*. <https://developers.google.com/machine-learning/glossary>
+  - For when you need the standard definition of a term rather than a paraphrase.
+
+### Papers — foundations
+
+- **[Paper · ★★★]** Leo Breiman. "Random Forests." *Machine Learning* 45, 5–32, 2001. <https://link.springer.com/article/10.1023/A:1010933404324>
+  - Bagging plus random feature subsets, out-of-bag error, and variable importance, from the inventor. Read the sections on the strength–correlation trade-off; it is the clearest explanation of why decorrelating the trees matters.
+- **[Paper · ★★★]** Yoav Freund and Robert E. Schapire. "A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting." *Journal of Computer and System Sciences* 55(1), 119–139, 1997
+  - AdaBoost, with the training-error bound that explains why boosting looks like it should overfit and mostly does not.
+- **[Paper · ★★★]** Tianqi Chen and Carlos Guestrin. "XGBoost: A Scalable Tree Boosting System." arXiv:1603.02754, 2016 (KDD 2016). <https://arxiv.org/abs/1603.02754>
+  - The system that made gradient boosting the default for tabular data: the regularised objective, the weighted quantile sketch for split finding, sparsity-aware handling of missing values, and the cache- and out-of-core-aware implementation.
+- **[Paper · ★★]** James Bergstra and Yoshua Bengio. "Random Search for Hyper-Parameter Optimization." *JMLR* 13, 281–305, 2012. <https://jmlr.org/papers/v13/bergstra12a.html>
+  - The two-page argument, with figures, for why random search beats grid search at equal budget. The reason — only a few hyperparameters matter, and grid search wastes trials on the rest — is worth stating from memory.
+- **[Paper · ★★]** Lisha Li, Kevin Jamieson, Giulia DeSalvo, Afshin Rostamizadeh and Ameet Talwalkar. "Hyperband: A Novel Bandit-Based Approach to Hyperparameter Optimization." *JMLR* 18(185), 2018. <https://jmlr.org/papers/v18/16-558.html>
+  - Successive halving done right, with the budget-versus-configuration trade-off made explicit.
+- **[Paper · ★★]** Scott M. Lundberg and Su-In Lee. "A Unified Approach to Interpreting Model Predictions." arXiv:1705.07874, 2017 (NeurIPS 2017). <https://arxiv.org/abs/1705.07874>
+  - SHAP. Read it for the additivity property and for the reminder that an explanation describes the model, not the world.
+- **[Paper · ★]** Fei Tony Liu, Kai Ming Ting and Zhi-Hua Zhou. "Isolation Forest." *ICDM*, 2008
+  - Anomaly detection by random splitting, with the expected-path-length argument that makes it linear-time and sub-sampling-friendly.
+- **[Paper · ★]** David H. Wolpert and William G. Macready. "No Free Lunch Theorems for Optimization." *IEEE Transactions on Evolutionary Computation* 1(1), 67–82, 1997
+  - The reason no algorithm is universally best. Cite it before anyone claims one is.
+- **[Paper · ★]** Frank Rosenblatt. "The perceptron: a probabilistic model for information storage and organization in the brain." *Psychological Review* 65(6), 1958; and David E. Rumelhart, Geoffrey E. Hinton and Ronald J. Williams, "Learning representations by back-propagating errors," *Nature* 323, 1986
+  - The two ends of the first neural-network cycle: the model, and the learning rule that made hidden layers usable.
+
+### Papers — deep learning
+
+- **[Paper · ★★★]** Alex Krizhevsky, Ilya Sutskever and Geoffrey E. Hinton. "ImageNet Classification with Deep Convolutional Neural Networks." *NeurIPS*, 2012. <https://papers.nips.cc/paper_files/paper/2012>
+  - The paper that started the current era: 5 convolutional and 3 fully connected layers, 60 million parameters, 650,000 neurons, two GPUs, ReLU, dropout, data augmentation — and 15.3% top-5 error against 26.2% for the runner-up.
+- **[Paper · ★★★]** Ashish Vaswani, Noam Shazeer, Niki Parmar et al. "Attention Is All You Need." arXiv:1706.03762, 2017. <https://arxiv.org/abs/1706.03762>
+  - Scaled dot-product attention, multi-head attention, positional encoding, and the complexity table comparing self-attention with recurrent and convolutional layers. Note the `sqrt(d_k)` scaling and the reason given for it.
+- **[Paper · ★★★]** Diederik P. Kingma and Jimmy Ba. "Adam: A Method for Stochastic Optimization." arXiv:1412.6980, 2014 (ICLR 2015). <https://arxiv.org/abs/1412.6980>
+  - The update rules and the bias-correction terms. Three pages of actual algorithm.
+- **[Paper · ★★]** Kaiming He, Xiangyu Zhang, Shaoqing Ren and Jian Sun. "Deep Residual Learning for Image Recognition." arXiv:1512.03385, 2015. <https://arxiv.org/abs/1512.03385>
+  - Residual connections, the degradation problem they solve, and the 152-layer result. The identity-mapping follow-up (arXiv:1603.05027) is worth reading immediately afterwards.
+- **[Paper · ★★]** Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever and Ruslan Salakhutdinov. "Dropout: A Simple Way to Prevent Neural Networks from Overfitting." *JMLR* 15(56), 2014. <https://jmlr.org/papers/v15/srivastava14a.html>
+  - The technique, the inverted scaling at test time, and the interpretation as model averaging.
+- **[Paper · ★★]** Sergey Ioffe and Christian Szegedy. "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift." arXiv:1502.03167, 2015 (ICML 2015). <https://arxiv.org/abs/1502.03167>
+  - The algorithm in full, including the inference-time population statistics — the part people get wrong in production.
+- **[Paper · ★★]** Sepp Hochreiter and Jürgen Schmidhuber. "Long Short-Term Memory." *Neural Computation* 9(8), 1735–1780, 1997. <https://direct.mit.edu/neco/article/9/8/1735/6109>
+  - The constant-error-carousel argument for the gates. Still the source to cite when someone says LSTMs are ad hoc.
+- **[Paper · ★★]** Dzmitry Bahdanau, Kyunghyun Cho and Yoshua Bengio. "Neural Machine Translation by Jointly Learning to Align and Translate." arXiv:1409.0473, 2014. <https://arxiv.org/abs/1409.0473>
+  - Attention as a soft alignment over all encoder states: the direct ancestor of §7.3.
+- **[Paper · ★★]** Jonathan Ho, Ajay Jain and Pieter Abbeel. "Denoising Diffusion Probabilistic Models." arXiv:2006.11239, 2020. <https://arxiv.org/abs/2006.11239>
+  - The forward noising process, the reverse-parameterisation choice, and — importantly — the simplified training objective of predicting the noise.
+- **[Paper · ★]** Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza et al. "Generative Adversarial Nets." arXiv:1406.2661, 2014. <https://arxiv.org/abs/1406.2661>
+  - The minimax game, the global-optimality proof, and the failure modes everyone then spent a decade fixing.
+
+### Papers — scaling and systems
+
+- **[Paper · ★★★]** Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch et al. "Training Compute-Optimal Large Language Models." arXiv:2203.15556, 2022. <https://arxiv.org/abs/2203.15556>
+  - The source of the "~20 training tokens per parameter" figure, and of the method (fit the loss–compute frontier across model sizes) that produced it.
+- **[Paper · ★★]** Priya Goyal, Piotr Dollár, Ross Girshick et al. "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour." arXiv:1706.02677, 2017. <https://arxiv.org/abs/1706.02677>
+  - The linear scaling rule for learning rate versus batch size, the warmup needed to make it work, and the batch-size ceiling past which it stops holding.
+- **[Paper · ★★]** Samyam Rajbhandari, Jeff Rasley, Olatunji Ruwase and Yuxiong He. "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models." arXiv:1910.02054, 2019 (SC 2020). <https://arxiv.org/abs/1910.02054>
+  - The three stages of sharding optimiser state, gradients and parameters — the mechanism behind §8.3's memory arithmetic.
+- **[Paper · ★★]** Mohammad Shoeybi, Mostofa Patwary, Raul Puri et al. "Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism." arXiv:1909.08053, 2019. <https://arxiv.org/abs/1909.08053>
+  - Tensor parallelism done at layer granularity: the column-then-row split of the attention and MLP blocks, with the synchronisation points made explicit.
+- **[Paper · ★]** Yanping Huang, Youlong Cheng, Ankur Bapna et al. "GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism." arXiv:1811.06965, 2018. <https://arxiv.org/abs/1811.06965>
+  - Microbatches and the pipeline bubble, quantified.
+
+### Cross-references
+
+- For what happens after training — serving, batching, quantisation and KV-cache management — see **§06-1**.
+- For models that act rather than predict — planning, tools, safety boundaries — see **§06-2**.
+- For these algorithms placed under a RAN's millisecond timing constraints and inside an O-RAN RIC, see **§01-3**.
+- For where the training and serving compute physically sits, see **§05-2**.
+- For the array semantics the Python stack depends on, see **§08-3**.
+
 ## 07-1 · RISC-V for Communication Infrastructure
 
 
@@ -1165,7 +1263,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 27 · Primary Standards and Specification Repositories
+## 28 · Primary Standards and Specification Repositories
 
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
@@ -1193,7 +1291,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 28 · Suggested Reading Order
+## 29 · Suggested Reading Order
 
 
 **If you have 4 weeks before an interview:**
@@ -1214,13 +1312,13 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 29 · Verification and Maintenance
+## 30 · Verification and Maintenance
 
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story. **for §06-3, track major scikit-learn, PyTorch and JAX releases, and new textbook editions** — the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026, and the practical rules of thumb (which model family wins on tabular data, what precision a given accelerator supports) are properties of the ecosystem rather than of the theory, so they move faster than the mathematics does.
 
 ---
 

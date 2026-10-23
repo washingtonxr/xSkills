@@ -58,7 +58,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-3 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
-| `06-x` | AI inference and agent systems | 06-1, 06-2 |
+| `06-x` | Machine learning, AI inference and agent systems | 06-1 … 06-3 |
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
 | `08-x` | Programming languages and engineering practice | 08-1 … 08-5 |
 
@@ -98,9 +98,10 @@ flowchart LR
         d1["05-1 DPDK / UPF"]
         d2["05-2 Cloud-edge-end"]
     end
-    subgraph g6["06 · AI inference and agents"]
+    subgraph g6["06 · Machine learning, AI and agents"]
         i1["06-1 LLM inference · xLLM"]
         i2["06-2 Agent systems"]
+        i3["06-3 Machine learning foundations"]
     end
     subgraph g7["07 · Silicon and ISA"]
         r1["07-1 RISC-V"]
@@ -130,6 +131,9 @@ flowchart LR
     c2 --> d1 --> d2
     d2 --> i1 --> i2
     i2 --> d2
+    d2 --> i3
+    i3 --> i1
+    i3 --> i2
     r1 --> c1
     r1 --> e1
     p2 --> e1
@@ -169,7 +173,8 @@ flowchart LR
 - [[05-1 DPDK User Plane and 5G UPF]] — mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — UnifiedBus, memory pooling, MFU, RDMA
 
-### 06 · AI inference and agent systems
+### 06 · Machine learning, AI inference and agent systems
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — read this first if the AI group is new to you: paradigms, the workflow and the leakage traps, linear and logistic models, bias and variance, trees and ensembles, k-means and PCA, networks and backpropagation with worked numbers, CNN/RNN/transformer/generative architectures, training at scale, evaluation metrics, tuning, applications, MLOps and failure modes
 - [[06-1 LLM Inference Engines and xLLM]] — KV cache, PagedAttention, quantization, operator fusion, prefill/decode
 - [[06-2 Agent Systems and Edge Orchestration]] — GRAFT, multi-device SLM mesh, safety-bounded execution
 

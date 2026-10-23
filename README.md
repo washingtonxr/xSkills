@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.10
+version: 1.11
 sibling: README.cn.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (27 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (28 notes)**.
 
 ---
 
@@ -58,7 +58,7 @@ flowchart LR
 | Target role | Priority notes |
 | --- | --- |
 | RAN system architect | 01-1 → 01-2 → 01-5 → 01-3 → 05-1 → 07-1 |
-| Edge AI / cloud-edge-end architect | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
+| Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
 | Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
 | WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 03-1 → 04-3 |
 | WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 27 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 28 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -101,6 +101,7 @@ flowchart LR
 │   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
 │   ├── 06-1 LLM Inference Engines and xLLM.md
 │   ├── 06-2 Agent Systems and Edge Orchestration.md
+│   ├── 06-3 Machine Learning - Foundations, Core Algorithms and Applications.md
 │   ├── 07-1 RISC-V for Communication Infrastructure.md
 │   ├── 08-1 Programming Languages Toolchain and Performance Engineering.md
 │   ├── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
@@ -124,7 +125,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 29 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 27 primary standards repositories, 28 a reading order, and 29 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 30 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 28 primary standards repositories, 29 a reading order, and 30 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -151,6 +152,7 @@ flowchart LR
 | **05-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
 | **06-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
 | **06-2** | Agent systems and edge orchestration | GRAFT, multi-device SLM mesh, safety-bounded execution |
+| **06-3** | **Machine learning foundations, core algorithms and applications** | A beginner-to-practitioner path in English: what AI, ML, deep learning and generative modelling mean and where the boundaries are; the model / loss / optimiser triad and the learning loop; supervised, unsupervised, self-supervised, semi-supervised and reinforcement learning with a paradigm-selection decision tree; the end-to-end pipeline, splits and cross-validation, and six data-leakage patterns; representations per data type, encoding, scaling and the curse of dimensionality; linear and logistic regression with hand-computed gradients, bias-variance and regularisation, decision trees with a worked Gini split, bagging versus boosting, k-NN, SVM, naive Bayes, k-means, DBSCAN and PCA; neural networks with a numeric backpropagation example, optimisers and regularisation; CNN, RNN/LSTM, transformer, transfer learning and generative architectures with worked sizing arithmetic; training at scale, precision and the three parallelism strategies; evaluation metrics from one confusion matrix, tuning methods, application directions, MLOps, failure modes and a staged learning path |
 | **07-1** | RISC-V for communications infrastructure | Baseband clusters, software-defined PHY, H extension, L1/L2 interface |
 | **08-1** | Languages, toolchain and performance engineering | Build systems, kernel-bypass selection, performance methodology, how the languages fit together |
 | **08-2** | C and C++ programming and STL | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
@@ -163,10 +165,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 26 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 27 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 136 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 153 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -213,6 +215,7 @@ flowchart LR
 - TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
 - Linux mainline and LTS releases → update 08-1/04-2
 - xLLM / agent framework releases and papers → update 06-1/06-2
+- Major framework releases (scikit-learn, PyTorch, JAX) and textbook editions → update 06-3 (the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026)
 - WG21 / WG14 meetings and GCC / Clang major releases → update 08-2
 - CPython feature releases (annual, October) and PEP acceptances, NumPy major releases → update 08-3
 - MATLAB / Simulink releases (March and September each year) and HDL / Embedded Coder capability changes → update 08-4

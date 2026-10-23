@@ -16,7 +16,7 @@ aliases:
   - Python 3.15
   - NumPy
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Python Programming — Language, Object Model and Engineering Practice
@@ -417,6 +417,7 @@ The three rules behind those snippets: **never materialise what you can view**, 
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the extension side of pybind11/nanobind
 - [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — the other modelling environment; `py.` interop from MATLAB
 - [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — test-vector consumers for the emitter above
+- [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — the main consumer of the array semantics above: vectorised losses, broadcasting in metric code, and why the naive Python loop is the bottleneck
 - [[06-1 LLM Inference Engines and xLLM]] — Python front end over a C++ engine, GIL and batching implications
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — where the Python/C++ boundary sits in an edge pipeline
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — training/serving harness code, often Python
