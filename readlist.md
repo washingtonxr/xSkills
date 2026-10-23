@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.9
+version: 1.10
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,10 +11,10 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 26 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
+> This file supports the 27 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the
 > vault's domain groups:
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,
-> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN;
+> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH);
 > `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,
 > `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting;
@@ -25,7 +25,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `07-x` silicon and ISA — `07-1` RISC-V;
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.
-> Sections `26`–`28` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `27`–`29` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number
 > rather than by `[[wikilink]]`.
@@ -185,6 +185,73 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
   - Carries the NTN system information and the RedCap access control mechanisms.
 
 ---
+
+## 01-5 · NR Random Access — UE RACH Procedure, Signalling and Tuning
+
+### Standards
+
+- **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*, v17.3.0 (ETSI TS 138 321 V17.3.0, 2023-01). <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/17.03.00_60/ts_138321v170300p.pdf>
+  - The normative text for this note: clause 5.1 (random access), 5.1.1b–5.1.1d (feature-based resource partitioning), 6.2.3 and 6.2.3a (MAC RAR, fallbackRAR, successRAR), 7.2 (Backoff Parameter values), 7.3 (DELTA_PREAMBLE), 7.4 (PRACH Mask Index). Read the clause 5.1 state machine once end to end before reading anything else about RACH.
+- **[Standard · ★★★]** 3GPP. *TS 38.211 — Physical channels and modulation*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138211/>
+  - PRACH in clause 6.3.3: the preamble format tables (6.3.3.1-1 and 6.3.3.1-2), sequence generation, and the three time-domain configuration tables 6.3.3.2-2 (FR1 FDD/SUL), 6.3.3.2-3 (FR1 TDD) and 6.3.3.2-4 (FR2).
+- **[Standard · ★★★]** 3GPP. *TS 38.213 — Physical layer procedures for control*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138213/>
+  - Clause 4.2 (timing advance), clause 8 (the physical-layer random access procedure, Msg3 PUSCH scheduling), clause 8.1 (SSB-to-PRACH-occasion association).
+- **[Standard · ★★]** 3GPP. *TS 38.331 — Radio Resource Control (RRC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138331/>
+  - `RACH-ConfigCommon`, `RACH-ConfigGeneric`, `RACH-ConfigDedicated`, `BeamFailureRecoveryConfig`, `RA-Prioritization`, `RRCSetupRequest`, `RRCResumeRequest(1)`, `UE-TimersAndConstants`. Every parameter range quoted in the note comes from here.
+- **[Standard · ★★]** 3GPP. *TS 38.300 — NR; Overall description; Stage 2*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138300/>
+  - Clause 9.2.6 is the list of events that initiate random access, and clause 16 is the NTN material. Read 9.2.6 to get the trigger-to-RRC-consequence mapping right.
+- **[Standard · ★★]** 3GPP. *TS 38.214 — Physical layer procedures for data*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138214/>
+  - Table 6.1.2.1.1-5 for the numerology-dependent Msg3 delay Δ, plus the default `k2` allocation tables.
+- **[Standard · ★]** 3GPP. *TS 38.101-1 / -2 / -3 — User Equipment radio transmission and reception*. <https://www.etsi.org/deliver/etsi_TS/138100_138199/13810101/>
+  - `P_CMAX,f,c`, the ceiling in the open-loop PRACH power formula. Only needed to check the arithmetic in a power-ramping calculation.
+
+### Books
+
+- **[Book · ★★★]** *5G NR: The Next Generation Wireless Access Technology* — Erik Dahlman, Stefan Parkvall and Johan Sköld, Academic Press, 2018. ISBN 978-0-12-814323-0 (print), 978-0-12-814324-7 (e-book)
+  - Chapter 16 "Initial access" is the best narrative account of why NR random access looks the way it does, and chapter 15 "Uplink power and timing control" is the background for the open-loop formula and the TA loop. Read these two chapters before arguing about any RACH parameter.
+- **[Book · ★]** *5G NR and Beyond* or any later Dahlman/Parkvall/Sköld volume covering Rel-16 and Rel-17
+  - Only if you need the 2-step RACH and SDT material in book form; the specifications and the 3GPP work-item documents are more reliable for those.
+
+### Specifications-in-progress and work items
+
+- **[Doc · ★★★]** 3GPP. *RP-200085 — Revised WID on 2-step RACH for NR*. <https://portal.3gpp.org/>
+  - The Rel-16 work item that introduced MsgA/MsgB. Two pages, and it states exactly what problem 2-step was meant to solve (latency and, in unlicensed spectrum, the number of channel-access attempts).
+- **[Doc · ★★]** i TecSpec. *TR 21.916 §19.1.2 — 2-step RACH for NR*. <https://itecspec.com/3gpp/21.916/s/19.1.2>
+  - The Rel-16 feature summary: MsgA composition, shared versus separate PRACH occasions, preamble-to-PUSCH-occasion mapping, and the fallback indication.
+- **[Doc · ★★]** Nokia, Nokia Shanghai Bell. *Introduction of SDT — Stage-2 running CR* (RAN2 #116-e, Rel-17). <https://www.3gpp.org/ftp/Email_Discussions/RAN2/%5BRAN2%23116-e%5D/>
+  - The RAN2 agreements in their own words: 2-step and 4-step RA-SDT, CFRA not supported for RA-SDT, switching from SDT to non-SDT, and the events that terminate an SDT session.
+- **[Doc · ★★]** Thales. *NTN Stage 2 CR* (RAN2 #117-e). <https://www.3gpp.org/FTP/Email_Discussions/RAN2/%5BRAN2%23117-e%5D/>
+  - The Rel-17 NTN timing-advance formula with common TA and UE self-estimated TA, plus the K_offset and K_mac timing relationships that make Msg3 and BFR scheduling causal.
+- **[Doc · ★]** i TecSpec. *TR 38.822 §6.1.4 — NR_NTN_solutions*. <https://itecspec.com/3gpp/38.822/s/6.1.4>
+  - The L1 feature list for NTN, including `uplinkPreCompensation-r17` and the mandatory GNSS-based TA and frequency pre-compensation.
+
+### Implementation references and worked examples
+
+- **[Doc · ★★★]** lte5ghub. *Random Access (4-step & 2-step) in 5G NR*. <https://lte5ghub.com/random-access>
+  - The trigger-to-RRC-consequence table, the RA-RNTI worked example, the shared MsgA/preamble budget pitfall, the spatial-filter ramping rule, and a log-reading checklist that is directly usable in the field.
+- **[Doc · ★★★]** NR Explained. *Random access: PUSCH scheduled by RAR UL grant (Msg3)*. <https://www.nrexplained.com/ra_msg3>
+  - The 27-bit RAR UL grant field by field, the default `k2` table, the Δ table, and the minimum RAR-to-Msg3 processing time. The clearest single page on Msg3 scheduling.
+- **[Doc · ★★]** ShareTechnote. *5G/NR — Random Access Procedure (Msg1–Msg4)*. <https://sharetechnote.com/html/5G/5G_RACH_old1.html>
+  - A real Amarisoft log with the `k2 + Δ` arithmetic visible in the SFN timestamps, plus the Msg4 HARQ-ACK behaviour.
+- **[Doc · ★★]** CafeTele. *The 5G NR Random Access Procedure — PRACH, Msg1–Msg4, 2-Step RACH, Counters & Optimization*. <https://www.cafetele.com/articles/article-5g-nr-random-access-rach.html>
+  - The two contention-resolution mechanisms stated plainly, the backoff valve, and the MsgA/MsgB fallback story.
+- **[Doc · ★★]** MathWorks. *5G NR PRACH Configuration* (`nrPRACHConfig`). <https://uk.mathworks.com/help/releases/R2022a/5g/ug/5g-nr-prach-configuration.html>
+  - Which configuration table applies to which frequency range and duplex mode. Useful for reproducing the format tables and for checking a `prach-ConfigurationIndex` without opening the PDF.
+- **[Doc · ★]** Howl Testuff Works. *5G NR: 2-Step Random Access Procedure (Release-16)*. <http://howltestuffworks.blogspot.com/2020/04/5g-nr-2-step-random-access-procedure.html>
+  - The successRAR and fallbackRAR field lists and the MsgA PUSCH-to-PRACH symbol gap by numerology. Secondary — cross-check field sizes against TS 38.321.
+- **[Doc · ★]** i TecSpec. *TS 38.331 §RRCSetupRequest*. <https://itecspec.com/3gpp/38.331/s/rrcsetuprequest>
+  - The exact `InitialUE-Identity` and `EstablishmentCause` enumerations, when you need to quote them rather than paraphrase.
+
+### Practitioner and operator material
+
+- **[Doc · ★★]** 3GPP. *Small Data Transmission (SDT)*. <https://www.3gpp.org/technologies/sdt>
+  - The official one-page description of RA-SDT and CG-SDT, including the separation of SDT and non-SDT random-access resources.
+- **[Doc · ★★]** ShareTechnote. *NTN — Random Access*. <https://www.sharetechnote.com/html/NTN/NTN_RACH.html>
+  - Which TR 38.821 candidate solutions survived into Rel-17 and which disappeared once GNSS-based pre-compensation was made mandatory, plus an NTN RACH symptom table.
+- **[Doc · ★★]** NTT DOCOMO Technical Journal, Vol. 24 No. 3. *Special Articles on 3GPP Release 17 Standardization Activities*. <https://dcm-dpweb51.tz.nttdocomo.co.jp/english/corporate/technology/rd/technical_journal/bn/vol24_3/005.html>
+  - K_offset, the HARQ enhancement, and the NTN mobility triggers, explained from an operator's point of view.
+- **[Doc · ★]** lte5ghub. *TS 38.331: RRC States (Idle / Inactive / Connected)*. <https://lte5ghub.com/rrc-states>
+  - Why a completed random access no longer implies a state transition once SDT is enabled — the KPI trap worth knowing before you read a drive-test report.
 
 ## 02-1 · WLAN — Wi-Fi Generations Evolution
 
@@ -1098,7 +1165,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 26 · Primary Standards and Specification Repositories
+## 27 · Primary Standards and Specification Repositories
 
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
@@ -1126,7 +1193,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 27 · Suggested Reading Order
+## 28 · Suggested Reading Order
 
 
 **If you have 4 weeks before an interview:**
@@ -1147,13 +1214,13 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 28 · Verification and Maintenance
+## 29 · Verification and Maintenance
 
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story.
 
 ---
 

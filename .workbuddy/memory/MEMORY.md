@@ -38,7 +38,7 @@ replaced on request. Group order follows the signal path outward:
 
 | Group | Domain | Notes |
 | --- | --- | --- |
-| `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) |
+| `01-x` | Cellular and mobile communications | 01-1 5G-A/6G radio access · 01-2 NR RAN L2 · 01-3 AI/ML for RAN and O-RAN · 01-4 cellular IoT (RedCap/eRedCap/NTN) · 01-5 NR random access (RACH) |
 | `02-x` | WLAN | 02-1 generations · 02-2 power saving · 02-3 ecosystem (WFA/EasyMesh/prpl) · 02-4 TX/RX datapath and offload · 02-5 discovery, authentication and association · 02-6 roaming, healing and steering · 02-7 EasyMesh operation, tuning and troubleshooting |
 | `03-x` | Low-power and sensor networking | 03-1 WSN and low-power MAC |
 | `04-x` | Embedded and systems software | 04-1 RTOS and hardware interfaces · 04-2 Linux embedded · 04-3 software architecture |
@@ -47,7 +47,7 @@ replaced on request. Group order follows the signal path outward:
 | `07-x` | Silicon and ISA | 07-1 RISC-V |
 | `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ · 08-3 Python · 08-4 MATLAB/Simulink · 08-5 Verilog HDL |
 
-`readlist.md` sections use the **same** `GG-x` numbers (sections 26–28 are the
+`readlist.md` sections use the **same** `GG-x` numbers (sections 27–29 are the
 standards repositories, reading order, and maintenance). Renumbering a note means
 renumbering its readlist section too.
 

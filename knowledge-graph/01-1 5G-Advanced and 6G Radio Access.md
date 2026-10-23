@@ -14,7 +14,7 @@ aliases:
   - Rel-21
   - IMT-2030
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # 5G-Advanced and 6G Radio Access
@@ -167,6 +167,7 @@ flowchart LR
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the procedure every release keeps tuning: 2-step RACH from Rel-16, feature-partitioned RA resources and SDT from Rel-17, and LTM from Rel-18 where a mobility event may run with no RACH at all
 - [[07-1 RISC-V for Communication Infrastructure]]
 
 ---

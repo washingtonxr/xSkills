@@ -16,7 +16,7 @@ aliases:
   - MAC scheduler
   - L2 protocol stack
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # 5G NR RAN Layer 2 Protocol Stack
@@ -217,6 +217,7 @@ flowchart LR
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
+- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the MAC procedure this note only lists: Msg1 to Msg4, MSGA/MSGB, RA-RNTI, the RAR MAC PDU, and the counters and windows that a MAC implementation must keep
 
 ---
 

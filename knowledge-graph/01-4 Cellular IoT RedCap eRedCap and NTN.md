@@ -16,7 +16,7 @@ aliases:
   - NR-Light
   - Non-Terrestrial Networks
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # Cellular IoT — RedCap, eRedCap and NTN
@@ -148,6 +148,7 @@ A defensible minimal-change answer:
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — what these devices actually have to do to get in: RedCap RA resource partitioning and Msg3 repetitions on one side, and NTN where the UE pre-compensates timing and Doppler from GNSS before Msg1
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
 - [[06-2 Agent Systems and Edge Orchestration]]

@@ -2,7 +2,7 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.9
+version: 1.10
 sibling: README.cn.md
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (26 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (27 notes)**.
 
 ---
 
@@ -57,12 +57,12 @@ flowchart LR
 
 | Target role | Priority notes |
 | --- | --- |
-| RAN system architect | 01-1 → 01-2 → 01-3 → 05-1 → 07-1 |
+| RAN system architect | 01-1 → 01-2 → 01-5 → 01-3 → 05-1 → 07-1 |
 | Edge AI / cloud-edge-end architect | 05-2 → 06-1 → 06-2 → 08-1 → 04-2 |
 | Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 07-1 → 05-1 → 08-1 |
 | WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 03-1 → 04-3 |
 | WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
-| Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 04-1 |
+| Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
 | Software / language foundation (any role) | 08-2 → 08-3 → 08-1 |
 | Algorithm modelling or DSP prototyping | 08-4 → 08-5 → 08-3 |
 
@@ -79,12 +79,13 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 26 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 27 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
 │   ├── 01-3 AI-ML for RAN and O-RAN RIC.md
 │   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
+│   ├── 01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning.md
 │   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
 │   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
@@ -123,7 +124,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 28 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 26 primary standards repositories, 27 a reading order, and 28 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 29 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 27 primary standards repositories, 28 a reading order, and 29 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -134,6 +135,7 @@ flowchart LR
 | **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP, HARQ, BSR, grant lifecycle, QoS mapping |
 | **01-3** | AI/ML for RAN and O-RAN | near-RT/non-RT RIC, xApp/rApp, DRL scheduling, sim-to-real |
 | **01-4** | Cellular IoT | RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS |
+| **01-5** | **NR random access (RACH)** | The full UE random-access procedure: MAC-level triggers and what each failure means at RRC, RA-type and feature-partitioned resource selection (RedCap/SDT/NSAG/Msg3 repetition), PRACH formats 0–3 and A1–C2 with their CP-implied cell radii, open-loop power and the ramping rules, RA-RNTI and MSGB-RNTI arithmetic, the RAR MAC PDU and the Backoff Indicator table, Msg3 scheduling (`k2 + Δ`) and payloads, contention resolution, 2-step MsgA/MsgB with successRAR and fallbackRAR, CFRA and beam failure recovery, the SDT / NTN / RedCap variants, a latency budget, every tuning knob, and a layered troubleshooting tree with a symptom table |
 | **02-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
 | **02-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
 | **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
@@ -161,10 +163,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 25 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 26 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 125 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 136 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -206,6 +208,7 @@ flowchart LR
 **Update triggers**
 
 - 3GPP TSG plenary meetings (4 per year) → update 01-1/01-2/01-4
+- New 3GPP TS 38.321 / 38.331 versions and RAN1/RAN2 agreements on random access → update 01-5 (field sizes, counters, windows and parameter ranges are release-specific; TS 38.321 v17.3.0, 2023-01, is the quoted baseline)
 - IEEE 802.11 WG sessions and WFA certification announcements → update 02-1/02-2/02-3
 - TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
 - Linux mainline and LTS releases → update 08-1/04-2

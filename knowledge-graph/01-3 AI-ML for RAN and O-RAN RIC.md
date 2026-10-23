@@ -15,7 +15,7 @@ aliases:
   - non-RT RIC
   - RAN intelligence
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-23
 ---
 
 # AI/ML for the RAN and the O-RAN RIC
@@ -177,6 +177,7 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
+- [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the canonical closed-loop target: preamble collision rate, RAR success and 2-step fallback rate observed by an xApp, and the parameter set it is allowed to retune
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 
