@@ -662,6 +662,7 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language mechanisms used to express ports, HSMs and lock-free handoffs
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the L1/L2/L3 decomposition in §6.1 at spec level
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — where RAN intelligence is placed relative to the stack split
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the L1/L2 real-time boundary at full scale: the FAPI interface, the eleven-step per-slot pipeline, and the execution model that the layering in §1 has to support
 - [[07-1 RISC-V for Communication Infrastructure]] — the silicon substrate for L1 acceleration and heterogeneous baseband
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the WLAN instantiation of layered control/data separation
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — duty cycling and sleep architecture at the constrained end

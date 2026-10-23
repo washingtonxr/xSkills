@@ -754,6 +754,7 @@ Method, in order:
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — partitioning: the same "what shares memory with what" question asked across a machine boundary
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — measuring contention: `perf`, tracing, and the bypass options
 - [[07-1 RISC-V for Communication Infrastructure]] — the privilege levels and CSR names referenced in §1.1
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the concurrency model applied to the hardest case: one lock-free per-slot thread, deferred-apply queues for RRC reconfiguration, and a hot path that must not allocate
 
 ---
 

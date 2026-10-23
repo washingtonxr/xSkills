@@ -53,7 +53,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 
 | Group | Domain | Notes |
 | --- | --- | --- |
-| `01-x` | Cellular and mobile communications | 01-1 … 01-5 |
+| `01-x` | Cellular and mobile communications | 01-1 … 01-6 |
 | `02-x` | WLAN | 02-1 … 02-7 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-5 |
@@ -76,6 +76,7 @@ flowchart LR
         c3["01-3 AI/ML for RAN · O-RAN RIC"]
         c4["01-4 RedCap · eRedCap · NTN"]
         c5["01-5 NR random access (RACH)"]
+        c6["01-6 DU MAC scheduler"]
     end
     subgraph g2["02 · WLAN"]
         w1["02-1 Wi-Fi generations"]
@@ -119,6 +120,8 @@ flowchart LR
     c1 --> c2 --> c3
     c2 --> c5
     c4 --> c5
+    c2 --> c6 --> c3
+    c5 --> c6
     c2 --> e3
     c4 --> s1
     w1 --> w2 --> w3
@@ -158,6 +161,7 @@ flowchart LR
 - [[01-3 AI-ML for RAN and O-RAN RIC]] — near-RT/non-RT RIC, xApps/rApps, DRL scheduling, sim-to-real
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the whole UE random-access procedure end to end: triggers and their RRC meaning, resource and RA-type selection, PRACH formats and open-loop power ramping, RA-RNTI and the RAR, Msg3 timing and payloads, contention resolution, 2-step MsgA/MsgB with fallback, CFRA and BFR, and the SDT / NTN / RedCap variants — then the same procedure retold from the UE side and from the gNB side, with what each side knows that the other does not
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the scheduler itself: the CU/DU split and the 7-2x fronthaul, the four resources it allocates at once, the per-slot time budget, twelve modules, the eleven-step pipeline, the two-stage DL allocation, the UL chain, HARQ and PUCCH and PDCCH budgets, TDD and DRX, and the real-time execution model
 
 ### 02 · WLAN
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — 802.11n/ac/ax/be/bn, Wi-Fi 4→9, MLO, OFDMA, UHR, multi-AP coordination

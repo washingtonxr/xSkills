@@ -158,6 +158,7 @@ flowchart TD
 - [[06-1 LLM Inference Engines and xLLM]]
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]]
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the interrupt and softirq latency that the profiling and bypass discussion is measuring
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — a real-time workload to profile: worst-case slot processing time, data layout for the per-slot UE iteration, and measuring the tail rather than the mean
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency and IPC model whose contention the profiler is attributing
 
 ---

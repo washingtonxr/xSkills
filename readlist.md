@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.13
+version: 1.14
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,10 +11,11 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 30 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
+> This file supports the 31 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
 > vault's domain groups:  
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,  
-> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH);  
+> `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH),  
+> `01-6` NR DU MAC scheduler;  
 > `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,  
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,  
 > `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting;  
@@ -850,6 +851,84 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
+## 01-6 · NR DU MAC Scheduler — Resource Allocation, HARQ and Real-Time Implementation
+
+### Standards
+
+- **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/>
+  - Clause 5.4.3.1 logical channel prioritisation, 5.4.4 scheduling request, 5.4.5 buffer status reporting, 5.7 power headroom, 5.13 DRX. The normative source for what the scheduler is obliged to do.
+- **[Standard · ★★★]** 3GPP. *TS 38.213 — Physical layer procedures for control*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138213/>
+  - Clause 10.1: the CCE aggregation levels (Table 10.1-1), the per-slot candidate budget (10.1-2) and the non-overlapped-CCE budget (10.1-3). Clause 9.2.1 PUCCH resource sets, 9.2.3 HARQ-ACK timing, 11.2 uplink power control. These three clauses are the whole of §9 and §8.4.
+- **[Standard · ★★★]** 3GPP. *TS 38.214 — Physical layer procedures for data*, v18.9.0 (ETSI TS 138 214 V18.9.0). <https://www.etsi.org/deliver/etsi_ts/138200_138299/138214/18.09.00_60/ts_138214v180900p.pdf>
+  - Clause 5.1 the 16-process maximum and the default of 8, 5.1.3.1 the MCS tables, 5.1.3.2 TBS determination, 5.3 the PDSCH processing time N1, 6.4 the PUSCH preparation time N2. The two timing tables in 5.3 and 6.4 set every k1 and k2 in the note.
+- **[Standard · ★★★]** 3GPP. *TS 38.211 — Physical channels and modulation*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138211/>
+  - Clause 7.3.2 the CORESET and REG/CCE structure, 7.3.2.1 the supported aggregation levels, 7.4 the PDSCH DMRS patterns that the TBS computation subtracts.
+- **[Standard · ★★]** 3GPP. *TS 38.331 — Radio Resource Control (RRC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138331/>
+  - `PDSCH-ServingCellConfig`, `PDSCH-Config`, `PUSCH-Config`, `PDCCH-Config`, `PUCCH-Config`, `ConfiguredGrantConfig`, `DRX-Config`. Every bound a scheduler must respect is an ASN.1 constraint in here.
+- **[Standard · ★★]** 3GPP. *TS 38.212 — Multiplexing and channel coding*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138212/>
+  - Clause 5.4.2 rate matching and the limited buffer rate matching circular buffer `Ncb = min(N, Nref)`; clause 5.2.2 the base-graph selection behind the 3824-bit TBS threshold.
+- **[Standard · ★★]** 3GPP. *TS 38.300 — NR; Overall description; Stage 2*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138300/>
+  - Clause 16 the CU/DU split and which node owns what — the reason the scheduler is in the DU at all.
+- **[Standard · ★]** 3GPP. *TS 38.306 — UE radio access capabilities*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138306/>
+  - Where the 16- versus 32-process HARQ capability and the PDCCH monitoring capability are signalled. A scheduler is bounded by what the UE reports, not by what the network would like.
+- **[Standard · ★]** 3GPP. *TS 38.473 — F1 application protocol (F1AP)*. <https://www.etsi.org/deliver/etsi_TS/138400_138499/138473/>
+  - UE Context Setup and Modification: the procedures that create and mutate the contexts the scheduler reads in every slot.
+- **[Doc · ★★]** i TecSpec. *TS 38.213 §9.2.1 — PUCCH Resource Sets*. <https://itecspec.com/3gpp/38.213/s/9.2.1>
+  - The exact text for the four sets, the 32-resource first set, the 8-resource others and the `maxPayloadSize` selection rule.
+- **[Doc · ★★]** i TecSpec. *TS 38.331 — Multiplicity and type constraint definitions*. <http://itecspec.com/3gpp/38.331/s/multiplicity-and-type-constraint-definitions>
+  - `maxNrofPUCCH-Resources = 128`, `maxNrofPUCCH-ResourceSets = 4`, `maxNrofPUCCH-ResourcesPerSet = 32`, `maxNrofDL-Allocations = 16`.
+
+### Books
+
+- **[Book · ★★★ · EN]** *5G NR: The Next Generation Wireless Access Technology*, 2nd ed. — Erik Dahlman, Stefan Parkvall, Johan Sköld · Academic Press, 2021 · ISBN 978-0-12-822320-8
+  - Chapter 14 is the scheduling chapter, 13 the retransmission protocols, 15 uplink power and timing control, 21 interference handling in TDD networks. Three Ericsson people who were in the room: the "why it is like this" parts are the parts a specification cannot give you, and they are what an interview asks for.
+
+### Papers
+
+- **[Paper · ★★★ · EN]** "Rate control for communication networks: shadow prices, proportional fairness and stability" — F. P. Kelly, A. K. Maulloo, D. K. H. Tan · *Journal of the Operational Research Society*, vol. 49, no. 3, pp. 237–252, March 1998 · DOI 10.1057/palgrave.jors.2600523
+  - The origin of the proportional-fairness criterion. Read it once and you will never again say "PF is fair" without qualifying it — it maximises the sum of log rates, which is a fairness criterion, not fairness, and the two are not the same thing.
+
+### Open interfaces
+
+- **[Standard · ★★★ · EN]** O-RAN ALLIANCE. *O-RAN.WG4.CUS — Control, User and Synchronization Plane Specification*. <https://www.o-ran.org/specifications>
+  - The eCPRI message types, the C-plane section types 0 to 8, the eAxC identifier, and the T1a/T2a/Ta3/Ta4/Tcp_adv_dl timing windows. If you work on a 7-2x box, this document decides your slot pipeline.
+- **[Standard · ★★ · EN]** O-RAN ALLIANCE. *O-RAN.WG1.OAD — O-RAN Architecture Description*. <https://www.o-ran.org/specifications>
+  - The O-CU / O-DU / O-RU functional split and the 7-2x categories A and B, which decide where beamforming weights are computed.
+- **[Standard · ★★★ · EN]** Small Cell Forum. *SCF222.10.02 / 222.10.04 — 5G NR FAPI specification*. <https://www.smallcellforum.org/>
+  - The P5 control and P7 data-path messages with their IDs. This is the interface the scheduler actually speaks.
+- **[Doc · ★★ · EN]** NVIDIA. *SCF FAPI support — Aerial cuBB release notes*. <https://docs.nvidia.com/aerial/>
+  - The supported-message matrix, and the practical note that the PDU travels in a separate buffer rather than inside the message.
+
+### Implementation references
+
+- **[Code · ★★★ · EN]** **srsRAN Project** — `github.com/srsran/srsRAN_Project`
+  - A complete open scheduler you can read end to end: the per-slot UE context, the two-stage DL allocation, the CCE allocator and the PUCCH reservation. Pair it with §5 and §9.
+- **[Code · ★★ · EN]** **OpenAirInterface** — `github.com/OPENAIRINTERFACE/openairinterface5g`, the `open-nFAPI` P7 implementation
+  - The pack and unpack functions for DL_TTI.request, UL_TTI.request, UL_DCI.request and TX_Data.request, and the uplink indications. The clearest place to see the L2/L1 contract as code.
+- **[Doc · ★★ · EN]** COSMOS. *O-RAN architecture and the 7.2x fronthaul*. <https://www.cosmos-lab.org/wiki/public/tutorials/cellular-4g5g-oran/oran-intro>
+  - The window definitions, the early/on-time/late counters, and two worked failures worth memorising: a `ta4_max` too narrow loses every PRACH, and a `T1a` outside the O-RU's window means the cell never radiates.
+- **[Doc · ★★ · EN]** ShareTechnote. *Open RAN — eCPRI and the O-RAN C/U-plane*. <https://www.sharetechnote.com/html/OpenRAN/OR_eCPRI.html>
+  - The section-type table and the eAxC sequence-id rules.
+- **[Doc · ★ · EN]** Intel. *O-RAN Intel FPGA IP User Guide*. <https://cdrdv2-public.intel.com/812720/ug_oran-683238-812720.pdf>
+  - How `t2a_min_up` / `t2a_max_up` / `ta3_min_up` are programmed from real O-RU processing delay, which is what makes the abstract windows concrete.
+- **[Doc · ★ · EN]** Eurecom. *Experimental analysis of massive MIMO antennas in O-RAN systems*. <https://www.eurecom.fr/publication/8398>
+  - The 7-2x functional allocation and the argument for centralising high-PHY in the O-DU.
+
+### Practitioner and operator material
+
+- **[Doc · ★★ · EN]** lte5ghub. *HARQ in 5G NR — downlink and uplink*. <https://lte5ghub.com/harq>
+  - The process-count table, the NDI-toggle pipeline and the asynchronous-in-both-directions comparison with LTE.
+- **[Doc · ★★ · EN]** lte5ghub. *TS 38.214: time-domain resource allocation and SLIV in 5G NR*. <https://lte5ghub.com/time-domain-allocation>
+  - The N1/N2 table and the practical k2 floors per numerology, plus the SLIV decoding that turns a TDRA field into symbols.
+- **[Doc · ★★ · EN]** lte5ghub. *TS 38.321: scheduling — dynamic, SPS and configured grant in 5G NR*. <https://lte5ghub.com/scheduling>
+  - The candidate-to-CCE mapping formula and the per-slot PDCCH monitoring limits, both worked.
+- **[Doc · ★ · EN]** 5G/6G Academy. *CORESET and search spaces in 5G NR*. <https://www.5g6gacademy.com/learn/coreset-and-search-spaces>
+  - The per-slot blind-decode and CCE budgets, and why the caps tighten as SCS rises.
+- **[Doc · ★ · EN]** HiCellTek. *MCS, TBS and code rate reference*. <https://hicelltek.com/en/mcs-tbs-code-rate/>
+  - Per-index Qm and code rate for MCS tables 1 to 4, and the resulting spectral-efficiency ceilings.
+
+---
+
 ## 05-1 · DPDK User Plane and 5G UPF
 
 ### Books
@@ -1321,7 +1400,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 30 · Primary Standards and Specification Repositories
+## 31 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1348,14 +1427,14 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 31 · Suggested Reading Order
+## 32 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
 | Week | Focus                                                  | Reading                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1    | Anchor the map                                         | Note `00 MOC`; Dahlman *5G NR* chapters 6/13/14; Gast *802.11* chapters on DCF and IFS/NAV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 2    | Your primary track                                     | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · interrupts: §04-4 — the Arm GICv3/v4 INTID table, then the IRQ-domain and workqueue docs · concurrency: §04-5 — McKenney perfbook memory-ordering chapters + the Franke/Russell OLS 2002 futex paper, then the "Fuss, Futexes and Furwocks" claims checked against glibc nptl/pthread_mutex_lock.c · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique · WLAN datapath: §02-4 against `net/mac80211/tx.c` and `rx.c` — read the code once, it is the only way the host/device split becomes obvious · WLAN join sequence: §02-5 with a capture open, then Dragonblood before repeating any claim that SAE cannot be attacked |
+| 2    | Your primary track                                     | RAN architect: TS 38.321/38.322/38.323 + TR 38.843 · Edge AI: xLLM technical report + Mooncake + PagedAttention · scheduling: §01-6 — TS 38.213 clause 10.1 and 9.2.1 first, then the srsRAN scheduler source, then the O-RAN WG4 CUS timing windows · Embedded/Linux: LDD3 (model chapters) + Kerrisk (IPC chapters) · interrupts: §04-4 — the Arm GICv3/v4 INTID table, then the IRQ-domain and workqueue docs · concurrency: §04-5 — McKenney perfbook memory-ordering chapters + the Franke/Russell OLS 2002 futex paper, then the "Fuss, Futexes and Furwocks" claims checked against glibc nptl/pthread_mutex_lock.c · WLAN: 802.11ax tutorial + Wi-Fi 8 tutorial · WLAN low power: §02-2 — Gast power-management chapters, then the AP Power Save primer and the SMPS critique · WLAN datapath: §02-4 against `net/mac80211/tx.c` and `rx.c` — read the code once, it is the only way the host/device split becomes obvious · WLAN join sequence: §02-5 with a capture open, then Dragonblood before repeating any claim that SAE cannot be attacked |
 | 2b   | Language layer (do this once, whatever your track)     | *Modern C* (Gustedt) for C23 + Josuttis *C++23 — The Complete Guide* for the modern C++ surface; then Stroustrup *A Tour of C++*, 3rd ed. if the gap is large                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | 2c   | Architecture layer (do this once, whatever your track) | White *Making Embedded Systems* ch. 2 + Lacamera *Embedded Systems Architecture* ch. 3 + Samek *Practical UML Statecharts* Part II, then Buttazzo ch. on resource access protocols if you will be asked about priority inversion                                                                                                                                                                                                                                                                                                                                                                                  |
 | 3    | Future direction                                       | TR 22.870 + "What Should 6G Be?" + "Wi-Fi: Twenty-Five Years and Counting" + HeartStream (ESSERC 2025)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -1368,12 +1447,12 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 32 · Verification and Maintenance
+## 33 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.
 - **Chinese-language entries keep their original titles.** The English text following them is a description, not a translation of the title.
-- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story. **for §06-3, track major scikit-learn, PyTorch and JAX releases, and new textbook editions** **for §04-4, track Arm GIC specification revisions, RISC-V International AIA document revisions, and the mainline workqueue and deferred-work conversions** — the tasklet-to-WQ_BH migration changes which mechanism is correct for new code, the AIA document carries clarifications with each revision (v1.0 ratified June 2023, revision 2025-03-12), and the APLIC/IMSIC drivers only exist from Linux 6.10, so the controller you can rely on depends on the kernel you ship. **for §04-5, track the kernel fence (the per-CPU and scheduling primitives that land with each release), the glibc NPTL sources, and the sanitizer support in your toolchain** — the futex operations, the `clone3` flags and the fd-ified kernel objects (pidfd in 5.3, `waitid(P_PIDFD)` in 5.4, io_uring in 5.1) all have a minimum kernel version, and POSIX.1-2017 is stable while everything on top of it is not, so every "which primitive" answer needs a kernel and a toolchain version attached. — the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026, and the practical rules of thumb (which model family wins on tabular data, what precision a given accelerator supports) are properties of the ecosystem rather than of the theory, so they move faster than the mathematics does.
+- Update triggers: 3GPP TSG plenaries (four per year) for §01-1/§01-2/§01-4; IEEE 802.11 working group and Wi-Fi Alliance announcements for §02-1/§02-2/§02-3; Linux mainline and LTS releases for §08-1/§04-2; xLLM, Mooncake and agent-framework releases for §06-1/§06-2; RISC-V International ratifications for §07-1; **CPython feature releases each October, PEP acceptances and NumPy major versions for §08-3** (3.15.0 shipped 2026-10-09, so any "current Python version" claim has a one-year shelf life); **MATLAB/Simulink's March and September releases for §08-4** (R2026a in April 2026, R2026b on 2026-09-24, and Python-interoperability support moves with them); **IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions for §08-5** (1800-2023 approved 2023-12-06 is current, and there is no standalone Verilog standard after 1364-2005); **WG21/WG14 meetings and GCC/Clang major releases for §08-2** — C++26 reached WG21 shipping on 2026-03-28, and compiler support tables change with every GCC and Clang major release; **AUTOSAR releases (annual, R25-11 current), MISRA document revisions, Zephyr six-month releases and LTS branches, and ISO/IEC 26262 / IEC 61508 maintenance for §04-3** — AUTOSAR releases once a year in November, so any "current AUTOSAR release" claim has a one-year shelf life; **for §02-2 specifically, track TGbn and TGbp ballot milestones plus Wi-Fi Alliance power-management certifications** — 802.11bn AP Power Save is still a draft feature and P802.11bp is at D1.0 working-group ballot, so both will move before ratification; **for §02-5, track IEEE 802.11 security amendments, Wi-Fi Alliance WPA3 specification revisions and hostapd/wpa_supplicant releases** — the frame sequence is stable but the mandatory bits move with certification (WPA3 and PMF for Wi-Fi 7, H2E-only SAE in 6 GHz), and every join failure mode in this note is observable in `wpa_supplicant -dd`, so a version bump is worth re-reading; **for §02-4, follow the mac80211/driver merge window and AP silicon offload announcements** — the packet path changes with kernel releases (`net/mac80211/`), not with standards, and vendor packet engines (PPE/NSS/Runner, WED) are documented only in release notes and SDKs, so every "which offload is available" claim needs a current device check; **for §01-5, track new 3GPP TS 38.321 / 38.331 versions and RAN2 agreements on random access, SDT and NTN timing** — field sizes, counters, windows and parameter ranges are all release-specific (the quoted baseline is TS 38.321 v17.3.0 of 2023-01), and the feature-partitioning clauses 5.1.1b–5.1.1d only exist from Rel-17, so a version bump changes which mechanisms you may claim at all. **for §01-6, track new 3GPP TS 38.213 / 38.214 / 38.331 versions, O-RAN WG4 CUS and WG1 OAD releases, and SCF FAPI revisions** — the per-slot PDCCH candidate and non-overlapped-CCE budgets, the HARQ process ceiling and the PUCCH resource-set bounds are all release-specific (the quoted baselines are TS 38.214 v18.9.0 and TS 38.321 v17.3.0), the 16-to-32 process extension only exists from Rel-17, and a 7-2x integration lives or dies on the T1a/T2a/Ta3/Ta4 windows the two boxes negotiate, so this is one section where a version bump changes answers rather than details. **for §02-6, track EasyMesh release updates, Wi-Fi Alliance Agile Multiband revisions and TGbn ballot milestones** — the steering message catalogue moves with the EasyMesh major release (v6.0 effective 2024-12-31), the decision logic is vendor code and never stable, and the roaming model itself moves with 802.11bn, where SMD is still draft (D1.x in 2026, publication projected 2028), so every "seamless roaming" claim needs a date attached. **for §02-7, track Wi-Fi Alliance Multi-AP specification revisions, EasyMesh test-plan updates and prplMesh major releases** — the message and TLV numberings grow with each release (v6.0 effective 2024-12-31) and profile negotiation is what actually decides the feature set of a mixed-vendor network, so a version bump changes both the protocol detail and the interop story. **for §06-3, track major scikit-learn, PyTorch and JAX releases, and new textbook editions** **for §04-4, track Arm GIC specification revisions, RISC-V International AIA document revisions, and the mainline workqueue and deferred-work conversions** — the tasklet-to-WQ_BH migration changes which mechanism is correct for new code, the AIA document carries clarifications with each revision (v1.0 ratified June 2023, revision 2025-03-12), and the APLIC/IMSIC drivers only exist from Linux 6.10, so the controller you can rely on depends on the kernel you ship. **for §04-5, track the kernel fence (the per-CPU and scheduling primitives that land with each release), the glibc NPTL sources, and the sanitizer support in your toolchain** — the futex operations, the `clone3` flags and the fd-ified kernel objects (pidfd in 5.3, `waitid(P_PIDFD)` in 5.4, io_uring in 5.1) all have a minimum kernel version, and POSIX.1-2017 is stable while everything on top of it is not, so every "which primitive" answer needs a kernel and a toolchain version attached. — the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026, and the practical rules of thumb (which model family wins on tabular data, what precision a given accelerator supports) are properties of the ecosystem rather than of the theory, so they move faster than the mathematics does.
 
 ---
 

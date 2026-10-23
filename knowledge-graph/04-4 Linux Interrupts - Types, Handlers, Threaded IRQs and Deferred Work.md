@@ -803,6 +803,7 @@ Method, in order:
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the C idioms that handlers depend on: `container_of`, `READ_ONCE`/`WRITE_ONCE`, memory ordering, `volatile` misuse
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — why inference latency inherits interrupt latency, and why an NPU completion interrupt is still an interrupt
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — measuring the cost: `perf`, tracing, and the kernel-bypass options that eliminate the interrupt path
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the consumer of the isolation this note enables: a per-slot thread that cannot afford an interrupt, a softirq or a workqueue run in its path
 
 ---
 

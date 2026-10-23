@@ -178,6 +178,7 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the canonical closed-loop target: preamble collision rate, RAR success and 2-step fallback rate observed by an xApp, and the parameter set it is allowed to retune; §10.4 lists precisely what the gNB cannot know before Msg3, which is why RACH optimisation is either a bet on collision probability or a reaction to a collision already observed
+- [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the thing an xApp is trying to influence: the KPIs a scheduler exposes over E2, and the per-slot budget that any learned policy has to fit inside
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — the algorithms themselves, before the RAN constraints are applied: paradigms, core models, evaluation, and the failure modes that an xApp inherits
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[06-2 Agent Systems and Edge Orchestration]]
