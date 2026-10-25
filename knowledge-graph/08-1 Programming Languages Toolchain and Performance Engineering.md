@@ -166,6 +166,7 @@ flowchart TD
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — measurement discipline for latency work: percentiles and sample counts, clock sources, and the cost of the instrumentation itself
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the measurement discipline behind any number you put on a dashboard, and the reason "it feels faster" is not a metric
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the measurement discipline behind every number on a value dashboard, and the reason performance claims need stated assumptions before they can become value claims
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

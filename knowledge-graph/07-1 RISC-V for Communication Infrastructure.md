@@ -164,6 +164,7 @@ Answer across four dimensions:
 
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — what an open baseband looks like today, and why an open ISA is the natural next step for a platform like this
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — an instruction-set architecture as a licensing and ecosystem business model, and the same question Arm answers: where the royalty base is drawn and which complementary assets make the architecture the default
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

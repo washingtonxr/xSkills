@@ -1450,6 +1450,7 @@ Dated, checkable facts used in this note.
   inference SLO
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the clearest example of work whose requirements are not knowable up front, and therefore of the time-boxed experiment instead of the schedule
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the clearest case of value that cannot be specified up front, and therefore of time-boxed experiments and leading indicators over scheduled deliverables
 ---
 
 ## References

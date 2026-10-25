@@ -184,6 +184,7 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — ecosystem and platform economics applied to the RAN: who supplies the xApp, who owns the data, and where the take rate sits
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -167,6 +167,7 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 - [[07-1 RISC-V for Communication Infrastructure]]
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the portfolio-level form of the same question: what runs where, who owns the decision, and what it costs to change it later
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the portfolio form of the same question: what runs where, who owns the decision, and what it costs to change later, which is where the cost to serve of a value model is decided
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

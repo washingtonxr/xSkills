@@ -851,6 +851,7 @@ and **a modifiable implementation on this end** at the same time.
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — a platform where the latency mechanisms are registers: contention window, SIFS, slot time, ACK timeouts and retry limits you can set, and a research vehicle for measuring them
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the honest distance between a research platform and a product, which is precisely the gap a value thesis has to close
 ---
 
 ## References

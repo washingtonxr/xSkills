@@ -1570,6 +1570,7 @@ by "a scheduler that must first win a contended medium".
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the implementation view of the same problem: which driver and protocol mechanisms produce the numbers the 802.1 toolbox asks for, and what is honestly achievable
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the converged wired-wireless network, and the reason a deterministic bound can be a contracted and tiered product rather than a marketing adjective
 ---
 
 ## References

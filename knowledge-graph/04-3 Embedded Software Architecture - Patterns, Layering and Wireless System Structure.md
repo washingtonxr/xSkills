@@ -676,6 +676,7 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the layering argument instantiated on a shipping router: intent, state, control plane, kernel and hardware
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — architecture as the mechanism that decides how much of the work can run in parallel, which is what a schedule network is really describing
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — architecture as the mechanism that decides how much of the work can run in parallel, and therefore what the cost to serve of a new tier will be
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -953,6 +953,7 @@ The method behind that table is the same one used in [[02-7 WLAN - Wi-Fi EasyMes
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the box the latency mechanisms are configured on: qdiscs, AQL, airtime fairness, the flow offload trade-off, and hostapd's steering surface
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — open source plus a commercial layer in practice: what is not source, and how a project's neighbours fund themselves
 ---
 
 ## References

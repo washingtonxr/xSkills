@@ -1749,6 +1749,7 @@ Dated, checkable facts. Anything not independently confirmed is marked `VERIFY`.
 50. UK HM Treasury. *The Green Book: Central Government Guidance on Appraisal and Evaluation*.
     — Optimism-bias uplifts since 2003: reference class forecasting as government policy.
 
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the sibling discipline: this note decides which value is worth pursuing and how it is captured, and 09-1 decides whether the attempt is planned, resourced, gated and stopped - a business model without a kill criterion is a funding commitment, and a project plan without a value model is a schedule for the wrong thing
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

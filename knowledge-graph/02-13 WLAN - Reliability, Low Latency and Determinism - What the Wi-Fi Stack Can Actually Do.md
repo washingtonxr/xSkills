@@ -917,6 +917,7 @@ shares — and total throughput to *rise*, because fast stations finally get to 
   network" looks like when the medium is licensed
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — how to write an exit criterion that is a measurement rather than an opinion, which is what every milestone definition needs
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — how to write an exit criterion that is a measurement rather than an opinion, which is exactly what a tier fence and an outcome-based contract need
 ---
 
 ## References

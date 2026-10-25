@@ -62,12 +62,13 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
 | `08-x` | Programming languages and engineering practice | 08-1 … 08-5 |
 | `09-x` | Engineering project management and delivery | 09-1 |
+| `10-x` | Value-driven business model and monetisation | 10-1 |
 
-The order is deliberate: it walks the signal path outward — air interface and RAN (`01`), then the wireless LAN and sensor edges (`02`, `03`), then the software that runs on the devices (`04`), then the data plane and the compute fabric (`05`), then the AI workloads that consume it (`06`), and finally the silicon and language foundations underneath everything (`07`, `08`). Group `09` sits outside that path on purpose: engineering project management is the discipline that decides which of the technical work gets attempted, in what order, with whose time, and when the attempt is stopped.
+The order is deliberate: it walks the signal path outward — air interface and RAN (`01`), then the wireless LAN and sensor edges (`02`, `03`), then the software that runs on the devices (`04`), then the data plane and the compute fabric (`05`), then the AI workloads that consume it (`06`), and finally the silicon and language foundations underneath everything (`07`, `08`). Groups `09` and `10` sit outside that path on purpose: `09` is the discipline that decides which of the technical work gets attempted, in what order, with whose time, and when the attempt is stopped, and `10` is the discipline that decides what the work is worth, who pays for it, how the payment recurs, and what stops the value leaking to customers, suppliers or imitators.
 
 ## Domains
 
-Vault map — the nine groups and the edges that carry arguments between them:
+Vault map — the ten groups and the edges that carry arguments between them:
 
 ```mermaid
 flowchart LR
@@ -128,6 +129,9 @@ flowchart LR
     end
     subgraph g9["09 · Engineering project management"]
         m1["09-1 Methodology, lifecycle, tools, best practice"]
+    end
+    subgraph g10["10 · Value-driven business model"]
+        v1["10-1 Value, capture, pricing, best practice"]
     end
 
     c1 --> c2 --> c3
@@ -213,6 +217,12 @@ flowchart LR
     p5 --> m1
     w13 --> m1
     i3 --> m1
+    m1 --> v1
+    c8 --> v1
+    r1 --> v1
+    d2 --> v1
+    w13 --> v1
+    i3 --> v1
 ```
 
 ### 01 · Cellular and mobile communications
@@ -277,6 +287,10 @@ AP rather than the client
 ### 09 · Engineering project management and delivery
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the discipline that decides which of the technical work above gets attempted, in what order, with whose time, and when the attempt is stopped: what a project, a programme and a portfolio are and why conflating them is the commonest structural error; the empirical base — Flyvbjerg's 16,000-project database at 47.9% on budget, 8.5% on budget and on time, 0.5% on all three including benefits, McKinsey-Oxford's 45% over budget and 56% less value, CHAOS and the size effect, with the four caveats you must state when quoting them; the methodology family tree from plan-driven through iterative and adaptive to flow and systems engineering, and why "waterfall" is a misreading of Royce; a decision tree for choosing a method from requirements volatility, consequence of failure, certification and the binding constraint; the lifecycle with gates and an explicit kill branch, in PMBOK 7, PRINCE2 Version 7, NASA's phases and key decision points, and stage-gate; scope, the 100% rule and a worked WBS; scheduling from Gantt through CPM and PERT to critical chain and Monte Carlo, with a worked critical path and a fever chart; estimation as a forecast with P50 and P80, reference class forecasting, and earned value with its 1967-to-2026 lineage; risk under ISO 31000 and NASA's 70% joint confidence level; verification and validation by level in the V-model; change, baselines and configuration; organisation, decision rights and the single-threaded or chief-engineer owner; governance by exception with tolerances and non-advocacy review; the tool stack and the failure mode of each class; what a project management plan contains and a worked Wi-Fi 7 multi-link plan with milestones, buffers and a risk register; the practice sets of Toyota, Amazon, Google, NASA, USDS and the FBI Sentinel turnaround, plus what not to copy from Spotify and SAFe; the failure taxonomy from Brooks's law to 100% utilisation, Denver's baggage system and the 737 MAX report; Little's Law and the metrics that survive; and an operating rhythm with a first-30-days checklist
+
+### 10 · Value-driven business model and monetisation
+
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the commercial side of everything above: what "value-driven" means and the three senses of the phrase that get conflated (value-based management, value-based pricing, and the business-model view of creating, delivering and capturing value); the value slice — willingness to pay, price, cost, opportunity cost — and why your share is set by your added value rather than by your effort; what value-driven is *not* (cost-plus, share-driven, feature-driven, revenue-driven) and the three overstated claims about value-based pricing, recurring revenue and outcome-based contracts; the five-part value frame, the three canvases and what each hides, and the four-box model of value proposition, profit formula, key resources and key processes; the evidence base with its sources and the four caveats — Marn and Rosiello's 11.1%, McKinsey's ~8% and 8.7%, the 18.7% volume arithmetic, Adobe's designed revenue trough and its primary numbers, Rolls-Royce's 1962 Power-by-the-Hour and per-flying-hour capture, Arm's licence-plus-royalty model and the royalty-base fight, the NDRC's 2015 Qualcomm remedy fixing the base at 65% of net selling price, and the SaaS benchmark conventions; jobs-to-be-done in both lineages with the opportunity algorithm and its weakness; economic value to the customer against a named alternative; willingness-to-pay methods from Van Westendorp to conjoint and live tests, and the difference between the customer value driver tree and the financial one; eight schools of method and which leads for which uncertainty; an eight-phase process with gates, stop branches and discovery-driven planning; the tool stack with each class's failure mode; a fifteen-pattern catalogue with the value metric as the first column, a pattern-selection tree, and where value is captured across the communications and silicon stack; appropriability, complementary assets and the four claimants on the value slice; pricing as metric, structure then level, with tiers, fences, the pocket-price waterfall and the clauses that decide capture; organisation, incentives, cadence and anti-patterns; the practice sets of Toyota's target costing, Amazon's working backwards and usage pricing, Adobe's designed transition, Rolls-Royce, Michelin, Signify and Xerox, Arm's ecosystem licensing, Porter and Teisberg's outcomes-per-dollar with its critique, and what not to copy; seven failure modes with a diagnosis tree; the value dashboard; a worked industrial wireless case from job statement to unit economics, kill criteria and risk register; and ten short answers
 
 ## Cross-cutting threads
 

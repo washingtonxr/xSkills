@@ -1223,6 +1223,7 @@ Dated, checkable facts. Anything not independently confirmed is marked `VERIFY`.
     — the specification-side reference to read next to the code, chapter by chapter.
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the discipline that decides what a stack like this promises: where the honest distance between a research platform and a product becomes a scope statement, a verification plan and a real-time budget
+- [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — the licence as a business-model instrument in this very domain: GPL to OAI Public License v1.1 (2017) to CSSL v1.0 and why a FRAND patent clause exists, which is the sharpest local example of the appropriability argument in note 10-1 section 9
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.
