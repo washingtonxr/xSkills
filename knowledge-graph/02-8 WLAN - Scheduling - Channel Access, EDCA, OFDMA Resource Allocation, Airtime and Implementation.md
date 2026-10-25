@@ -1283,6 +1283,7 @@ flowchart TB
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — where the scheduler this note describes actually runs: firmware on a Q6, hardware queues the host cannot inspect, and the queueing decision above the driver that decides whether any of it matters
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what all of this is for: the ladder from EDCA through trigger-based access, TWT, r-TWT and preemption to a latency bound, plus the 802.1 toolbox it has to interoperate with and the AP-as-bridge model that puts it in a wired TSN domain
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — where every feature whose scheduler this note describes came from: RUs and MRU, the EHT tone-plan revision, MLO's upper/lower MAC split, TTLM, SCS and R-TWT, and the Wi-Fi 8 coordination work that extends this loop across APs
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the other half of this problem: every dozing station is one a scheduler cannot put in a participant set, and TWT turns uncontrollable sleep into negotiable schedule

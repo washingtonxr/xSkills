@@ -855,6 +855,7 @@ ride an IEEE 1905.1 control plane.
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what a transition costs below the management plane: peer and key state held inside firmware, and what SMD's connect-before-disconnect demands of the driver's station state machine
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence this note
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the transition as a hole in any latency bound: a roam measured in hundreds of milliseconds against a 1 ms cycle, and SMD as Wi-Fi 8's first standard answer
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what steering is trying to influence: the per-station airtime accounting and the fact that the roam decision still belongs to the client's own access process

@@ -793,6 +793,7 @@ Method, in order:
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — NAPI and tasklets at full scale: one NAPI per interrupt group, a tasklet per copy-engine pipe, threaded NAPI as a throughput fix worth more than 3x, and a crash path that must disable interrupts before freeing rings
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: driver model, device tree, DMA and cache coherency, the debugging toolbox, and where interrupts sit in the whole stack
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the consumer of a trustworthy timestamp: interrupt latency and deferred work are what turn a hardware-timestamped frame into a sub-microsecond synchronisation error, or into a microsecond one
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where the interrupt path meets the rest of a driver: probe ordering with the interrupt requested last, the per-transfer state machine, DMA completion, and the power-management cases where an IRQ must be masked

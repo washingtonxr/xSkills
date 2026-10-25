@@ -1011,6 +1011,7 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what the controller cannot see: queues inside the chip, statistics that arrive only as firmware events, and an SoC forwarding plane that hides traffic from the host entirely
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where EasyMesh sits among WFA certifications, the
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the layer above it: what a controller has to configure when service periods are aligned across APs and to a wired gate control list, and why multi-AP coordination is the only mechanism that makes a bound survive a neighbour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the layer below channel selection and steering: airtime fairness per BSS, and the observation that no cross-AP scheduling exists before Wi-Fi 8 coordination

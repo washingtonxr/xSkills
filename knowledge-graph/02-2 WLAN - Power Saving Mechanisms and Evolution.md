@@ -470,6 +470,7 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — where the sleep mechanisms this note describes are implemented: firmware-managed power states on a Q6 processor, WoW and packet filters, and the firmware lifecycle a suspend has to survive
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save

@@ -1153,6 +1153,7 @@ by "a scheduler that must first win a contended medium".
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the machinery a latency bound has to be delivered by: where frames actually queue, what the firmware scheduler owns, why the host's airtime estimate is systematically low, and the missing host API that would carry a requirement down to the thing that can honour it
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the mechanism layer this note's determinism story sits on: EDCA, the RU grid, trigger frames, airtime fairness, and why a Wi-Fi scheduler must win the medium before it can schedule it
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — TWT as a power-saving mechanism, and therefore the origin of the service period that r-TWT turns into a latency tool
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation each feature belongs to, and where Wi-Fi 8's quantified latency target came from

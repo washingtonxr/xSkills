@@ -713,6 +713,7 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the silicon and firmware underneath the offload planes this note catalogues: WMI and HTT, copy engines and SRNG rings, who owns reordering and rate control, and a second SoC-side accelerator that makes packets disappear from the host
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the features this datapath exists to carry
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — where a deadline is actually spent: hardware timestamping, queueing and the offload boundaries that decide whether a bound is observable at all, and the deadline-aware retry policy this datapath has to honour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what sits at the bottom of the TX path this note traces: EDCA queueing, FQ-CoDel and AQL inside `mac80211`, the three places a Wi-Fi queue hides, and why the per-TXOP decision lands in firmware

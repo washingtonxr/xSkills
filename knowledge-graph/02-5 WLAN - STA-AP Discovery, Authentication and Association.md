@@ -872,6 +872,7 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the machinery behind the frames this note traces: vdev and peer objects created by WMI, keys installed into a hardware crypto engine, and the state that has to survive a firmware restart
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced which part of this
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what has to be negotiated after association before a stream can be scheduled at all: SCS agreements with QoS Characteristics, r-TWT membership, and the capability exchange that decides whether any of it applies
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what association makes possible: the AID and Block Ack session a scheduler needs before a station is a candidate, and the EML capabilities it must respect

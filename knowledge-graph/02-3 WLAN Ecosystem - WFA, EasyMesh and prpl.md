@@ -185,6 +185,7 @@ Everything on the left can be expressed in today's data model; everything on the
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what certification has to reach: a driver that ships in mainline Linux, firmware and board data as shipped artifacts, and which of the announced Wi-Fi 8 features actually exist in products
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
 - [[02-1 WLAN - Wi-Fi Generations Evolution]]
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2

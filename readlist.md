@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.18
+version: 1.19
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,7 +11,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 35 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
+> This file supports the 36 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
 > vault's domain groups:  
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,  
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH),  
@@ -20,7 +20,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,  
 > `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting,  
 > `02-8` Wi-Fi scheduling — channel access, EDCA, OFDMA allocation and airtime, `02-9` TSN over Wi-Fi across
-generations;  
+generations, `02-10` Wi-Fi 6/7/8 baseband and driver architecture with Qualcomm as the reference design;  
 > `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;  
 > `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture,
 > `04-4` Linux interrupts, `04-5` concurrency, processes, threads and IPC;  
@@ -30,7 +30,7 @@ generations;
 > `07-x` silicon and ISA — `07-1` RISC-V;  
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,  
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.  
-> Sections `35`–`37` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `36`–`38` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number  
 > rather than by `[[wikilink]]`.
@@ -738,6 +738,78 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - An engineering walkthrough from a TGbn contributor: DS-CTS and P-EDCA, LLI, NPCA, ELR and DRU, plus the certification timeline.
 - **[Doc · ★ · EN]** MaxLinear. *Quality of Service (QoS) Mechanisms in Wi-Fi*, white paper, 2024
   - A readable secondary account of the amendment-by-amendment QoS story from 802.11e to 802.11be. Use it for orientation, verify every claim against the amendment.
+
+
+## 02-10 · WLAN — Baseband and Driver Architecture for Wi-Fi 6, 7 and 8
+
+### Vendor documentation — primary, and unusually good
+
+- **[Doc · ★★★ · EN]** Qualcomm Technologies. *Wi-Fi software architecture: ath11k driver software architecture*, document 80-80021-14. <https://docs.qualcomm.com/doc/80-80021-14/topic/wlan_sw_overview.html>
+  - The vendor's own decomposition of the driver and the firmware: the MAC interface, control path, data path, the WMI/HTT/HAL host-firmware interface, bus abstraction, PCIe, and the copy engine as "a hardware pipe, standard ring interface based communication channel". Then the Q6 firmware's contents, including the named performance-algorithm block with the transmit scheduler, MU scheduler, MU grouping, RU allocator and airtime fairness. Start here.
+- **[Doc · ★★★ · EN]** Qualcomm Technologies. *Networking Pro 1620 Platform product brief*, 87-PW325-1. <https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Networking-Pro-1620-product-brief_87-PW325-1.pdf>
+  - 33 Gbps, quad-band 16-stream, 320 MHz, 240 MHz for 6-GHz-less regions, 4K QAM, 2000 clients, 37-user OFDMA per channel, 4-user MU-MIMO per channel, AFC, and the IPQ9574 ordering part. The numbers to quote when someone asks what a Wi-Fi 7 platform claims.
+- **[Doc · ★★★ · EN]** Qualcomm Technologies. *Qualcomm FastConnect 7900 Mobile Connectivity System product brief*, 87-73970-1. <https://docs.qualcomm.com/bundle/publicresource/87-73970-1_REV_B_Qualcomm_FastConnect_7900_Mobile_Connectivity_System_Product_Brief.pdf>
+  - 6 nm single-chip 2x2, 5.8 Gbps with 4K QAM on 320 MHz, 4.3 Gbps on 240 MHz of 5 GHz, High Band Simultaneous, and the "AI-optimized" framing that became explicit in the next generation.
+- **[Doc · ★★★ · EN]** Qualcomm Technologies. *"Qualcomm Debuts AI-Native Wi-Fi 8 Portfolio"*, press release, MWC Barcelona, 2 March 2026. <https://www.qualcomm.com/news/releases/2026/03/qualcomm-debuts-ai-native-wifi-8-portfolio-unifying-client-and-n>
+  - FastConnect 8800 (first 4x4 mobile Wi-Fi radio, beyond 10 Gbps, 2x performance, 3x gigabit range, Bluetooth HDT at 7.5 Mbps, Wi-Fi 8 plus Bluetooth 7.0 plus UWB 802.15.4ab plus Thread 1.5) and the five Dragonwing platforms, including NPro A8 Elite with a 5x5 radio, 2.5x latency reduction and an integrated Hexagon NPU.
+- **[Doc · ★★ · EN]** Qualcomm Technologies. *"Wi-Fi 8 under the hood: The technologies powering ultra-high reliability"*, OnQ, November 2025. <https://www.qualcomm.com/news/onq/2025/11/wi-fi-8-technologies-powering-ultra-high-reliability>
+  - A vendor engineering account of the PHY changes: longer LDPC block lengths, UEQM, new MCS levels, ELR, DRU. Read it next to the MaxLinear white paper for the numbers.
+- **[Doc · ★★ · EN]** MaxLinear. *Wi-Fi 8 for Broadband Service Providers*. <https://www.maxlinear.com/document?id=23470>
+  - The most concrete secondary source on the Wi-Fi 8 PHY: 2x LDPC at 3888 bits with 0.5-1 dB measured gain, the new MCS entries, UEQM for two to four streams with LDPC only, and the full DRU definition including sizes, distribution bandwidth, uplink-only operation and the two-stream limit.
+
+### Kernel mailing lists and driver documentation — where the truth lives
+
+- **[Code · ★★★ · EN]** Valo, K. *"ath11k: driver for Qualcomm IEEE 802.11ax devices"*, LWN, 2019. <https://lwn.net/Articles/796850>
+  - Why ath11k was a clean start, that its datapath is completely different from ath10k's, that it supports multiple MACs called "soc", and that there is only one WMI interface.
+- **[Code · ★★★ · EN]** WikiDevi. *ath11k — supported devices*. <https://wikidevi.wive-ng.ru/Ath11k>
+  - Which kernel version each chipset first appeared in: IPQ8074 in v5.6, IPQ6018 and QCA6390 in v5.10, QCN9074 in v5.14, WCN6855, QCA6698AQ and QCA2066 in v5.17.
+- **[Code · ★★★ · EN]** LibrePhone. *The ath11k Driver*. <https://librephone.fsf.org/site/ath11k/>
+  - The layer stack from HDD and WMA down through WMI, HTT, HTC, HIF and CE to SNOC/AHB or PCIe, and the three mandatory HTT initialisation messages.
+- **[Code · ★★★ · EN]** *Qualcomm-Atheros-Ath12k-documentation*, Chapter 4: TX Path in ath12k. <https://github.com/shibinkr/Qualcomm-Atheros-Ath12k-documentation>
+  - Descriptor allocation, DMA mapping, pushing to the TCL SRNG, head and tail pointers and the doorbell. The clearest walkthrough of the transmit hot path.
+- **[Code · ★★★ · EN]** Bairaktaris, J. *"wifi: ath11k: airtime queue limits, fairness and a driver TXQ scheduler"*, LWN, 2026. <https://lwn.net/Articles/1090342> and <https://lwn.net/Articles/1093204>
+  - The single best measurement in this whole subject: AQL and airtime fairness inert on ath11k, throughput against latency at several limit settings, two-station fairness, and the 1.85 ratio between the host's charge and the radio's own measurement.
+- **[Code · ★★★ · EN]** Bairaktaris, J. *"fix SoC reboot on firmware crash on AHB"*, LKML, July 2026. <https://lkml.iu.edu/hypermail/linux/kernel/2608.0/08477.html>
+  - The IPQ8074 assert-reboots-the-SoC bug, why only the debugfs `assert` trigger reproduces it, and the before-and-after recovery counts. Read it for the method as much as the fix.
+- **[Code · ★★ · EN]** Gong, W. *"ath11k: add feature for device recovery"*, LKML, October 2021. <https://lore.kernel.org/linux-wireless/20211015035459.14190-1-wgong@codeaurora.org/t/>
+  - Why PCIe parts need their own recovery logic absent remoteproc, the `MHI_CB_EE_RDDM` event, and the reset path through host-interface power down and up.
+- **[Code · ★★ · EN]** Zhu, H. *"wifi: ath12k: enable threaded NAPI when DP IRQ affinity is unavailable"*, LKML, 2026. <https://lkml.iu.edu/2605.2/04437.html>
+  - The 802 Mbit/s to 2.58 Gbps measurement, and the runtime test that decides the policy.
+- **[Code · ★★ · EN]** Kolli, A., and Valo, K. *"ath11k: add firmware-2.bin support"*, LKML, January 2023. <https://patchwork.kernel.org/project/linux-wireless/patch/20230111092547.21425-4-kvalo@kernel.org/>
+  - Firmware API 2, the IE container format, and how the MHI layer is handed the amss image by pointer.
+- **[Code · ★★ · EN]** Pubbisetty, M. *"ath11k: Add QMI changes for WCN6750"*, ath11k list, January 2022. <https://lists.infradead.org/pipermail/ath11k/2022-January/002590.html>
+  - The QMI message sequence, the fixed 12 MB MSA region, and the M3 image bundled into the Q6 image.
+- **[Code · ★★ · EN]** Pan, M. *"wifi: ath11k: support usecase-specific firmware overrides"*, LKML, May 2025. <https://patchwork.ozlabs.org/project/devicetree-bindings/cover/20250522013444.1301330-1-miaoqing.pan@oss.qualcomm.com>
+  - The `firmware-name` device-tree property and the WCN6855 default-versus-`nfa765` firmware split.
+- **[Code · ★★ · EN]** Bhagat, R. K. *"wifi: ath12k: add Ath12k AHB driver support for IPQ5332"*, LWN, 2025. <https://lwn.net/Articles/1015075>
+  - IPQ5332 as an 802.11be 2.4 GHz 2x2 device, the separate CE register space, fixed QMI firmware memory, and WCSS secure PIL userPD handling.
+- **[Code · ★★ · EN]** Sriram, R., Sundaram, R., and Valo, K. *"wifi: ath12k: ath12k_mac_op_tx(): MLO support"*, LKML, November 2024. <https://lore.kernel.org/all/20241126171139.2350704-3-kvalo@kernel.org/>
+  - The transmit link id, per-link address translation, and the rule that 802.3 frames are enqueued on the primary association link with firmware doing link selection.
+- **[Code · ★★ · EN]** Mahalingam, B. *"wifi: ath12k: Add support for MLO Multicast handling in driver"*, LKML, January 2025. <https://lore.kernel.org/all/20250109184932.1593157-3-quic_bmahalin@quicinc.com/>
+  - IEEE 802.11be-2024 section 10.3.2.14.2, the same sequence number on every link, the vdev id plus 128 trick, and the multicast global sequence number in HTT metadata.
+- **[Code · ★★ · EN]** Sahu, A. *"wifi: ath12k: report proper tx completion status to mac80211"*, LKML, 2025. <https://lore.kernel.org/ath12k/20250505221419.2672473-315-sashal@kernel.org/T/>
+  - WMI MLO setup, ready and teardown for a single split-phy device, and the firmware assert that follows when they are not sent.
+- **[Code · ★ · EN]** Huang, C. *"ath11k: supports one MSI vector"*, LKML, December 2020. <https://patchwork.kernel.org/project/linux-wireless/patch/20201223030225.2345-6-cjhuang@codeaurora.org/>
+  - The single-MSI fallback and the copy-engine interrupt handling.
+- **[Code · ★ · EN]** LKDDb. *CONFIG_ATH12K_AHB*. <https://cateee.net/lkddb/web-lkddb/ATH12K_AHB.html>
+  - Device-tree compatibles and kernel versions for ath12k AHB, including IPQ5332 and IPQ5424.
+
+### Papers and secondary analysis
+
+- **[Paper · ★★★ · EN]** Karamyshev, A., Levitsky, I., Bankov, D., and Khorov, E. "A Tutorial on Wi-Fi 8: The Journey to Ultra High Reliability." *Problems of Information Transmission* 61(2):164-210, 2025. DOI 10.1134/S003294602502005X.
+  - DRUs, interference-mitigation pilots, UEQM, the doubled LDPC codeword, ELR with data quadruplication, and the full MAC candidate list: P-EDCA, NPCA, preemption, DSO, DBE, unavailability reporting and QoS signalling.
+- **[Doc · ★★ · EN]** *OpenWrt NSS acceleration and optimisations* — generated documentation. <https://deepwiki.com/LiBwrt/openwrt-6.x/5.3-nss-acceleration-and-optimizations>
+  - The NSS driver, ECM, the WiFi offload module, and the accelerated-path-versus-standard-path packet flow.
+- **[Code · ★★ · EN]** *nss-packages: Qualcomm NSS offload packages for the OpenWrt qualcommax EDMA stack*. <https://github.com/juliusbairaktaris/nss-packages>
+  - The component list: `qca-nss-drv`, `qca-nss-ecm`, `qca-mcs`, PPPoE, bridge and VLAN managers, NSS SQM, and the NSS firmware package.
+- **[Doc · ★★ · EN]** *OpenWrt firmware_qca-wireless: ATH11K platform support* — generated documentation. <https://deepwiki.com/openwrt/firmware_qca-wireless/3-ath11k-platform-support-(wi-fi-66e)>
+  - Board-data file naming, the QMI hardware-detection and BDF-matching sequence, and the exact-match rule for the `variant` string.
+- **[Doc · ★★ · EN]** OpenWrt Forum. *"MX4200v2 / IPQ8074: continuous reboot loop caused by ath11k firmware crash"*. <https://forum.openwrt.org/t/mx4200v2-ipq8074-continuous-reboot-loop-caused-by-ath11k-firmware-crash-with-two-ssids-on-one-2-4ghz-radio/252958>
+  - A firmware assert taking a whole board down, with the assertion line, the two conditions that trigger it, and a method for isolating which. The best available case study of a firmware failure diagnosed from Linux.
+- **[Doc · ★ · EN]** Aerlync. *The ath12k Unified Driver Model*. <https://www.aerlync.com/Company/Blogs/ath12k>
+  - A secondary write-up of the two-module split, the `wifi7/` directory and the per-commit change statistics. Useful for the direction; **verify the numbers against the mailing list**.
+- **[Doc · ★ · EN]** Gunbark security research. *ath11k driver audit notes*. <https://gunbark.dev/content/51b398b0-9cf2-4075-b5ed-54d48a2a5ce7>
+  - The trust-boundary argument: coherent DMA rings the device writes, an IOMMU that bounds where but not when, and descriptor fields derived from over-the-air frames.
 
 
 ## 03-1 · Wireless Sensor Networks and Low-Power MAC
@@ -1657,7 +1729,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 35 · Primary Standards and Specification Repositories
+## 36 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1684,7 +1756,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 36 · Suggested Reading Order
+## 37 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -1704,7 +1776,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 37 · Verification and Maintenance
+## 38 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.

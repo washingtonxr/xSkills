@@ -16,7 +16,7 @@ aliases:
   - PFCP
   - small packet forwarding
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # DPDK, User Plane and the 5G UPF
@@ -163,6 +163,7 @@ Data path sketch:
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the other half of the bypass argument: what a Wi-Fi driver already offloads into firmware and hardware, and why the host path that remains is the part kernel bypass cannot remove
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the other per-packet scheduler in the same network: polling versus a slot deadline, and the two time scales that separate an air-interface bottleneck from a user-plane one

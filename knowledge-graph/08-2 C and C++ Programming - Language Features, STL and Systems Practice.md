@@ -18,7 +18,7 @@ aliases:
   - C++26
   - C23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # C and C++ Programming — Language Features, STL and Systems Practice
@@ -1000,6 +1000,7 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the kernel C idioms in their native habitat: the skb control block as per-packet state, `container_of` from a descriptor back to a frame, and the barriers that make a doorbell write visible to a device
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass
 - [[05-1 DPDK User Plane and 5G UPF]] — mempools, zero-copy mbufs, hugepages, NUMA
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — ports and surrogates, HSM dispatch, lock-free handoffs as architectural mechanisms

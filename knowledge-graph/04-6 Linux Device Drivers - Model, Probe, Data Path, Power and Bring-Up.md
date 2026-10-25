@@ -1419,6 +1419,7 @@ a user may hold the fd past `remove()` (§5).
 
 ## Related
 
+- [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the largest driver in the tree as a worked example of this note's model: firmware loaded by MHI or remoteproc, board data matched by an exact variant string, rings in coherent DMA memory written by the device, and a bus that turns a firmware assert into a board reset
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: the driver API
   catalogue, device tree, locking primitives, DMA, kernel-to-userspace interfaces and the debugging toolbox that this
   note organises into a workflow
