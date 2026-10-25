@@ -18,7 +18,7 @@ aliases:
   - prplMesh
   - prplOS
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # WLAN Ecosystem — WFA Certification, EasyMesh and the prpl Stack
@@ -188,6 +188,7 @@ Everything on the left can be expressed in today's data model; everything on the
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — gateway layering, control/data plane separation, A/B update architecture
 - [[02-1 WLAN - Wi-Fi Generations Evolution]]
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what WFA actually certifies on power: WMM-PS, and broadcast TWT / extended sleep / dynamic SMPS in Wi-Fi CERTIFIED 6 Release 2
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what certification actually requires once QoS becomes deterministic: Wi-Fi QoS Management with SCS, MSCS and DSCP mapping, and why a profile such as IEC/IEEE 60802 is what turns a toolbox into something buyable
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — where WMM certification constrains the EDCA parameters, and what the Multi-AP layer can and cannot say about airtime
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what the mesh control plane sits on top of: forwarding fast paths, PPE/WED offload, and why a bridged AP needs flow tracking
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what certification actually mandates in the join sequence: WPA3 and PMF, SAE with H2E, and how an EasyMesh controller's steer maps onto a BSS transition

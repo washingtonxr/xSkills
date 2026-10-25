@@ -25,7 +25,7 @@ aliases:
   - AP Power Save
   - WUR
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # WLAN — Power Saving Mechanisms and Evolution
@@ -473,6 +473,7 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — where the service period this note invented went next: TWT's wake windows repurposed as r-TWT's protected windows, and the same agreement read as a latency tool instead of a sleep tool
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the consumer of everything this note negotiates: TWT as schedulable state, the r-TWT access rules, why a dozing station is not schedulable, and the service period as a scheduled TXOP
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what association commits the AP to: the listen interval, the AID that indexes the TIM bitmap, and TWT agreements negotiated only after the station is associated
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — why a power-save client roams badly: it is asleep through the frames that would have triggered the decision, and a TWT agreement on the old AP does not travel with it

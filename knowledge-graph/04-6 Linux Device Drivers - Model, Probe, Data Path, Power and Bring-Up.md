@@ -1422,6 +1422,7 @@ a user may hold the fd past `remove()` (§5).
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: the driver API
   catalogue, device tree, locking primitives, DMA, kernel-to-userspace interfaces and the debugging toolbox that this
   note organises into a workflow
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — why the timestamp matters: hardware timestamping in the driver is the difference between a 10–40 ns synchronisation error and a microsecond one, and therefore between a schedule that holds and one that cannot be written
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the interrupt half of §7: controller
   types, the generic IRQ layer, the four bottom halves, threaded IRQs and affinity
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency half of §12: contexts,

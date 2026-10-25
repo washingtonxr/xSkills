@@ -26,7 +26,7 @@ aliases:
   - HT
   - UHR
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # WLAN — Wi-Fi Generations Evolution (Wi-Fi 4 → Wi-Fi 8 → Wi-Fi 9)
@@ -518,6 +518,7 @@ AI features must demonstrate benefits that justify their **computational complex
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what each generation's features cost in the packet path: where A-MPDU, BA, MLO reordering and coordination land in the host/device split
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — which generation introduced which part of the join sequence: 11i, 11w, 11r/k/v, 11ai, 11ax 6 GHz discovery, 11be multi-link setup
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the determinism line through the same generations: what each one did for the clock, for bounded latency, for reliability and for resource management, and why Wi-Fi 8 finally wrote the target down as a number
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what each generation's scheduling features actually do: RUs and MRU, the trigger frame, the EHT tone-plan revision, MLO's upper/lower MAC split, TID-to-link mapping, and r-TWT
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what those features are for once there are many APs: 11k/v/r as one transition system, 11be MLD-level BTM and link reconfiguration, 11bn SMD as the first standard answer to client-controlled roaming
 - [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management plane that has to keep up with each generation: releases v1.0→v6.0, and how Wi-Fi 7 MLO changes what a controller configures and steers

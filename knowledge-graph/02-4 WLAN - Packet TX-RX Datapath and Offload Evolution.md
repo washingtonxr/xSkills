@@ -22,7 +22,7 @@ tags:
   - dpdk
   - af-xdp
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 aliases:
   - Wi-Fi TX RX path
   - 802.11 datapath
@@ -714,6 +714,7 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 ## Related
 
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the features this datapath exists to carry
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — where a deadline is actually spent: hardware timestamping, queueing and the offload boundaries that decide whether a bound is observable at all, and the deadline-aware retry policy this datapath has to honour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what sits at the bottom of the TX path this note traces: EDCA queueing, FQ-CoDel and AQL inside `mac80211`, the three places a Wi-Fi queue hides, and why the per-TXOP decision lands in firmware
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — where the datapath stops, and how the AP buffers
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification of aggregation/QoS features, mesh forwarding, open AP software stacks

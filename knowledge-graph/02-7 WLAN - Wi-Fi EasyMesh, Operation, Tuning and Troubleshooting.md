@@ -25,7 +25,7 @@ tags:
   - tuning
   - troubleshooting
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 aliases:
   - EasyMesh
   - Wi-Fi CERTIFIED EasyMesh
@@ -1012,6 +1012,7 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 ## Related
 
 - [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where EasyMesh sits among WFA certifications, the
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the layer above it: what a controller has to configure when service periods are aligned across APs and to a wired gate control list, and why multi-AP coordination is the only mechanism that makes a bound survive a neighbour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the layer below channel selection and steering: airtime fairness per BSS, and the observation that no cross-AP scheduling exists before Wi-Fi 8 coordination
   prpl stack (prplOS / prplMesh / prpl LCM), and the "do not conflate" table against 802.11k/v/r/s
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what EasyMesh can only *request*: the roam

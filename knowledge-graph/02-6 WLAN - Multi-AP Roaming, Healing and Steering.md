@@ -26,7 +26,7 @@ tags:
   - wi-fi-8
   - smd
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 aliases:
   - Wi-Fi roaming
   - Multi-AP steering
@@ -856,6 +856,7 @@ ride an IEEE 1905.1 control plane.
 ## Related
 
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence this note
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the transition as a hole in any latency bound: a roam measured in hundreds of milliseconds against a 1 ms cycle, and SMD as Wi-Fi 8's first standard answer
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what steering is trying to influence: the per-station airtime accounting and the fact that the roam decision still belongs to the client's own access process
   assumes: the MLME states, the PMK→PMK-R0→PMK-R1→PTK chain, and the FT exchange described in
   isolation rather than at ESS scale

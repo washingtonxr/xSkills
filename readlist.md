@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.17
+version: 1.18
 last-updated: 2026-10-23
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -11,7 +11,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 **Books, papers, standards and technical reports for the PersonalSkills knowledge base**
 
-> This file supports the 34 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
+> This file supports the 35 notes in `knowledge-graph/`. Sections are numbered `GG-x` to match the  
 > vault's domain groups:  
 > `01-x` cellular and mobile communications — `01-1` 5G-Advanced and 6G Radio Access, `01-2` NR RAN L2,  
 > `01-3` AI/ML for RAN and O-RAN RIC, `01-4` RedCap/eRedCap/NTN, `01-5` NR random access (RACH),  
@@ -19,7 +19,8 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `02-x` WLAN — `02-1` Wi-Fi generations, `02-2` power saving, `02-3` WFA/EasyMesh/prpl ecosystem,  
 > `02-4` packet TX/RX datapath and offload, `02-5` discovery, authentication and association,  
 > `02-6` multi-AP roaming, healing and steering, `02-7` EasyMesh operation, tuning and troubleshooting,  
-> `02-8` Wi-Fi scheduling — channel access, EDCA, OFDMA allocation and airtime;  
+> `02-8` Wi-Fi scheduling — channel access, EDCA, OFDMA allocation and airtime, `02-9` TSN over Wi-Fi across
+generations;  
 > `03-x` low-power and sensor networking — `03-1` WSN and low-power MAC;  
 > `04-x` embedded and systems software — `04-1` RTOS and hardware interfaces, `04-2` Linux embedded, `04-3` software architecture,
 > `04-4` Linux interrupts, `04-5` concurrency, processes, threads and IPC;  
@@ -29,7 +30,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 > `07-x` silicon and ISA — `07-1` RISC-V;  
 > `08-x` programming languages — `08-1` toolchain and performance, `08-2` C and C++, `08-3` Python,  
 > `08-4` MATLAB and Simulink, `08-5` Verilog HDL.  
-> Sections `34`–`36` collect primary standards repositories, a reading order, and maintenance notes.
+> Sections `35`–`37` collect primary standards repositories, a reading order, and maintenance notes.
 >
 > This file lives at the project root, not inside the Obsidian vault, so it refers to notes by number  
 > rather than by `[[wikilink]]`.
@@ -673,6 +674,71 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
   - Simulation-based quantification of when triggered access pays for itself, which is the question §5.2's ~500–800 µs figure is trying to answer.
 
 ---
+
+## 02-9 · WLAN — Time-Sensitive Networking over Wi-Fi: Research and Practice Across Generations
+
+### Standards and specifications
+
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11be-2024 — Amendment 2: Enhancements for Extremely High Throughput (EHT)*, published 22 July 2025 · DOI 10.1109/IEEESTD.2024.11090080 · free via the IEEE GET program
+  - The TSN generation itself: SCS with the QoS Characteristics element, restricted TWT, MLO and TID-to-link mapping. Read alongside the 802.11→802.1 liaison below, which explains the intent.
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11ax-2021 — Amendment 1: Enhancements for High Efficiency WLAN*, published 19 May 2021
+  - OFDMA, trigger-based uplink access and TWT. Every granted-access mechanism in the note is built on these three.
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11ak-2018 — Amendment 4: Enhancements for Transit Links Within Bridged Networks*
+  - The amendment that lets a Wi-Fi link be a transit link inside an IEEE 802.1Q bridged network. Without it there is no "802.1Qbv reaches a wireless segment" answer.
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11aa-2012 — Amendment 2: MAC Enhancements for Robust Audio Video Streaming*
+  - SCS, intra-access-category queues, the Drop Eligibility Indicator, OBSS management and GCR. Where the vocabulary of wireless TSN was established eight years before r-TWT.
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11-2024* (maintenance revision), published 28 April 2025
+  - The consolidated base document, including the FTM procedure from 802.11mc that 802.1AS-2020 relies on.
+- **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.1AS-2020 / 802.1AS-2025 — Timing and Synchronization for Time-Sensitive Applications*
+  - gPTP, and the specification of FTM as the 802.11 time-transfer method. The clause that decides whether your synchronisation budget is spent before scheduling begins.
+- **[Standard · ★★ · EN]** IEEE. *IEEE Std 802.1Qbv-2015 — Amendment 25: Enhancements for Scheduled Traffic*
+  - The time-aware shaper and the gate control list: the wired mechanism that r-TWT service periods have to be aligned with.
+- **[Standard · ★★ · EN]** IEEE. *IEEE Std 802.1CB-2017 — Frame Replication and Elimination for Reliability*
+  - The redundancy mechanism that MLO is asked to emulate, and the reason emulation is weaker than disjoint paths.
+- **[Standard · ★★ · EN]** IEEE. *IEEE Std 802.1Qci-2017* (per-stream filtering and policing), *802.1Qcc-2018* (SRP enhancements and centralised configuration), *802.1Qbu-2016* with *802.3br-2016* (frame preemption), *802.1Qch-2017* (cyclic queueing), *802.1Qcr-2020* (asynchronous traffic shaping)
+  - The rest of the toolbox, each with a different answer to "what happens to this over the air". Preemption is the one whose absence from Wi-Fi is most keenly felt.
+- **[Standard · ★★ · EN]** IEC/IEEE. *IEC/IEEE 60802 — Time-Sensitive Networking Profile for Industrial Automation*, published 29 June 2026 · <https://1.ieee802.org/tsn/iec-ieee-60802/>
+  - The profile: which features, defaults and configuration a converged industrial network must implement, including the 0.1–1 µs synchronisation allowance.
+- **[Standard · ★ · EN]** IEEE. *IEEE Std 802.1DG-2025 — TSN Profile for Automotive In-Vehicle Ethernet*, published 6 June 2025
+  - The automotive counterpart; the best worked example of how a profile narrows a toolbox into something purchasable.
+- **[Standard · ★★ · EN]** 3GPP. *TS 23.501 — System Architecture for the 5G System*, §5.28 (TSN integration) and §5.29 (5G LAN)
+  - The cellular answer to the same question: DS-TT, NW-TT, TSN-AF, and `dependentDelayMin`/`dependentDelayMax`. The sharpest contrast with the Wi-Fi approach, which has no equivalent normative quantity.
+
+### Papers and technical documentation
+
+- **[Doc · ★★★ · EN]** IEEE 802.11 Working Group. *Liaison communication to IEEE 802.1 regarding TSN support*, 20 December 2022
+  - The working group's own three-row mapping of the 802.1 toolbox onto 802.11be, plus the SCS/QoS Characteristics and r-TWT descriptions. The single best primary source for this topic.
+- **[Doc · ★★★ · EN]** Cavalcanti, D., and Venkatesan, G. *802.1 TSN over 802.11, with updates from developments in 802.11be*, IEEE 802.1 Plenary, November 2020
+  - The architecture of a wireless TSN domain, the 802.1AC GLK convergence function, and the honest list of which TSN features already operate over 802.11.
+- **[Paper · ★★★ · EN]** Adame, T., Carrascosa-Zamacois, M., and Bellalta, B. *Time-Sensitive Networking in IEEE 802.11be: On the Way to Low-Latency WiFi 7*, Sensors 21(15):4954, 2021 · DOI 10.3390/s21154954 · open access
+  - The reference survey: every 802.1 tool mapped onto 802.11be, and the multimedia, healthcare, industrial and transport use cases with their numbers.
+- **[Paper · ★★★ · EN]** Haxhibeqiri, J., Jiao, X., Shen, X., Pan, C., Jiang, X., Hoebeke, J., and Moerman, I. *Coordinated SR and Restricted TWT for Time Sensitive Applications in WiFi 7 Networks*, IEEE Communications Magazine 62(8):118–124, 2024 · DOI 10.1109/MCOM.001.2300431
+  - A real implementation of coordinated SR and r-TWT on the openwifi SDR platform. Read it for the overheads, which simulations never show.
+- **[Paper · ★★★ · EN]** Mozaffariahrar, E., Wilhelmi, F., Galati-Giordano, L., Imputato, P., Menth, M., and Avallone, S. *R-TWT in Wi-Fi 7 and Beyond: Enabling Bounded Latency, Energy Efficiency, and Reliability*, IEEE ETFA 2025 · DOI 10.1109/ETFA65518.2025.11205686
+  - The ns-3 evaluation of r-TWT against PSM and DCF, and the methodological caveat that matters: restricted access is mimicked with individual TWT.
+- **[Paper · ★★★ · EN]** Karamyshev, A., Levitsky, I., Bankov, D., and Khorov, E. *A Tutorial on Wi-Fi 8: The Journey to Ultra High Reliability*, Problems of Information Transmission 61(2):164–210, 2025 · DOI 10.1134/S003294602502005X
+  - Feature by feature on 802.11bn: DRU, UEQM, P-EDCA, NPCA, preemption, roaming and multi-AP coordination.
+- **[Paper · ★★ · EN]** Wilhelmi, F., Bellalta, B., Geraci, G., et al. *A Tutorial on IEEE 802.11bn Multi-AP Coordination for Wi-Fi 8*, arXiv:2606.13759
+  - Co-TDMA, Co-SR, Co-BF and Co-RTWT, with the Kom8ndor open-source simulator. The evidence for the "multi-AP coordination is where the remaining uncertainty lives" claim.
+- **[Paper · ★★ · EN]** Nurchis, M., and Bellalta, B. *Target Wake Time: Scheduled Access in IEEE 802.11ax WLANs*, IEEE Wireless Communications 26(2), 2019
+  - The service period as a scheduling primitive rather than a sleep mechanism — the origin of everything r-TWT does.
+- **[Paper · ★★ · EN]** Khorov, E., Kiryanov, A., Lyakhov, A., and Bianchi, G. *A Tutorial on IEEE 802.11ax High Efficiency WLANs*, IEEE Communications Surveys & Tutorials 21(1):197–216, 2019
+  - The Wi-Fi 6 PHY and MAC reset in detail. Where to go when the trigger frame in §6 needs its full derivation.
+- **[Paper · ★★ · EN]** Aslam, M. et al. *Hardware Efficient Clock Synchronization Across Wi-Fi and Ethernet Based Network Using PTP*, IEEE Transactions on Industrial Informatics, 2021
+  - The hardware-timestamping argument with measurements. Read it before promising a synchronisation budget to anyone.
+- **[Doc · ★★ · EN]** IEEE 802.11 Real Time Applications Topic Interest Group. *RTA TIG Report*, doc. 11-18/2009-06, 2019
+  - Where the requirement set for real-time applications over 802.11 was first written down inside the working group.
+- **[Doc · ★★ · EN]** IETF RAW. *Reliable and Available Wireless Technologies*, draft-ietf-raw-technologies
+  - An unusually accurate cross-technology summary of what each 802.11 revision contributes to TSN, and of the trade-offs any wireless extension of TSN has to accept.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED QoS Management*, announced 23 February 2021, extended 21 October 2021
+  - SCS, MSCS, DSCP mapping and DSCP Policy: what is actually certified, which is the only reliable guide to what actually ships.
+- **[Doc · ★ · EN]** Jiao, X. et al. *openwifi: A Free and Open-Source IEEE 802.11 SDR Implementation on SoC*, IEEE VTC, 2020
+  - The platform on which r-TWT and coordinated SR have been implemented and measured.
+- **[Doc · ★ · EN]** Samsung Research — Ha, T., Shafin, R., and Manasi. *IEEE 802.11bn (Ultra-High Reliability, Wi-Fi 8)*
+  - An engineering walkthrough from a TGbn contributor: DS-CTS and P-EDCA, LLI, NPCA, ELR and DRU, plus the certification timeline.
+- **[Doc · ★ · EN]** MaxLinear. *Quality of Service (QoS) Mechanisms in Wi-Fi*, white paper, 2024
+  - A readable secondary account of the amendment-by-amendment QoS story from 802.11e to 802.11be. Use it for orientation, verify every claim against the amendment.
+
 
 ## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
@@ -1591,7 +1657,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 34 · Primary Standards and Specification Repositories
+## 35 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1618,7 +1684,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 35 · Suggested Reading Order
+## 36 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -1638,7 +1704,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 36 · Verification and Maintenance
+## 37 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.

@@ -23,7 +23,7 @@ tags:
   - hostapd
   - wpa-supplicant
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 aliases:
   - Wi-Fi association procedure
   - STA attach procedure
@@ -873,6 +873,7 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
 ## Related
 
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced which part of this
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what has to be negotiated after association before a stream can be scheduled at all: SCS agreements with QoS Characteristics, r-TWT membership, and the capability exchange that decides whether any of it applies
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what association makes possible: the AID and Block Ack session a scheduler needs before a station is a candidate, and the EML capabilities it must respect
   sequence: 11i for RSNA, 11w for PMF, 11r/k/v for transition, 11ai for FILS, 11ax for 6 GHz
   discovery and TWT, 11be for multi-link setup

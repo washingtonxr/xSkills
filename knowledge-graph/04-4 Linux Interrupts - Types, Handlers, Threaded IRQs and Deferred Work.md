@@ -22,7 +22,7 @@ aliases:
   - Interrupt coalescing
   - NAPI
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # Linux Interrupts — Types, Handlers, Threaded IRQs and Deferred Work
@@ -794,6 +794,7 @@ Method, in order:
 ## Related
 
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: driver model, device tree, DMA and cache coherency, the debugging toolbox, and where interrupts sit in the whole stack
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the consumer of a trustworthy timestamp: interrupt latency and deferred work are what turn a hardware-timestamped frame into a sub-microsecond synchronisation error, or into a microsecond one
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where the interrupt path meets the rest of a driver: probe ordering with the interrupt requested last, the per-transfer state machine, DMA completion, and the power-management cases where an IRQ must be masked
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the companion note: the execution-context matrix, preemption models, kernel threads, and the user-space side of concurrency
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — the Cortex-M/NVIC/PendSV counterpart, and the reasons an RTOS may beat Linux here

@@ -54,7 +54,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | Group | Domain | Notes |
 | --- | --- | --- |
 | `01-x` | Cellular and mobile communications | 01-1 … 01-7 |
-| `02-x` | WLAN | 02-1 … 02-8 |
+| `02-x` | WLAN | 02-1 … 02-9 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-6 |
 | `05-x` | Data plane and heterogeneous compute | 05-1, 05-2 |
@@ -88,6 +88,7 @@ flowchart LR
         w6["02-6 Roaming, healing and steering"]
         w7["02-7 EasyMesh operation, tuning, troubleshooting"]
         w8["02-8 Scheduling, EDCA, OFDMA, airtime"]
+        w9["02-9 TSN over Wi-Fi"]
     end
     subgraph g3["03 · Low-power / sensor"]
         s1["03-1 WSN and low-power MAC"]
@@ -139,6 +140,9 @@ flowchart LR
     w2 --> w8
     w4 --> w8
     w7 --> w8
+    w1 --> w9
+    w2 --> w9
+    w8 --> w9
     w7 --> e3
     w4 --> e2
     w2 --> s1 --> e1
@@ -185,6 +189,7 @@ flowchart LR
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — end-to-end TX/RX path (socket → qdisc → mac80211 → descriptor → EDCA/A-MPDU/Block Ack → PHY, and back through reorder/decrypt/GRO), the five planes of offload (per-packet assists, FullMAC vs SoftMAC, AP flow offload and WED, kernel bypass, control-plane), MLO reordering, and how to localise a fault in the path
 - [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence phase by phase: scanning and 6 GHz discovery (RNR, PSC, FILS Discovery), the MLME state machine, Open System vs SAE vs OWE vs 802.1X/EAP, association and the AID, the PMK→PTK key hierarchy and the 4-way handshake, PMF and SA Query, FT/k/v and FILS roaming, MLO setup, and a symptom-to-phase debugging table
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the multi-AP control loop: why 802.11 leaves the roam decision to the station, 802.11k discovery and 802.11r at ESS scale (R0KH placement, over-the-DS encapsulation, the failure taxonomy), steering by BTM / MBO / assoc control / EasyMesh with the decision function and its ping-pong problem, mesh healing as a backhaul state machine with topology repair and channel change, MLO at MLD granularity, and Wi-Fi 8 SMD as the first standard answer
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what the scheduler is for: the four numbers a time-sensitive application actually demands, the six structural reasons Wi-Fi resists a bound, the 802.1 toolbox and what each tool becomes over the air, the generation ladder from 802.11e through 802.11v, aa, mc, ak, ax and be to 802.11bn, 802.1AS over TM and FTM with the hardware-timestamping constraint, the five-rung ladder from EDCA to trigger-based access, TWT, r-TWT and preemption, SCS and the QoS Characteristics element, 802.1CB over MLO, P-EDCA, NPCA and multi-AP coordination, the wired–wireless integration model, and a deployment method with a worked latency budget
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the scheduler itself: interframe spaces and the DCF backoff machine, EDCA's four access categories and its release-to-release TXOP change, the OFDMA resource-unit grid and the legal MRU set, the eight trigger-frame types and one UL OFDMA round, MU-MIMO sounding, Wi-Fi 7 scheduling across links, airtime fairness and deficit round robin, the per-TXOP pipeline, rate control, TWT, and `mac80211` with AQL
 
 ### 03 · Low-power and sensor networking
