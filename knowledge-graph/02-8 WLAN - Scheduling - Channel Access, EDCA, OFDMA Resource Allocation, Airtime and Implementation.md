@@ -1365,6 +1365,8 @@ flowchart TB
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the airtime knobs as they exist on a real device, including the offload paths that bypass AQL
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same scheduler reimplemented: backoff, contention window, SIFS and slot time as writable FPGA registers
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — what the scheduler can and cannot promise: the latency budget it controls, AQL as the airtime-based queue limit, and the measured effect of fair queueing and airtime fairness
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

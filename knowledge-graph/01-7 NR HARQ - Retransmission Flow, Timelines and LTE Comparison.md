@@ -975,6 +975,8 @@ Anything not listed here and not independently confirmed is marked `VERIFY` rath
   boundary that HARQ straddles: where the soft buffer lives, which side owns the state machine, and the
   execution model that makes the slot budget in §3.2 achievable
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the contrast in recovery: NR combines soft information on a bounded timeline, Wi-Fi retries after a failure and pays the channel-access delay again
+
 ## 13. References
 
 1. 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*.

@@ -162,6 +162,7 @@ flowchart TD
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — a real-time workload to profile: worst-case slot processing time, data layout for the per-slot UE iteration, and measuring the tail rather than the mean
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — a second real-time wireless workload to profile: airtime estimation, the cost of a wrong rate report, and measuring the tail of a microsecond-scale decision
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency and IPC model whose contention the profiler is attributing
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — measurement discipline for latency work: percentiles and sample counts, clock sources, and the cost of the instrumentation itself
 
 ---
 

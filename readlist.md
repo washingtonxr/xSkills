@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.20
+version: 1.21
 last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -909,6 +909,74 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 - **[Doc · ★ · EN]** ORCA project. *EU Horizon 2020 research and innovation programme, grant agreement no. 732174* — the funding source acknowledged by openwifi.
 - **[Doc · ★ · EN]** NLnet / NGI Zero Core. *openwifi funding pages* — the 802.11n feature, the 802.11a/g/n maturity work, and the extended OpenWrt support.
+
+## 02-13 · WLAN — Reliability, Low Latency and Determinism
+
+### The standards and the numbers they commit to
+
+- **[Std · ★★★ · EN]** IEEE Std 802.11-2020 — retransmission limits, RTS threshold, MSDU lifetime, EDCA, TWT, BlockAck.
+  - The primary source for section 4.1. Read the retry-limit and lifetime clauses rather than any secondary summary.
+- **[Doc · ★★★ · EN]** Calhoun, P., Montemurro, M., and Stanley, D. (eds.). *CAPWAP Protocol Binding for IEEE 802.11*, RFC 5416. <https://www.rfc-editor.org/rfc/rfc5416.html>
+  - §6.7 restates the dot11 MIB defaults that this note quotes: short retry 7, long retry 4, RTS threshold 2347, Tx MSDU lifetime 512 TU, Rx MSDU lifetime 512.
+- **[Std · ★★ · EN]** IEEE Std 802.11e-2005, 802.11r-2008, 802.11k-2008, 802.11v-2011, 802.11ax-2021 and 802.11be-2024 — EDCA, Fast BSS Transition, radio resource measurement, WNM, TWT/OFDMA, and MLO with r-TWT and SCS.
+- **[Doc · ★ · EN]** ITU-T Recommendation G.114 — the 150 ms one-way recommendation that every voice roaming budget is measured against.
+
+### Rate control — read the algorithm before you claim a reliability problem
+
+- **[Doc · ★★★ · EN]** Linux wireless. *Minstrel rate control — theory of operation*. <https://www.linuxwireless.sipsolutions.net/en/developers/Documentation/mac80211/RateControl/minstrel>
+  - The 100 ms interval, the EWMA smoothing factor, the 10% lookaround rate, the four-entry MRR chain and the 26 ms chain cap. Also where `rc_stats` in debugfs is explained.
+- **[Paper · ★★★ · EN]** *MAC-Layer Rate Control for 802.11 Networks: Lesson Learned and Looking Forward*. arXiv:1807.02827. <https://arxiv.org/abs/1807.02827>
+  - The survey with the Minstrel equations, the 75% EWMA weight, the retry-preference tables, and why throughput-based control behaves differently from loss-based control under collisions.
+
+### Queueing in the Wi-Fi stack — the part you can actually change
+
+- **[Code · ★★★ · EN]** Yan, K., and Høiland-Jørgensen, T. *mac80211: Implement Airtime-based Queue Limit (AQL)*, Linux commit `3ace10f`. <https://lore.kernel.org/r/20191119060610.76681-4-kyan@google.com>
+  - The rationale (CoDel's sojourn time excludes the firmware queue; bytes are the wrong unit for a wireless queue) and the constants 5000 / 12000 / 24000 plus the debugfs interface.
+- **[Paper · ★★★ · EN]** Høiland-Jørgensen, T., Kazior, M., Täht, D., Hurtig, P., and Brunstrom, A. *Bufferbloat mitigation in the WiFi stack — status and next steps*, Netdev 2.2. <https://www.netdevconf.info/2.2/papers/jorgensen-wifistack-talk.pdf>
+  - The numbers this note quotes: FIFO versus FQ-CoDel versus FQ-MAC latency under a saturating download, the airtime shares, and the net throughput increase from fairness.
+- **[Code · ★★★ · EN]** Høiland-Jørgensen, T. *mac80211: Adjust TSQ pacing shift*, Linux commit `36148c2bbfbe`. <https://lore.kernel.org/linux-wireless/20180202151105.30043-1-toke@toke.dk/t/>
+  - The throughput table for `sk_pacing_shift` 10/9/8/7 and the explicit latency cost of the change.
+- **[Paper · ★★ · EN]** Grazia, C. A., Patriciello, N., Høiland-Jørgensen, T., Klapez, M., Casoni, M., and Mangues-Bafalluy, J. *Adapting TCP Small Queues for IEEE 802.11 Networks*. IEEE PIMRC 2018, pp. 1-6. <https://doi.org/10.1109/PIMRC.2018.8581048>
+  - Controlled TSQ: the throughput/latency trade made rate-aware rather than fixed.
+- **[Doc · ★★ · EN]** Corbet, J. *TCP small queues and WiFi aggregation — a war story*. LWN.net. <https://lwn.net/Articles/757643>
+  - The engineering narrative behind the pacing-shift change, told by the people who debugged it.
+- **[Paper · ★★★ · EN]** Nichols, K., and Jacobson, V. *Controlling Queue Delay*. Communications of the ACM 55(7), 2012 — CoDel: 5 ms target, 100 ms interval, minimum sojourn time as the control signal.
+- **[Doc · ★★ · EN]** IETF. *Controlled Delay Active Queue Management*, RFC 8289; *The Flow Queue CoDel Packet Scheduler*, RFC 8290.
+- **[Doc · ★★★ · EN]** Briscoe, B., Schepper, K. D., Bagnulo, M., and White, G. *L4S architecture*, RFC 9330; Schepper and Briscoe, *ECN protocol for L4S*, RFC 9331; *DualQ Coupled AQM*, RFC 9332. <https://www.rfc-editor.org/rfc/rfc9332.html>
+  - RFC 9332 carries the measured L4S queuing delays and the note that Wi-Fi L4S trials were in progress at the time of writing.
+
+### Latency across links and generations
+
+- **[Paper · ★★★ · EN]** *Next Generation Wi-Fi and 5G NR-U in the 6 GHz Bands: Opportunities & Challenges*. IEEE document 9165719. <https://ieeexplore.ieee.org/ielaam/6287639/8948470/9165719-aam.pdf>
+  - The four-component latency decomposition, and the multi-link results: hundreds of milliseconds at the 95th percentile for a single-link device, an order-of-magnitude reduction with multi-link, latency as low as 25% of single-link.
+- **[Paper · ★★★ · EN]** MediaTek. *Wi-Fi 7 Multi-Link Operation (MLO) White Paper*, WF7MLOWP0622. <https://www.mediatek.com/hubfs/Wi-Fi-7-MLO-White-Paper-WF7MLOWP0622.pdf>
+  - The 95th-percentile latency table for single-link, NSTR, STR and EMLSR at 10/40/70% network loading, and the UMAC/LMAC architecture partitions.
+- **[Paper · ★★ · EN]** Kedar, E. *Single-Chip MLO Coordination Enables Path to Lowest Latency*. MaxLinear white paper, 2025. <https://www.maxlinear.com/news/white-papers/2025/single-chip-mlo-coordination-enables-path-to-lowest-latency>
+  - The ~70% STR latency reduction claim in dense simulated and real environments, and the single-MAC versus multi-MAC argument.
+- **[Paper · ★★★ · EN]** Multi-link analyses: arXiv:2111.09281 (latency with real over-the-air occupancy traces), arXiv:2210.07695 (the starvation anomaly), arXiv:2212.12420 (finite-load delay model), arXiv:2205.15065 (coexistence with legacy single-link), arXiv:2305.02052 (latency and throughput together).
+  - Read these for the caveats: symmetry decides the sign, single-radio MLO underdelivers on worst case, and more than two links adds little.
+
+### Bounded latency and the next generation
+
+- **[Paper · ★★★ · EN]** Ofinno. *Wi-Fi 8: Ultra High Reliability in the Unlicensed Bands*. <https://ofinno.com/wp-content/uploads/2023/01/Wi-Fi-8-Ultra-High-Reliability-in-the-Unlicensed-Bands_Digital-Copy.pdf>
+  - The statement that 802.11be with r-TWT and SCS achieves bounded latency below 25 ms, why that is not enough for sub-millisecond industrial use, and why r-TWT cannot protect aperiodic traffic.
+- **[Paper · ★★★ · EN]** Mozaffariahrar, E., Wilhelmi, F., Galati-Giordano, L., Imputato, P., Menth, M., and Avallone, S. *R-TWT in Wi-Fi 7 and Beyond: Enabling Bounded Latency, Energy Efficiency, and Reliability*. <https://www.upf.edu/documents/d/fwilhelmi/r-twt_in_wi-fi_7_and_beyond_enabling_bounded_latency_energy_efficiency_and_reliability-pdf>
+  - ns-3 evaluation of r-TWT across traffic types and network sizes: worst-case latency, energy, collision rate and throughput, against PSM and DCF.
+- **[Paper · ★★★ · EN]** Ha, T., Shafin, R., and Manasi. *IEEE 802.11bn (Ultra-High Reliability, Wi-Fi 8)*. Samsung Research. <https://research.samsung.com/blog/IEEE-802-11bn-Ultra-High-Reliability-UHR-Wi-Fi-8>
+  - The PAR targets as stated by a participant: +25% throughput at a given SINR, -25% latency at the 95th percentile, -25% dropped packets.
+- **[Paper · ★★★ · EN]** *What Will Wi-Fi 8 Be? A Primer on IEEE 802.11bn Ultra High Reliability*. arXiv:2303.10442. <https://arxiv.org/html/2303.10442v2>
+  - The use-case requirements table (99.9% to 99.9999999% reliability, 0.1-100 ms latency) that motivates the whole UHR programme.
+
+### Measurement
+
+- **[Tool · ★★★ · EN]** Høiland-Jørgensen, T., and Täht, D. *FLENT: The FLExible Network Tester*. <https://flent.org>
+  - Controlled load plus latency distribution in one run — the tool that produced the curves behind the bufferbloat work.
+- **[Paper · ★★ · EN]** Gettys, J., and Nichols, K. *Bufferbloat: Dark Buffers in the Internet*. ACM Queue 9(11), 2011 — the problem statement.
+- **[Code · ★★ · EN]** Linux `iw` source, `phy.c` — `set retry`, `set rts`, `set frag`, `set coverage`, `set distance`, `set txq`, all over `NL80211_CMD_SET_WIPHY`.
+
+### The comparison case
+
+- **[Std · ★★ · EN]** 3GPP TS 22.261 and TR 22.804 — the URLLC service requirements used in the cross-technology comparison, and TS 23.501 for ATSSS as the multi-access reliability counterpart.
 
 ## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
@@ -1827,7 +1895,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 38 · Primary Standards and Specification Repositories
+## 39 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1854,7 +1922,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 39 · Suggested Reading Order
+## 40 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -1874,7 +1942,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 40 · Verification and Maintenance
+## 41 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.

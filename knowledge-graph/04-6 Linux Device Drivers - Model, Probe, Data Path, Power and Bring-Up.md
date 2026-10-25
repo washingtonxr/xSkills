@@ -1448,6 +1448,8 @@ a user may hold the fd past `remove()` (§5).
 
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a driver whose device is an FPGA: device tree addresses and interrupts for soft IP, DMA into a programmable fabric, and a driver that is really the north half of a distributed system
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — DMA and interrupt design as the floor on host-side latency, and the device-model view of a driver whose queues the network stack is trying to bound
+
 ---
 
 ## References

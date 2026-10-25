@@ -750,6 +750,8 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the offload planes as switches you can throw on a real box, and what each one costs you in observability
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a data path visible end to end including the DMA and interrupt boundaries this note stops at, because the low MAC is Verilog
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the latency consequences of each offload plane, and why a fast path that bypasses mac80211 also bypasses the queue management that bounds latency
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

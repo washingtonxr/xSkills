@@ -1242,6 +1242,8 @@ flowchart TD
     — the `nrofHARQ-ProcessesForPDSCH` enumeration and the soft-buffer scaling factor when more than 16
     processes are configured.
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — what a scheduled medium looks like: the comparison case for every Wi-Fi determinism claim, where the grant replaces contention
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

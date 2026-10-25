@@ -1171,6 +1171,8 @@ by "a scheduler that must first win a contended medium".
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the box that has to be configured for a latency bound, and the offload-versus-observability trade that decides whether the bound is even measurable
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a platform where scheduled access can be built in hardware: time-gated FPGA queues addressed by MAC address
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the implementation view of the same problem: which driver and protocol mechanisms produce the numbers the 802.1 toolbox asks for, and what is honestly achievable
+
 ---
 
 ## References

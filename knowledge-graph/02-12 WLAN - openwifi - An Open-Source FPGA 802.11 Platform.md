@@ -848,6 +848,8 @@ and **a modifiable implementation on this end** at the same time.
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layering argument
   this platform makes concrete: hard deadlines below, soft deadlines above
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — a platform where the latency mechanisms are registers: contention window, SIFS, slot time, ACK timeouts and retry limits you can set, and a research vehicle for measuring them
+
 ---
 
 ## References

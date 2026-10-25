@@ -811,6 +811,8 @@ Method, in order:
 
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the interrupt path at the bottom of an SDR Wi-Fi stack: `ieee80211_rx_irqsafe()` and `ieee80211_tx_status_irqsafe()` called from the FPGA's interrupts
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — NAPI, interrupt moderation and threaded IRQs as the host-side half of a wireless latency budget
+
 ---
 
 ## References

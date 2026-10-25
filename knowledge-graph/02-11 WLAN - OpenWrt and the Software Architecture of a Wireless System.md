@@ -951,6 +951,8 @@ The method behind that table is the same one used in [[02-7 WLAN - Wi-Fi EasyMes
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling a forwarding path whose cost is
   per-packet on the CPU side and invisible on the offload side
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the box the latency mechanisms are configured on: qdiscs, AQL, airtime fairness, the flow offload trade-off, and hostapd's steering surface
+
 ---
 
 ## References

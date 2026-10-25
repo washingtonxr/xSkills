@@ -486,6 +486,8 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — where the power-saving knobs live on a real AP, and what has to be configured before TWT does anything
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the other side of the TWT argument: the same mechanism that saves power adds latency if the interval is long, and protects latency if the service period is restricted
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

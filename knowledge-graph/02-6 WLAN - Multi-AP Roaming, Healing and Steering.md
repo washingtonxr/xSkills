@@ -963,6 +963,8 @@ ride an IEEE 1905.1 control plane.
 
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — where 802.11k and 802.11v are actually invoked: hostapd's `bss_mgmt_enable` and `bss_transition_request` ubus methods, and the user-space daemon that decides when
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the roaming latency budget — scan, authentication and reassociation — and why roaming is usually the real reliability failure rather than a radio failure
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -1258,6 +1258,8 @@ latency targets achievable in a real deployment, and it is the one with no stand
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the other side of the driver: how a router configures what section 6 describes, and where the firmware and board data come from
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same low MAC and PHY, but in Verilog you can edit and registers you can read
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — why AQL exists — the firmware queue the host cannot see — and what the offload paths cost when you are trying to bound latency
+
 ---
 
 ## References

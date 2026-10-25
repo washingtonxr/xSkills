@@ -531,6 +531,8 @@ AI features must demonstrate benefits that justify their **computational complex
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — which generation's features become configuration knobs and package versions, and the platform whose release branch decides what you can actually run
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the contrast: an implementation of 802.11a/g and n whose PHY and low MAC are Verilog, so a generation's mechanics can be rewritten rather than configured
 
+- [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — which generation's mechanisms are available for a latency or reliability target, from EDCA in 802.11e to r-TWT and MLO in 802.11be to preemption in 802.11bn
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.
