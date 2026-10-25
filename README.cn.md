@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.21
+version: 1.22
 sibling: README.md
 last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -158,7 +158,7 @@ flowchart LR
 | **02-6** | **WLAN 多 AP 漫游、自愈与引导** | 为什么 802.11 把漫游决策留给终端，以及网络侧能做什么：四种切换方式的代价对比（完整入网 / PMKSA 缓存 / FT / FILS）、802.11k 的 Neighbor Report 与 Beacon Report、一次端到端切换的逐帧时序、ESS 尺度的 FT（R0KH 部署位置、`0x890D` over-the-DS 转发帧、五类现网失效、切换后数据面要重建什么）、BTM / MBO / assoc control / EasyMesh 客户端引导的决策函数与乒乓问题、以回程状态机为核心的 mesh 自愈（拓扑修复与信道切换）、MLD 粒度的 MLO 引导，以及 Wi-Fi 8 的 SMD 与 MAPC |
 | **02-7** | **Wi-Fi EasyMesh 原理、调优与排障** | EasyMesh 标准化了什么、刻意不标准化什么；规范版本 v1.0→v6.0 与 Profile-1/2/3；IEEE 1905.1 CMDU 与 TLV 机制（真实报文号 `0x893A`、`0x8003`、`0x8014`、`0x8019`、`0x9B`）；WPS/PBC 与 DPP 两条入网路径（`mapBackhaulSta`、`mapAgent`、CCE、代理封装）；AP-Autoconfiguration 的 M1/M2 与 Multi-AP IE（`0xDD`、OUI `50-6F-9A`、类型 `0x1B` 与扩展子元素的位定义）；四地址回程与 `multi_ap=1/2/3`；四类测量机制；信道选择、三种引导机制与回程优化；部署取舍；全部可调策略字段；以及分层排障方法论与症状对照表 |
 | **02-8** | **Wi-Fi 调度** | 调度器在 AP 内的完整实现：帧间间隔族与 DCF 退避状态机、CCA 与 BSS Color 双 NAV、EDCA 四个接入类别及 802.11-2016 与 2012 两版 TXOP 限制的变迁与 DSSS 列、OFDMA 资源单元栅格与合法 MRU 组合、八种 Trigger 帧类型与一次完整的上行 OFDMA 回合、MU-MIMO 探测及其代价、Wi-Fi 7 跨链路调度（UMAC/LMAC 切分与 EMLSR 三个定时器）、空口时间公平与赤字轮询、每 TXOP 决策流水线、作为调度器一部分的速率控制、TWT 与 r-TWT 作为可调度状态、`mac80211` 中的 FQ-CoDel 与 AQL 及队列藏身的三处、KPI 体系与排障决策树 |
-| **02-9** | **Wi-Fi TSN · 研究与实践** | 贯穿各代际的确定性主线：工业与沉浸式应用真正提出的四个数字（周期、时延界、可靠性、抖动），Wi-Fi 无法给出确定性上界的六个结构性原因，以及 802.1 工具箱逐项映射到 802.11 的结果。随后是阶梯：802.11e 的优先级、802.11v 的 Timing Measurement、802.11aa 的 SCS 与 AC 内队列、802.11mc 的 0.1 ns FTM、802.11ak 的中继链路、802.11ax 的触发式接入、802.11be 的 r-TWT（TID 位图与静默间隔），直到 802.11bn 被量化的 25% 目标。此外还有 TM/FTM 之上的 802.1AS 与软硬件时间戳的误差预算、五级接入阶梯、SCS 与四参数 QoS Characteristics 元素、MLO 之上的 802.1CB 以及冗余为何要付出空口代价、P-EDCA、NPCA、抢占与多 AP 协同、AP 作为网桥并与 Qbv 门控对齐的融合模型、证据强度的五层梳理、带时延预算算例的九步落地方法、症状排查表，以及 Wi-Fi 与 5G 的逐条对比 |
+| **02-9** | **Wi-Fi TSN · 研究与实践** | 贯穿各代际的确定性主线：工业与沉浸式应用真正提出的四个数字（周期、时延界、可靠性、抖动），Wi-Fi 无法给出确定性上界的六个结构性原因，以及 802.1 工具箱逐项映射到 802.11 的结果。随后是阶梯：802.11e 的优先级、802.11v 的 Timing Measurement、802.11aa 的 SCS 与 AC 内队列、802.11mc 的 0.1 ns FTM、802.11ak 的中继链路、802.11ax 的触发式接入、802.11be 的 r-TWT（TID 位图与静默间隔），直到 802.11bn 被量化的 25% 目标。此外还有 TM/FTM 之上的 802.1AS 与软硬件时间戳的误差预算、五级接入阶梯、SCS 与四参数 QoS Characteristics 元素、MLO 之上的 802.1CB 以及冗余为何要付出空口代价、P-EDCA、NPCA、抢占与多 AP 协同、AP 作为网桥并与 Qbv 门控对齐的融合模型、证据强度的五层梳理、带时延预算算例的九步落地方法、症状排查表，；以及后续新增的第 11 节「融合」：为什么有线-无线 TSN 融合是趋势并给出每一步的带日期证据；一个 gPTP 时基如何跨四段跳变传递（AP 为 PTP Relay Instance、客户端为 End Instance）；以太网 peer-delay 机制与 802.11 TM/FTM 原生授时机制之间的媒体相关层切分；空口实测数字（从有线 52 ns 到商用 Wi-Fi 的 13 µs）；优先级如何穿越 802.11 Portal 并经历八→四的坍缩，以及「802.1Q 优先级 3 落到 Wi-Fi Best Effort」这个坑；为什么发送时刻归 AP 而不归客户端（mac80211 完全绕过 qdisc 层）；两端能力清单；以及六条仍未闭合的缺口 |
 | **02-10** | **基带与驱动架构 · Wi-Fi 6/7/8** | 以高通为参考设计拆开无线电：基带里到底有什么、每一代究竟要哪一块电路长大；定义一切的两条边界；Wi-Fi 7 AP 与 Wi-Fi 8 终端的解剖；WCSS 与运行固件的 Q6 处理器；WMI/HTT/HTC/CE/QMI/MHI 协议栈与完整的 ring 清单；一张说明主机、固件、硬件各做什么的职责表；收发两条数据通路与描述符中真正关键的字段；中断组、NAPI 与 threaded NAPI 的实测收益；帧究竟在哪里排队，以及排错之后吞吐量与时延的实测权衡；MLO 在芯片里和驱动里分别是什么；功耗、散热与一次固件断言的真实代价；SoC 侧的 NSS 转发加速平面；从 ath9k、ath10k、ath11k 到 ath12k 及其双模块拆分的驱动演进；Wi-Fi 8 对每一层的诉求；架构正在走向的八个方向；十个面试答案；以及一张故障定位表 |
 | **02-11** | **OpenWrt 与无线系统软件架构** | 把路由器当作软件系统来拆：OpenWrt 到底是什么（一个 Linux 发行版 + 交叉构建系统，对外是四件产物——源码树、ImageBuilder、SDK、软件仓库）；从意图到空口的五条边界；永远在跑的五个守护进程（procd、ubusd、rpcd、netifd、fw4）；把 `/etc/config/wireless` 变成 hostapd BSS 而不重启任何东西的 ucode 流水线；`wifi-device` / `wifi-iface` / `wifi-vlan` / `wifi-station` 的UCI 无线设备模型；hostapd 的 ubus 方法表以及为什么引导决策在用户态；netifd 的设备与接口状态机（含真实的事件名与状态名）；一个报文在盒子里怎么走、flow offload 与 WED 各自付出什么代价；固件、板级校准数据、MAC 地址与监管域这四样“不在源码里”的东西；含 apk 与 attended sysupgrade 的构建与升级体系；以及相邻模型的横向对比——TIP OpenWiFi（APNOS + uCentral + Cloud SDK 与设备 PKI）、OpenSync、prplOS 与 RDK-B、玩家分支、以及厂商 SDK——外加 OpenWrt One 参考硬件、六条诚实的局限、故障定位表和十个面试答案 |
 | **02-12** | **openwifi · 开源 FPGA 802.11 平台** | 把驱动与空口之间那堵墙推倒：为什么需要一个 SDR 802.11 全栈（商用芯片不让你做的四件事）；Zynq + AD9361 平台与是否需要 Vivado 授权的开发板清单；三个仓库以及 Vivado、内核与镜像的构建流程；六个 FPGA IP 核及其逐文件构成；`xpu` 里的低 MAC——CSMA/CA 状态机，以及让 SIFS、时隙、ACK 超时、CCA、竞争窗口与重传次数都变成可写寄存器的那些寄存器；四个发送队列与按 MAC 地址的时隙切片；一个“硬件掌握时序”的 mac80211 驱动及其完整的 `ieee80211_ops` 清单；收发两条通路的逐步拆解；切分为何落在这一层；`sdrctl`（nl80211 testmode）与 sysfs 两条控制通道；各种工作模式与 802.11b 的坑；CSI / IQ / 感知类能力；公开性能数字及其受限原因；与商用芯片、GNU Radio 收发机、`mac80211_hwsim`、仿真器的对比；许可与资助；真实用例；故障定位表与十个面试答案 |
@@ -190,7 +190,7 @@ flowchart LR
 2. **入口**：`00 MOC` 是唯一导航页，其余 33 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 333 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 339 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---

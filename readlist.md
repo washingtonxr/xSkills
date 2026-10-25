@@ -2,7 +2,7 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.21
+version: 1.22
 last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
@@ -739,6 +739,39 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Doc · ★ · EN]** MaxLinear. *Quality of Service (QoS) Mechanisms in Wi-Fi*, white paper, 2024
   - A readable secondary account of the amendment-by-amendment QoS story from 802.11e to 802.11be. Use it for orientation, verify every claim against the amendment.
 
+
+### The converged network — when both the client and the AP are TSN-aware
+
+- **[Doc · ★★★ · EN]** Garner, G. *The Transport and Impact of Synchronization in Time-Sensitive Networking: An Introduction to IEEE 802.1AS*. IEEE 802 Foundational Technologies webinar, February 2022. <https://www.ieee802.org/1/files/public/docs2022/webinar-garner-synchronization-0222.pdf>
+  - The starting point for the clock half of section 11: the media-independent and media-dependent layer split, which media have native timing mechanisms, the meanLinkDelay and neighborRateRatio formulas, and how the correction field and the accumulated rate ratio are built hop by hop.
+- **[Doc · ★★★ · EN]** IEEE 802.1. *Draft blog post for IEEE Std 802.1AS-2020*, July 2020. <https://www.ieee802.org/1/files/public/docs2020/as-draft-blog-post-0720-v01.pdf>
+  - What 802.1AS-2020 adds over 2011 in the working group's own words: FTM transport over 802.11, multiple domains, detection of non-compliant devices, and the Common Mean Link Delay Service. Read it before you argue about clocks over Wi-Fi.
+- **[Doc · ★★ · EN]** IEEE 802.1 Time-Sensitive Networking Task Group. *TSN summary*, July 2025. <https://ieee802.org/1/files/public/docs2025/admin-tsn-summary-0725-v01.pdf>
+  - The one-page map of the toolbox, the profiles and the recent amendments: 802.1ASdn-2024, 802.1ASdm-2024, 802.1ASed-2026, 802.1Qdj-2024, 802.1Qdx-2024, 802.1DG-2025, 802.1DP-2025. Use it to keep your dates honest.
+- **[Standard · ★★★ · EN]** IEC/IEEE. *IEC/IEEE 60802:2026 — Time-Sensitive Networking Profile for Industrial Automation*. Edition 1.0, published 29 June 2026, ISBN 9782832712870. <https://webstore.iec.ch/en/publication/60188>
+  - The profile a wireless segment has to plug into: conformance classes ccA and ccB, the seven traffic types, multiple gPTP domains with a working clock and a global time, the Annex C clock control model and the Annex D synchronisation error budget. Check its annexes before claiming it covers wireless.
+- **[Doc · ★★★ · EN]** Broadcom. *802.11 QoS Queue Architecture and Possible 802.1bz Bridge Model*. IEEE 802.11 contribution 11-13-0221-01-00ak, March 2013. <https://mentor.ieee.org/802.11/dcn/13/11-13-0221-01-00ak-802-11-qos-queue-architecture-and-possible-802-1bz-bridge-model.pptx>
+  - Where the 802.11 Portal argument comes from, and the side-by-side table showing that 802.1Q traffic classes and 802.11 access categories are different mappings of the same eight priorities. Also the origin of the alternate voice and video queues.
+- **[Doc · ★★★ · EN]** IETF. Szigeti, T., Baker, F., Mohapatra, P., and McCann, J. *Mapping Diffserv to IEEE 802.11*, RFC 8325, February 2018. <https://www.rfc-editor.org/rfc/rfc8325>
+  - The UP-to-AC table reproduced from IEEE 802.11-2016 Table 10-1, the AIFS table, the statement that the mapping is non-configurable, and the Diffserv-to-UP mapping a converged network should actually use.
+- **[Code · ★★★ · EN]** Linux. *net/mac80211/wme.c*. <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/net/mac80211/wme.c>
+  - `ieee802_1d_to_ac`, `ieee80211_select_queue()`, `wme_downgrade_ac()` and the admission-control downgrade walk. The only place the client-side behaviour is unambiguous.
+- **[Paper · ★★★ · EN]** Høiland-Jørgensen, T., Kazior, M., Täht, D., Hurtig, P., and Brunstrom, A. *Bufferbloat mitigation in the WiFi stack — status and next steps*, Netdev 2.2. <https://www.netdevconf.info/2.2/papers/jorgensen-wifistack-talk.pdf>
+  - The source of the asymmetry: mac80211 disables the qdisc layer entirely on WiFi interfaces, because a generic qdisc cannot split a flow into the per-TID aggregates 802.11 aggregation requires. This is why `taprio` and `etf` are Ethernet tools.
+- **[Doc · ★★ · EN]** iproute2 and Linux man-pages. *tc-etf(8)*, *tc-taprio(8)*, and `SO_TXTIME` / `SCM_TXTIME` in *socket(7)*. <https://man7.org/linux/man-pages/man8/ETF.8.html>
+  - The wired end-station launch-time machinery, documented precisely, so that the contrast with a Wi-Fi client is exact rather than rhetorical.
+- **[Thesis · ★★★ · EN]** Wu, P. *Time Synchronization Protocols for Industrial Use Cases: A Performance Review of NTP and PTP and a Wireless-aware Enhancement*. KTH Royal Institute of Technology, 29 October 2024, DiVA diva2:1942067. <https://www.diva-portal.org/smash/get/diva2:1942067/FULLTEXT01.pdf>
+  - The survey behind the measured table: LinuxPTP over Wi-Fi, ath9k software versus TSF hardware timestamping, outlier filtering, Kalman-filtered control loops, openwifi, and the finding that in infrastructure mode most error comes from delay variation inside the AP.
+- **[Paper · ★★ · EN]** *Extending Reference Broadcast Infrastructure Synchronization Protocol in IEEE 802.11 as Enabler for the Industrial Internet of Things*. arXiv:2106.03732. <https://arxiv.org/html/2106.03732v1>
+  - The three-way measurement: wireline gPTP median 52 ns and max 254 ns, plain IEEE 1588 over the air median about 0.95 ms with outliers to several ms, and RBIS at median 13 us and max below 40 us on commodity hardware.
+- **[Paper · ★★ · EN]** *Integration of IEEE 802.1AS-based Time Synchronization in IEEE 802.11 as an Enabler for Novel Industrial Use Cases*. arXiv:2101.02434. <https://arxiv.org/pdf/2101.02434>
+  - A worked 802.11-plus-802.1AS integration with a TSN evaluation kit as grandmaster and linuxptp: about plus or minus 350 ns at a 31.25 ms sync interval, against the contrast of carrying PTP directly over the air.
+- **[Paper · ★★ · EN]** *Practical IEEE 802.1AS-Based TSN Time Synchronization over Wi-Fi for Bare-Metal Devices*. Project WiWiOPT, BMWK grant KK5189604MS1. <https://dtic.dimensions.ai/details/publication/pub.1186205720>
+  - Bare-metal gPTP supporting both Ethernet and 802.11 links on low-cost embedded hardware, below 10 us without additional components. Proof that the client side does not have to be exotic.
+- **[Doc · ★ · EN]** Espressif Systems. *Wi-Fi FTM: carry and retrieve Vendor Specific IE in FTM frames*, issue IDFGH-17768. <https://github.com/espressif/esp-idf/issues/18689>
+  - An implementer's working reading of 802.1AS-2020 over 802.11: the media-dependent sync is the FTM exchange, the FollowUpInformation rides inside it as a Vendor Specific element, and putting it in a beacon instead makes the origin timestamp stale by the beacon marshal-to-transmit latency. Read as implementation evidence, not as the standard.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi Alliance extends Wi-Fi CERTIFIED 7 to 20 MHz-only devices*, 6 January 2026. <https://www.wi-fi.org/news-events/newsroom/wi-fi-alliance-extends-wi-fi-certified-7-20-mhz-only-devices>
+  - The ecosystem evidence for the trend, and the caveat: the certified feature list is MLO, DL/UL MU-MIMO and Multi-RUs, not r-TWT, SCS or MSCS.
 
 ## 02-10 · WLAN — Baseband and Driver Architecture for Wi-Fi 6, 7 and 8
 

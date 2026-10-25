@@ -28,6 +28,10 @@ tags:
   - mapc
   - 60802
   - determinism
+  - wireless-tsn
+  - ptp-relay-instance
+  - 802-11-portal
+  - up-to-ac-mapping
   - bounded-latency
   - industrial-wireless
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -36,6 +40,7 @@ aliases:
   - Wi-Fi TSN
   - Wireless TSN
   - Wi-Fi Determinism
+  - wTSN
 ---
 
 # WLAN — Time-Sensitive Networking over Wi-Fi: Research and Practice Across Generations
@@ -890,9 +895,355 @@ Note the *Monitored → Violated → Computed* loop. A deterministic network is 
 loop, and the feedback signal — measured latency distributions, not averages — is what distinguishes a deployment
 that holds its bound from one that held it on commissioning day.
 
+§11 turns that model into a design: what the client and the AP each have to implement for the two halves of
+it — the shared clock and the shared schedule — to meet in the middle.
+
 ---
 
-## 11. The research landscape — what has actually been established, and how
+## 11. The converged network — when both the client and the AP are TSN-aware
+
+Everything above asks what Wi-Fi can do. This section asks the question a real deployment has to answer: **what
+does it take to make the wired TSN domain and the wireless domain into one network**, with the client inside the
+design and not merely attached to it.
+
+### 11.0 Why convergence is the direction of travel
+
+Three independent things happened, and they happened in the right order. First the time standard took Wi-Fi into
+scope. Then the Wi-Fi standard grew 802.1-shaped hooks. Then the profiles and the certification bodies started
+talking about determinism rather than throughput. None of that is marketing; each step is a document with a date.
+
+```mermaid
+flowchart TD
+    A["Clock<br/>802.1AS takes 802.11 links into scope<br/>TM in 2011 then FTM in 2020"] --> D["One TSN network<br/>wired and wireless"]
+    B["MAC<br/>802.11be ships SCS MSCS QoS Characteristics<br/>r-TWT and TID-to-link mapping"] --> D
+    C["Profiles and ecosystem<br/>60802 2026 for industry 802.1DG 2025 for cars<br/>802.1DP 2025 for aerospace"] --> D
+    E["Silicon and certification<br/>Wi-Fi 7 features certified at 20 MHz for IoT<br/>802.11bn makes reliability the objective"] --> D
+    D --> F["What is still missing<br/>a normative wireless bridge delay<br/>and hardware timestamping in clients"]
+```
+
+| Layer | Document or event | What it establishes |
+| --- | --- | --- |
+| Time | **IEEE 802.1AS-2020** specifies transport of gPTP over IEEE 802.11 links using the medium's native timing mechanism — TM in 802.1AS-2011, FTM in 802.1AS-2020 | The clock standard already has Wi-Fi in scope. It is not an annex; the 802.1AS architecture is deliberately split into a media-independent and a media-dependent layer so that a medium with its own timing mechanism can supply one |
+| MAC | **IEEE 802.11be-2024**, published 22 July 2025 | The Wi-Fi standard already carries 802.1-shaped hooks: a stream is described with four numbers (QoS Characteristics), classified with SCS or mirrored with MSCS, given a service period by r-TWT, and steered onto a link by TID-to-link mapping |
+| Profile | **IEC/IEEE 60802:2026**, published 29 June 2026 — two conformance classes ccA and ccB, seven traffic types, multiple gPTP domains with a working clock and a global time | Industrial automation has a profile. Everything a wireless hop has to plug into is now written down, including a synchronisation error budget in Annex D |
+| Neighbouring profiles | **IEEE 802.1DG-2025** automotive, **IEEE 802.1DP-2025 / SAE AS6675** aerospace | The pattern repeats industry by industry: a narrow selection from a common toolbox. That is how a toolbox becomes infrastructure |
+| Clock robustness | **802.1ASdm-2024** hot standby and clock drift error reduction, **802.1ASdn-2024** YANG, **802.1ASed-2026** fault-tolerant timing with time integrity | You only make a clock hot-standby, manageable and integrity-checked when it has become load-bearing |
+| Ecosystem | **Wi-Fi Alliance, 6 January 2026**: Wi-Fi CERTIFIED 7 extended to 20 MHz-only devices for smart home, industrial and healthcare IoT | The certification body is now selling determinism to the IoT market — in its own words, Wi-Fi 7 features "improve deterministic behavior, scheduling efficiency, and robustness" in dense environments |
+| Wi-Fi 8 | **802.11bn UHR**, PAR approved 21 September 2023 | Reliability and latency are now the objective function of a Wi-Fi amendment, not a side effect of throughput |
+| The competitive push | 3GPP Rel-16 makes the 5G system a TSN bridge with a normative bridge delay | The cellular answer exists and is standardised. That is the strongest single reason Wi-Fi had to answer the same question |
+
+Three honest caveats belong next to that table, because they are what separates an architecture from a slide:
+
+- **IEC/IEEE 60802:2026 profiles bridges, end stations and LANs.** Its annexes are the PCS proforma, clock
+  control, the time-synchronisation error budget, device flags and accumulated delays. A wireless segment is not
+  one of them. The profile tells you what to be synchronised *to*; it does not tell you how to synchronise a radio.
+  **VERIFY** before asserting a wireless annex in a tender document.
+- **The 20 MHz Wi-Fi 7 certification lists MLO, DL/UL MU-MIMO and Multi-RUs** — not r-TWT, SCS or MSCS. It
+  widens the population of industrial clients; it does not certify the TSN machinery.
+- **There is still no normative wireless bridge delay.** §10 makes the point with the cellular comparison; it
+  remains the deepest gap, and it is why a converged Wi-Fi TSN network is still an engineered and measured system
+  rather than a computed one.
+
+### 11.1 One time base across four segments
+
+A scheduled network is a single clock with four kinds of hop. The design is the same at every hop — measure the
+link delay, carry a correction, accumulate the rate ratio — and the whole difficulty is that the *measurement* is
+different on the wireless hop.
+
+```mermaid
+flowchart LR
+    GM["Grandmaster<br/>GNSS or a PTP grandmaster<br/>PTP End Instance as the root"]
+    BC1["Wired TSN bridge<br/>PTP Relay Instance<br/>boundary clock"]
+    BC2["Wired TSN bridge<br/>PTP Relay Instance"]
+    AP["Wireless TSN AP<br/>PTP Relay Instance<br/>slave on the wired port<br/>master on the wireless port"]
+    STA["TSN client<br/>PTP End Instance<br/>slave only"]
+    APP["Application or PLC<br/>reads the PHC or a disciplined system clock"]
+
+    GM -->|"gPTP over 802.3<br/>Pdelay_Req and Pdelay_Resp<br/>residence time in correctionField"| BC1
+    BC1 -->|"same mechanism hop by hop"| BC2
+    BC2 -->|"gPTP over 802.3"| AP
+    AP -->|"gPTP over 802.11<br/>Sync and Follow_Up carried by the<br/>802.11 native timing mechanism"| STA
+    STA --> APP
+```
+
+Four roles, and getting the vocabulary right is half the design review:
+
+| Role | PTP instance type | What it does |
+| --- | --- | --- |
+| Grandmaster | PTP End Instance, master only | Originates the time base; one per gPTP domain |
+| Wired bridge | PTP Relay Instance | Slave on one port, master on the others; adds its residence time to the correction field |
+| Wireless AP | PTP Relay Instance | Same, but the master port is an 802.11 port, so the link delay and the Sync transport come from the 802.11 media-dependent layer |
+| TSN client | PTP End Instance, slave only | Computes offset and rate ratio, then serves a clock to the application |
+
+The media-dependent split, which is the part that surprises people:
+
+| Medium | Link delay measured by | Sync carried by | Asymmetry |
+| --- | --- | --- | --- |
+| Full-duplex Ethernet | IEEE 1588 peer-to-peer delay mechanism; `meanLinkDelay = (r·(t4−t1) − (t3−t2)) / 2` | Sync and Follow_Up as gPTP messages | Measured externally and inserted as a managed object if known |
+| IEEE 802.11 | The medium's native timing mechanism — **TM** in 802.1AS-2011, **FTM** in 802.1AS-2020 | Sync and Follow_Up information transported by that same 802.11 exchange | Reciprocity makes the air symmetric in principle; contention makes it asymmetric in practice |
+
+On the wireless hop the 802.1AS media-dependent layer does not send a separate Pdelay_Req. It uses the FTM
+exchange already defined by 802.11mc, and — this is the detail that decides whether an implementation works —
+the Follow_Up information has to arrive **paired with the measurement it belongs to**. An implementer's reading of
+802.1AS-2020 clause 12 is that the media-dependent sync is the FTM exchange, and that the FollowUpInformation
+(`preciseOriginTimestamp`, `correctionField`, `rateRatio`) is carried inside that exchange as a **Vendor Specific
+information element**, delivered through the `MLME-FINETIMINGMSMT` primitives. Carrying the origin timestamp in a
+beacon instead looks equivalent and is not: it is stale by the beacon marshal-to-transmit latency, which corrupts
+the transfer. **VERIFY** the exact clause and subclause numbers before quoting them.
+
+```mermaid
+sequenceDiagram
+    participant GM as Grandmaster
+    participant AP as AP relay instance
+    participant STA as STA end instance
+
+    GM->>AP: Sync and Follow_Up over 802.3
+    Note over AP: AP holds gm time on its wired port<br/>and accumulates rateRatio
+    STA->>AP: FTM Request
+    AP->>STA: ACK carrying t1
+    AP->>STA: FTM frame with t1 and t4
+    STA->>AP: ACK carrying t2 and t3
+    Note over STA: STA now holds t1 t2 t3 t4
+    AP->>STA: FollowUpInformation paired with the same exchange
+    Note over STA: offset equals receive time minus preciseOriginTimestamp minus meanLinkDelay minus correctionField
+    STA->>STA: apply rateRatio then serve the clock to the application
+```
+
+What the **AP** must actually do, in the order it fails if you get it wrong:
+
+1. Run a real gPTP instance on its wired port and hold the time base — an AP that is only a Wi-Fi radio with a
+   clock is not a relay instance, it is a lie with a timestamp.
+2. Generate `preciseOriginTimestamp` **per FTM exchange**, not once per beacon period.
+3. Add its own residence time and the accumulated rate ratio into `correctionField` before the exchange leaves.
+4. Timestamp in hardware at the MAC or PHY boundary. Software timestamping costs about 1 µs; IEC/IEEE 60802
+   allows 0.1–1 µs from the grandmaster for the whole path.
+5. Run the FTM exchange often enough that the client's oscillator cannot drift between corrections, and often
+   enough that a contended FTM frame is an outlier rather than the sample.
+6. Present the wireless port to the controller as a port with a delay, not as a port with a priority.
+
+What the **client** must do:
+
+1. Participate as a PTP End Instance, not as a device that happens to receive beacons.
+2. Compute offset and rate ratio, then **serve a clock** — a PHC, a `ptp4l`-disciplined system clock, or a
+   `phc2sys` link into the application's clock — because an application cannot schedule against a TSF counter it
+   cannot read.
+3. Timestamp in hardware. Everything else is mitigation.
+4. Survive loss of sync without moving the clock (holdover), and report that it is in holdover.
+5. Use the clock. A synchronised client that schedules nothing has bought an expensive free-running clock.
+
+That fifth point deserves its own diagram, because it is where deployments actually fail. Every design has a
+state for *locked*; almost none has a designed state for *the clock is now drifting*.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Unlocked
+    Unlocked --> Acquiring: gPTP instance starts and FTM begins
+    Acquiring --> Locked: offset within budget and rateRatio stable
+    Acquiring --> Unlocked: no usable exchange for the timeout period
+    Locked --> Locked: correction applied each exchange
+    Locked --> Holdover: exchanges lost but local oscillator still trusted
+    Holdover --> Locked: exchanges resume and offset is small
+    Holdover --> Degraded: drift exceeds the holdover budget
+    Degraded --> Acquiring: resynchronise from scratch
+    Degraded --> Unlocked: application told the time base is unusable
+    Locked --> Degraded: offset exceeds the budget repeatedly
+```
+
+What has actually been measured over the air, from the literature (a 2024 KTH survey of the field, plus the
+original papers it cites):
+
+| Platform | Method | Measured result |
+| --- | --- | --- |
+| Wireline reference in the same testbed | 802.1AS gPTP over Ethernet | median **52 ns**, maximum **254 ns** |
+| Plain IEEE 1588 sent over the air | PTP over Wi-Fi with no 802.11 media-dependent layer | median **≈0.95 ms**, outliers to several ms — unusable for industrial classes |
+| Reference Broadcast Infrastructure Synchronisation | COTS Wi-Fi, beacon-based, no driver changes | median **13 µs**, maximum below **40 µs** |
+| linuxptp with the AP as a boundary clock | gPTP over 802.11a, one and two hops | **90th percentile 1.4 µs** one hop, **2.8 µs** two hops; and the offset *between* clients is much smaller than the offset from client to AP |
+| ath9k with software timestamping | PTP, system clock timestamps on TX or RX interrupt | µs-level accuracy, jitter within **2 µs** |
+| ath9k with hardware TSF timestamps | PTP, timestamps taken inside the NIC | error and jitter both below **1 µs** |
+| ath5k with outlier removal | post-hoc filtering of Linux-induced outliers | **831 ns** mean error, **767 ns** standard deviation |
+| Wireless-aware control loops | Kalman-filtered PTP at the application layer | **100 µs** with the filter, settling about **2 min**; about **3 ms** without it |
+| openwifi SDR with ptpd | AP as master, clients as slaves | **50 µs** |
+| Bare-metal gPTP on low-cost COTS embedded | gPTP implemented for both Ethernet and 802.11 links | below **10 µs** with low power on standard devices |
+
+Two conclusions fall out of that table and they should be said out loud in any design review. First, **plain PTP
+over the air is not a wireless TSN clock** — the gap between 0.95 ms and 13 µs is the gap between using the
+802.11 media-dependent layer and ignoring it. Second, **the dominant error source is usually the AP's own delay
+variation, not the client's uplink or downlink latency**, which means buying better clients does not fix a bad AP
+and the AP is where the timestamping budget has to be spent.
+
+### 11.2 Priority scheduling across the wired–wireless boundary
+
+Clock first, then scheduling: with a shared time base the question becomes how a stream keeps its treatment as it
+crosses from 802.1Q queues into 802.11 access categories.
+
+**The boundary is an architectural object, and it has a name.** IEEE 802.1Q requires a bridge to an IEEE 802.11
+LAN to connect to an **IEEE 802.11 Portal**; the Portal is the logical point at which MSDUs from an integrated
+non-IEEE 802.11 LAN enter the IEEE 802.11 distribution system, and for bridging purposes the service interface it
+presents is identical to the one at the 802.11 MAC SAP. Everything below is what the Portal has to do.
+
+```mermaid
+flowchart LR
+    subgraph Wired["Wired TSN domain"]
+        T["Talker<br/>SO_PRIORITY or DSCP then VLAN PCP"]
+        B["802.1Q bridge<br/>Qbv GCL per port per queue<br/>Qci PSFP at ingress<br/>Qbu preemption on egress"]
+    end
+    subgraph Portal["802.11 Portal the mapping point"]
+        M["Priority mapping<br/>8 user priorities collapse into 4 access categories"]
+    end
+    subgraph Air["802.11 BSS"]
+        Q["AP per TID queues<br/>EDCA parameters broadcast<br/>r-TWT service period<br/>trigger frame grants the uplink"]
+        S["STA per TID queues<br/>waits for the service period or the trigger"]
+    end
+    T --> B --> M --> Q --> S
+    M --> W["The trap: 802.1Q priority 3 means Critical Applications<br/>802.11 maps user priority 3 to AC_BE"]
+```
+
+The collapse from eight priorities to four access categories is fixed by the standard and is not configurable.
+RFC 8325 states it plainly: it is the *non-configurable* and standard-specified mapping of UP markings to Access
+Categories that produces differentiated treatment over the air.
+
+| User priority | 802.1Q meaning | 802.11 access category | AIFS in slot times |
+| --- | --- | --- | --- |
+| 1 | Background | AC_BK | 7 |
+| 2 | Excellent Effort | AC_BK | 7 |
+| 0 | Best Effort | AC_BE | 3 |
+| 3 | **Critical Applications** | **AC_BE** | 3 |
+| 4 | Video | AC_VI | 2 |
+| 5 | Video | AC_VI | 2 |
+| 6 | Internetwork Control | AC_VO | 2 |
+| 7 | Network Control | AC_VO | 2 |
+
+Two things to notice, and both are interview material. **802.1Q priority 2 is "excellent effort" and lands in
+Wi-Fi background.** **802.1Q priority 3 is "critical applications" and lands in Wi-Fi best effort.** A stream
+marked PCP 3 because it is important gets *worse* treatment over the air than one marked PCP 4 for video. This is
+not a bug in anybody's implementation; it is two standards mapping the same three bits to different traffic
+classes. The consequence is operational: **pick the 802.11 user priority deliberately and let the wired marking
+follow from it**, rather than the other way round, and drive the Diffserv-to-UP mapping from RFC 8325 or from the
+QoS Map element rather than from intuition.
+
+On the Linux client, that mapping is one array and one function, both worth knowing by name:
+
+```c
+/* net/mac80211/wme.c — the default classifier mapping */
+const int ieee802_1d_to_ac[8] = {
+	IEEE80211_AC_BE,   /* UP 0 */
+	IEEE80211_AC_BK,   /* UP 1 */
+	IEEE80211_AC_BK,   /* UP 2 */
+	IEEE80211_AC_BE,   /* UP 3 */
+	IEEE80211_AC_VI,   /* UP 4 */
+	IEEE80211_AC_VI,   /* UP 5 */
+	IEEE80211_AC_VO,   /* UP 6 */
+	IEEE80211_AC_VO    /* UP 7 */
+};
+```
+
+`ieee80211_select_queue()` takes `skb->priority`, and if no priority has been set it derives one from the VLAN tag
+or the DSCP via `cfg80211_classify8021d()`. If the AP has set the **admission control mandatory** bit for that
+access category and no TSPEC or SCS has been admitted for it, `wme_downgrade_ac()` walks the priority down one
+category at a time — 6 or 7 becomes 5, 4 or 5 becomes 3, 0 or 3 becomes 2 — until it reaches an AC that is not
+gated. That is the whole of Wi-Fi admission control as seen from the client: **an unadmitted high-priority stream
+is not dropped, it is silently reclassified downwards.** If your TSN stream is mysteriously sharing a queue with
+bulk traffic, this is usually why.
+
+Now the three schedulers, and the asymmetry between them:
+
+| Scheduler | Where it lives | What it can decide | What it cannot |
+| --- | --- | --- | --- |
+| 802.1Qbv gate control list | Every wired bridge port | Exactly when each queue may transmit, with a cycle and a base time | Nothing about the air |
+| The AP's wireless port | The AP | EDCA parameters for the BSS, MU EDCA, the r-TWT service period and its TID bitmap, which stations get a trigger and which RUs, which link carries which TID | It cannot stop a neighbour on the same channel |
+| The client | The STA | Which TID a frame is classified into, and whether it is awake for its service period | It cannot launch a frame at a chosen instant |
+
+That last row is the one wired TSN engineers get wrong. On Ethernet, a TSN end station *launches* traffic:
+`tc mqprio` maps flows to traffic classes, `tc taprio` gates them, `tc etf` with `SO_TXTIME` releases each packet
+at a launch time, and with `offload` the NIC performs the arbitration in hardware. On Wi-Fi the launch time is
+not the client's to set. The mac80211 queueing design **bypasses the qdisc layer entirely on Wi-Fi interfaces** —
+the smart queue management lives inside mac80211, because a generic qdisc has no way to split a flow into the
+per-TID aggregates the 802.11 MAC requires. So `taprio` and `etf` are Ethernet tools; on a Wi-Fi interface the
+decision of *when* belongs to the AP, and the client's contribution is to be classified correctly, awake, and
+holding a frame ready when the trigger arrives.
+
+```mermaid
+sequenceDiagram
+    participant CUC as CUC and CNC
+    participant Talker as Talker
+    participant Bridge as Wired bridge
+    participant AP as AP with Portal
+    participant STA as TSN client
+
+    Talker->>CUC: talker advertise with StreamID and requirements
+    CUC->>CUC: match with listener then ask the CNC for a path
+    CUC->>STA: SCS Request with QoS Characteristics
+    STA->>AP: SCS Request over the air
+    AP->>AP: admission control then r-TWT schedule and TID assignment
+    AP->>STA: SCS Response accepted with an SCS ID
+    CUC->>Bridge: GCL installed on wired ports
+    CUC->>AP: AP presented as a TSN bridge port with a wireless delay
+    Note over Bridge,AP: wired gate opens while the r-TWT service period runs
+    Talker->>Bridge: frame marked with the chosen user priority
+    Bridge->>AP: frame delivered inside the open gate
+    AP->>AP: Portal maps priority to TID then queues for the service period
+    AP->>STA: trigger frame grants an uplink or the AP transmits downlink
+    STA->>AP: TB PPDU inside the service period
+    Note over STA: no contention and no backoff because the AP granted the access
+```
+
+The chain of admission, end to end, and where it can break:
+
+1. **Describe the stream.** 802.1Qcc talker advertise carries the StreamID, the destination and the traffic
+   specification. Over the air the equivalent is the SCS Request with its QoS Characteristics: four mandatory
+   numbers — minimum service interval, maximum service interval, minimum data rate, delay bound — plus options
+   such as maximum MSDU size and MSDU delivery ratio.
+2. **Classify it.** DSCP or VLAN PCP to user priority on the wired side (RFC 8325), UP to TID at the Portal,
+   and if the traffic is uplink-originated, MSCS so the AP mirrors the classification onto the downlink.
+3. **Admit it.** The AP decides, and its answer is not a guarantee — 802.11be states the AP's obligation in terms
+   of *enabling* the requested treatment. If the AP sets ACM and the stream is not admitted, the client's own
+   stack quietly downgrades the priority one category at a time.
+4. **Schedule it.** A service period whose start the wired gate can be aligned to, a TID bitmap that says which
+   traffic may use it, and a trigger frame that removes contention from the uplink.
+5. **Policing.** 802.1Qci per-stream filtering and policing exists on the wired side and has no 802.11
+   counterpart. The nearest thing is admission control plus per-AC airtime limits — and that difference is why a
+   misbehaving wireless client can still damage a schedule that every wired device is honouring.
+6. **Configure and verify it.** 802.1Qcp, 802.1Qcw and 802.1Qdj give YANG models for the wired side. There is no
+   equivalent wireless model, which is why wireless TSN configuration is still vendor-specific and why the
+   controller's view of the wireless hop is usually a configured guess that only measurement can confirm.
+
+### 11.3 The both-ends checklist
+
+If you are asked "what does it take for the client and the AP to both support TSN", this is the answer in one
+table. Every row is something you can check with a command, a sniffer or a datasheet.
+
+| Capability | Client must | AP must | How you verify |
+| --- | --- | --- | --- |
+| Clock | gPTP end instance; hardware timestamping; a PHC or disciplined clock exposed to the application; designed holdover | gPTP relay instance; hardware timestamping; per-exchange origin timestamps; residence time in the correction field | `ptp4l` and `pmc` on both; measure the offset distribution, not the mean |
+| Ranging | FTM initiator, and the FollowUpInformation paired with the exchange | FTM responder with vendor-information support | Capture the FTM exchange and confirm the origin timestamp is not beacon-derived |
+| Stream description | SCS Request with QoS Characteristics | SCS admission, TID assignment, r-TWT schedule | Association capture; check the SCS Response status code |
+| Mirroring | MSCS so the uplink classification is mirrored onto the downlink | MSCS support and a mirrored classifier | `iw` or vendor tooling; check the downlink treatment of a stream whose uplink is marked |
+| Scheduled access | r-TWT membership; end TXOPs before the SP; wake for the SP; answer the trigger | Broadcast the r-TWT schedule in beacons; grant triggers; protect the SP | Beacon decode of the r-TWT element with its TID bitmap; per-SP airtime accounting |
+| Priorities | Mark at the source with `SO_PRIORITY` or DSCP; know the UP to AC mapping | Broadcast EDCA and MU EDCA parameters; set ACM deliberately | `ieee802_1d_to_ac` on the client; EDCA Parameter Set in the beacon; watch for priority downgrades |
+| Redundancy | MLO with TID-to-link mapping, or dual radios | MLO on the AP side; 802.1CB-style replication and elimination | Measure both the latency improvement and the airtime cost |
+| Mobility | 802.11k and 802.11v; 802.11r or OKC so a transition does not cost a full EAP exchange | Neighbour reports; transition management; 802.11bn single mobility domain where available | Measure the transition gap and compare it with the cycle time |
+| Offload | Know which offload paths bypass the queueing you configured | Know that hardware offload can bypass AQL and the fair queueing | Latency under load with and without offload — always measure both |
+| Management | Report sync status and stream KPIs | Expose per-stream latency and loss distributions, not averages | The *Monitored to Violated to Computed* loop of §10.2 |
+
+### 11.4 What still does not close
+
+Say these before someone else says them for you.
+
+- **No normative wireless bridge delay.** 802.1Qcc has `dependentDelayMin` and `dependentDelayMax`; the 5G system
+  computes them; Wi-Fi does not define them. A converged Wi-Fi TSN network is therefore measured, not computed.
+- **Hardware timestamping is not a commodity client feature.** The 0.1–1 µs budget of IEC/IEEE 60802 is not
+  reachable with software timestamps, and most clients do software timestamps.
+- **Eight priorities become four access categories at a boundary nobody configures.** The PCP 3 trap is not
+  exotic; it is the default.
+- **Policing stops at the Portal.** 802.1Qci has no 802.11 counterpart, so the wireless hop is the one place a
+  misconfigured device can still injure a schedule.
+- **Preemption is 802.11bn, not 802.11be.** Until it ships, a long low-priority frame can still occupy the medium
+  in front of a critical one.
+- **The configuration plane is vendor-specific.** Wired TSN has YANG models. Wireless TSN has datasheets.
+
+---
+
+## 12. The research landscape — what has actually been established, and how
 
 It is worth separating three kinds of evidence, because they support very different claims.
 
@@ -929,7 +1280,7 @@ read:
 
 ---
 
-## 12. Application method — how to actually deploy this
+## 13. Application method — how to actually deploy this
 
 Research findings do not deploy themselves. The practical procedure has nine steps, and the ordering matters
 because each step can invalidate the one before it.
@@ -965,7 +1316,7 @@ Five rules that come out of practice and are worth memorising:
 5. **Measure the tail.** The mean will look excellent while the 99th percentile is unusable — this is the defining
    failure mode of Wi-Fi latency work.
 
-### 12.1 A worked latency budget
+### 13.1 A worked latency budget
 
 The following is an **illustrative** design calculation, not a specification-derived number. Its purpose is to show
 which term dominates.
@@ -989,9 +1340,9 @@ the service-period interval is the dominant term in the latency bound, and the r
 
 ---
 
-## 13. Measurement and troubleshooting
+## 14. Measurement and troubleshooting
 
-### 13.1 The KPIs that matter
+### 14.1 The KPIs that matter
 
 | KPI | Why it is the right one | What a wrong value looks like |
 | --- | --- | --- |
@@ -1002,7 +1353,7 @@ the service-period interval is the dominant term in the latency bound, and the r
 | **Deadline-miss ratio** | The only KPI the application actually cares about | Excellent latency, missed cycles |
 | **Service-period utilisation** | Shows whether the schedule is correctly sized | SP always full, meaning SP too short or load unbounded |
 
-### 13.2 Symptom table
+### 14.2 Symptom table
 
 | Symptom | Most likely cause | How to confirm | Fix |
 | --- | --- | --- | --- |
@@ -1033,7 +1384,7 @@ flowchart TD
 
 ---
 
-## 14. Wi-Fi TSN versus 5G TSN — the same question, two answers
+## 15. Wi-Fi TSN versus 5G TSN — the same question, two answers
 
 Both communities were asked to carry deterministic traffic over a shared medium, and their answers differ in a way
 that is more instructive than either answer alone.
@@ -1058,7 +1409,7 @@ by "a scheduler that must first win a contended medium".
 
 ---
 
-## 15. Ten answers worth having on the tip of your tongue
+## 16. Ten answers worth having on the tip of your tongue
 
 1. **"What is TSN?"** Not a standard — the IEEE 802.1 toolbox: time synchronisation (802.1AS), bounded latency
    (802.1Qbv, Qch, Qcr), reliability (802.1CB), and resource management (802.1Qcc). Grew out of AVB, renamed in
@@ -1130,11 +1481,57 @@ by "a scheduler that must first win a contended medium".
 - **TSN toolbox dates**: 802.1Qav-2009, 802.1AS-2011, 802.1Qat-2010, 802.1Qbv-2015, 802.1Qca-2015, 802.1Qbu-2016
   with 802.3br-2016, 802.1CB-2017, 802.1Qch-2017, 802.1Qci-2017, 802.1Qcc-2018, 802.1CM-2018, 802.1CS-2020,
   802.1Qcr-2020, 802.1AS-2025. AVB TG renamed TSN TG in **November 2012**.
+- **IEC/IEEE 60802:2026** published **29 June 2026**, Edition 1.0, IEC TC 65/SC 65C with IEEE 802.1, ISBN
+  9782832712870. Two conformance classes, **ccA** feature-rich and **ccB** resource-constrained, for both bridge
+  and end-station components; **seven traffic types** - isochronous, cyclic synchronous, cyclic asynchronous,
+  alarms and events, configuration and diagnostics, network control, best effort; **multiple gPTP domains** with a
+  working clock and a global time; Annex C clock control, **Annex D time synchronisation error budget**.
+  Its annexes are the PCS proforma, clock control, the sync error budget, device flags and accumulated delays.
+  **VERIFY** whether a wireless segment appears anywhere in it before asserting one.
 - **Profiles**: **IEC/IEEE 60802** published **29 June 2026**; **IEEE 802.1DG-2025** approved 28 May 2025,
   published 6 June 2025; **IEEE 802.1DP-2025 / SAE AS6675** aerospace, 2025; **IEEE 802.1BA-2021** AVB profile.
 - **Wi-Fi CERTIFIED QoS Management** launched **23 February 2021** with MSCS and DSCP mapping based on **RFC 8325**;
   extended **21 October 2021** to four features: SCS, MSCS, DSCP mapping and DSCP Policy. MSCS is the mirroring
   mechanism defined in IEEE 802.11 REVmd.
+- **IEEE 802.1AS architecture** is split into a **media-independent** and a **media-dependent** layer, precisely so
+  that a medium with a native timing mechanism can supply one. Transport is specified over full-duplex Ethernet
+  (IEEE 1588 peer-to-peer delay), **IEEE 802.11** (TM in 802.1AS-2011, **FTM in 802.1AS-2020**), IEEE 802.3 EPON and
+  coordinated shared networks. meanLinkDelay = (r.(t4-t1) - (t3-t2)) / 2 and neighborRateRatio
+  r = (t3(N) - t3(0)) / (t4(N) - t4(0)), with the rateRatio relative to the grandmaster obtained by accumulating
+  neighborRateRatio. 802.1AS-2020 adds **multiple domains**, improved detection of non-compliant devices, and the
+  Common Mean Link Delay Service of IEEE 1588-2019. Later amendments: **802.1ASdn-2024** YANG, **802.1ASdm-2024**
+  hot standby and clock drift error reduction, **802.1ASed-2026** fault-tolerant timing with time integrity.
+- **The wired-wireless boundary is an IEEE 802.11 Portal.** 802.1Q requires a bridge to an IEEE 802.11 LAN to
+  connect to an 802.11 Portal, and for bridging purposes the service interface presented at the Portal is identical
+  to the one at the 802.11 MAC SAP; the Portal is the logical point at which MSDUs from an integrated non-802.11 LAN
+  enter the 802.11 distribution system.
+- **Eight user priorities collapse into four access categories, and the mapping is not configurable.** RFC 8325
+  reproduces the table from IEEE 802.11-2016 clause 10.2.4.2 Table 10-1: UP 7 and 6 to AC_VO, 5 and 4 to AC_VI,
+  3 and 0 to AC_BE, 2 and 1 to AC_BK; AIFS in slot times from clause 9.4.2.29 Table 9-137 is BK 7, BE 3, VI 2, VO 2.
+  RFC 8325 calls the mapping **non-configurable**. The consequence: 802.1Q priority 2 is excellent effort but lands
+  in Wi-Fi background, and 802.1Q priority 3 is critical applications but lands in Wi-Fi best effort.
+- **mac80211 implements that mapping and its admission-control fallback.** `ieee802_1d_to_ac[8]` in
+  `net/mac80211/wme.c` is {BE, BK, BK, BE, VI, VI, VO, VO}; `ieee80211_select_queue()` takes `skb->priority` or
+  derives it with `cfg80211_classify8021d()`; when the AP sets the **admission control mandatory** bit for the AC and
+  no stream is admitted, `wme_downgrade_ac()` walks the priority down one category at a time - 6 or 7 to 5, 4 or 5 to
+  3, 0 or 3 to 2. **mac80211 bypasses the qdisc layer entirely on Wi-Fi interfaces**, so `taprio` and `etf` are
+  Ethernet mechanisms; on a Wi-Fi interface the launch time belongs to the AP.
+- **Measured synchronisation over the air** (KTH survey and the papers it cites): wireline 802.1AS in the same
+  testbed median **52 ns** and max **254 ns**; plain IEEE 1588 over the air median about **0.95 ms** with outliers to
+  several ms; Reference Broadcast Infrastructure Synchronisation on COTS median **13 us** and max below **40 us**;
+  linuxptp with the AP as a boundary clock **90th percentile 1.4 us** one hop and **2.8 us** two hops, with the
+  client-to-client offset much smaller than client-to-AP; ath9k with software timestamps us-level and jitter within
+  2 us, with hardware TSF timestamps below 1 us; ath5k with outlier removal 831 ns plus or minus 767 ns; openwifi
+  with ptpd **50 us**; bare-metal gPTP on low-cost COTS embedded below **10 us**. The dominant error source in
+  infrastructure mode is usually **delay variation inside the AP**, not the client's uplink or downlink.
+- **Wi-Fi Alliance, 6 January 2026**: Wi-Fi CERTIFIED 7 extended to **20 MHz-only** client devices for smart home,
+  industrial and healthcare IoT, with MLO, DL/UL MU-MIMO and Multi-RUs; in the Alliance's words the features improve
+  deterministic behavior, scheduling efficiency, and robustness. **r-TWT, SCS and MSCS are not in the certified
+  feature list.**
+- **VERIFY**: the 802.1AS-2020 clause and subclause numbers for the 802.11 media-dependent layer and for carrying
+  FollowUpInformation as a Vendor Specific information element inside the FTM exchange (an implementer reading places
+  them in clause 12 and 12.7 Type 0 via the `MLME-FINETIMINGMSMT` primitives), and whether IEC/IEEE 60802:2026 has
+  any wireless annex.
 - **3GPP**: Rel-16 makes the 5G system a TSN bridge with **DS-TT** and **NW-TT** and the **TSN-AF** (TS 23.501
   §5.28; §5.29 covers 5G LAN); bridge delay reported as `dependentDelayMin`/`dependentDelayMax` per 802.1Qcc,
   computed from UE–DS-TT residence time plus per-traffic-class UE↔UPF/NW-TT delay. Rel-17 adds **TSCTSF**,
@@ -1202,7 +1599,7 @@ by "a scheduler that must first win a contended medium".
 23. Liu, X., Gan, M., Dai, W., Dong, Y., Chan, C. C.-K., and Song, J. "Towards Ultra-High Reliability in Wi-Fi 8: IEEE 802.11bn Core Mechanisms, mmWave Integration, and Performance Verification." arXiv:2607.19931. — System-level simulations of whether the 802.11bn mechanisms actually meet their targets.
 24. IEEE 802.11 Real Time Applications Topic Interest Group. *RTA TIG Report*, doc. 11-18/2009-06, 2019. <https://www.ieee802.org/11/Reports/rtatigupdate.htm> — Where the requirement set for real-time applications over 802.11 was first written down by the working group itself.
 25. Hu, C. et al. "Protected TWT Enhancement for Latency Sensitive Traffic." IEEE 802.11 contribution 11-20/1046r14, 2020. — The TGbe contribution lineage from which restricted TWT emerged.
-26. 3GPP. *TS 23.501 — System Architecture for the 5G System*, §5.28 (TSN integration) and §5.29 (5G LAN). — The cellular answer: DS-TT, NW-TT, TSN-AF and bridge delay; the sharpest contrast with the Wi-Fi approach in §14.
+26. 3GPP. *TS 23.501 — System Architecture for the 5G System*, §5.28 (TSN integration) and §5.29 (5G LAN). — The cellular answer: DS-TT, NW-TT, TSN-AF and bridge delay; the sharpest contrast with the Wi-Fi approach in §15.
 27. Wi-Fi Alliance. *Wi-Fi CERTIFIED QoS Management*. Announced 23 February 2021; extended 21 October 2021 to SCS, MSCS, DSCP mapping and DSCP Policy. <https://www.wi-fi.org/news-events/newsroom/wi-fi-alliance-enhances-consistent-quality-of-service-for-latency-sensitive-wi> — What is actually certified, and therefore what actually ships.
 28. Wi-Fi Alliance. *Wi-Fi CERTIFIED QoS Management prioritizes traffic to improve user experience*. <https://www.wi-fi.org> — MSCS defined in IEEE 802.11 REVmd, DSCP mapping defaulting to RFC 8325, and the QoS Map feature from 802.11u.
 29. IETF. *Reliable and Available Wireless Technologies* (RAW), draft-ietf-raw-technologies. <https://ftp.ripe.net/mirrors/internet-drafts/draft-ietf-raw-technologies-05.html> — An unusually accurate cross-technology summary: what 802.11-2012, 802.11-2016, 802.11ak, 802.11ax and 802.11be each contribute to TSN, and the trade-offs of extending TSN to any wireless medium.
@@ -1211,6 +1608,21 @@ by "a scheduler that must first win a contended medium".
 32. Samsung Research. *IEEE 802.11bn (Ultra-High Reliability, Wi-Fi 8)* — Ha, T., Shafin, R., and Manasi. <https://research.samsung.com/blog/IEEE-802-11bn-Ultra-High-Reliability-UHR-Wi-Fi-8> — An engineering walkthrough from a TGbn contributor: P-EDCA and DS-CTS, LLI, NPCA, ELR and DRU, with the certification timeline.
 33. MaxLinear. *Quality of Service (QoS) Mechanisms in Wi-Fi*, white paper, 2024. <https://www.maxlinear.com/news/white-papers/2024/quality-of-service-(qos)-mechanisms-in-wi-fi> — A readable secondary account of the amendment-by-amendment QoS story from 802.11e through 802.11be.
 34. Things Embedded. *Time Sensitive Networking (TSN): Standards, Scheduling and Hardware*. <https://things-embedded.com/uk/white-paper/time-sensitive-networking-tsn-guide/> — The clearest short explanation of why priority alone is not enough, and what preemption buys at 1 Gbit/s.
+35. Garner, G. *The Transport and Impact of Synchronization in Time-Sensitive Networking: An Introduction to IEEE 802.1AS*. IEEE 802 Foundational Technologies webinar, February 2022. <https://www.ieee802.org/1/files/public/docs2022/webinar-garner-synchronization-0222.pdf> — The single clearest primary explanation of §11.1: the media-independent and media-dependent layers, which media have native timing mechanisms, the meanLinkDelay and neighborRateRatio formulas, and how the correction field and accumulated rate ratio are built hop by hop.
+36. IEEE 802.1. *Draft blog post for IEEE Std 802.1AS-2020*, July 2020. <https://www.ieee802.org/1/files/public/docs2020/as-draft-blog-post-0720-v01.pdf> — What 802.1AS-2020 adds over 802.1AS-2011 in the working group's own words: FTM transport over 802.11, multiple domains for redundancy and for a working clock alongside global time, detection of non-compliant devices, and the Common Mean Link Delay Service.
+37. IEEE 802.1 Time-Sensitive Networking Task Group. *TSN summary*, July 2025. <https://ieee802.org/1/files/public/docs2025/admin-tsn-summary-0725-v01.pdf> — The one-page map of the whole toolbox and every profile, including the recent amendments quoted in §11.0: 802.1ASdn-2024, 802.1ASdm-2024, 802.1ASed-2026, 802.1Qdj-2024, 802.1Qdx-2024, 802.1DG-2025 and 802.1DP-2025.
+38. Broadcom. *802.11 QoS Queue Architecture and Possible 802.1bz Bridge Model*. IEEE 802.11 contribution 11-13-0221-01-00ak, March 2013. <https://mentor.ieee.org/802.11/dcn/13/11-13-0221-01-00ak-802-11-qos-queue-architecture-and-possible-802-1bz-bridge-model.pptx> — The source of the Portal argument and of the side-by-side table showing that 802.1Q-2012 traffic classes and 802.11 access categories are different mappings of the same eight priorities; also where 802.11aa's alternate voice and video queues come from.
+39. IETF. Szigeti, T., Baker, F., Mohapatra, P., and McCann, J. *Mapping Diffserv to IEEE 802.11*, RFC 8325, February 2018. <https://www.rfc-editor.org/rfc/rfc8325> — The UP-to-AC table reproduced from IEEE 802.11-2016 Table 10-1, the AIFS table, the statement that the mapping is non-configurable, and the Diffserv-to-UP mapping a converged network should use.
+40. Linux. *net/mac80211/wme.c* — `ieee802_1d_to_ac`, `ieee80211_select_queue()`, `wme_downgrade_ac()`, `ieee80211_downgrade_queue()`. <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/net/mac80211/wme.c> — The mapping and the admission-control downgrade as code, which is the only place the behaviour is unambiguous.
+41. Høiland-Jørgensen, T., Kazior, M., Täht, D., Hurtig, P., and Brunstrom, A. *Bufferbloat mitigation in the WiFi stack — status and next steps*, Netdev 2.2. <https://www.netdevconf.info/2.2/papers/jorgensen-wifistack-talk.pdf> — The source of the asymmetry in §11.2: mac80211 disables the qdisc layer entirely on WiFi interfaces, because a generic qdisc cannot split a flow into the per-TID aggregates 802.11 aggregation requires.
+42. iproute2 and Linux man-pages. *tc-etf(8) — Earliest TxTime First qdisc*; *tc-taprio(8)*; *socket(7)*, `SO_TXTIME` and `SCM_TXTIME`. <https://man7.org/linux/man-pages/man8/ETF.8.html> — The wired end-station launch-time machinery, documented precisely so that the contrast with a Wi-Fi client is exact rather than rhetorical.
+43. Wu, P. *Time Synchronization Protocols for Industrial Use Cases: A Performance Review of NTP and PTP and a Wireless-aware Enhancement*. KTH Royal Institute of Technology, 29 October 2024, DiVA diva2:1942067. <https://www.diva-portal.org/smash/get/diva2:1942067/FULLTEXT01.pdf> — The survey behind the measured table in §11.1: LinuxPTP over Wi-Fi, ath9k software versus TSF hardware timestamping, outlier filtering, Kalman filtering, openwifi, and the finding that in infrastructure mode most error comes from delay variation inside the AP.
+44. *Extending Reference Broadcast Infrastructure Synchronization Protocol in IEEE 802.11 as Enabler for the Industrial Internet of Things*. arXiv:2106.03732. <https://arxiv.org/html/2106.03732v1> — The three-way comparison: wireline gPTP median 52 ns and max 254 ns, plain IEEE 1588 over Wi-Fi median about 0.95 ms with outliers to several ms, and RBIS at median 13 us with a maximum below 40 us on commodity hardware.
+45. *Integration of IEEE 802.1AS-based Time Synchronization in IEEE 802.11 as an Enabler for Novel Industrial Use Cases*. arXiv:2101.02434. <https://arxiv.org/pdf/2101.02434> — A worked integration of 802.11 with 802.1AS using a TSN evaluation kit as grandmaster and linuxptp, with the plus or minus 350 ns result at a 31.25 ms sync interval and the contrast against carrying PTP directly over the air.
+46. *Practical IEEE 802.1AS-Based TSN Time Synchronization over Wi-Fi for Bare-Metal Devices*. Project WiWiOPT, supported by the German Federal Ministry for Economic Affairs and Climate Action, grant KK5189604MS1. <https://dtic.dimensions.ai/details/publication/pub.1186205720> — A bare-metal gPTP implementation supporting both Ethernet and 802.11 links on low-cost embedded hardware, reaching below 10 us without additional components.
+47. Espressif Systems. *Wi-Fi FTM: carry and retrieve Vendor Specific IE in FTM frames*, issue IDFGH-17768. <https://github.com/espressif/esp-idf/issues/18689> — An implementer's working reading of 802.1AS-2020 over 802.11: the media-dependent sync is the FTM exchange, the FollowUpInformation rides inside it as a Vendor Specific element, and putting it in a beacon instead makes the origin timestamp stale by the beacon marshal-to-transmit latency. Read as implementation evidence, not as the standard.
+48. IEC/IEEE. *IEC/IEEE 60802:2026 — Time-Sensitive Networking Profile for Industrial Automation*. Edition 1.0, published 29 June 2026, ISBN 9782832712870. <https://webstore.iec.ch/en/publication/60188> — The profile a wireless segment has to plug into: ccA and ccB, the seven traffic types, multiple gPTP domains with working clock and global time, the Annex C clock control model and the Annex D synchronisation error budget.
+
 
 ---
 
