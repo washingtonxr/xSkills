@@ -145,6 +145,7 @@ A defensible minimal-change answer:
 - Ambient IoT device type 1 ≈ **1 µW peak**, backscatter + envelope detection, no L1 HARQ.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — NTN as code: SIB19, `get_NTN_Koffset()` and the GEO-versus-LEO K2 arithmetic, plus UE frequency-offset compensation, in the only open stack that implements them
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]

@@ -960,6 +960,7 @@ per-bearer decision rather than a global rule.
 Anything not listed here and not independently confirmed is marked `VERIFY` rather than asserted.
 
 ## 12. Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the mechanism as data structures: HARQ as available and retransmission `NR_list_t` pools, the RV cycling table, and the k1/k2 floors that decide whether a UE can attach at all
 
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the layer that owns HARQ, and where BSR, LCP and RLC ARQ meet it
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the same question asked of a contended medium: what happens to a retransmission scheme when the retry budget is a deadline rather than a count, and why Wi-Fi has to schedule around the air instead of around a slot

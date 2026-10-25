@@ -211,6 +211,7 @@ flowchart LR
 - Rel-18 introduced L1/L2 signalling-driven mobility work (LTM) to reduce handover interruption.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the same layers as a program: SDAP and PDCP in the CU-UP, RRC in the CU-CP, RLC and MAC in the DU, with F1 and E1 as the seams and `openair2/LAYER2/` as the code
 
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the L1/L2 real-time boundary, execution contexts per layer, modem-host interface design
 - [[01-1 5G-Advanced and 6G Radio Access]]

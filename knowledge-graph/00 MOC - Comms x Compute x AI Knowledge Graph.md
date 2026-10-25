@@ -53,7 +53,7 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 
 | Group | Domain | Notes |
 | --- | --- | --- |
-| `01-x` | Cellular and mobile communications | 01-1 … 01-7 |
+| `01-x` | Cellular and mobile communications | 01-1 … 01-8 |
 | `02-x` | WLAN | 02-1 … 02-13 |
 | `03-x` | Low-power and sensor networking | 03-1 |
 | `04-x` | Embedded and systems software | 04-1 … 04-6 |
@@ -78,6 +78,7 @@ flowchart LR
         c5["01-5 NR random access (RACH)"]
         c6["01-6 DU MAC scheduler"]
         c7["01-7 HARQ · NR and LTE"]
+        c8["01-8 OpenAirInterface · OAI"]
     end
     subgraph g2["02 · WLAN"]
         w1["02-1 Wi-Fi generations"]
@@ -133,6 +134,14 @@ flowchart LR
     c2 --> c7
     c6 --> c7
     c4 --> c7
+    c2 --> c8
+    c5 --> c8
+    c6 --> c8
+    c7 --> c8
+    c3 --> c8
+    c8 --> e5
+    c8 --> d1
+    c8 --> w12
     c2 --> e3
     c4 --> s1
     w1 --> w2 --> w3
@@ -204,6 +213,7 @@ flowchart LR
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the whole UE random-access procedure end to end: triggers and their RRC meaning, resource and RA-type selection, PRACH formats and open-loop power ramping, RA-RNTI and the RAR, Msg3 timing and payloads, contention resolution, 2-step MsgA/MsgB with fallback, CFRA and BFR, and the SDT / NTN / RedCap variants — then the same procedure retold from the UE side and from the gNB side, with what each side knows that the other does not
 - [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the retransmission mechanism itself: what the soft buffer stores, how NDI and RV decide new versus retry, the k0/k1/k2 timing with N1 and N2, HARQ-ACK codebooks and CBG retransmission, the four state machines, and a clause-level NR-versus-LTE comparison with the eight things an LTE engineer has to unlearn
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the scheduler itself: the CU/DU split and the 7-2x fronthaul, the four resources it allocates at once, the per-slot time budget, twelve modules, the eleven-step pipeline, the two-stage DL allocation, the UL chain, HARQ and PUCCH and PDCCH budgets, TDD and DRX, and the real-time execution model
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the whole stack as a program you can read: what OAI is and who governs it, the GPL-to-OAI-PL-to-CSSL licence line and the Duranta move, the four software assets, the repository map, the four executables and what each node type is, the libconfig and command-line surface, ITTI tasks versus the real-time L1 threads with their notified FIFOs and thread pool, the FAPI L1/L2 boundary as a struct of function pointers with the P5 and P7 rhythm, nFAPI VNF/PNF, the NR MAC scheduler file by file with its preprocessor and postprocessor split, what the PHY actually implements and the USRP bandwidth ceilings, where RLC/PDCP/SDAP/RRC/NGAP/GTP-U sit relative to F1 and E1, split 8 and O-RAN 7.2x with libxran, DPDK, NETCONF/YANG and PTP, the nrUE with its actors and the k1/k2 budget, the 11-NF core, FlexRIC and the E2 and O1 interfaces, the simulator ladder from rfsim to Colosseum, the real-time tuning ladder with a worked core allocation, the measured throughput table, the independent srsRAN comparison, and a fault-localisation tree
 
 ### 02 · WLAN
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — 802.11n/ac/ax/be/bn, Wi-Fi 4→9, MLO, OFDMA, UHR, multi-AP coordination

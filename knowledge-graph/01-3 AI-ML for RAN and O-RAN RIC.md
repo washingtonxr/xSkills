@@ -174,6 +174,7 @@ Being able to name this ladder, and to ask an interviewer which rung their team 
 - Rel-21 AI capabilities named: radio-link AI optimisation, fault self-healing, AI resource scheduling, AI-DPD.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the RAN side of the E2 interface: FlexRIC's service models and its sub-millisecond RAN-to-xApp latency, the O1 adapter, and why an xApp runs at tens of milliseconds while the scheduler runs at a slot
 
 - [[01-1 5G-Advanced and 6G Radio Access]]
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]

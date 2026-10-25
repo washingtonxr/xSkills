@@ -284,6 +284,84 @@ generations, `02-10` Wi-Fi 6/7/8 baseband and driver architecture with Qualcomm 
 - **[Doc · ★ · EN]** USPTO. *US10911187 — User equipment provision of enhanced capability information for HARQ processing*. <https://uspto.report/patent/grant/10,911,187>
   - Why soft-buffer size is proportional to data rate times HARQ RTT, and why a higher peak rate forces a choice between fewer processes and a lower rate.
 
+## 01-8 · 5G NR — OpenAirInterface: the open-source NR stack
+
+### Project, governance and licence
+
+- **[Doc · ★★★ · EN]** Kaltenberger, F., Gosain, A., Ghauri, I., Knopp, R., et al. *Driving Innovation in 6G Wireless Technologies: The OpenAirInterface Approach*. arXiv:2412.13295 (published in *Computer Networks*). <https://arxiv.org/abs/2412.13295>
+  - The one document to read first. History and governance, the licence argument, the RAN/CN/OAM asset split, F1/E1/FAPI/7.2/E2/O1 support, the PHY parameter table, the O-RU vendor list, the performance tables, the 11-NF core and FlexRIC's service models and latency, all in one place.
+- **[Doc · ★★★ · EN]** OpenAirInterface Software Alliance. *OAI License Model*. <https://openairinterface.org/?page_id=101>
+  - The four repositories and their licences, and the FRAND patent clause that distinguishes CSSL from Apache 2.0. Read it before you answer any licensing question about OAI.
+- **[Doc · ★★ · EN]** OpenAirInterface Software Alliance. *CSSL — The OAI move to a generic license*, OAI Webinar Series chapter 16. <https://openairinterface.org/?p=1495/>
+  - Why OAI Public License v1.1 became CSSL v1.0 with the Duranta launch, in the project's own words.
+- **[Doc · ★★ · EN]** Linux Foundation Networking and OpenAirInterface Software Alliance. *LF Networking and OSA collaborate to announce Duranta* (2025-08-27). <https://lfnetworking.org/>
+  - The governance change: OAI assets seeded into an LFN incubation project with a governing board, security processes and Nephio integration.
+- **[Doc · ★★ · EN]** OpenAirInterface Software Alliance. *OAI 5G RAN Project Group Charter*. <https://www.openairinterface.org/docs/OSA-5G-RAN-Project-Group-Charter.pdf>
+  - How the 5G work is funded and steered: the two-year project group started 2020-11-15, its steering committee and its output list.
+- **[Doc · ★ · EN]** OpenAirInterface Software Alliance. *Winter Newsletter, January 2022*. <https://openairinterface.org/wp-content/uploads/2025/10/Winter_Newsletter.pdf>
+  - The July 2021 launch of the 5G Stand-Alone gNB stack: containerised AMF/UPF/SMF, a bare-metal gNB on two USRP N310s, and a Quectel module as the UE.
+
+### Source code and architecture
+
+- **[Code · ★★★ · EN]** Duranta project. *openairinterface5g*. <https://github.com/duranta-project/openairinterface5g>
+  - The repository. Start at `README.md` for the directory map, then `executables/nr-softmodem.c` for startup, `openair2/NR_PHY_INTERFACE/NR_IF_Module.c` for the L1/L2 boundary and `openair2/LAYER2/NR_MAC_gNB/gNB_scheduler.c` for the scheduler. Check `CHANGELOG.md` and the weekly tag before quoting any feature.
+- **[Code · ★★★ · EN]** OpenAirInterface. *openairinterface5g tags*. <https://gitlab.eurecom.fr/oai/openairinterface5g/-/tags>
+  - Weekly integration tags (`2026.w43` merged 2026-10-23). The per-week merge-request summaries are the best available record of what actually changed, and the only honest answer to "does OAI support X today".
+- **[Doc · ★★★ · EN]** OpenAirInterface. *Feature set, build and run documentation* — `doc/FEATURE_SET.md`, `doc/BUILD.md`, `doc/RUNMODEM.md`, `doc/tuning_and_security.md`. <https://openairinterface.org/docs/>
+  - The supported parameter table, the `build_oai` invocations, the softmodem command line, and the performance-tuning section: L1 thread cores, thread pool, `L1_num_tx_sym_per_thread`, `max_ldpc_iterations`, `ul_max_mcs`, and the AMD EPYC core-complex caveat.
+- **[Doc · ★★★ · EN]** Kaltenberger, F. *OAI Layer 1/2 procedures*, OAI Fall 2019 Workshop, Beijing. <https://www.openairinterface.org/docs/workshop/8_Fall2019Workshop-Beijing/Training/2019-12-03-KALTENBERGER-2.pdf>
+  - The thread inventory and timing diagrams: `ru_thread`, `ru_thread_tx`, `fep_thread`, `feptx_thread`, `ru_thread_prach`, `ru_thread_asynch`, `L1_thread_rx`, `L1_thread_tx`, `L1_thread_prach`.
+- **[Doc · ★★ · EN]** Thomas, L. *Configuration files and Linux threading in the OAI RAN code*, OAI Webinar Series chapter one. <https://openairinterface.org/wp-content/uploads/2022/01/OAI-webinar-chapter-one.pdf>
+  - The notifiedFIFO discipline, the permanent-thread inventory, and the argument against allocation in the hot path.
+- **[Doc · ★★★ · EN]** Knopp, R., Kaltenberger, F., et al. *The OpenAirInterface 5G New Radio Implementation: Current Status and Roadmap*. EURECOM. <https://www.eurecom.fr/publication/5822/download/comsys-publi-5822.pdf>
+  - The FAPI P5 and P7 figures, and the USRP X310 (184.32 Msps, 80 MHz, 217 PRB) versus N310 (122.88 Msps, 100 MHz, 273 PRB) bandwidth analysis that explains the config-file PRB counts.
+- **[Doc · ★★★ · EN]** OpenAirInterface. *VNF/PNF split architecture* (`doc/NR_NFAPI_archi.md`). <https://openairinterface-docs-5b3d70.eurecom.io/projects/OpenAirInterface5G/architecture/NR_NFAPI_archi/>
+  - The nFAPI split in detail: `configure_nr_nfapi_vnf()` and `configure_nr_nfapi_pnf()`, the P5 and P7 loops, socket versus WLS versus nvIPC encoding, and how `UL_INFO` is packed and shipped.
+- **[Doc · ★★ · EN]** OpenAirInterface. *O-RAN FHI 7.2 tutorial* (`doc/ORAN_FHI7.2_Tutorial.md`). <https://openairinterface.org/docs/>
+  - Which functions sit in the O-DU and which in the O-RU, the Intel libxran and DPDK dependency, the M-plane, the PTP LLS-C configuration, and worked kernel command lines.
+- **[Doc · ★★ · EN]** OpenAirInterface. *5G NR SA tutorial with OAI nrUE and GPU offload* (`doc/NR_SA_Tutorial_OAI_nrUE_GPU_offload.md`).
+  - The UE command line: `--num-dl-actors`, `--num-ul-actors`, `--thread-pool`, `--loader.ldpc.shlibversion`, `--ue-fo-compensation`, plus the DPDK and UHD build prerequisites.
+- **[Doc · ★★ · EN]** COSMOS testbed. *Duranta/OAI 5G SA soft-only: gNB + nrUE + OAI CN5G over RFsim*. <https://www.cosmos-lab.org/wiki/public/tutorials/cellular-4g5g-oran/duranta-soft-5g-single-host>
+  - A worked single-host rfsim deployment with the core, including the image-to-tag mapping (`duranta-20260907c` built from tag `2026.w36`), the PLMN and UE pool, and the path onward to over-the-air.
+- **[Code · ★★ · EN]** OpenAirInterface. *oai-cn5g-fed*. <https://gitlab.eurecom.fr/oai/cn5g/oai-cn5g-fed>
+  - The core federation: the NF list, the two UPF variants, UPF-VPP under Apache 2.0, and the deployment tutorials.
+
+### Papers, benchmarks and deployment
+
+- **[Paper · ★★★ · EN]** Kaltenberger, F., et al. *An Open, Programmable, Multi-vendor 5G O-RAN Testbed with NVIDIA ARC and OpenAirInterface*. arXiv:2310.17062. <https://arxiv.org/abs/2310.17062>
+  - The FAPI split in a real deployment: L1 as master sending a slot indication every slot, L2 replying with a UL or DL request, O-RAN 7.2 with the S-plane on PTPv2 and sync architecture option 3.
+- **[Paper · ★★★ · EN]** Guemdani, M., Gu, P., Phung, C.-D., Secci, S. *Comparative E2E Performance Analysis of O-RAN Designs in a 5G Standalone Testbed*. IEEE HPSR 2025.
+  - The independent srsRAN versus OAI comparison: bitrate stability, jitter, packet loss, CPU and disk write, in monolithic and split configurations. Read it before you argue either stack's superiority.
+- **[Doc · ★★ · EN]** NgKore Foundation. *ORAN end-to-end commands cheatsheet*.
+  - The exact build and run commands for B210, N310, X410 and the `oran_fhlib_5g` target, the `ptp4l`/`phc2sys` invocations per O-RU and NIC pair, and the kernel command line used for a tuned 18-core box.
+- **[Doc · ★★ · EN]** NgKore Foundation. *OAI NTN: inside the source code*. <https://docs.ngkorefoundation.org/ntn/oai/oai-ntn/>
+  - A code-level walk of `apply_ntn_config()`, SIB19, `nr_mac_configure_sib19()` and `get_NTN_Koffset()`, with the GEO and LEO K2 values. The practical companion to §01-4.
+- **[Doc · ★ · EN]** Northeastern University. *Colosseum — massive channel emulator*.
+  - The 128 SRN, 128 USRP X310 and 64 FPGA testbed where the soft-UE throughput figures were measured, and the only place to do reproducible large-scale OAI experiments.
+- **[Doc · ★ · EN]** Keysight. *RuSIM and CoreSIM*. <https://www.keysight.com/>
+  - RU, channel and UE emulation plus core emulation: how the 1.61 Gbps figure and the stress tests were produced.
+
+### Standards and specifications it implements
+
+- **[Standard · ★★★]** 3GPP. *TS 38.211 — Physical channels and modulation*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138211/>
+  - Numerology, frame and slot structure and the physical channels that `openair1/PHY/NR_TRANSPORT` implements. Read it beside the code, not before it.
+- **[Standard · ★★★]** 3GPP. *TS 38.212 — Multiplexing and channel coding*. <https://www.etsi.org/deliver/etsi_TS/138200_138299/138212/>
+  - LDPC and Polar coding and rate matching — the reference for the decoder whose iteration count is the single most useful OAI tuning knob.
+- **[Standard · ★★★]** 3GPP. *TS 38.321 — Medium Access Control (MAC) protocol specification*. <https://www.etsi.org/deliver/etsi_TS/138300_138399/138321/>
+  - The normative source for everything in `NR_MAC_gNB`: RACH, HARQ, BSR, LCP and DRX.
+- **[Standard · ★★]** 3GPP. *TS 38.401 / TS 38.470 series — NG-RAN architecture and F1*. <https://www.etsi.org/deliver/etsi_TS/138400_138499/>
+  - The CU/DU split, F1-C and F1-U, and the E1 interface that decides which OAI task runs in which box.
+- **[Standard · ★★]** Small Cell Forum. *FAPI and nFAPI specifications*. <https://www.smallcellforum.org/>
+  - The P5 and P7 procedures OAI adopts verbatim as its L1/L2 boundary, in and out of the process.
+- **[Standard · ★★]** O-RAN ALLIANCE. *Open Fronthaul Control, User and Synchronization Plane Specification (7.2x)*. <https://www.o-ran.org/specifications>
+  - The C-, U- and S-plane definition behind `radio/fhi_72`, including the section types and compression options.
+- **[Standard · ★★]** IEEE. *1588-2019 — Precision Time Protocol*. <https://standards.ieee.org/ieee/1588/6211/>
+  - The clock O-RAN 7.2 depends on, and the reason a bring-up is ordered PTP, then M-plane, then C/U-plane.
+- **[Doc · ★★ · EN]** Intel. *DPDK and the bb-dev (ACC200) acceleration framework*. <https://www.dpdk.org/>
+  - The two Intel dependencies in one: the fronthaul data path and the look-aside LDPC path.
+- **[Book · ★★★ · EN]** *5G NR: The Next Generation Wireless Access Technology*, 2nd ed. — Erik Dahlman, Stefan Parkvall, Johan Sköld · Academic Press, 2021 · ISBN 978-0-12-822320-8
+  - The specification-side reference to keep open next to the source, chapter by chapter.
+
 ## 02-1 · WLAN — Wi-Fi Generations Evolution
 
 ### Books

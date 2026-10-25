@@ -699,6 +699,7 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 - **io_uring** was introduced in 5.1 (2019); **XDP** in 4.8 and **AF_XDP** in 4.18 — useful when dating a "modern" kernel feature in a design discussion.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the host work a softmodem needs: a real-time or low-latency kernel, hugepages and DPDK binding, `cpupower` and `tuned`, and the NUMA and core-complex behaviour that decides thread placement
 
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the deep treatment of §3: the device model, matching and probe ordering, devres, one lifecycle state machine, the char-device and interrupt data paths, DMA ownership, runtime PM, the bus-by-bus anatomy, framework selection and a bring-up method with a symptom table
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the deep treatment of §3.7: interrupt types, controllers, the generic IRQ layer, threaded IRQs, deferred work, and tuning and troubleshooting

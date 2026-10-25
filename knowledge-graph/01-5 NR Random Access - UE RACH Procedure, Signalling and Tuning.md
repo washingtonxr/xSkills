@@ -1074,6 +1074,7 @@ Facts below are checkable against the specifications named; anything I could not
   doubt; the NSA-specific path should be checked against TS 37.340 before being quoted.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the procedure as code: `handle_nr_rach()` consuming `rach_ind`, `nr_schedule_RA()` producing Msg2 and Msg4, and `ssb_index_from_prach()` mapping a detected preamble back to a beam
 
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — where this procedure lives: random access is one of the five
   responsibilities of MAC, and Msg3/Msg4 are the first MAC PDUs of a new connection

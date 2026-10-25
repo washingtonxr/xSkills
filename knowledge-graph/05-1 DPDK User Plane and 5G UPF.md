@@ -162,6 +162,7 @@ Data path sketch:
 - DPDK core primitives: **mbuf, rte_mempool (with per-core cache), rte_ring, PMD, RSS, rte_flow**, EAL lcore pinning, hugepages.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the same DPDK and eBPF discipline at both ends: the O-RAN 7.2 C/U-plane over libxran on one side, the eBPF/XDP UPF on the other
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the other half of the bypass argument: what a Wi-Fi driver already offloads into firmware and hardware, and why the host path that remains is the part kernel bypass cannot remove
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — pool allocation, false sharing, PMR arenas, zero-copy buffer ownership

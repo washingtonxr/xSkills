@@ -158,6 +158,7 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 - Ascend roadmap: **960 (next year Q2 air-cooled / Q3 liquid-cooled), 970 (2028), 980 (2029)**.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — a softmodem as a cloud-native workload: Nephio, Sylva and Helm charts, SR-IOV and real-time kernels, and the in-line versus look-aside acceleration decision as a general pattern
 
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — what the training and serving workloads actually are: parallelism strategies, precision, and the memory arithmetic that decides where a workload can run
 - [[06-1 LLM Inference Engines and xLLM]]

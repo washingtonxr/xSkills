@@ -1104,6 +1104,7 @@ flowchart TD
   antenna at full load ≈ 2.9 Gbit/s at 16+16 bits versus ≈ 3.9 Gbit/s continuously for split 8.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — one concrete instance of everything in this note: `gNB_dlsch_ulsch_scheduler()`, the preprocessor and postprocessor split, the VRB map, the HARQ `NR_list_t` pools, and the real-time threads that enforce the per-slot budget
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the contrast in full: a scheduler handed a slot by a grant against a scheduler inside a chip that must first win the medium, and what changes when the queue lives in hardware rather than in the scheduler
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the layer this note implements: what MAC is specified to do, the

@@ -818,6 +818,7 @@ and **a modifiable implementation on this end** at the same time.
 ---
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the same idea one domain over: an open stack where the low MAC is yours to rewrite, and the same honest distance between a research platform and a product
 
 - [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the software stack above the driver,
   including the TIP OpenWiFi project whose name is easily confused with this one

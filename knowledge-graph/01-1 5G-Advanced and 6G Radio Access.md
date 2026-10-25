@@ -163,6 +163,7 @@ flowchart LR
 - 3GPP June 2026 newsletter themes also include: Coordinated Closed Loop (CCL) for autonomous networks, AI and Agentic Protocols for 6G, post-quantum cryptography direction.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — where the 6G research directions in its §7 actually get prototyped: FR3 and sub-THz experiments, AI-native air-interface work and the 130 GHz demonstration, on a stack you can rebuild
 
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]

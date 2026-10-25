@@ -999,6 +999,7 @@ Defence: `-Wall -Wextra -Wconversion -Wsign-conversion -Wshadow -Wpedantic`, plu
 - `VERIFY`: `std::scope_exit` is **not** in a published ISO standard (it exists in the Library Fundamentals TS, Boost.Scope and folly). Do not claim otherwise.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the idioms in the large: function-pointer structs standing in for interfaces, `AssertFatal`, C structs as protocol messages, and LTE and NR code sharing one tree
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the kernel C idioms in their native habitat: the skb control block as per-packet state, `container_of` from a descriptor back to a frame, and the barriers that make a doorbell write visible to a device
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — build systems, sanitizers, profiling, kernel bypass

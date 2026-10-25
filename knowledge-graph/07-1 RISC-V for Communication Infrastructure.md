@@ -147,6 +147,7 @@ Answer across four dimensions:
 - Claimed GPP-to-ASIC energy gap compression from ~**10³× to ~10×** in RISC-V baseband SoC research. *(VERIFY primary source.)*
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the L1-accelerator-to-L2-core boundary that FAPI and nFAPI formalise, and what changes when the accelerator sits on the same die as the general-purpose cores
 
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — heterogeneous baseband partitioning, mailbox/doorbell firmware interfaces, why L1 is offloaded
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — RVV intrinsics vs `std::simd` portability, C23 `_BitInt` on RISC-V, custom extensions

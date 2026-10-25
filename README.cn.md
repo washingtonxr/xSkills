@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.22
+version: 1.23
 sibling: README.md
 last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（39 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（40 篇笔记）**。
 
 ---
 
@@ -57,7 +57,7 @@ flowchart LR
 
 | 目标岗位 | 优先笔记 |
 | --- | --- |
-| RAN 系统架构师 | 01-1 → 01-2 → 01-6 → 01-7 → 01-5 → 01-3 → 05-1 → 07-1 |
+| RAN 系统架构师 | 01-1 → 01-2 → 01-6 → 01-7 → 01-8 → 01-5 → 01-3 → 05-1 → 07-1 |
 | 边缘 AI / 端边云架构师 | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
 | 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
 | WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 02-11 → 02-12 → 02-13 → 03-1 → 04-3 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，39 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，40 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -88,6 +88,7 @@ flowchart LR
 │   ├── 01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning.md
 │   ├── 01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation.md
 │   ├── 01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison.md
+│   ├── 01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack.md
 │   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
 │   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
 │   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
@@ -136,7 +137,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 41 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、02-11 OpenWrt 与无线系统软件、02-12 openwifi、02-13 可靠性/低时延/确定性、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 39 一手标准库、40 阅读顺序、41 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 42 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、01-8 OpenAirInterface、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、02-11 OpenWrt 与无线系统软件、02-12 openwifi、02-13 可靠性/低时延/确定性、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 39 一手标准库、40 阅读顺序、41 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -150,6 +151,7 @@ flowchart LR
 | **01-5** | **NR 随机接入（RACH）** | UE 随机接入全流程：MAC 层触发事件及其在 RRC 层的含义、RA 类型与按特性划分的接入资源选择（RedCap / SDT / NSAG / Msg3 重复）、PRACH 格式 0–3 与 A1–C2 及其 CP 隐含的小区半径、开环功率与功率爬坡规则、RA-RNTI 与 MSGB-RNTI 计算、RAR MAC PDU 与 Backoff Indicator 表、Msg3 调度（`k2 + Δ`）与载荷、竞争解决、两步接入 MsgA/MsgB 与 successRAR / fallbackRAR、CFRA 与波束失败恢复、SDT / NTN / RedCap 变体、时延预算、全部可调参数，以及分层排障决策树与症状对照表——**并分别从两侧重述同一流程：§9 是 UE 侧状态机与计数器，§10 是 gNB 侧的前导检测、RAR 组装与 CU-DU 分工，§10.4 列出双方各自知道而对方不知道的信息** |
 | **01-6** | **NR DU 侧 MAC 调度器** | 调度器在 DU 内的完整实现：CU/DU 切分与 7-2x 前传的四个平面及八种 C-plane section type、FAPI 的 L2/L1 接口与每时隙消息时序、调度器同时分配的四种资源、含 O-RAN T1a/T2a/Ta3/Ta4 时间窗与 k0/k1/k2 下限的每时隙时间预算、十二个内部模块、十一步决策流水线、两阶段 TD/FD 下行分配与排序策略及 TBS 计算、SR/BSR/授权的上行链路与配置授权、HARQ 进程状态机与 PUCCH 应答难题、PDCCH 与 CCE 预算及候选位置哈希、TDD 与 DRX、实时执行模型、KPI 体系与排障决策树 |
 | **01-7** | **NR HARQ · 与 LTE 对比** | 两代系统的重传机制全解：软缓冲区存什么、LLR 如何合并；每种 HARQ 方案都要回答的四个设计问题；NR 的实体与进程架构（缺省 8 进程、上限 16）；从 TB CRC、LDPC、速率匹配到 HARQ-ACK 判决的下行流水线；没有 PHICH、「下一个授权就是反馈」的上行流水线；k0/k1/k2 与 N1/N2 处理时延，以及算出来的 2.5 ms 往返对比 LTE 的 8 ms；三种 HARQ-ACK 码本与一个 type-2 DAI 算例；PUCCH 资源选择；CBGTI/CBGFI 的 CBG 重传；配置授权的推导进程号与 `configuredGrantTimer`；四个状态机；逐条对照的 NR 与 LTE 差异表（含 TDD 各配置的进程数表）；两代系统的软缓冲与 LBRM 计算；URLLC 与 NTN 的绕行方案；以及症状排查表 |
+| **01-8** | **OpenAirInterface · 开源 NR 全栈** | 把整个 5G NR 协议栈当成一份能读的程序来讲：OAI 是什么、谁来治理；GPL → OAI PL v1.1 → CSSL v1.0 的许可演进与并入 Linux Foundation Networking 的 Duranta 项目；四大软件资产（RAN、CN、OAM、CI/CD）；从 `openair1` 到 `fronthaul` 的仓库地图；四个可执行文件各自变成什么网元；libconfig 与命令行参数面（真正有用的那十几个选项）；ITTI 任务与实时 L1 线程的两种执行模型（notifiedFIFO、线程池、启动屏障）；作为函数指针结构体的 FAPI L1/L2 接口与 P5/P7 节律；nFAPI 的 VNF/PNF 与三种传输；NR MAC 调度器逐文件拆解、preprocessor 与 postprocessor 的分工与 `gNB_dlsch_ulsch_scheduler()` 完整调用链；PHY 真正实现了什么，以及 USRP X310 的 80 MHz、N310 的 100 MHz 上限；RLC/PDCP/SDAP/RRC/NGAP/GTP-U 分别落在 F1 与 E1 的哪一侧；split 8 与 O-RAN 7.2x（libxran over DPDK、NETCONF/YANG、PTP）；nrUE 的 actor 框架与 k1/k2 处理预算；11 个 NF 的核心网；FlexRIC 与 E2/O1；从 `nr-ulsim`、`rfsim`、`vrtsim` 到 Colosseum 的仿真阶梯；带实际核分配表的实时性调优阶梯；实测吞吐表；与 srsRAN 的独立对比；排障决策树；以及十个面试简答 |
 | **02-1** | WLAN 代际演进 | Wi-Fi 4→9、MLO、OFDMA、UHR、多 AP 协同、逐特性设计细节 |
 | **02-2** | **WLAN 节能技术** | 能耗方程与四类机制族；Legacy PS/PS-Poll、U-APSD、SMPS、VHT TXOP PS 与 OM Control、802.11ah 的 TWT/RAW/TIM 分段、802.11ax TWT 与 trigger-enabled SP、802.11ba 唤醒无线电、802.11be r-TWT、802.11bn AP Power Save / DPS / 跨链路节能、802.11bp 环境供能——含逐代机制对比表、Mermaid 图、实现分层与失效模式 |
 | **02-3** | WLAN 生态 | WFA 认证、EasyMesh、prplMesh/prplOS/prpl LCM |
@@ -187,10 +189,10 @@ flowchart LR
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 33 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+2. **入口**：`00 MOC` 是唯一导航页，其余 39 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 339 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 360 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---
@@ -235,6 +237,7 @@ flowchart LR
 | openwifi 的范围 | “开源 Wi-Fi 芯片” 或 “完整的现代 Wi-Fi 协议栈” | 它是 Zynq SoC 上**与 Linux mac80211 兼容的 802.11a/g/n SDR 实现**：PHY 与低 MAC 在 FPGA，高 MAC 在 mac80211。它只做 OFDM（不支持 802.11b）、20 MHz、MCS 0–7，实测 iperf TCP 40–50 Mbps；Wi-Fi 6、OFDMA、RFSoC 与 JCAS/ISAC 属于**订阅特性**而非开源部分。还要注意重名：TIP 的 OpenWiFi 是另一个项目——基于 OpenWrt 的云端管理 AP 架构——见笔记 02-12 |
 | Wi-Fi 时延 | "几毫秒" | 空载是的。但在满载下载下，驱动或固件的深队列会把时延推到**数百毫秒**：FQ-CoDel 下慢站中位数仍在 200 ms 以上、快站约 35 ms，按站公平排队再给快站降约 45%。**负载下**的主导项是排队，**最坏情况**的主导项是信道接入——提高 PHY 速率对这两项都无效。见笔记 02-13 |
 | MLO 时延 | "链路越多时延越低" | 只有在**各链路占用率相近**时成立。厂商实测显示 10/40/70% 负载下 STR 为 2/8/18 ms，而单链路为 30/70/150 ms（95 分位）；但若副链路明显更忙，STR 的最坏时延反而会高于单链路，而单射频的 EMLSR 在中高负载下对 p95 几乎没有改善。见笔记 02-13 |
+| OpenAirInterface 许可 | "开源，Apache 或 GPL" | 三者都不是。OAI 的许可演进是 **GPL v2 → OAI Public License v1.1（2017）→ CSSL v1.0**，RAN 仓库于 **2026-03-27** 改许可，同期随 Duranta 项目并入 Linux Foundation Networking。CSSL 是 Apache 2.0 加一条 FRAND 专利条款，目的是让持有 3GPP 标准必要专利的公司也能贡献代码；它**不是 OSI 认证的许可**，商业使用按 FRAND 条款走。另需区分的是定位：OAI 是研究级软调制解调器——4 层下行 / 2 层上行、尚无量产 MU-MIMO、仅静态 TDD——不是运营商级 DU，见笔记 01-8 |
 | NR HARQ 进程数 | "默认是 16" | 缺省是 **8**：`nrofHARQ-ProcessesForPDSCH` 缺省时 UE 按 8 个进程假设，16 是上限而非默认值。而且并非越多越好——每个进程都要占用软缓冲区，而 UE 的软缓冲总量是能力项不是配置项，只需要六个进程的小区配成 n16 反而会摊薄每次重传能拿到的合并增益——见笔记 01-6 §8.3 |
 **更新触发点**
 

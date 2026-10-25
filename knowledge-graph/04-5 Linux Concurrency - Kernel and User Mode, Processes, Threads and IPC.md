@@ -743,6 +743,7 @@ Method, in order:
 - **Namespaces** in current kernels: `mnt`, `pid`, `net`, `ipc`, `uts`, `user`, `cgroup`, `time`. **cgroups v2** is a single unified hierarchy.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the execution model in full: POSIX threads at real-time priority, notified FIFOs instead of message queues in the hot path, a worker pool for LDPC, and the shared-address-space trade-off
 
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the sibling note: the hard-IRQ and bottom-half contexts referenced throughout §2 and §5
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where these primitives get used: which lock for which context in a driver, the five driver-specific concurrency failure modes, and the teardown race that a refcount on state rather than on the device prevents

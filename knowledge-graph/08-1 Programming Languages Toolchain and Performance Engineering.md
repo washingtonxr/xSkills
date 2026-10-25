@@ -147,6 +147,7 @@ flowchart TD
 - FPGA/RTL flow: **Verilog/SystemVerilog → simulation (Verilator/Icarus/ModelSim) → synthesis (Vivado/Quartus)**, with CDC handling and timing closure as the recurring constraints.
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — what makes a slot fit: SIMD-vectorised LDPC, data layout, and the measurement discipline behind every throughput number in its §20
 
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the language-level counterpart: C23/C++26 features, templates, memory model, STL
 - [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — the tooling and modelling language in depth

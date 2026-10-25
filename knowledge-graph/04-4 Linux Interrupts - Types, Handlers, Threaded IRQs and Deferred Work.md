@@ -792,6 +792,7 @@ Method, in order:
 - **`IRQF_ONESHOT` is mandatory** for a threaded interrupt; `disable_irq()` may not be called from a handler on the same IRQ (use `disable_irq_nosync()`).
 
 ## Related
+- [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — why a per-slot thread wants `isolcpus=managed_irq`, `nohz_full` and a disabled NMI watchdog: the interrupt environment the L1 pipeline has to be isolated from
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — NAPI and tasklets at full scale: one NAPI per interrupt group, a tasklet per copy-engine pipe, threaded NAPI as a throughput fix worth more than 3x, and a crash path that must disable interrupts before freeing rings
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the parent note: driver model, device tree, DMA and cache coherency, the debugging toolbox, and where interrupts sit in the whole stack
