@@ -26,7 +26,7 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 - `knowledge-graph/` is the Obsidian vault root — open *that* folder, not the project root.
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
 - Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
-- Fixed note body shape: knowledge points → **Anchors** → **Related** → **References**; the big domain notes (01-5/01-6/01-7/01-8/02-7/02-8/02-9/02-10/02-11/02-12/02-13/06-3/04-4/04-5/04-6) all close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
+- Fixed note body shape: knowledge points → **Anchors** → **Related** → **References**; the big domain notes (01-5/01-6/01-7/01-8/09-1/02-7/02-8/02-9/02-10/02-11/02-12/02-13/06-3/04-4/04-5/04-6) all close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
 - Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view); every note is expected to carry them in its structural sections (architecture, data path, timing, decision logic), not just in passing.
 - Bulk renumbering recipe: two-phase `git mv` (old → `__tmp__` → final) to avoid filename collisions, then one regex pass with `(?<![\d\-])(\d{2})-(\d)(?!\d)` and a lookup dict — single pass avoids chained rewrites, and the lookbehind protects dates and version strings.
 
@@ -46,6 +46,7 @@ replaced on request. Group order follows the signal path outward:
 | `06-x` | Machine learning, AI inference and agent systems | 06-1 LLM inference/xLLM · 06-2 agent systems · 06-3 machine learning foundations (read first) |
 | `07-x` | Silicon and ISA | 07-1 RISC-V |
 | `08-x` | Programming languages and practice | 08-1 toolchain and performance · 08-2 C and C++ · 08-3 Python · 08-4 MATLAB/Simulink · 08-5 Verilog HDL |
+| `09-x` | Engineering project management and delivery | 09-1 engineering project management — methodology, lifecycle, tools and best practice |
 
 `readlist.md` sections use the **same** `GG-x` numbers (sections 32–34 are the
 standards repositories, reading order, and maintenance). Renumbering a note means

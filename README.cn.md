@@ -2,7 +2,7 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.23
+version: 1.24
 sibling: README.md
 last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（40 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（41 篇笔记）**。
 
 ---
 
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，40 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，41 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -119,7 +119,8 @@ flowchart LR
 │   ├── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
 │   ├── 08-3 Python Programming - Language, Object Model and Engineering Practice.md
 │   ├── 08-4 MATLAB and Simulink - Programming, Modelling and Code Generation.md
-│   └── 08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice.md
+│   ├── 08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice.md
+│   └── 09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice.md
 └── .workbuddy/                    项目工作数据（勿删）
 ```
 
@@ -137,7 +138,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 42 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、01-8 OpenAirInterface、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、02-11 OpenWrt 与无线系统软件、02-12 openwifi、02-13 可靠性/低时延/确定性、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 39 一手标准库、40 阅读顺序、41 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 43 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、01-8 OpenAirInterface、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、02-11 OpenWrt 与无线系统软件、02-12 openwifi、02-13 可靠性/低时延/确定性、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL、09-1 工程项目管理，另附 40 一手标准库、41 阅读顺序、42 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -183,16 +184,17 @@ flowchart LR
 | **08-3** | **Python 编程** | CPython 执行模型（字节码、特化、JIT、GIL 与自由线程）、dunder 对象协议、属性查找与 C3 MRO、从 dataclass 到 Protocol 到元类的类体系、生成器与 asyncio、类型标注演进、NumPy 跨步数组模型、性能决策树、打包与测试实践 |
 | **08-4** | **MATLAB 与 Simulink** | 列主序数组语义与写时复制、向量化、`classdef` 值类与句柄类、`arguments` 参数校验、事件、System 对象、Simulink 采样时间与求解器选择、Stateflow、定点字长设计、Embedded/HDL Coder、SIL/PIL/HIL |
 | **08-5** | **Verilog HDL** | IEEE 1364→1800 沿革、线网与变量及四值逻辑、阻塞与非阻塞调度、状态机与复位纪律、时序方程、CDC 与异步 FIFO、测试平台与 SystemVerilog 类/UVM、FPGA 与 ASIC 综合流程、DSP RTL 结构 |
+| **09-1** | **工程项目管理** | 决定「哪些技术工作该做、按什么顺序做、用谁的时间做、什么时候停」的学科：项目、项目群、项目组合的区别，以及为什么把三者混为一谈是最常见的结构性错误；实证基础——Flyvbjerg 16,000 个项目中 47.9% 不超预算、8.5% 同时不超预算不超期、0.5% 连收益都达标，McKinsey 与牛津的研究为 45% 超预算、56% 价值打折，CHAOS 的规模效应，以及引用这些数字时必须同时说出的四条口径提醒；方法论族谱与「瀑布其实误读了 Royce」；由需求可变性、失效后果、认证要求和真正瓶颈推导方法选择的决策树；带门禁与显式「终止」分支的生命周期，覆盖 PMBOK 7、PRINCE2 Version 7、NASA 阶段与 KDP、Stage-Gate；WBS 与 100% 规则；从甘特图、CPM、PERT、关键链到蒙特卡洛，并给出一条算过的关键路径与 fever chart；把估算写成 P50/P80 的预测、参照类预测、以及从 1967 年 C/SCSC 到 2026 年 EIA-748-E 的挣值演进；ISO 31000 风险与 NASA 70% 联合置信度；V 模型的验证与确认；变更、基线与配置管理；决策权、单线程负责人与主查（chief engineer）模式；按例外管理、容差与无利益相关方评审的治理；工具栈与每一类工具的失效方式；项目管理计划包含什么，以及一份 Wi-Fi 7 多链路项目的完整样例（里程碑、缓冲、风险登记册）；丰田、亚马逊、Google、NASA、USDS 与 FBI Sentinel 反转的实践集，以及 Spotify 模型和 SAFe 里不该照搬的部分；Brooks 定律、100% 利用率、丹佛机场与 737 MAX 报告；利特尔法则与经得起推敲的度量；以及运行节奏与前 30 天清单 |
 
 ---
 
 ## 五、知识图谱使用说明
 
 1. **打开方式**：在 Obsidian 中选择"打开本地仓库"，指向 `knowledge-graph/` 文件夹（而非项目根目录）。
-2. **入口**：`00 MOC` 是唯一导航页，其余 39 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
+2. **入口**：`00 MOC` 是唯一导航页，其余 40 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 360 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 378 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---
@@ -237,6 +239,7 @@ flowchart LR
 | openwifi 的范围 | “开源 Wi-Fi 芯片” 或 “完整的现代 Wi-Fi 协议栈” | 它是 Zynq SoC 上**与 Linux mac80211 兼容的 802.11a/g/n SDR 实现**：PHY 与低 MAC 在 FPGA，高 MAC 在 mac80211。它只做 OFDM（不支持 802.11b）、20 MHz、MCS 0–7，实测 iperf TCP 40–50 Mbps；Wi-Fi 6、OFDMA、RFSoC 与 JCAS/ISAC 属于**订阅特性**而非开源部分。还要注意重名：TIP 的 OpenWiFi 是另一个项目——基于 OpenWrt 的云端管理 AP 架构——见笔记 02-12 |
 | Wi-Fi 时延 | "几毫秒" | 空载是的。但在满载下载下，驱动或固件的深队列会把时延推到**数百毫秒**：FQ-CoDel 下慢站中位数仍在 200 ms 以上、快站约 35 ms，按站公平排队再给快站降约 45%。**负载下**的主导项是排队，**最坏情况**的主导项是信道接入——提高 PHY 速率对这两项都无效。见笔记 02-13 |
 | MLO 时延 | "链路越多时延越低" | 只有在**各链路占用率相近**时成立。厂商实测显示 10/40/70% 负载下 STR 为 2/8/18 ms，而单链路为 30/70/150 ms（95 分位）；但若副链路明显更忙，STR 的最坏时延反而会高于单链路，而单射频的 EMLSR 在中高负载下对 p95 几乎没有改善。见笔记 02-13 |
+| 「敏捷就是不做计划」·「加人来赶进度」 | 「敏捷用速度替代计划；人越多完成得越快」 | 两个说法都错，而且都可检验。敏捷提高的是计划的**频率**、缩短的是计划的**周期**——检视与调整是一个控制回路，不是没有控制回路。而 Brooks 定律说的是：给一个延期的项目加人只会更延期，因为新人需要培训、工作要重新切分、沟通路径按 n(n−1)/2 增长。实证比直觉更冷酷：Flyvbjerg 的 16,000 个项目里只有 8.5% 同时不超预算、不超期，Standish 的规模效应是小型项目 61% 成功、最大规模项目只有 6%——所以杠杆最大的动作是拆分工作、限制在制品，而不是加人。见笔记 09-1 |
 | OpenAirInterface 许可 | "开源，Apache 或 GPL" | 三者都不是。OAI 的许可演进是 **GPL v2 → OAI Public License v1.1（2017）→ CSSL v1.0**，RAN 仓库于 **2026-03-27** 改许可，同期随 Duranta 项目并入 Linux Foundation Networking。CSSL 是 Apache 2.0 加一条 FRAND 专利条款，目的是让持有 3GPP 标准必要专利的公司也能贡献代码；它**不是 OSI 认证的许可**，商业使用按 FRAND 条款走。另需区分的是定位：OAI 是研究级软调制解调器——4 层下行 / 2 层上行、尚无量产 MU-MIMO、仅静态 TDD——不是运营商级 DU，见笔记 01-8 |
 | NR HARQ 进程数 | "默认是 16" | 缺省是 **8**：`nrofHARQ-ProcessesForPDSCH` 缺省时 UE 按 8 个进程假设，16 是上限而非默认值。而且并非越多越好——每个进程都要占用软缓冲区，而 UE 的软缓冲总量是能力项不是配置项，只需要六个进程的小区配成 n16 反而会摊薄每次重传能拿到的合并增益——见笔记 01-6 §8.3 |
 **更新触发点**

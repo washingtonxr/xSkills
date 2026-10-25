@@ -1222,6 +1222,7 @@ Dated, checkable facts. Anything not independently confirmed is marked `VERIFY`.
     Academic Press, 2021. ISBN 978-0-12-822320-8.
     — the specification-side reference to read next to the code, chapter by chapter.
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the discipline that decides what a stack like this promises: where the honest distance between a research platform and a product becomes a scope statement, a verification plan and a real-time budget
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

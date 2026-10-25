@@ -1450,6 +1450,7 @@ a user may hold the fd past `remove()` (§5).
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — DMA and interrupt design as the floor on host-side latency, and the device-model view of a driver whose queues the network stack is trying to bound
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the bring-up method and its symptom table, which is the engineering version of a project diagnosis tree
 ---
 
 ## References

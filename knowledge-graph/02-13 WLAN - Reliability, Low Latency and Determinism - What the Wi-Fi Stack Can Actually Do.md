@@ -916,6 +916,7 @@ shares — and total throughput to *rise*, because fast stations finally get to 
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — what "scheduled by the
   network" looks like when the medium is licensed
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — how to write an exit criterion that is a measurement rather than an opinion, which is what every milestone definition needs
 ---
 
 ## References

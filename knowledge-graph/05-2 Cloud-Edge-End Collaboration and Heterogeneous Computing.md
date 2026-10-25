@@ -166,6 +166,7 @@ A protocol-stack engineer's answer to "if RTT is 2 µs and memory is globally ad
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[07-1 RISC-V for Communication Infrastructure]]
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the portfolio-level form of the same question: what runs where, who owns the decision, and what it costs to change it later
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

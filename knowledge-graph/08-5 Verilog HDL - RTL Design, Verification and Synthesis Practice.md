@@ -517,6 +517,7 @@ Two Verilog-specific fixed-point traps worth memorising: a **part-select of a si
 
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a real production Verilog baseband: the module inventory, the AXI-Lite register interface and the testbench workflow
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — tape-out as the most expensive gate in engineering, and front-loading plus verification-by-level as literal requirements rather than slogans
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

@@ -165,6 +165,7 @@ flowchart TD
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the concurrency and IPC model whose contention the profiler is attributing
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — measurement discipline for latency work: percentiles and sample counts, clock sources, and the cost of the instrumentation itself
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the measurement discipline behind any number you put on a dashboard, and the reason "it feels faster" is not a metric
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

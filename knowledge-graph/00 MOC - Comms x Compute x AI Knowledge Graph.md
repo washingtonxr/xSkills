@@ -61,12 +61,13 @@ Notes are numbered `GG-x`: `GG` is a **domain group** numbered sequentially from
 | `06-x` | Machine learning, AI inference and agent systems | 06-1 … 06-3 |
 | `07-x` | Silicon and instruction-set architecture | 07-1 |
 | `08-x` | Programming languages and engineering practice | 08-1 … 08-5 |
+| `09-x` | Engineering project management and delivery | 09-1 |
 
-The order is deliberate: it walks the signal path outward — air interface and RAN (`01`), then the wireless LAN and sensor edges (`02`, `03`), then the software that runs on the devices (`04`), then the data plane and the compute fabric (`05`), then the AI workloads that consume it (`06`), and finally the silicon and language foundations underneath everything (`07`, `08`).
+The order is deliberate: it walks the signal path outward — air interface and RAN (`01`), then the wireless LAN and sensor edges (`02`, `03`), then the software that runs on the devices (`04`), then the data plane and the compute fabric (`05`), then the AI workloads that consume it (`06`), and finally the silicon and language foundations underneath everything (`07`, `08`). Group `09` sits outside that path on purpose: engineering project management is the discipline that decides which of the technical work gets attempted, in what order, with whose time, and when the attempt is stopped.
 
 ## Domains
 
-Vault map — the eight groups and the edges that carry arguments between them:
+Vault map — the nine groups and the edges that carry arguments between them:
 
 ```mermaid
 flowchart LR
@@ -124,6 +125,9 @@ flowchart LR
         p3["08-3 Python"]
         p4["08-4 MATLAB and Simulink"]
         p5["08-5 Verilog HDL"]
+    end
+    subgraph g9["09 · Engineering project management"]
+        m1["09-1 Methodology, lifecycle, tools, best practice"]
     end
 
     c1 --> c2 --> c3
@@ -203,6 +207,12 @@ flowchart LR
     p4 --> c1
     p4 --> p5
     p5 --> r1
+    c6 --> m1
+    e6 --> m1
+    p4 --> m1
+    p5 --> m1
+    w13 --> m1
+    i3 --> m1
 ```
 
 ### 01 · Cellular and mobile communications
@@ -263,6 +273,10 @@ AP rather than the client
 - [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — CPython execution model, dunder protocols, classes (dataclass / ABC / Protocol / metaclass), asyncio, typing, NumPy array model, performance decision tree, packaging
 - [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — array semantics and copy-on-write, `classdef` value vs handle classes, `arguments` validation, Simulink solvers and sample time, Stateflow, fixed point, Embedded/HDL Coder, SIL/PIL/HIL
 - [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — 1364/1800 lineage, blocking vs non-blocking semantics, FSM and reset discipline, timing and CDC, SystemVerilog classes and UVM, synthesis flows, DSP RTL patterns
+
+### 09 · Engineering project management and delivery
+
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the discipline that decides which of the technical work above gets attempted, in what order, with whose time, and when the attempt is stopped: what a project, a programme and a portfolio are and why conflating them is the commonest structural error; the empirical base — Flyvbjerg's 16,000-project database at 47.9% on budget, 8.5% on budget and on time, 0.5% on all three including benefits, McKinsey-Oxford's 45% over budget and 56% less value, CHAOS and the size effect, with the four caveats you must state when quoting them; the methodology family tree from plan-driven through iterative and adaptive to flow and systems engineering, and why "waterfall" is a misreading of Royce; a decision tree for choosing a method from requirements volatility, consequence of failure, certification and the binding constraint; the lifecycle with gates and an explicit kill branch, in PMBOK 7, PRINCE2 Version 7, NASA's phases and key decision points, and stage-gate; scope, the 100% rule and a worked WBS; scheduling from Gantt through CPM and PERT to critical chain and Monte Carlo, with a worked critical path and a fever chart; estimation as a forecast with P50 and P80, reference class forecasting, and earned value with its 1967-to-2026 lineage; risk under ISO 31000 and NASA's 70% joint confidence level; verification and validation by level in the V-model; change, baselines and configuration; organisation, decision rights and the single-threaded or chief-engineer owner; governance by exception with tolerances and non-advocacy review; the tool stack and the failure mode of each class; what a project management plan contains and a worked Wi-Fi 7 multi-link plan with milestones, buffers and a risk register; the practice sets of Toyota, Amazon, Google, NASA, USDS and the FBI Sentinel turnaround, plus what not to copy from Spotify and SAFe; the failure taxonomy from Brooks's law to 100% utilisation, Denver's baggage system and the 737 MAX report; Little's Law and the metrics that survive; and an operating rhythm with a first-30-days checklist
 
 ## Cross-cutting threads
 

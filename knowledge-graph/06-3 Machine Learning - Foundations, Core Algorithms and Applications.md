@@ -1449,6 +1449,7 @@ Dated, checkable facts used in this note.
   completion interrupt behind inference latency, and why its scheduling latency is the floor of the
   inference SLO
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the clearest example of work whose requirements are not knowable up front, and therefore of the time-boxed experiment instead of the schedule
 ---
 
 ## References

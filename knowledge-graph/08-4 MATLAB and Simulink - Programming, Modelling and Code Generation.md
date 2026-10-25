@@ -499,6 +499,7 @@ Verification levels, in increasing confidence: **MIL** (model in the loop, the m
 22. Attaway, S. *MATLAB: A Practical Introduction to Programming and Problem Solving*, 5th ed. Butterworth-Heinemann, 2019. ISBN 978-0-12-815479-3.
 23. Colgren, R. D. *Basic MATLAB, Simulink, and Stateflow*. AIAA Education Series, 2007. ISBN 978-1-56347-838-1.
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — SIL, PIL and HIL as the mechanism that retires hardware-dependent risk before hardware exists, which is what a front-loaded schedule depends on
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

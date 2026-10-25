@@ -1245,6 +1245,7 @@ flowchart TD
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — what a scheduled medium looks like: the comparison case for every Wi-Fi determinism claim, where the grant replaces contention
 
+- [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — the hardest schedule constraint in the whole vault — the per-slot budget — and the reason verification cannot be left to the end of a modem project
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.
