@@ -528,6 +528,9 @@ AI features must demonstrate benefits that justify their **computational complex
 - [[06-2 Agent Systems and Edge Orchestration]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — which generation's features become configuration knobs and package versions, and the platform whose release branch decides what you can actually run
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the contrast: an implementation of 802.11a/g and n whose PHY and low MAC are Verilog, so a generation's mechanics can be rewritten rather than configured
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

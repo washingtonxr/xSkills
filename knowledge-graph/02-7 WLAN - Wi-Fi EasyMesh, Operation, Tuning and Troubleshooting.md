@@ -1059,6 +1059,8 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 22. Huawei. *How Do I Complete EasyMesh Networking on Routers?* — consumer-side onboarding methods (WPS button, wireless relay, Ethernet). https://consumer.huawei.com/en/support/content/en-us16057841/
 23. TP-Link Community. *Knowledge Base: EasyMesh* — deployment and troubleshooting cases, including Ethernet backhaul behind a switch. https://community.tp-link.com/en/home/forum/topic/660384
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — what an EasyMesh deployment lands on: an OpenWrt box with no controller, and the uCentral or prpl agent that supplies one
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

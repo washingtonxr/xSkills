@@ -21,7 +21,7 @@ aliases:
   - Yocto
   - Buildroot
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # Linux Embedded Development — Drivers, Applications and Core Subsystems
@@ -713,6 +713,8 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] and [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — nl80211/cfg80211/mac80211 as the Linux side of Wi-Fi
 - [[06-2 Agent Systems and Edge Orchestration]] — IPC and sandboxing model for on-device agents
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — keepalive and lossy-link socket tuning
+
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — a complete worked example of an embedded Linux network device: procd, ubus, netifd, flash partitions and a cross-build system
 
 ---
 

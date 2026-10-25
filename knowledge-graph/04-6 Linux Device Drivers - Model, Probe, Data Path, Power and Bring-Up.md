@@ -26,6 +26,7 @@ aliases:
   - kernel driver bring-up
 version: 1.0
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
+last-updated: 2026-10-25
 ---
 
 # Linux Device Drivers — Model, Probe, Data Path, Power and Bring-Up
@@ -1444,6 +1445,8 @@ a user may hold the fd past `remove()` (§5).
   in this vault: what the kernel-side and offload-side split looks like when the deadline is a slot
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — accelerators and their drivers: the dma-buf and
   IOMMU arguments of §8.5 asked at the scale of an NPU
+
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a driver whose device is an FPGA: device tree addresses and interrupts for soft IP, DMA into a programmable fabric, and a driver that is really the north half of a distributed system
 
 ---
 

@@ -18,7 +18,7 @@ aliases:
   - IEEE 1364
   - IEEE 1800
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-22
+last-updated: 2026-10-25
 ---
 
 # Verilog HDL — RTL Design, Verification and Synthesis Practice
@@ -514,6 +514,8 @@ Two Verilog-specific fixed-point traps worth memorising: a **part-select of a si
 16. Icarus Verilog documentation. <https://steveicarus.github.io/iverilog/>
 17. OpenLane / OpenROAD documentation. <https://openlane.readthedocs.io/>
 18. SkyWater SKY130 PDK. <https://skywater-pdk.readthedocs.io/>
+
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a real production Verilog baseband: the module inventory, the AXI-Lite register interface and the testbench workflow
 
 ---
 

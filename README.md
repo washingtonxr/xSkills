@@ -2,9 +2,9 @@
 title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
 lang: en
 category: project-readme
-version: 1.19
+version: 1.20
 sibling: README.cn.md
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > Language: English (current) · [简体中文](README.cn.md)
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (36 notes)**.
+This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (38 notes)**.
 
 ---
 
@@ -60,7 +60,7 @@ flowchart LR
 | RAN system architect | 01-1 → 01-2 → 01-6 → 01-7 → 01-5 → 01-3 → 05-1 → 07-1 |
 | Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
 | Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
-| WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 03-1 → 04-3 |
+| WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 02-11 → 02-12 → 03-1 → 04-3 |
 | WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
 | Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
 | Software / language foundation (any role) | 08-2 → 08-3 → 08-1 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
 ├── skills-draft.cn.md              知识框架与面试题纲（中文）
 ├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 36 notes)
+├── knowledge-graph/                Obsidian knowledge graph (vault, 38 notes)
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -98,6 +98,8 @@ flowchart LR
 │   ├── 02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation.md
 │   ├── 02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations.md
 │   ├── 02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design.md
+│   ├── 02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System.md
+│   ├── 02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform.md
 │   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
 │   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
 │   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
@@ -133,7 +135,7 @@ flowchart LR
 | `background.cn.md` | Chinese | Input source | Same, in Chinese |
 | `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
 | `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 38 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 01-6 NR DU MAC scheduler, 01-7 NR HARQ and its LTE comparison, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 02-8 Wi-Fi scheduling, 02-9 TSN over Wi-Fi, 02-10 Wi-Fi baseband and driver architecture, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 04-6 device drivers, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 36 primary standards repositories, 37 a reading order, and 38 verification and maintenance |
+| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 40 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 01-6 NR DU MAC scheduler, 01-7 NR HARQ and its LTE comparison, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 02-8 Wi-Fi scheduling, 02-9 TSN over Wi-Fi, 02-10 Wi-Fi baseband and driver architecture, 02-11 OpenWrt and wireless system software, 02-12 openwifi, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 04-6 device drivers, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL — plus 38 primary standards repositories, 39 a reading order, and 40 verification and maintenance |
 
 ### 4.2 Knowledge graph notes
 
@@ -157,6 +159,8 @@ flowchart LR
 | **02-8** | **Wi-Fi scheduling** | The scheduler as an AP implements it: the interframe-space family and the DCF backoff state machine, CCA and the two NAVs with BSS colour, EDCA's four access categories with the 802.11-2016 versus 2012 TXOP-limit change and the DSSS column, the OFDMA resource-unit grid and the legal MRU combinations, the eight trigger-frame types and a full UL OFDMA round, MU-MIMO sounding and its cost, Wi-Fi 7 scheduling across links with the UMAC/LMAC split and the EMLSR timers, airtime fairness and deficit round robin, the eight-step per-TXOP pipeline, rate control as part of the scheduler, TWT and r-TWT as schedulable state, `mac80211` with FQ-CoDel and AQL and the three places a queue hides, the KPI set and a troubleshooting tree |
 | **02-9** | **TSN over Wi-Fi · research and practice** | The determinism line through every generation: the cycle-bound-reliability-jitter contract industrial and immersive applications actually state, the six structural reasons Wi-Fi resists a bound, and the 802.1 toolbox mapped onto 802.11 tool by tool. Then the ladder: 802.11e priorities, 802.11v Timing Measurement, 802.11aa's SCS and intra-AC queues, 802.11mc FTM at 0.1 ns, 802.11ak transit links, 802.11ax trigger-based access, 802.11be r-TWT with the TID bitmap and the quiet interval, and 802.11bn's quantified 25-percent targets. Plus 802.1AS over TM and FTM with the hardware-versus-software timestamping budget, the five-rung access ladder, SCS and the four-number QoS Characteristics element, 802.1CB over MLO and why redundancy costs airtime, P-EDCA, NPCA, preemption and multi-AP coordination, the AP-as-bridge integration model with Qbv gate alignment, a five-layer review of the evidence, a nine-step deployment method with a worked latency budget, a symptom table, and the clause-level Wi-Fi-versus-5G comparison |
 | **02-10** | **Baseband and driver architecture · Wi-Fi 6/7/8** | The radio opened up, with Qualcomm as the reference design: what a baseband contains and which block each generation had to grow, the two boundaries that define every Wi-Fi subsystem, the anatomy of a Wi-Fi 7 AP and a Wi-Fi 8 client, the WCSS with the Q6 processor its firmware runs on, the WMI/HTT/HTC/CE/QMI/MHI stack and a full ring inventory, the ownership table that says which of host, firmware and hardware does what, the transmit and receive data paths with the descriptor fields that matter, interrupt groups and NAPI and the threaded-NAPI result, where a frame waits with the measured throughput-against-latency trade, MLO in silicon and in the driver, power and thermal and what a firmware assert actually costs, the SoC-side NSS forwarding plane, the evolution from ath9k through ath10k and ath11k to ath12k and its two-module split, what Wi-Fi 8 demands of each layer, eight directions the architecture is moving in, ten interview answers, and a fault-localisation table |
+| **02-11** | **OpenWrt and wireless system software** | The router as a software system: what OpenWrt actually is (a Linux distribution plus a cross-build system with four artifacts — the source tree, ImageBuilder, the SDK and the package repository), the five boundaries from intent to air, the five daemons that are always running (procd, ubusd, rpcd, netifd, fw4), the ucode pipeline that turns `/etc/config/wireless` into a hostapd BSS without restarting anything, the UCI wireless device model with `wifi-device` / `wifi-iface` / `wifi-vlan` / `wifi-station`, hostapd's ubus surface and why steering lives in user space, netifd's device and interface state machines with its real event and state names, where a packet goes and what flow offload and WED cost you, firmware / board data / MACs / regulatory as the four things that are not source, the build and update system including apk and attended sysupgrade, and how the neighbouring models differ — TIP OpenWiFi with APNOS and uCentral plus its Cloud SDK and device PKI, OpenSync, prplOS and RDK-B, the hobbyist forks, and vendor SDKs — plus the OpenWrt One reference hardware, six honest limitations, a fault-localisation table, and ten interview answers |
+| **02-12** | **openwifi · an open-source FPGA 802.11 platform** | The wall between the driver and the air, knocked down: why an SDR 802.11 stack exists (the four things a commercial chip will not let you do), the Zynq plus AD9361 platform with the board table and its Vivado-licence column, the three repositories and the Vivado / kernel / image build flow, the six FPGA IP cores and what each contains file by file, the low MAC inside `xpu` with the CSMA/CA state machine and the registers that make SIFS, slot time, ACK timeouts, CCA, contention window and the retry limit yours to set, the four transmit queues and time slicing by MAC address, the driver as a mac80211 driver whose hardware owns the timing with the full `ieee80211_ops` list, the transmit and receive paths step by step, why the split falls where it does, `sdrctl` over nl80211 testmode and sysfs as the two control channels, modes of operation and the 802.11b caveat, CSI / IQ / sensing features, published performance and what limits it, how it compares with commercial chips, GNU Radio transceivers, `mac80211_hwsim` and simulators, licensing and funding, real use cases, a fault-localisation table, and ten interview answers |
 | **03-1** | WSN and low-power MAC | Clustering routing, UAV-assisted collection, TSCH, AoI |
 | **04-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
 | **04-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
@@ -181,10 +185,10 @@ flowchart LR
 ## 5. Using the Knowledge Graph
 
 1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 33 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
+2. **Entry point**: `00 MOC` is the only navigation page. The other 37 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
 3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
 4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 293 blocks across the vault.
+5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 317 blocks across the vault.
 6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
 
 ---
@@ -224,6 +228,8 @@ flowchart LR
 | r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
 | Linux bottom halves | "tasklet is the fast deferred-work mechanism" | Tasklets are **deprecated**. The API was modernised around 5.9 and the replacement is **WQ_BH**, merged for **6.9** with `system_bh_wq` and `system_bh_highpri_wq`; it runs in softirq context, may not sleep and requires `max_active = 0`. The tasklet API still exists and conversion is ongoing — see note 04-4 |
 | Power ramping after a contention loss | "a UE that loses contention restarts from Msg1 without ramping power" | It **does** ramp. TS 38.321 clause 5.1.3 increments `PREAMBLE_POWER_RAMPING_COUNTER` on four transmission conditions only — the attempt counter is above one, the SSB/CSI-RS is unchanged, the PHY has not sent the power-ramping-suspension notification, and no LBT failure was reported — with **no carve-out for contention-resolution losses**. The narrow statement that is true is the beam rule: no ramping when the beam changes, whatever the cause. Note that this also removes a common shortcut — collisions cannot be told apart from coverage misses by the power column — see note 01-5 §9.3 |
+| OpenWrt identity | “a router firmware” | It is a **Linux distribution plus a cross-build system** with four downloadable artifacts (source tree, ImageBuilder, SDK, package repository). The wireless stack is a set of independently versioned packages — kernel, `mac80211` backport, driver, `wpad`, firmware and board data — so a wireless regression is often version skew between them, not a bug in one. And OpenWrt ships **no network-level wireless policy**: steering, mesh healing and channel planning are packages you deploy — see note 02-11 |
+| openwifi scope | “an open-source Wi-Fi chip” or “a full modern Wi-Fi stack” | It is a **Linux-mac80211-compatible SDR implementation of 802.11a/g/n** on a Zynq SoC: PHY and low MAC in FPGA, high MAC in mac80211. It is OFDM only (no 802.11b), 20 MHz, MCS 0–7, and measured at iperf TCP 40–50 Mbps; Wi-Fi 6, OFDMA, RFSoC and JCAS/ISAC are **subscription features**, not open source. Note also the name collision: TIP’s OpenWiFi is a different project — a cloud-managed AP architecture on OpenWrt — see note 02-12 |
 | NR HARQ process count | "16 by default" | It is **8** when `nrofHARQ-ProcessesForPDSCH` is absent; 16 is the maximum, not the default. And more is not automatically better: every process holds a soft buffer and total UE soft-buffer memory is a capability, so n16 on a cell that only needs six can reduce the combining gain available to each retransmission — see note 01-6 §8.3 |
 
 **Update triggers**
@@ -231,6 +237,7 @@ flowchart LR
 - 3GPP TSG plenary meetings (4 per year) → update 01-1/01-2/01-4
 - New 3GPP TS 38.321 / 38.331 versions and RAN1/RAN2 agreements on random access → update 01-5 (field sizes, counters, windows and parameter ranges are release-specific; TS 38.321 v17.3.0, 2023-01, is the quoted baseline)
 - IEEE 802.11 WG sessions and WFA certification announcements → update 02-1/02-2/02-3
+- OpenWrt stable series releases (roughly annual) and TIP OpenWiFi or OpenSync releases → update 02-11 (the release branch, the kernel and the wireless script generation all move together)
 - TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
 - Linux mainline and LTS releases → update 08-1/04-2/04-4/04-5 (the quoted baseline this cycle: PREEMPT_RT merged in 6.12, WQ_BH in 6.9, EEVDF in 6.6, clone3/pidfd_open in 5.3, RISC-V AIA drivers in 6.10)
 - xLLM / agent framework releases and papers → update 06-1/06-2

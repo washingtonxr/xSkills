@@ -484,6 +484,8 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — how a power policy is layered: host policy vs firmware state machine vs RF capability
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — where the power-saving knobs live on a real AP, and what has to be configured before TWT does anything
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

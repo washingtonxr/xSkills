@@ -963,6 +963,8 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
     description of `NL80211_CMD_AUTHENTICATE`, `NL80211_CMD_ASSOCIATE`, `NL80211_CMD_NEW_KEY` and the
     state machine that drives them.
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — who owns the MLME on a router: hostapd as a long-lived ubus server, and how a BSS is added without restarting anything
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

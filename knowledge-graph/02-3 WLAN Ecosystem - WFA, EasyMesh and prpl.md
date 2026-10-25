@@ -198,6 +198,8 @@ Everything on the left can be expressed in today's data model; everything on the
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the software that a Multi-AP or prpl deployment lands on, and why a default OpenWrt image has no controller of its own
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

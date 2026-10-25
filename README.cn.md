@@ -2,9 +2,9 @@
 title: PersonalSkills — 通信 × 异构算力 × AI 知识库
 lang: zh-CN
 category: project-readme
-version: 1.19
+version: 1.20
 sibling: README.md
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
@@ -14,7 +14,7 @@ copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 
 > 语言版本：简体中文（当前） · [English](README.md)
 
-本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（36 篇笔记）**。
+本仓库沉淀"通信技术 + 异构算力 + AI"交叉领域的面试准备材料与分领域知识点，包含 **5 份源文档 + 1 个 Obsidian 知识图谱（38 篇笔记）**。
 
 ---
 
@@ -60,7 +60,7 @@ flowchart LR
 | RAN 系统架构师 | 01-1 → 01-2 → 01-6 → 01-7 → 01-5 → 01-3 → 05-1 → 07-1 |
 | 边缘 AI / 端边云架构师 | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
 | 嵌入式 / Linux 平台 | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
-| WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 03-1 → 04-3 |
+| WLAN / 网关方向 | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 02-11 → 02-12 → 03-1 → 04-3 |
 | WLAN 安全 / 客户端协议栈方向 | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
 | 低功耗 / IoT 设备方向 | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
 | 软件 / 语言基础（任何岗位都要过一遍） | 08-2 → 08-3 → 08-1 |
@@ -79,7 +79,7 @@ flowchart LR
 ├── skills-draft.md                Knowledge Framework and Interview Outline（English，默认）
 ├── skills-draft.cn.md             知识框架与面试题纲（中文）
 ├── readlist.md                    参考文献清单（中英文书籍 / 论文 / 标准，说明为英文）
-├── knowledge-graph/               Obsidian 知识图谱（Vault，36 篇笔记）
+├── knowledge-graph/               Obsidian 知识图谱（Vault，38 篇笔记）
 │   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      ← 入口索引
 │   ├── 01-1 5G-Advanced and 6G Radio Access.md
 │   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
@@ -98,6 +98,8 @@ flowchart LR
 │   ├── 02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation.md
 │   ├── 02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations.md
 │   ├── 02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design.md
+│   ├── 02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System.md
+│   ├── 02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform.md
 │   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
 │   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
 │   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
@@ -133,7 +135,7 @@ flowchart LR
 | `background.cn.md` | 中文 | 输入源 | 同上，中文表述 |
 | `skills-draft.md` | English | 主文档 | 2026 知识框架（6 大领域）+ 面试题纲（A/B/C/D 四层）+ Word 产出结构 |
 | `skills-draft.cn.md` | 中文 | 主文档 | 同上，中文表述 |
-| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 38 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 36 一手标准库、37 阅读顺序、38 校核与维护 |
+| `readlist.md` | 英文说明（标题保留原语种） | 参考文献 | 40 个主题域的书籍 / 论文 / 标准 / 文档清单，编号 `GG-x` 与图谱一致：01-1 5G-A 与 6G、01-2 NR L2、01-3 AI-RAN 与 O-RAN、01-4 RedCap/eRedCap/NTN、01-5 NR 随机接入（RACH）、01-6 NR DU MAC 调度器、01-7 NR HARQ 及与 LTE 的对比、02-1 WLAN 代际、02-2 WLAN 节能、02-3 WLAN 生态、02-4 WLAN 收发包流程与 offload、02-5 WLAN 发现、鉴权与关联、02-6 WLAN 漫游、自愈与引导、02-7 EasyMesh 原理与运维排障、02-8 Wi-Fi 调度、02-9 Wi-Fi TSN、02-10 Wi-Fi 基带与驱动架构、02-11 OpenWrt 与无线系统软件、02-12 openwifi、03-1 WSN、04-1 嵌入式 RTOS、04-2 Linux 嵌入式、04-3 嵌入式软件架构、04-4 Linux 中断、04-5 并发与进程/线程/IPC、04-6 设备驱动、05-1 DPDK/UPF、05-2 端边云、06-1 LLM 推理与 xLLM、06-2 Agent、06-3 机器学习基础、07-1 RISC-V、08-1 语言与性能、08-2 C/C++、08-3 Python、08-4 MATLAB 与 Simulink、08-5 Verilog HDL，另附 38 一手标准库、39 阅读顺序、40 校核与维护 |
 
 ### 4.2 知识图谱笔记
 
@@ -157,6 +159,8 @@ flowchart LR
 | **02-8** | **Wi-Fi 调度** | 调度器在 AP 内的完整实现：帧间间隔族与 DCF 退避状态机、CCA 与 BSS Color 双 NAV、EDCA 四个接入类别及 802.11-2016 与 2012 两版 TXOP 限制的变迁与 DSSS 列、OFDMA 资源单元栅格与合法 MRU 组合、八种 Trigger 帧类型与一次完整的上行 OFDMA 回合、MU-MIMO 探测及其代价、Wi-Fi 7 跨链路调度（UMAC/LMAC 切分与 EMLSR 三个定时器）、空口时间公平与赤字轮询、每 TXOP 决策流水线、作为调度器一部分的速率控制、TWT 与 r-TWT 作为可调度状态、`mac80211` 中的 FQ-CoDel 与 AQL 及队列藏身的三处、KPI 体系与排障决策树 |
 | **02-9** | **Wi-Fi TSN · 研究与实践** | 贯穿各代际的确定性主线：工业与沉浸式应用真正提出的四个数字（周期、时延界、可靠性、抖动），Wi-Fi 无法给出确定性上界的六个结构性原因，以及 802.1 工具箱逐项映射到 802.11 的结果。随后是阶梯：802.11e 的优先级、802.11v 的 Timing Measurement、802.11aa 的 SCS 与 AC 内队列、802.11mc 的 0.1 ns FTM、802.11ak 的中继链路、802.11ax 的触发式接入、802.11be 的 r-TWT（TID 位图与静默间隔），直到 802.11bn 被量化的 25% 目标。此外还有 TM/FTM 之上的 802.1AS 与软硬件时间戳的误差预算、五级接入阶梯、SCS 与四参数 QoS Characteristics 元素、MLO 之上的 802.1CB 以及冗余为何要付出空口代价、P-EDCA、NPCA、抢占与多 AP 协同、AP 作为网桥并与 Qbv 门控对齐的融合模型、证据强度的五层梳理、带时延预算算例的九步落地方法、症状排查表，以及 Wi-Fi 与 5G 的逐条对比 |
 | **02-10** | **基带与驱动架构 · Wi-Fi 6/7/8** | 以高通为参考设计拆开无线电：基带里到底有什么、每一代究竟要哪一块电路长大；定义一切的两条边界；Wi-Fi 7 AP 与 Wi-Fi 8 终端的解剖；WCSS 与运行固件的 Q6 处理器；WMI/HTT/HTC/CE/QMI/MHI 协议栈与完整的 ring 清单；一张说明主机、固件、硬件各做什么的职责表；收发两条数据通路与描述符中真正关键的字段；中断组、NAPI 与 threaded NAPI 的实测收益；帧究竟在哪里排队，以及排错之后吞吐量与时延的实测权衡；MLO 在芯片里和驱动里分别是什么；功耗、散热与一次固件断言的真实代价；SoC 侧的 NSS 转发加速平面；从 ath9k、ath10k、ath11k 到 ath12k 及其双模块拆分的驱动演进；Wi-Fi 8 对每一层的诉求；架构正在走向的八个方向；十个面试答案；以及一张故障定位表 |
+| **02-11** | **OpenWrt 与无线系统软件架构** | 把路由器当作软件系统来拆：OpenWrt 到底是什么（一个 Linux 发行版 + 交叉构建系统，对外是四件产物——源码树、ImageBuilder、SDK、软件仓库）；从意图到空口的五条边界；永远在跑的五个守护进程（procd、ubusd、rpcd、netifd、fw4）；把 `/etc/config/wireless` 变成 hostapd BSS 而不重启任何东西的 ucode 流水线；`wifi-device` / `wifi-iface` / `wifi-vlan` / `wifi-station` 的UCI 无线设备模型；hostapd 的 ubus 方法表以及为什么引导决策在用户态；netifd 的设备与接口状态机（含真实的事件名与状态名）；一个报文在盒子里怎么走、flow offload 与 WED 各自付出什么代价；固件、板级校准数据、MAC 地址与监管域这四样“不在源码里”的东西；含 apk 与 attended sysupgrade 的构建与升级体系；以及相邻模型的横向对比——TIP OpenWiFi（APNOS + uCentral + Cloud SDK 与设备 PKI）、OpenSync、prplOS 与 RDK-B、玩家分支、以及厂商 SDK——外加 OpenWrt One 参考硬件、六条诚实的局限、故障定位表和十个面试答案 |
+| **02-12** | **openwifi · 开源 FPGA 802.11 平台** | 把驱动与空口之间那堵墙推倒：为什么需要一个 SDR 802.11 全栈（商用芯片不让你做的四件事）；Zynq + AD9361 平台与是否需要 Vivado 授权的开发板清单；三个仓库以及 Vivado、内核与镜像的构建流程；六个 FPGA IP 核及其逐文件构成；`xpu` 里的低 MAC——CSMA/CA 状态机，以及让 SIFS、时隙、ACK 超时、CCA、竞争窗口与重传次数都变成可写寄存器的那些寄存器；四个发送队列与按 MAC 地址的时隙切片；一个“硬件掌握时序”的 mac80211 驱动及其完整的 `ieee80211_ops` 清单；收发两条通路的逐步拆解；切分为何落在这一层；`sdrctl`（nl80211 testmode）与 sysfs 两条控制通道；各种工作模式与 802.11b 的坑；CSI / IQ / 感知类能力；公开性能数字及其受限原因；与商用芯片、GNU Radio 收发机、`mac80211_hwsim`、仿真器的对比；许可与资助；真实用例；故障定位表与十个面试答案 |
 | **03-1** | WSN 与低功耗 MAC | 分簇路由、UAV 采集、TSCH、AoI |
 | **04-1** | 嵌入式 RTOS | FreeRTOS、PendSV、I2C/SPI/UART/CAN、DMA、缓存一致性 |
 | **04-2** | Linux 嵌入式开发 | 启动链、设备树、驱动、IPC、网络栈、虚拟化、PREEMPT_RT |
@@ -184,7 +188,7 @@ flowchart LR
 2. **入口**：`00 MOC` 是唯一导航页，其余 33 篇均通过 `[[wikilink]]` 双向连通，可用 Graph View 查看关联密度。
 3. **命名规则**：笔记按领域分组编号 `GG-x`——`00 MOC` 为索引，八个领域组从 `01` 起**连续编号**：`01-x` 移动通信、`02-x` WLAN、`03-x` 低功耗与传感组网、`04-x` 嵌入式与系统软件、`05-x` 数据面与异构算力、`06-x` AI 推理与智能体系统、`07-x` 芯片与指令集、`08-x` 编程语言与工程实践。组号顺序沿信号路径由内向外展开：从空口一直到芯片与语言底座。文件名即主题，便于按编号排序与按名检索。
 4. **笔记结构**：知识点正文 → **Anchors（事实锚点）** → **Related（关联笔记）**，三段式固定。
-5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 293 个图块。
+5. **图示**：笔记使用 Mermaid 代码块，在 Obsidian 阅读视图中原生渲染。凡涉及结构的章节都配图——版本时间线、协议栈与数据通路、控制回路、决策树与状态机——全库共 317 个图块。
 6. **检索建议**：优先用 `tags` 与 `aliases`（frontmatter 中已定义），其次用全文搜索标准号（如 `38.914`、`802.11bn`）。
 
 ---
@@ -225,6 +229,8 @@ flowchart LR
 | Linux 下半部机制 | "tasklet 就是快速下半部" | tasklet 已**弃用**。API 在 5.9 前后完成现代化改造，替代者是 **WQ_BH**，于 **6.9** 合入（含 `system_bh_wq` 与 `system_bh_highpri_wq`），运行在 softirq 上下文、不可睡眠且要求 `max_active = 0`；tasklet API 仍在，转换工作尚未完成——见笔记 04-4 |
 | 竞争解决失败后的功率爬坡 | "竞争失败的 UE 从 Msg1 重来且不爬坡" | 实际**会**爬坡。TS 38.321 第 5.1.3 节对 `PREAMBLE_POWER_RAMPING_COUNTER` 的递增只设四个条件——传输计数大于 1、SSB/CSI-RS 未变更、物理层未发出功率爬坡暂停通知、上一次传输无 LBT 失败——**没有为竞争解决失败开任何例外**。真正成立的是更窄的那条：换波束才不爬坡，与失败原因无关。这也否掉了一个常用捷径：碰撞与覆盖不足**无法靠功率列区分**——见笔记 01-5 §9.3 |
 
+| OpenWrt 的定位 | “一个路由器固件” | 它是**一个 Linux 发行版 + 交叉构建系统**，对外是四件可下载的产物（源码树、ImageBuilder、SDK、软件仓库）。无线协议栈是一组各自独立版本化的 package（内核、`mac80211` 回移包、驱动、`wpad`、固件与板级数据），所以无线问题常常是它们之间的版本错配，而不是某一处的缺陷。另外 OpenWrt **不提供网络级无线策略**：引导、mesh 自愈与信道规划都要自己部署软件包——见笔记 02-11 |
+| openwifi 的范围 | “开源 Wi-Fi 芯片” 或 “完整的现代 Wi-Fi 协议栈” | 它是 Zynq SoC 上**与 Linux mac80211 兼容的 802.11a/g/n SDR 实现**：PHY 与低 MAC 在 FPGA，高 MAC 在 mac80211。它只做 OFDM（不支持 802.11b）、20 MHz、MCS 0–7，实测 iperf TCP 40–50 Mbps；Wi-Fi 6、OFDMA、RFSoC 与 JCAS/ISAC 属于**订阅特性**而非开源部分。还要注意重名：TIP 的 OpenWiFi 是另一个项目——基于 OpenWrt 的云端管理 AP 架构——见笔记 02-12 |
 | NR HARQ 进程数 | "默认是 16" | 缺省是 **8**：`nrofHARQ-ProcessesForPDSCH` 缺省时 UE 按 8 个进程假设，16 是上限而非默认值。而且并非越多越好——每个进程都要占用软缓冲区，而 UE 的软缓冲总量是能力项不是配置项，只需要六个进程的小区配成 n16 反而会摊薄每次重传能拿到的合并增益——见笔记 01-6 §8.3 |
 **更新触发点**
 

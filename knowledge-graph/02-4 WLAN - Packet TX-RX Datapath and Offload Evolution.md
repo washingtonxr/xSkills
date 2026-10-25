@@ -747,6 +747,9 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 14. FD.io. *VPP hostap plugin* documentation — userspace 802.11 data plane over hostap's driver wrapper. <https://wiki.fd.io/view/VPP>
 15. "MAC Level Throughput Comparison: 802.11ax vs. 802.11ac." arXiv:1803.10189 — the analytical treatment of A-MPDU size, BA window, and why the 256-MPDU window needs extended BA.
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the offload planes as switches you can throw on a real box, and what each one costs you in observability
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a data path visible end to end including the DMA and interrupt boundaries this note stops at, because the low MAC is Verilog
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

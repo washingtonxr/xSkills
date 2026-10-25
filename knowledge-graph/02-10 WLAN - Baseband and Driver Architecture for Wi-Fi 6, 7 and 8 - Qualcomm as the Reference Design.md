@@ -1255,6 +1255,9 @@ latency targets achievable in a real deployment, and it is the one with no stand
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling a path whose cost is per-descriptor, not per-packet
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the kernel C idioms this driver is written in: `container_of`, `FIELD_GET`, `READ_ONCE` and `WRITE_ONCE`, and the barriers that make a doorbell correct
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the other side of the driver: how a router configures what section 6 describes, and where the firmware and board data come from
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same low MAC and PHY, but in Verilog you can edit and registers you can read
+
 ---
 
 ## References

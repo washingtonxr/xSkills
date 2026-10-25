@@ -2,8 +2,8 @@
 title: Reading List — Comms × Heterogeneous Compute × AI
 lang: en
 category: reading-list
-version: 1.19
-last-updated: 2026-10-23
+version: 1.20
+last-updated: 2026-10-25
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
 ---
 
@@ -811,6 +811,104 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 - **[Doc · ★ · EN]** Gunbark security research. *ath11k driver audit notes*. <https://gunbark.dev/content/51b398b0-9cf2-4075-b5ed-54d48a2a5ce7>
   - The trust-boundary argument: coherent DMA rings the device writes, an IOMMU that bounds where but not when, and descriptor fields derived from over-the-air frames.
 
+
+## 02-11 · WLAN — OpenWrt and the Software Architecture of a Wireless System
+
+### The project itself — release, support and the reference hardware
+
+- **[Doc · ★★★ · EN]** OpenWrt Project. *Welcome to the OpenWrt Project*. <https://openwrt.org/>
+  - The current stable series and its latest service release with the kernel they ship, the old stable series and its end-of-life date, and the OpenWrt One announcement with its specification. The page to check before quoting any version.
+- **[Doc · ★★★ · EN]** OpenWrt Project. *OpenWrt version history*. <https://openwrt.org/about/history>
+  - Per-series kernel versions and dates, and the three 25.12 highlights that actually change the architecture: apk replacing opkg, attended sysupgrade enabled by default, and the Wi-Fi handling scripts rewritten in ucode.
+- **[Doc · ★★ · EN]** OpenWrt Project. *OpenWrt 25.12*. <https://openwrt.org/releases/25.12/start>
+  - The release and service-release list for the current stable series.
+- **[Doc · ★★ · EN]** OpenWrt Project. *Security — support status*. <https://openwrt.org/docs/guide-developer/security>
+  - Supported, security-maintenance and end-of-life dates per series, and the rule that only the latest minor release of a series is supported.
+- **[Doc · ★★★ · EN]** OpenWrt Project. *OpenWrt One*. <https://openwrt.org/toh/openwrt/one>
+  - MT7981BA, MT7976CN, 1 GB DDR4, 256 MiB NAND plus 16 MiB NOR for recovery, the 2.5 GbE and 1 GbE ports, M.2 NVMe, and the project's own guidance on packet steering, hardware flow offload and WED — including the warning that WED bypasses AQL.
+
+### netifd, ubus and the wireless pipeline
+
+- **[Code · ★★★ · EN]** OpenWrt Project. *netifd DESIGN*. <https://git.openwrt.org/?p=project/netifd.git;a=blob;f=DESIGN;hb=HEAD>
+  - The source of section 7: devices and their refcounting, the seven device events, interfaces with `active`, `autostart` and the four `IFS_*` states, and the protocol-handler contract that must never block.
+- **[Code · ★★★ · EN]** Golle, D., Crispin, J., and Wich, J.-P. *"How to trigger wifi reload from wifi.lua"*, openwrt-devel, October 2019. <https://lists.openwrt.org/pipermail/openwrt-devel/2019-October/025251.html>
+  - The change that made hostapd and wpa_supplicant permanent ubus servers so that netifd can add, remove and modify interfaces at runtime. Read this before you answer "how does a wireless config change get applied".
+- **[Doc · ★★★ · EN]** OpenWrt Project. *hostapd package README: UBUS methods*. <https://github.com/openwrt/openwrt/tree/master/package/network/services/hostapd>
+  - `bss_mgmt_enable`, `bss_transition_request`, `config_add`, `config_remove`, `del_client`, `get_clients`, `get_features` and `get_status`, with argument tables and worked `ubus call` examples.
+- **[Doc · ★★ · EN]** OpenWrt Project. *uci_wireless.txt*. <https://git.openwrt.org/?p=web.git;a=blob;f=docs/uci_wireless.txt;hb=HEAD>
+  - The `wifi-device` and `wifi-iface` option reference.
+- **[Doc · ★★ · EN]** OpenWrt Project. *Start/Stop wireless — basic Wi-Fi configuration*. <https://openwrt.org/docs/guide-user/network/wifi/basic>
+  - `wifi` command semantics, the `wifi-station` section with PSK or MAC matching and WPA3 SAE support since 24.10, and the `wifi-vlan` section.
+- **[Doc · ★★ · EN]** *OpenWrt wireless subsystem* — generated documentation of the source tree. <https://deepwiki.com/openwrt/openwrt/5.2-wireless-subsystem>
+  - The file inventory behind the pipeline: `wifi-scripts`, `wireless.uc`, `mac80211.sh`, `hostapd.uc`, `wpa_supplicant.uc`, `wpad_acl.json`, the `601-ucode_support.patch`, and the wireless schema.
+- **[Doc · ★★ · EN]** *Wireless management: mac80211, hostapd and wifi-scripts* — generated documentation. <https://deepwiki.com/ansuel/openwrt/5.2-wireless-management:-mac80211-hostapd-and-wifi-scripts>
+  - How UCI becomes a hostapd configuration through ucode, and how the mt76 package is structured.
+- **[Doc · ★★ · EN]** *Network configuration in OpenWrt* — community architecture write-up. <https://ducndc.github.io/blog/network-openwrt-configuration>
+  - The config-to-kernel mental model, the who-does-what table, and the debugging order: config, then ubus, then kernel, then packets.
+- **[Doc · ★★ · EN]** OpenWrt Project. *DSA — Distributed Switch Architecture*. <https://openwrt.org/docs/guide-user/network/dsa/start>
+  - The switch model that replaced `swconfig`, and how VLAN filtering is configured on `br-lan`.
+- **[Doc · ★★ · EN]** OpenWrt Project. *Firewall configuration*. <https://openwrt.org/docs/guide-user/firewall/firewall_configuration>
+  - The UCI firewall options behind the data-plane section, including `flow_offloading` and `flow_offloading_hw`.
+- **[Doc · ★★ · EN]** OpenWrt Project. *Attended Sysupgrade (ASU)*. <https://openwrt.org/docs/guide-user/installation/attended.sysupgrade>
+  - The on-demand image build that preserves a device's package set across an upgrade.
+
+### The neighbours — operator and cloud-managed stacks
+
+- **[Doc · ★★★ · EN]** PLVision. *"How OpenWiFi Works: Architecture, Trust Infrastructure, and the Wired Layer."* <https://plvision.eu/blog/networking/how-openwifi-works>
+  - The three-layer disaggregation, APNOS and the uCentral agent with schema-and-ucode rendering, the modular package split, the Cloud SDK with OWGW and Kafka, and the PKI 2.0 birth and operational certificate model using EST.
+- **[Doc · ★★ · EN]** Light Reading. *"TIP, CableLabs advance on 'OpenWiFi'"*. <https://www.lightreading.com/broadband/tip-cablelabs-advance-on-openwifi>
+  - OpenWiFi's OpenWrt origin, the move from OpenSync to uCentral, deployment scale, and CableLabs validation of the 2.9 release.
+- **[Doc · ★★ · EN]** Wi-Fi NOW. *"Telecom Infra Project launches grand new vision for open-source Wi-Fi architecture"*. <https://staging.wifinowglobal.com/news-and-blog/tip-launches-grand-new-vision-for-open-source-wi-fi-architecture-everywhere>
+  - The original full-stack disaggregation announcement, with OpenSync as the AP-to-cloud middleware.
+- **[Doc · ★★ · EN]** Tanaza. *Open WiFi System for Communication Service Providers*. <https://www.tanaza.com/blog/open-wi-fi-system/>
+  - The OpenSync model: a cloud-agnostic data model on the AP so that any controller can manage any whitebox AP.
+
+### Wi-Fi 7 on OpenWrt — check before you quote
+
+- **[Doc · ★★ · EN]** *MT76 device architecture* — generated documentation. <https://deepwiki.com/openwrt/mt76/9.1-device-architecture>
+  - MT7996, MT7992 and MT7990 variants, band counts, the MLD index mask, WTBL size, and the per-band OMAC and VIF limits.
+- **[Doc · ★★ · EN]** OpenWrt Forum. *"BPI-R4 WiFi 7 Manager — LuCI app for MT7996 / MT7988A"*. <https://forum.openwrt.org/t/bpi-r4-wifi-7-manager-luci-app-for-mt7996-mt7988a/250060/3>
+  - Runtime evidence for MLO on mt76: `hostapd_cli` reporting `ieee80211be=1`, `num_links=3` and `ap_mld_type=STR`, and the beacon Multi-Link element showing EMLSR supported while EMLMR is not.
+
+## 02-12 · WLAN — openwifi: An Open-Source FPGA 802.11 Platform
+
+### The project — start here and check the licence
+
+- **[Code · ★★★ · EN]** Jiao, X., Mehari, M., and Liu, W. *openwifi* — repository README. <https://github.com/open-sdr/openwifi>
+  - The project description, the feature list, the supported boards, the published performance figures, the 802.11b note, the porting guide, and the licensing and funding statements.
+- **[Code · ★★★ · EN]** Jiao, X. *openwifi-hw* — FPGA design repository README. <https://github.com/open-sdr/openwifi-hw>
+  - The board table with its Vivado-licence column, the build flow and every script, the baseband clock options, the IP-core modification and simulation workflow, conditional compilation, and migration guidance for new Vivado and ADI releases.
+- **[Doc · ★★★ · EN]** Jiao, X. *openwifi document* — `doc/README.md`. <https://github.com/open-sdr/openwifi/blob/master/doc/README.md>
+  - The `ieee80211_ops` the driver implements, the receive and transmit interrupt paths, `sdrctl` as an nl80211 testmode command, the `tx` and `rx` register tables, the nine decisions inside `openwifi_tx()`, and the TSF timestamp explanation.
+- **[Code · ★★★ · EN]** *openwifi driver source* — `driver/sdr.c`, `sdr.h`, `hw_def.h`, `sdrctl_intf.c`, `sysfs_intf.c`. <https://github.com/open-sdr/openwifi/tree/master/driver>
+  - `MODULE_LICENSE("GPL v2")`, the mac80211 ops, `openwifi_rx_interrupt()` with `ieee80211_rx_irqsafe()`, `openwifi_tx_interrupt()` with `ieee80211_tx_status_irqsafe()`, and the per-IP driver modules.
+- **[Code · ★★ · EN]** *openwifi-hw IP cores* — `ip/xpu/src`, `ip/tx_intf/src`, `ip/rx_intf/src`, `ip/side_ch/src`. <https://github.com/open-sdr/openwifi-hw/tree/master/ip>
+  - The module inventory: `csma_ca.v`, `cw_exp.v`, `cca.v`, `tsf_timer.v`, `tx_control.v`, `pkt_filter_ctl.v`, `time_slice_gen.v`, `phy_rx_parse.v`, `tx_bit_intf.v`, `tx_iq_intf.v`, `dac_intf.v`, `csi_fuzzer.v`, `adc_intf.v`, `byte_to_word_fcs_sn_insert.v`, `side_ch_control.v` and their companions.
+- **[Paper · ★★★ · EN]** Jiao, X., Liu, W., Mehari, M., Aslam, M., and Moerman, I. "openwifi: a free and open-source IEEE802.11 SDR implementation on SoC." *2020 IEEE 91st Vehicular Technology Conference (VTC2020-Spring)*, pp. 1-2, 2020.
+  - The project's conference paper. Citation metadata is in `doc/cite-openwifi-vtc-paper.md`.
+
+### The substrate it is built on
+
+- **[Code · ★★ · EN]** *openofdm* — the 802.11 OFDM receiver openwifi's receiver derives from, and the `dot11zynq` fork carrying openwifi's improvements. <https://github.com/jhshi/openofdm>
+  - Read it to understand what `openofdm_rx` does before you modify it.
+- **[Code · ★★ · EN]** Analog Devices. *HDL Reference Designs*. <https://github.com/analogdevicesinc/hdl>
+  - The reference designs openwifi builds on, including the `fmcomms2` project used as the porting baseline.
+- **[Doc · ★ · EN]** openwifi. *Subscription and advanced features*. <https://openwifi.tech>
+  - The dual-licence model and the feature set that is not in the open-source edition: Wi-Fi 6, OFDMA, RFSoC, JCAS/ISAC and other bandwidths.
+
+### The comparison class — host-based SDR 802.11
+
+- **[Paper · ★★★ · EN]** Bloessl, B., Segata, M., Sommer, C., and Dressler, F. "An IEEE 802.11a/g/p OFDM Receiver for GNU Radio." *Proceedings of the 2nd ACM SIGCOMM Workshop on Software Radio Implementation Forum (SRIF 2013)*, 2013.
+  - The first open GNU Radio OFDM receiver for 802.11a/g/p. Defines the transceiver end of the comparison: full visibility, no MAC deadlines.
+- **[Paper · ★★★ · EN]** Bloessl, B., Segata, M., Sommer, C., and Dressler, F. "Performance Assessment of IEEE 802.11p with an Open Source SDR-Based Prototype." *IEEE Transactions on Mobile Computing*, 2018. <https://www.computer.org/csdl/journal/tm/2018/05/08031977/13rRUxlgy4n>
+  - A validated SDR-based 802.11p transceiver with the simulation-to-experiment methodology that a platform like this exists to support.
+- **[Code · ★★ · EN]** *Wime project*. <https://wime-project.net>
+  - The open-source SDR-based experimentation framework behind the GNU Radio transceiver lineage, including the 802.11p work and its measurement studies.
+
+### Funding and provenance
+
+- **[Doc · ★ · EN]** ORCA project. *EU Horizon 2020 research and innovation programme, grant agreement no. 732174* — the funding source acknowledged by openwifi.
+- **[Doc · ★ · EN]** NLnet / NGI Zero Core. *openwifi funding pages* — the 802.11n feature, the 802.11a/g/n maturity work, and the extended OpenWrt support.
 
 ## 03-1 · Wireless Sensor Networks and Low-Power MAC
 
@@ -1729,7 +1827,7 @@ Supports vault note `16`. Note that §13 covers toolchain, profiling and perform
 
 ---
 
-## 36 · Primary Standards and Specification Repositories
+## 38 · Primary Standards and Specification Repositories
 
 Cross-cutting sources that back every section above. Bookmark these; they are always more authoritative than secondary writing.
 
@@ -1756,7 +1854,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 37 · Suggested Reading Order
+## 39 · Suggested Reading Order
 
 **If you have 4 weeks before an interview:**
 
@@ -1776,7 +1874,7 @@ Cross-cutting sources that back every section above. Bookmark these; they are al
 
 ---
 
-## 38 · Verification and Maintenance
+## 40 · Verification and Maintenance
 
 - Every entry above was checked against a publisher page, library catalogue, DOI, arXiv record or the issuing standards body before inclusion.
 - Entries are recorded with the identifier that makes them checkable: **ISBN** for books, **DOI** or **arXiv ID** for papers, **specification number** for standards. Where a citation could not be independently confirmed at the time of writing, it is marked **VERIFY** rather than asserted.

@@ -1362,6 +1362,9 @@ flowchart TB
 31. Ryan, D. *Cisco WLC: EDCA timers* — comparing IEEE 802.11-2016 Table 9-137 against IEEE 802.11-2012 Table 8-105. <https://netgab.net/web/2017/12/05/cisco-wlc-edca-timers/>
     — The side-by-side that makes the TXOP-limit change legible, and the observation behind §3.2's DSSS paragraph: the 2016 change from 0 to 2.528 ms *caps* a slow station, because at 1 Mbps one 1500-byte frame wants ~12 ms of airtime and no longer gets it.
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the airtime knobs as they exist on a real device, including the offload paths that bypass AQL
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same scheduler reimplemented: backoff, contention window, SIFS and slot time as writable FPGA registers
+
 ---
 
 Copyright (c) 2026 Washington Ruan. All rights reserved.

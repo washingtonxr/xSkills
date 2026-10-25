@@ -809,6 +809,8 @@ Method, in order:
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the consumer of the isolation this note enables: a per-slot thread that cannot afford an interrupt, a softirq or a workqueue run in its path
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the other real-time wireless deadline: not a slot but a SIFS, which is why the Wi-Fi MAC's per-TXOP decision cannot live on a host CPU at all
 
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the interrupt path at the bottom of an SDR Wi-Fi stack: `ieee80211_rx_irqsafe()` and `ieee80211_tx_status_irqsafe()` called from the FPGA's interrupts
+
 ---
 
 ## References

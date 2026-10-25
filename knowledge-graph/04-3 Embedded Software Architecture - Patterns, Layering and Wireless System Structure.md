@@ -19,7 +19,7 @@ aliases:
   - Embedded Architecture Patterns
 version: 1.0
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 related-notes:
   - 07 Embedded Systems RTOS and Hardware Interfaces
   - 15 Linux Embedded Development - Drivers, Applications and Core Subsystems
@@ -672,6 +672,8 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the worked example of a power policy split across host, firmware and RF capability
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS, eDRX and the power architecture of cellular IoT devices
 - [[05-1 DPDK User Plane and 5G UPF]] — single-owner zero-copy ownership applied at line rate
+
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the layering argument instantiated on a shipping router: intent, state, control plane, kernel and hardware
 
 ---
 

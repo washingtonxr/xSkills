@@ -15,7 +15,7 @@ aliases:
   - HeartStream
   - many-core cluster
 copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
-last-updated: 2026-10-23
+last-updated: 2026-10-25
 ---
 
 # RISC-V for Communication Infrastructure
@@ -160,6 +160,8 @@ Answer across four dimensions:
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the platform side of a driver port: PLIC versus AIA irqchips behind `platform_get_irq`, non-coherent DMA and the barrier discipline, and why the same C source needs review per architecture
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — where the AIA/APLIC/IMSIC drivers are described in full: the ratified June 2023 specification, the PLIC comparison, and the 6.10 merge
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the U/S/M privilege levels in the concurrency model, and the mailbox doorbell path between Linux and an RTOS core
+
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — what an open baseband looks like today, and why an open ISA is the natural next step for a platform like this
 
 ---
 

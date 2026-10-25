@@ -1168,6 +1168,9 @@ by "a scheduler that must first win a contended medium".
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where hardware timestamping lives: the NIC driver, its DMA path, and the interrupt latency that decides whether a timestamp is trustworthy
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling worst-case rather than mean behaviour in a path whose deadline is measured in microseconds
 
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the box that has to be configured for a latency bound, and the offload-versus-observability trade that decides whether the bound is even measurable
+- [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a platform where scheduled access can be built in hardware: time-gated FPGA queues addressed by MAC address
+
 ---
 
 ## References
