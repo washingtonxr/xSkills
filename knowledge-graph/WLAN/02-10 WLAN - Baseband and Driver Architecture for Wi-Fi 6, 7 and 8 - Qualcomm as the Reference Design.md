@@ -1238,6 +1238,7 @@ latency targets achievable in a real deployment, and it is the one with no stand
 
 ## Related
 
+- [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] — the other half of the same die: the analog front end that feeds this baseband, where DPD and calibration actually run, and why a neural receiver cannot fit inside a 13.6 µs symbol
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — the packet-path view this note's silicon view sits under: SoftMAC and FullMAC, the five offload planes, and what "offload" costs you in observability
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what the firmware scheduler in section 6 is actually deciding, and why a Wi-Fi scheduler must win the medium first
 - [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the requirement that section 11's queueing numbers and section 16's host-API gap exist to serve

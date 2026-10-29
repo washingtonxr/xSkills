@@ -16,7 +16,7 @@ last-updated: 2026-10-29
 
 > **One thesis holds this vault together.** Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into a single scheduling problem — deciding *what* runs *where*, *when*, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales. Every note states where that analogy holds and, more usefully, where it breaks.
 
-**Ten directories · 42 notes · one index.** The directory is the domain; the note number is the order to read within it.
+**Ten directories · 43 notes · one index.** The directory is the domain; the note number is the order to read within it.
 
 ## 1. Start here
 
@@ -37,7 +37,7 @@ Two rules make the difference between reading and knowing:
 ```mermaid
 flowchart LR
     MN["MN<br/>mobile network<br/>8 notes"]
-    WLAN["WLAN<br/>IEEE 802.11<br/>14 notes"]
+    WLAN["WLAN<br/>IEEE 802.11<br/>15 notes"]
     WSN["WSN<br/>low-power WPAN<br/>1 note"]
     EMBEDDED["EMBEDDED<br/>systems software<br/>6 notes"]
     DATAPLANE["DATAPLANE<br/>packet plane · fabric<br/>2 notes"]
@@ -125,13 +125,14 @@ References: [`MN/readlist.md`](MN/readlist.md) — 3GPP, ITU-R, O-RAN, and the v
 
 ## 6. `WLAN` — IEEE 802.11
 
-Fourteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the generations promise, how a station joins and stays joined, how frames actually move, how the AP schedules, what the silicon does, what the software on top does, and finally whether any of it can be made deterministic.
+Fifteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the generations promise, how a station joins and stays joined, how frames actually move, how the AP schedules, what the silicon does, what the software on top does, and finally whether any of it can be made deterministic.
 
-**Read first:** 02-14, the fundamentals; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
+**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
 
 | Note | What it answers |
 | --- | --- |
 | [[02-14 WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7]] | The substrate under every other note: why 802.11's MAC differs from Ethernet's, the ALOHA-to-802.11be history, the join sequence, CSMA/CA and EDCA, the numerology and the rate arithmetic, Wi-Fi 6 as the hinge, Wi-Fi 7 PHY and MLO, deployment, product test, 5G convergence and trends — built from *Wi-Fi 7 In Depth* (Cisco Press, 2024) and *Wi-Fi 7: Principles, Technology, and Applications* (Springer, 2025) |
+| [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] | The analog half: the five jobs a radio performs, the noise/EVM budget that commissions it, superheterodyne to zero-IF to digital-assisted, the TX and RX chains stage by stage, MIMO and MLO costs, power and coexistence, 802.11bf sensing, and what AI can and cannot change inside a transceiver |
 | [[02-1 WLAN - Wi-Fi Generations Evolution]] | 802.11n → 802.11bn as a feature-by-feature lineage, and what each generation was actually for |
 | [[02-2 WLAN - Power Saving Mechanisms and Evolution]] | Energy as the design constraint: legacy PS, U-APSD, SMPS, TWT and r-TWT, wake-up radio, ambient power |
 | [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] | Who certifies and who coordinates: WFA programmes, EasyMesh, prplMesh, prplOS |

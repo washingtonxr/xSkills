@@ -19,6 +19,7 @@ last-updated: 2026-10-29
 - **Titles** are kept in their published form and never translated; descriptions are English.
 - **Nothing is asserted.** Where a citation could not be confirmed against a publisher, DOI, arXiv record or the issuing body, it is marked `VERIFY`.
 - **Start here:** if you are new to 802.11, read `02-14` first and use its two source books as the spine; the remaining sections assume the vocabulary it defines.
+- **The analog companion:** `02-15` is the only section that is not about the protocol stack. Read it after `02-14` if you care why the numbers in the PHY tables are what they are.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
@@ -798,6 +799,90 @@ consulted. Everything else in this section exists to check them.
   - A vendor page, not an authority, but it publishes the tone-plan arithmetic (`3920 × 5/6 × log2(4096) / 13.6 µs`) that reproduces 2882.4 Mbps per stream and 46.08 Gbps at 16 streams. Useful precisely because it also publishes the 16-stream number that the standard does not contain.
 - **[Book · EN · ★★]** Gast, M. S. *802.11 Wireless Networks: The Definitive Guide*, 2nd ed., O'Reilly, 2005 — see §02-1.
   - The IFS, NAV and frame taxonomy in §3 and §5 of note 02-14 are his; the tables are worth checking against the clause.
+
+---
+
+## 02-15 · WLAN — The Transceiver: From Superheterodyne to Wi-Fi 7 and the AI-Native Radio
+
+Every other section in this list is about a protocol or a stack. This one is about the analog half, and the reading
+is different: there are two excellent textbooks and then a large gap, because the Wi-Fi-specific transceiver
+literature lives in application notes and conference papers rather than in books.
+
+### The two textbooks
+
+- **[Book · EN · ★★★]** Razavi, B. *RF Microelectronics*, 2nd ed., Prentice Hall, 2011 · ISBN 978-0-13-713473-1
+  - The source for sections 4 to 6 of the note. Chapter 4 (direct conversion) and chapter 3 (phase noise) are the two
+    that explain why a Wi-Fi radio looks the way it does; the impairment mathematics for IQ mismatch and LO leakage is
+    the only treatment that lines up cleanly with the 802.11 EVM tables.
+  - Read the chapter on power amplifiers before believing any datasheet efficiency figure. The note's claim that a PA
+    quoted at 40% delivers single digits at the backoff 4096-QAM needs comes from here.
+- **[Book · EN · ★★★]** Lee, T. H. *The Design of CMOS Radio-Frequency Integrated Circuits*, 2nd ed., Cambridge
+  University Press, 2003 · ISBN 978-0-521-83539-8
+  - The historical half of the note in book form: why the superheterodyne dominated for eighty years, and why CMOS at
+    2.4 GHz was the thing that changed in the late 1990s.
+  - Chapter 1 is worth an evening on its own as an argument about architecture rather than circuits.
+
+### Standards — the numbers the note is built on
+
+- **[Std · ★★★ · EN]** IEEE Std 802.11be-2024, clause 36.3.19.4 — transmitter modulation accuracy.
+  - Table of allowed relative constellation error: −5 dB for BPSK down to **−38 dB for 4096-QAM**. Also the clause
+    that excludes LO leakage at the centre subcarrier and ±3 neighbours from the EVM computation, which is the clearest
+    evidence in the standard that direct conversion is assumed.
+- **[Std · ★★★ · EN]** IEEE 802.11-20/1253r6 — *PDT-PHY: Modulation Accuracy*. The draft text behind that table,
+  including the motion that set −38 dB and the looser TB-PPDU values at low transmit power.
+- **[Std · ★★★ · EN]** IEEE Std 802.11ax-2021, Table 27-49 and the HE sensitivity tables; IEEE Std 802.11-2020,
+  clause 27 and Table 21-25 / 19-26.
+  - Sensitivity and EVM for every MCS below 4096-QAM. Note that the tables scale exactly 3 dB per doubling of
+    bandwidth: they are a noise floor plus a fixed SNR, not measurements.
+- **[Std · ★★ · EN]** IEEE P802.11bn/D1.0 (July 2025) and the TGbn PAR — the ELR PPDU (20 MHz, one stream,
+  BPSK/QPSK, 1.67 and 3.33 Mbps, RU-level repetition, 3 dB boosted STF/LTF) and the 25% targets.
+- **[Std · ★★ · EN]** IEEE Std 802.11bf-2024 — WLAN sensing: sensing measurement instances, initiation and feedback
+  frames, monostatic and bistatic operation.
+
+### Measurement
+
+- **[Doc · EN · ★★★]** Rohde & Schwarz, *Hints for IEEE 802.11be EVM Measurements*, application note 1EF114.
+  - Why measuring −38 dB requires an analyser with 10 dB of residual margin, and what the analyser itself contributes
+    to the number. Read this before comparing two vendors' EVM claims.
+- **[Doc · EN · ★★]** Vendor RF performance tables — HPE Aruba 730-series QuickSpecs, Ruijie RG-AP7136-R.
+  - Useful exactly because they are not the standard: they quote typical sensitivity 8–12 dB better than the IEEE
+    floor, which implies a noise figure near 3 dB. Comparing them against Table 27-49 is a category error, and most
+    arguments about "which AP has better range" are that error.
+
+### AI and the physical layer
+
+- **[Paper · EN · ★★★]** Cammerer, S., Aït Aoudia, F., Hoydis, J., et al. *A Neural Receiver for 5G NR Multi-user
+  MIMO*. arXiv:2312.02601, 2023.
+  - The number the note leans on: about 730k weights, under 1 ms on an A100 with TensorRT, within 1 dB of LMMSE plus
+    K-best. Put it next to a 13.6 µs Wi-Fi symbol and the "AI-native PHY" question answers itself for this decade.
+- **[Paper · EN · ★★]** O'Shea, T. and Hoydis, J. *An Introduction to Deep Learning for the Physical Layer*. IEEE
+  Transactions on Cognitive Communications and Networking 3(4), 2017.
+  - Where the autoencoder framing starts. Worth reading for what it claims and, more usefully, what it does not.
+- **[Std · ★★ · EN]** 3GPP TR 38.843 — *Study on AI/ML for NR Air Interface*, Release 18.
+  - The only standardised AI-in-PHY framework: CSI compression at 8–79% overhead reduction, beam prediction at 60–90%
+    top-1, positioning under 1 m at 90% CDF. It is also the benchmark for what 802.11 has not done.
+- **[Doc · EN · ★★]** NVIDIA, *Real-Time Neural Receivers Drive AI-RAN Innovation* (developer blog) and the
+  `NVlabs/neural_rx` research code.
+  - The engineering view of the same result: what real-time inference actually costs, and why site-specific training
+    is the interesting part.
+
+### Regulatory
+
+- **[Doc · EN · ★★★]** FCC 47 CFR §15.247 (2.4 GHz) and §15.407 (5 and 6 GHz); *Report and Order*, ET Docket
+  No. 18-295 (April 2020) for the 6 GHz power classes and AFC.
+- **[Std · ★★ · EN]** ETSI EN 300 328 and EN 301 893.
+  - The European limits are lower than the US and differ per sub-band, which is why the same hardware ships with
+    different power tables. Do not quote a single EU number without the sub-band.
+
+### Cross-checks
+
+- **[Paper · EN · ★★]** Geraci, G., et al. *Wi-Fi: Twenty-Five Years and Counting*. Proceedings of the IEEE 113(11),
+  2025 · arXiv:2507.09613 — the independent timeline and the 802.11bn status used in section 7.
+- **[Book · EN · ★★]** Henry, J., Gupta, B., Hart, B., and Smith, M. *Wi-Fi 7 In Depth*. Cisco Press, 2024 — chapters
+  5 and 6 for the PPDU and MLO that the radio has to produce; see §02-14.
+- **[Book · EN · ★★]** Cheng, G., et al. *Wi-Fi 7: Principles, Technology, and Applications*. Springer, 2025 ·
+  DOI 10.1007/978-981-97-9026-5 — chapter 4, product development and test, is the closest published account of how a
+  radio is characterised from EVT to mass production.
 
 ---
 

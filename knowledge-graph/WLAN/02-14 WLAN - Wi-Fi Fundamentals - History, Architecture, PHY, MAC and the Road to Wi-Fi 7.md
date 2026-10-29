@@ -1435,6 +1435,9 @@ between sources (March or May 2028).
 
 ## Related
 
+- [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] — the analog half of
+  this note: what the EVM and sensitivity tables cost in silicon, why the preamble is 93% of a peak-rate frame, and
+  what AI can and cannot change inside a radio
 - [[02-1 WLAN - Wi-Fi Generations Evolution]] — the same territory at feature granularity: every amendment
   from 802.11n to 802.11bn with its PHY and MAC parameters, plus the Wi-Fi 8 ballot history and the Wi-Fi 9
   discussion
