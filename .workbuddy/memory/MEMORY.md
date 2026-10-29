@@ -9,10 +9,10 @@ Personal knowledge base for interview preparation at the intersection of
 
 | File | Role |
 | --- | --- |
-| `README.md` / `README.cn.md` | Project README (English default) |
-| `background.md` / `background.cn.md` | Profile + task statement |
-| `skills-draft.md` / `skills-draft.cn.md` | Knowledge framework + interview outline |
-| `readlist.md` | **No Chinese edition** — titles are already kept in their original published form with English descriptions |
+| `README.md` | **One file, Chinese then English.** There is no `README.cn.md` any more (removed 2026-10-29) |
+| `other/background.md` / `other/background.cn.md` | Profile + task statement (moved to `other/` 2026-10-29) |
+| `other/skills-draft.md` / `other/skills-draft.cn.md` | Knowledge framework + interview outline (moved to `other/`) |
+| `knowledge-graph/<DIR>/readlist.md` | **One per directory** — the root `readlist.md` was split 2026-10-29 |
 
 The `.en` suffix is **not** used. Do not reintroduce it.
 
@@ -24,7 +24,9 @@ The `.en` suffix is **not** used. Do not reintroduce it.
 ## Vault structure
 
 - `knowledge-graph/` is the Obsidian vault root — open *that* folder, not the project root.
-- `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point.
+- `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point: directory map, reading and memory method, contribution method, maintenance triggers.
+- Notes live in **one folder per domain**: `MN/ WLAN/ WSN/ EMBEDDED/ DATAPLANE/ AI/ SILICON/ LANGUAGES/ MANAGEMENT/ BUSINESS/`. Wikilinks still resolve because Obsidian matches by note name, so moving a note between folders does not break links.
+- `99 Corrections - Verified Facts That Popular Sources Get Wrong.md` is the appendix that used to be README §7.
 - Notes are numbered **`GG-x`** by domain group; the file name *is* the topic.
 - Fixed note body shape: knowledge points → **Anchors** → **Related** → **References**; the big domain notes (01-5/01-6/01-7/01-8/09-1/10-1/02-7/02-8/02-9/02-10/02-11/02-12/02-13/06-3/04-4/04-5/04-6) all close with **References** (real books/PEPs/standards with ISBN/DOI/URL), because the user requires citations at the end of the article.
 - Diagrams are **Mermaid** code blocks (render natively in Obsidian reading view); every note is expected to carry them in its structural sections (architecture, data path, timing, decision logic), not just in passing.
@@ -49,20 +51,24 @@ replaced on request. Group order follows the signal path outward:
 | `09-x` | Engineering project management and delivery | 09-1 engineering project management — methodology, lifecycle, tools and best practice |
 | `10-x` | Value-driven business model and monetisation | 10-1 value-driven business model — methodology, process, tools and best practice |
 
-`readlist.md` sections use the **same** `GG-x` numbers (sections 32–34 are the
-standards repositories, reading order, and maintenance). Renumbering a note means
-renumbering its readlist section too.
+Group number `GG` is also the **folder name**, in order: `01 → MN`, `02 → WLAN`,
+`03 → WSN`, `04 → EMBEDDED`, `05 → DATAPLANE`, `06 → AI`, `07 → SILICON`,
+`08 → LANGUAGES`, `09 → MANAGEMENT`, `10 → BUSINESS`.
+
+Each directory's `readlist.md` uses the **same** `GG-x` numbers for its sections.
+Renumbering a note means renumbering its readlist section and its directory table
+row in the MOC.
 
 ## Content conventions
 
 - **Anchors** sections hold only checkable facts with a date or number (spec numbers, freeze dates, DOIs, release versions).
 - Anything not independently confirmed is marked **`VERIFY`**, never asserted.
 - `[[wikilinks]]` are deliberate — a link means the two concepts get argued about together in interviews.
-- Source documents stay faithful to the original draft; **corrected facts live in the Anchors sections**, and the README §7 table records source-vs-verified discrepancies.
+- Source documents stay faithful to the original draft; **corrected facts live in the Anchors sections**, and `knowledge-graph/99 Corrections ...` records source-vs-verified discrepancies (it replaced the README fact-check table on 2026-10-29).
 - **Verify procedural claims against the clause, not the secondary sources.** Collected blog sources repeat errors verbatim — every popular RACH write-up claims contention-resolution losers do not ramp power, and TS 38.321 clause 5.1.3 shows they do. When a new section will restate an existing claim, re-check the clause first.
 - Structural diagrams follow the question: an "architecture / who does what" view is a **sequenceDiagram with the layers as participants** (the vertical order is the layering, the horizontal arrows are the messages), not a flowchart of boxes.
-- Copyright line `Copyright (c) 2026 Washington Ruan. All rights reserved.` appears in frontmatter and footer of every file.
-- Frontmatter: `title`, `lang`, `category`, `last-updated`, `copyright`, plus `sibling` for bilingual pairs and `version` for documents with revision history.
+- **Licensing (changed 2026-10-29, on request):** the project is open source under **GPL-3.0-or-later OR AGPL-3.0-or-later** (dual, user's choice). The old `All rights reserved` line is gone everywhere — do not reintroduce it. Frontmatter carries `license: GPL-3.0-or-later OR AGPL-3.0-or-later`; the footer is one italic line: `_Copyright (c) 2026 Washington Ruan and contributors · licensed under **GPL-3.0-or-later** or **AGPL-3.0-or-later**, at your option · see \`LICENSE\` and \`LICENSE-AGPL\`._` Full texts: `LICENSE` (GPL v3), `LICENSE-AGPL` (AGPL v3).
+- Frontmatter: `title`, `last-updated`, `license`; `lang`/`category` where the document has one; `sibling` for bilingual pairs in `other/`; `version` for the README.
 
 ## Verification commands
 

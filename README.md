@@ -1,282 +1,233 @@
 ---
-title: PersonalSkills - Communications x Heterogeneous Compute x AI Knowledge Base
-lang: en
+title: PersonalSkills — Communications x Heterogeneous Compute x AI
+lang: zh-en
 category: project-readme
-version: 1.25
-sibling: README.cn.md
-last-updated: 2026-10-25
-copyright: "Copyright (c) 2026 Washington Ruan. All rights reserved."
+version: 2.0.0
+license: GPL-3.0-or-later OR AGPL-3.0-or-later
+last-updated: 2026-10-29
 ---
 
 # PersonalSkills
 
-**Communications x Heterogeneous Compute x AI — Interview Preparation, Knowledge Framework and Knowledge Graph**
+**一个开源的通信 × 异构计算 × AI 知识库**
+**An open knowledge base for communications, heterogeneous compute and AI**
 
-> Language: English (current) · [简体中文](README.cn.md)
+**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **41 notes** · Obsidian-compatible
 
-This repository holds interview-preparation material and per-domain knowledge notes for the intersection of **communications technology, heterogeneous compute, and AI**: **5 source documents plus 1 Obsidian knowledge graph (42 notes)**.
-
----
-
-## 1. Project Purpose
-
-Everything is organised around a single thesis:
-
-> Cellular/WLAN protocol stacks, heterogeneous compute, and on-device AI are converging into one scheduling problem — deciding *what* runs *where*, *when*, under a fixed latency and power budget.
-
-So this is not a list of facts. It treats the **RAN MAC scheduler, the cloud-edge-end task orchestrator, and the LLM inference engine** as three instances of the same problem shape, and states explicitly where the analogy holds and where it breaks.
-
-Four cross-cutting threads run through the whole vault:
-
-1. **Determinism** — tail latency / P99 is the shared KPI across Wi-Fi 8 UHR, URLLC, and agent orchestration.
-2. **Memory semantics** — KV cache, memory pooling, and UnifiedBus global addressing are the same battle fought at three layers.
-3. **Interface semantics** — L1 accelerator ↔ L2 general-purpose core, NPU ↔ CPU, coordinator ↔ worker: the boundary always costs more than the compute.
-4. **Verification methodology** — simulation → data replay → hardware-in-the-loop is the only credible path for both AI schedulers and AI-native PHY.
+[中文](#中文) · [English](#english)
 
 ---
 
-## 2. Quick Start: Recommended Reading Path
+# 中文
 
-```mermaid
-flowchart LR
-    MOC["00 MOC<br/>build the map"] --> ROLE["pick 3–5 notes<br/>by target role"]
-    ROLE --> SRC["readlist.md<br/>pull primary sources"]
-    SRC --> MOCK["skills-draft.md<br/>groups A/B/C/D mock interview"]
-    MOCK --> SPRINT["48-hour sprint<br/>Anchors only"]
-```
+## 这是什么
 
-| Stage | What to do | Output |
-| --- | --- | --- |
-| 1. Build the map | Read `knowledge-graph/00 MOC ...` end to end | A unified mental model and a domain map |
-| 2. Read by target role | See the selection table below | 3-5 domain threads you can drill into |
-| 3. Go to primary sources | Use the matching section of `readlist.md` to pull books, papers and standards | A first-hand citation behind every claim you make |
-| 4. Mock interview | Self-test with groups A/B/C/D of `skills-draft.md` (or `skills-draft.cn.md`) | A parameter-level answer for every question |
-| 5. 48-hour sprint | Read only the **Anchors** section of each note plus Part III, Section 4 of `skills-draft.md` | Numbers, timelines and architecture diagrams on demand |
+一个围绕单一论点组织起来的工程知识库：
 
-**Selection by target role**
+> 蜂窝与 WLAN 协议栈、异构计算、端侧 AI 正在收敛成同一个调度问题——决定**什么在哪儿跑、什么时候跑**，在硬性的时延与功耗预算之内。RAN 的 MAC 调度器、端边云的任务编排器、LLM 推理引擎，是同一个闭环在三个不同时间尺度上的实例。
 
-| Target role | Priority notes |
-| --- | --- |
-| RAN system architect | 01-1 → 01-2 → 01-6 → 01-7 → 01-8 → 01-5 → 01-3 → 05-1 → 07-1 |
-| Edge AI / cloud-edge-end architect | 06-3 → 05-2 → 06-1 → 06-2 → 08-1 → 04-2 → 04-5 |
-| Embedded / Linux platform | 04-3 → 04-1 → 04-2 → 04-6 → 04-4 → 04-5 → 01-6 → 07-1 → 05-1 → 08-1 |
-| WLAN / gateway | 02-1 → 02-2 → 02-3 → 02-5 → 02-6 → 02-7 → 02-4 → 02-8 → 02-9 → 02-10 → 02-11 → 02-12 → 02-13 → 03-1 → 04-3 |
-| WLAN security / client stack | 02-5 → 02-6 → 02-7 → 02-1 → 02-3 → 08-2 |
-| Low-power / IoT devices | 02-2 → 03-1 → 01-4 → 01-5 → 04-1 |
-| Software / language foundation (any role) | 08-2 → 08-3 → 08-1 |
-| Algorithm modelling or DSP prototyping | 08-4 → 08-5 → 08-3 |
+所以这里不是事实清单。每篇笔记都说明这个类比在哪里成立，更重要的是在哪里失效。
 
----
+- **41 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
+- **每篇形态固定：** 结论 → 分层论述（配 Mermaid 图）→ **Anchors**（有日期、可核查的事实）→ **Related**（会被一起追问的邻居）→ **References**（一手来源）。
+- **笔记正文只用英文**，以便原样用于国际团队与英文面试；说明文档中英双语。
+- **不确定的就说不知道：** 无法独立确认的说法标注 `VERIFY`；流行说法与一手来源的差异集中记录在勘误表里。
 
-## 3. Directory Structure
+## 仓库结构
 
 ```
-261022,PersonalSkills/
-├── README.md                       Project README (English, default, this file)
-├── README.cn.md                    Project README (Chinese)
-├── background.md                   Personal Background and Task Statement (English, default)
-├── background.cn.md                个人背景与任务说明（中文）
-├── skills-draft.md                 Knowledge Framework and Interview Outline (English, default)
-├── skills-draft.cn.md              知识框架与面试题纲（中文）
-├── readlist.md                     Reading list (Chinese/English books, papers, standards; descriptions in English)
-├── knowledge-graph/                Obsidian knowledge graph (vault, 42 notes)
-│   ├── 00 MOC - Comms x Compute x AI Knowledge Graph.md      <- entry index
-│   ├── 01-1 5G-Advanced and 6G Radio Access.md
-│   ├── 01-2 5G NR RAN Layer 2 Protocol Stack.md
-│   ├── 01-3 AI-ML for RAN and O-RAN RIC.md
-│   ├── 01-4 Cellular IoT RedCap eRedCap and NTN.md
-│   ├── 01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning.md
-│   ├── 01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation.md
-│   ├── 01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison.md
-│   ├── 01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack.md
-│   ├── 02-1 WLAN - Wi-Fi Generations Evolution.md
-│   ├── 02-2 WLAN - Power Saving Mechanisms and Evolution.md
-│   ├── 02-3 WLAN Ecosystem - WFA, EasyMesh and prpl.md
-│   ├── 02-4 WLAN - Packet TX-RX Datapath and Offload Evolution.md
-│   ├── 02-5 WLAN - STA-AP Discovery, Authentication and Association.md
-│   ├── 02-6 WLAN - Multi-AP Roaming, Healing and Steering.md
-│   ├── 02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting.md
-│   ├── 02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation.md
-│   ├── 02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations.md
-│   ├── 02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design.md
-│   ├── 02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System.md
-│   ├── 02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform.md
-│   ├── 02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do.md
-│   ├── 03-1 Wireless Sensor Networks and Low-Power MAC.md
-│   ├── 04-1 Embedded Systems RTOS and Hardware Interfaces.md
-│   ├── 04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems.md
-│   ├── 04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure.md
-│   ├── 04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work.md
-│   ├── 04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC.md
-│   ├── 04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up.md
-│   ├── 05-1 DPDK User Plane and 5G UPF.md
-│   ├── 05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing.md
-│   ├── 06-1 LLM Inference Engines and xLLM.md
-│   ├── 06-2 Agent Systems and Edge Orchestration.md
-│   ├── 06-3 Machine Learning - Foundations, Core Algorithms and Applications.md
-│   ├── 07-1 RISC-V for Communication Infrastructure.md
-│   ├── 08-1 Programming Languages Toolchain and Performance Engineering.md
-│   ├── 08-2 C and C++ Programming - Language Features, STL and Systems Practice.md
-│   ├── 08-3 Python Programming - Language, Object Model and Engineering Practice.md
-│   ├── 08-4 MATLAB and Simulink - Programming, Modelling and Code Generation.md
-│   ├── 08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice.md
-│   ├── 09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice.md
-│   └── 10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice.md
-└── .workbuddy/                     Project working data (do not delete)
+PersonalSkills/
+├── README.md                    本文件，中英双语
+├── LICENSE                      GNU General Public License v3.0
+├── LICENSE-AGPL                 GNU Affero General Public License v3.0
+├── other/
+│   ├── background.md  .cn.md    个人背景、方向轨迹与原始任务说明
+│   └── skills-draft.md  .cn.md  2026 知识框架与 A/B/C/D 面试题纲
+└── knowledge-graph/             Obsidian vault —— 用 Obsidian 打开这个目录
+    ├── 00 MOC - ...md           唯一入口：目录地图、学习方法、贡献方法
+    ├── 99 Corrections - ...md   勘误表：流行说法 vs 一手来源
+    ├── MN/           01-x  移动通信（8 篇）+ readlist.md
+    ├── WLAN/         02-x  IEEE 802.11（13 篇）+ readlist.md
+    ├── WSN/          03-x  低功耗与传感网（1 篇）+ readlist.md
+    ├── EMBEDDED/     04-x  嵌入式与系统软件（6 篇）+ readlist.md
+    ├── DATAPLANE/    05-x  数据面与异构计算（2 篇）+ readlist.md
+    ├── AI/           06-x  机器学习与推理（3 篇）+ readlist.md
+    ├── SILICON/      07-x  芯片与指令集（1 篇）+ readlist.md
+    ├── LANGUAGES/    08-x  编程语言与工程实践（5 篇）+ readlist.md
+    ├── MANAGEMENT/   09-x  工程项目管理（1 篇）+ readlist.md
+    └── BUSINESS/     10-x  价值主导的商业模式（1 篇）+ readlist.md
 ```
 
----
+每个目录自带一份 `readlist.md`：该目录的书籍、论文、标准与技术报告，按笔记编号分节，`★★★` 表示「引用前至少翻过」。
 
-## 4. Document Inventory
+## 快速开始
 
-### 4.1 Source documents
+1. `git clone` 之后，用 Obsidian「打开文件夹作为仓库」，**指向 `knowledge-graph/`**——不是仓库根目录。
+2. 从 `00 MOC` 开始。它给出十个目录的扼要介绍、每个目录的阅读顺序、学习方法与贡献方法。
+3. 进入与你目标岗位对应的目录，按该目录给出的顺序读笔记；需要一手来源时，翻该目录的 `readlist.md`。
+4. 每篇笔记先读开头的结论与末尾的 **Anchors**，再回读正文。这是判断「这篇值不值得细读」最快的办法。
 
-| File | Language | Role | Content |
+## 十个目录
+
+| 目录 | 主题 | 篇数 | 面向 |
 | --- | --- | --- | --- |
-| `README.md` | English | Project README | This file: purpose, reading path, directory structure, inventory, conventions, fact-checking strategy |
-| `README.cn.md` | Chinese | Project README | Same, in Chinese |
-| `background.md` | English | Input source | Original profile + structured breakdown (education / certifications / role trajectory / domains / tech stack) + task statement |
-| `background.cn.md` | Chinese | Input source | Same, in Chinese |
-| `skills-draft.md` | English | Main document | 2026 knowledge framework (6 domains) + interview outline (layers A/B/C/D) + Word production structure |
-| `skills-draft.cn.md` | Chinese | Main document | Same, in Chinese |
-| `readlist.md` | Descriptions in English, titles in their original language | References | Books, papers, standards and documentation across 44 themed sections numbered `GG-x` to match the vault: 01-1 5G-A and 6G, 01-2 NR L2, 01-3 AI-RAN and O-RAN, 01-4 RedCap/eRedCap/NTN, 01-5 NR random access (RACH), 01-6 NR DU MAC scheduler, 01-7 NR HARQ and its LTE comparison, 01-8 OpenAirInterface, 02-1 WLAN generations, 02-2 WLAN power saving, 02-3 WLAN ecosystem, 02-4 WLAN packet datapath and offload, 02-5 WLAN discovery, authentication and association, 02-6 WLAN roaming, healing and steering, 02-7 EasyMesh operation and troubleshooting, 02-8 Wi-Fi scheduling, 02-9 TSN over Wi-Fi, 02-10 Wi-Fi baseband and driver architecture, 02-11 OpenWrt and wireless system software, 02-12 openwifi, 02-13 reliability latency and determinism, 03-1 WSN, 04-1 embedded RTOS, 04-2 Linux embedded, 04-3 embedded software architecture, 04-4 Linux interrupts, 04-5 concurrency, processes, threads and IPC, 04-6 device drivers, 05-1 DPDK/UPF, 05-2 cloud-edge-end, 06-1 LLM inference and xLLM, 06-2 agent systems, 06-3 machine learning foundations, 07-1 RISC-V, 08-1 languages and performance, 08-2 C and C++, 08-3 Python, 08-4 MATLAB and Simulink, 08-5 Verilog HDL, 09-1 engineering project management, 10-1 value-driven business model — plus 41 primary standards repositories, 42 a reading order, and 43 verification and maintenance |
+| `MN` | 3GPP 空口与 RAN 协议栈：release 地图、L2、AI/ML for RAN、蜂窝 IoT、随机接入、DU 调度器、HARQ，以及一个可读的开源实现 | 8 | RAN、协议栈、基带软件 |
+| `WLAN` | IEEE 802.11：代际、省电、生态、数据通路、接入、漫游、EasyMesh、调度、TSN、基带与驱动、OpenWrt、openwifi、可靠性与确定性 | 13 | WLAN 协议栈、AP/网关、客户端 |
+| `WSN` | 低功耗无线：WPAN 介质访问、分簇、TSCH、信息年龄 | 1 | IoT、低功耗设备 |
+| `EMBEDDED` | 嵌入式与系统软件：RTOS、嵌入式 Linux、软件架构、中断、并发与 IPC、设备驱动 | 6 | 嵌入式、Linux 平台 |
+| `DATAPLANE` | 数据面与异构计算：DPDK 与 5G UPF、端边云协同、内存池化与互联 | 2 | 数据面、边缘计算 |
+| `AI` | 机器学习与推理：基础与失败模式、LLM 服务引擎、智能体系统 | 3 | 端侧 AI、推理系统 |
+| `SILICON` | 芯片与指令集：RISC-V 在通信基础设施中的位置、L1/L2 边界 | 1 | 基带芯片、体系结构 |
+| `LANGUAGES` | 编程语言与工程实践：工具链与性能、C/C++、Python、MATLAB/Simulink、Verilog | 5 | 所有岗位的底层能力 |
+| `MANAGEMENT` | 工程项目管理：方法论、生命周期、计划与挣值、风险、治理、成熟企业实践 | 1 | 技术负责人、项目管理 |
+| `BUSINESS` | 价值主导的商业模式：价值创造与捕获、计费度量、定价、条款 | 1 | 产品、商业化、技术决策 |
 
-### 4.2 Knowledge graph notes
+按目标岗位选起点：
 
-| No. | Domain | Core coverage |
-| --- | --- | --- |
-| **00 MOC** | Root index | Unified mental model, domain navigation, numbering scheme, cross-cutting threads, vault conventions |
-| **01-1** | 5G-A / 6G radio access | Rel-19/20/21 timeline, AI-native air interface, ISAC, U6G ELAA, NTN |
-| **01-2** | 5G NR RAN L2 | MAC/RLC/PDCP/SDAP, HARQ, BSR, grant lifecycle, QoS mapping |
-| **01-3** | AI/ML for RAN and O-RAN | near-RT/non-RT RIC, xApp/rApp, DRL scheduling, sim-to-real |
-| **01-4** | Cellular IoT | RedCap tiers, eRedCap, NTN, Ambient IoT, LP-WUS |
-| **01-5** | **NR random access (RACH)** | The full UE random-access procedure: MAC-level triggers and what each failure means at RRC, RA-type and feature-partitioned resource selection (RedCap/SDT/NSAG/Msg3 repetition), PRACH formats 0–3 and A1–C2 with their CP-implied cell radii, open-loop power and the ramping rules, RA-RNTI and MSGB-RNTI arithmetic, the RAR MAC PDU and the Backoff Indicator table, Msg3 scheduling (`k2 + Δ`) and payloads, contention resolution, 2-step MsgA/MsgB with successRAR and fallbackRAR, CFRA and beam failure recovery, the SDT / NTN / RedCap variants, a latency budget, every tuning knob, and a layered troubleshooting tree with a symptom table — **plus the whole procedure retold from each side: §9 is the UE's state machine and counters, §10 the gNB's detection, RAR assembly and CU-DU split, and §10.4 tabulates what each side knows that the other does not** |
-| **01-6** | **NR DU MAC scheduler** | The scheduler as a DU implements it: the CU/DU split and the 7-2x fronthaul with its four planes and eight C-plane section types, the FAPI L2/L1 interface and its per-slot message sequence, the four resources a scheduler allocates at once, the per-slot time budget with the O-RAN T1a/T2a/Ta3/Ta4 windows and the k0/k1/k2 floors, twelve internal modules, the eleven-step decision pipeline, the two-stage TD/FD downlink allocation with the ranking policies and the TBS computation, the SR/BSR/grant uplink chain and configured grants, the HARQ process state machine and the PUCCH acknowledgement problem, the PDCCH and CCE budgets with the candidate hash, TDD and DRX, the real-time execution model, the KPI set and a troubleshooting tree |
-| **01-7** | **NR HARQ · NR and LTE** | The retransmission mechanism end to end in both generations: what the soft buffer stores and how LLRs combine, the four design questions every HARQ scheme answers, the NR entity and process architecture with the 8-process default and 16-process maximum, the downlink pipeline from TB CRC through LDPC and rate matching to the HARQ-ACK verdict, the uplink pipeline with no PHICH where the next grant *is* the feedback, k0/k1/k2 with the N1/N2 processing times and a worked 2.5 ms round trip against LTE's 8 ms, the three HARQ-ACK codebooks with a worked type-2 DAI example, PUCCH resource selection, CBG retransmission with CBGTI and CBGFI, configured grants with the derived process ID and `configuredGrantTimer`, four state machines, the clause-level NR-versus-LTE comparison with the per-TDD-config process tables, soft-buffer and LBRM arithmetic for both systems, URLLC and NTN escape hatches, and a symptom table |
-| **01-8** | **OpenAirInterface · an open-source NR stack** | The whole 5G NR stack as a program you can read: what OAI is and who governs it, the GPL-to-OAI-PL-to-CSSL licence line and the Duranta move under Linux Foundation Networking, the four software assets (RAN, CN, OAM, CI/CD), the repository map from `openair1` to `fronthaul`, the four executables and the node type each one becomes, the libconfig and command-line surface with the options that actually matter, ITTI tasks versus the real-time L1 threads with their notified FIFOs, thread pool and startup barrier, the FAPI L1/L2 boundary as a struct of function pointers with the P5 and P7 rhythm, nFAPI VNF/PNF and its three transports, the NR MAC scheduler file by file with the preprocessor and postprocessor split and the full `gNB_dlsch_ulsch_scheduler()` call chain, what the PHY implements with the USRP X310 80 MHz and N310 100 MHz ceilings, where RLC/PDCP/SDAP/RRC/NGAP/GTP-U sit relative to F1 and E1, split 8 and O-RAN 7.2x with libxran over DPDK, NETCONF/YANG and PTP, the nrUE with its actor framework and the k1/k2 processing budget, the 11-NF core, FlexRIC and the E2 and O1 interfaces, the simulator ladder from `nr-ulsim` through `rfsim` and `vrtsim` to Colosseum, the real-time tuning ladder with a worked core allocation, the measured throughput table, the independent srsRAN comparison, a fault-localisation tree, and ten interview answers |
-| **02-1** | WLAN generational evolution | Wi-Fi 4 to 9, MLO, OFDMA, UHR, multi-AP coordination, per-feature design detail |
-| **02-2** | **WLAN power saving** | Energy equation and the four mechanism families; legacy PS/PS-Poll, U-APSD, SMPS, VHT TXOP PS and OM control, 802.11ah TWT/RAW/TIM segmentation, 802.11ax TWT and trigger-enabled SPs, 802.11ba wake-up radio, 802.11be r-TWT, 802.11bn AP Power Save / DPS / cross-link PS, 802.11bp ambient power — with per-generation mechanism tables, Mermaid diagrams, implementation split and failure modes |
-| **02-3** | WLAN ecosystem | WFA certification, EasyMesh, prplMesh/prplOS/prpl LCM |
-| **02-4** | **WLAN packet datapath and offload** | End-to-end TX (socket → qdisc/AQL → mac80211 header/TID/SN/crypto → descriptor → EDCA/A-MPDU → PHY) and RX (sync → MPDU delimiter scan → FCS/address/decrypt → reorder buffer → DMA/NAPI/GRO → TCP) with byte-level accounting; the five offload planes (per-packet assists, FullMAC vs SoftMAC vs hybrid, AP flow offload with PPE/NSS/Runner and WED, kernel bypass, control plane); MLO reordering; power-save interaction; a symptom→layer debugging table |
-| **02-5** | **WLAN discovery, authentication and association** | The join sequence phase by phase: passive/active scanning and 6 GHz discovery (RNR, PSC, FILS Discovery, no wildcard probes), the three MLME states and their reason codes, Open System vs Shared Key vs SAE (Dragonfly, H2E, Dragonblood) vs OWE vs 802.1X/EAP, association and the AID, the PMK→PMK-R0/R1→PTK key hierarchy and each 4-way message, PMF/SA Query, FT with 802.11k/v and FILS, MLO setup with per-STA profiles, the hostapd/wpa_supplicant/mac80211 split, and a symptom→phase debugging table |
-| **02-6** | **WLAN multi-AP roaming, healing and steering** | Why 802.11 leaves the roam decision to the station, and what the network can do about it: the four transition variants and their cost (full join / PMKSA caching / FT / FILS), 802.11k Neighbor and Beacon Reports, one end-to-end transition sequence, FT at ESS scale (R0KH placement, `0x890D` over-the-DS remote frames, five field failures, what the data plane has to rebuild), steering by BTM / MBO / assoc control / EasyMesh client steering with the decision function and its ping-pong failure, mesh healing as a backhaul state machine with topology repair and channel change, MLO at MLD granularity, and Wi-Fi 8 SMD / MAPC |
-| **02-7** | **Wi-Fi EasyMesh — operation, tuning and troubleshooting** | What EasyMesh standardises and what it deliberately does not; releases v1.0→v6.0 and Profile-1/2/3; IEEE 1905.1 CMDU and TLV mechanics with the real message and TLV numbers (`0x893A`, `0x8003`, `0x8014`, `0x8019`, `0x9B`); onboarding by WPS/PBC and by DPP (`mapBackhaulSta`, `mapAgent`, CCE, proxied encapsulation); AP-autoconfiguration M1/M2 and the Multi-AP IE (`0xDD`, OUI `50-6F-9A`, type `0x1B`, extension bit map); the four-address backhaul and `multi_ap=1/2/3`; the four measurement families; channel selection, the three steering mechanisms and backhaul optimisation; deployment trade-offs; every tunable policy field; and a layered troubleshooting method with a symptom table |
-| **02-8** | **Wi-Fi scheduling** | The scheduler as an AP implements it: the interframe-space family and the DCF backoff state machine, CCA and the two NAVs with BSS colour, EDCA's four access categories with the 802.11-2016 versus 2012 TXOP-limit change and the DSSS column, the OFDMA resource-unit grid and the legal MRU combinations, the eight trigger-frame types and a full UL OFDMA round, MU-MIMO sounding and its cost, Wi-Fi 7 scheduling across links with the UMAC/LMAC split and the EMLSR timers, airtime fairness and deficit round robin, the eight-step per-TXOP pipeline, rate control as part of the scheduler, TWT and r-TWT as schedulable state, `mac80211` with FQ-CoDel and AQL and the three places a queue hides, the KPI set and a troubleshooting tree |
-| **02-9** | **TSN over Wi-Fi · research and practice** | The determinism line through every generation: the cycle-bound-reliability-jitter contract industrial and immersive applications actually state, the six structural reasons Wi-Fi resists a bound, and the 802.1 toolbox mapped onto 802.11 tool by tool. Then the ladder: 802.11e priorities, 802.11v Timing Measurement, 802.11aa's SCS and intra-AC queues, 802.11mc FTM at 0.1 ns, 802.11ak transit links, 802.11ax trigger-based access, 802.11be r-TWT with the TID bitmap and the quiet interval, and 802.11bn's quantified 25-percent targets. Plus 802.1AS over TM and FTM with the hardware-versus-software timestamping budget, the five-rung access ladder, SCS and the four-number QoS Characteristics element, 802.1CB over MLO and why redundancy costs airtime, P-EDCA, NPCA, preemption and multi-AP coordination, the AP-as-bridge integration model with Qbv gate alignment, a five-layer review of the evidence, a nine-step deployment method with a worked latency budget, a symptom table,  and, added later, section 11 on convergence — why wired-wireless TSN convergence is the direction of travel with the dated evidence for each step, how one gPTP time base is carried across the wired and wireless hops with the AP as a PTP relay instance and the client as an end instance, the media-dependent split between the Ethernet peer-delay mechanism and the 802.11 TM/FTM native timing mechanism, what has actually been measured over the air from 52 ns wireline to 13 us on commodity Wi-Fi, how priority crosses the 802.11 Portal with the eight-to-four collapse and the trap that 802.1Q priority 3 lands in Wi-Fi best effort, why the launch time belongs to the AP and not to the client because mac80211 bypasses the qdisc layer, the both-ends capability checklist, and six gaps that still do not close |
-| **02-10** | **Baseband and driver architecture · Wi-Fi 6/7/8** | The radio opened up, with Qualcomm as the reference design: what a baseband contains and which block each generation had to grow, the two boundaries that define every Wi-Fi subsystem, the anatomy of a Wi-Fi 7 AP and a Wi-Fi 8 client, the WCSS with the Q6 processor its firmware runs on, the WMI/HTT/HTC/CE/QMI/MHI stack and a full ring inventory, the ownership table that says which of host, firmware and hardware does what, the transmit and receive data paths with the descriptor fields that matter, interrupt groups and NAPI and the threaded-NAPI result, where a frame waits with the measured throughput-against-latency trade, MLO in silicon and in the driver, power and thermal and what a firmware assert actually costs, the SoC-side NSS forwarding plane, the evolution from ath9k through ath10k and ath11k to ath12k and its two-module split, what Wi-Fi 8 demands of each layer, eight directions the architecture is moving in, ten interview answers, and a fault-localisation table |
-| **02-11** | **OpenWrt and wireless system software** | The router as a software system: what OpenWrt actually is (a Linux distribution plus a cross-build system with four artifacts — the source tree, ImageBuilder, the SDK and the package repository), the five boundaries from intent to air, the five daemons that are always running (procd, ubusd, rpcd, netifd, fw4), the ucode pipeline that turns `/etc/config/wireless` into a hostapd BSS without restarting anything, the UCI wireless device model with `wifi-device` / `wifi-iface` / `wifi-vlan` / `wifi-station`, hostapd's ubus surface and why steering lives in user space, netifd's device and interface state machines with its real event and state names, where a packet goes and what flow offload and WED cost you, firmware / board data / MACs / regulatory as the four things that are not source, the build and update system including apk and attended sysupgrade, and how the neighbouring models differ — TIP OpenWiFi with APNOS and uCentral plus its Cloud SDK and device PKI, OpenSync, prplOS and RDK-B, the hobbyist forks, and vendor SDKs — plus the OpenWrt One reference hardware, six honest limitations, a fault-localisation table, and ten interview answers |
-| **02-12** | **openwifi · an open-source FPGA 802.11 platform** | The wall between the driver and the air, knocked down: why an SDR 802.11 stack exists (the four things a commercial chip will not let you do), the Zynq plus AD9361 platform with the board table and its Vivado-licence column, the three repositories and the Vivado / kernel / image build flow, the six FPGA IP cores and what each contains file by file, the low MAC inside `xpu` with the CSMA/CA state machine and the registers that make SIFS, slot time, ACK timeouts, CCA, contention window and the retry limit yours to set, the four transmit queues and time slicing by MAC address, the driver as a mac80211 driver whose hardware owns the timing with the full `ieee80211_ops` list, the transmit and receive paths step by step, why the split falls where it does, `sdrctl` over nl80211 testmode and sysfs as the two control channels, modes of operation and the 802.11b caveat, CSI / IQ / sensing features, published performance and what limits it, how it compares with commercial chips, GNU Radio transceivers, `mac80211_hwsim` and simulators, licensing and funding, real use cases, a fault-localisation table, and ten interview answers |
-| **02-13** | **Reliability, low latency and determinism** | What a latency or reliability target actually costs and who pays it: the three contracts and why they fight, the latency budget term by term with the layer that owns each one, the lever map from the application down to the low MAC, MAC retransmission with the real limits (7 short, 4 long, 512 TU lifetime) and why retrying is what destroys latency, Minstrel and its 26 ms retry-chain cap, duplication as reliability without a latency cost, the roaming budget with 802.11k/v/r and OKC, the four-rung ladder from EDCA through r-TWT to preemption, MLO with its 95th-percentile table and the symmetry caveat, AQL with its 5000/12000/24000 constants and hysteresis state machine, fair queueing and airtime fairness with the measured latencies, TSQ and the 3 ms for 3x throughput trade the kernel already made, L4S, what a bound requires, the honest achievability table, the cross-technology comparison, how to measure without fooling yourself, five deployment recipes, a fault-localisation table and ten interview answers |
-| **03-1** | WSN and low-power MAC | Clustering routing, UAV-assisted collection, TSCH, AoI |
-| **04-1** | Embedded RTOS | FreeRTOS, PendSV, I2C/SPI/UART/CAN, DMA, cache coherency |
-| **04-2** | Linux embedded development | Boot chain, device tree, drivers, IPC, network stack, virtualization, PREEMPT_RT |
-| **04-3** | Embedded software architecture | Layering and HAL/BSP separation, execution models (superloop / time-triggered / RTOS / active object), scheduling theory, HSM and event-driven design, design patterns, data ownership and mailbox interfaces, wireless stack decomposition (L1/L2 boundary, CU/DU, O-RAN 7-2x), memory and power architecture, OTA/rollback, ISO 26262 / IEC 61508 safety architecture |
-| **04-4** | **Linux interrupts** | The interrupt subject end to end in English: the five orthogonal type axes (synchronous/async, maskable/NMI and pseudo-NMI, level/edge, wire versus MSI-X, private/shared/IPI), the three controllers (ARM GICv2/v3/v4 with the full INTID map and ITS/LPI model, x86 IDT plus LAPIC/IOAPIC/MSI, RISC-V PLIC and CLINT versus the AIA with APLIC and IMSIC), the generic IRQ layer (`irq_desc`, `irq_chip`, `irq_domain`, the five flow handlers, chained versus nested), the entry path with Mermaid diagrams, top-half discipline with the permitted/forbidden table, the four bottom halves with the ten fixed softirq vectors and the 2 ms / 10-restart brakes, the rise and fall of tasklets versus `WQ_BH`, threaded IRQs at `SCHED_FIFO` priority 50, six worked applications (NAPI, DMA rings, GPIO keys, IIO triggers, UIO/VFIO, rpmsg doorbells), affinity and isolation and coalescing tuning, and a symptom-to-fix debugging table |
-| **04-5** | **Concurrency, kernel and user mode, processes, threads and IPC** | The concurrency subject end to end: the privilege boundary across x86 rings, ARM exception levels and RISC-V modes, and what each mode may touch; the five kernel execution contexts with the sleep/preempt/user-memory matrix; the four preemption models and `preempt_count`; the process model (`task_struct`, TGID versus TID, the `clone` flag table, copy-on-write and its absence on no-MMU systems, the lifecycle and PID 1); threads (NPTL 1:1 versus LinuxThreads versus NGPT, what is shared versus private, stack size, per-thread signal masks); kernel threads and their naming; ITC over atomics and the futex with private versus shared keying, robust and PI variants, and a worked lock-free ring; the seven-axis IPC comparison with a decision tree, the shared-memory-plus-doorbell pattern with `SCM_RIGHTS`, the fd-everything event loop, and a worked multi-process daemon; plus the bug taxonomy and the TSan/`lockdep`/`perf sched` toolchain |
-| **04-6** | **Device drivers · model, probe, data path, power** | The driver subject end to end for the embedded case: the five jobs a driver does and the kernel layering it sits in, char versus block versus net versus IIO versus hwmon and how to choose, the bus/device/driver/class model with kobjects, sysfs, uevent and devtmpfs, the binding flow and `-EPROBE_DEFER` and `fw_devlink`, probe ordering with `devm_*` and why `remove()` is empty, one lifecycle state machine, the full char-device read path with `-ERESTARTSYS` and `O_NONBLOCK`, ioctl encoding and ABI, poll/fasync/mmap, the interrupt-driven data path with a per-transfer state machine, MMIO and barriers, coherent versus streaming DMA and the buffer-ownership state machine, runtime PM with the real `rpm_status` states and the system-suspend callback order, platform versus I2C/SPI/PCI anatomy with regmap, the framework-selection tree, locking rules, the kernel-to-userspace interface decision, a nine-step bring-up flow with a sixteen-row symptom table, a complete annotated driver, and ten interview answers |
-| **05-1** | DPDK and 5G UPF | mbuf/mempool, PFCP, PDR/FAR/QER, QoS enforcement, small-packet pps |
-| **05-2** | Cloud-edge-end and heterogeneous compute | UnifiedBus, memory pooling, MFU, RDMA |
-| **06-1** | LLM inference engines and xLLM | KV cache, PagedAttention, quantization, operator fusion, prefill/decode |
-| **06-2** | Agent systems and edge orchestration | GRAFT, multi-device SLM mesh, safety-bounded execution |
-| **06-3** | **Machine learning foundations, core algorithms and applications** | A beginner-to-practitioner path in English: what AI, ML, deep learning and generative modelling mean and where the boundaries are; the model / loss / optimiser triad and the learning loop; supervised, unsupervised, self-supervised, semi-supervised and reinforcement learning with a paradigm-selection decision tree; the end-to-end pipeline, splits and cross-validation, and six data-leakage patterns; representations per data type, encoding, scaling and the curse of dimensionality; linear and logistic regression with hand-computed gradients, bias-variance and regularisation, decision trees with a worked Gini split, bagging versus boosting, k-NN, SVM, naive Bayes, k-means, DBSCAN and PCA; neural networks with a numeric backpropagation example, optimisers and regularisation; CNN, RNN/LSTM, transformer, transfer learning and generative architectures with worked sizing arithmetic; training at scale, precision and the three parallelism strategies; evaluation metrics from one confusion matrix, tuning methods, application directions, MLOps, failure modes and a staged learning path |
-| **07-1** | RISC-V for communications infrastructure | Baseband clusters, software-defined PHY, H extension, L1/L2 interface |
-| **08-1** | Languages, toolchain and performance engineering | Build systems, kernel-bypass selection, performance methodology, how the languages fit together |
-| **08-2** | C and C++ programming and STL | C23/C++26 language features, templates and compile-time computation, memory model and concurrency, STL containers/iterators/algorithms, systems idioms and the UB catalogue |
-| **08-3** | **Python programming** | CPython execution model (bytecode, specialisation, JIT, GIL and free-threading), the dunder object protocol, attribute lookup and C3 MRO, class system from dataclass to Protocol to metaclass, generators and asyncio, typing timeline, NumPy strided array model, performance decision tree, packaging and test practice |
-| **08-4** | **MATLAB and Simulink** | Column-major array semantics and copy-on-write, vectorisation, `classdef` value vs handle classes, `arguments` validation, events, System objects, Simulink sample time and solver selection, Stateflow, fixed-point word-length design, Embedded/HDL Coder, SIL/PIL/HIL |
-| **08-5** | **Verilog HDL** | IEEE 1364→1800 lineage, nets vs variables and four-state logic, blocking vs non-blocking scheduling, FSM and reset discipline, timing equations, CDC and async FIFO, testbenches and SystemVerilog classes/UVM, FPGA vs ASIC synthesis, DSP RTL patterns |
-| **09-1** | **Engineering project management** | The discipline that decides which technical work gets attempted, in what order, with whose time, and when the attempt is stopped: project versus programme versus portfolio and why conflating them is the commonest structural error; the empirical base — Flyvbjerg's 16,000 projects at 47.9% on budget, 8.5% on budget and on time, 0.5% on all three including benefits, McKinsey-Oxford at 45% over budget and 56% less value, CHAOS and the size effect, plus the four caveats you must state when quoting them; the methodology family tree and why "waterfall" misreads Royce; a decision tree for choosing a method from requirements volatility, consequence of failure, certification and the binding constraint; the lifecycle with gates and an explicit kill branch across PMBOK 7, PRINCE2 Version 7, NASA phases and stage-gate; the WBS and the 100% rule; Gantt, CPM, PERT, critical chain and Monte Carlo with a worked critical path and a fever chart; estimation as P50 and P80, reference class forecasting, and earned value from C/SCSC in 1967 to EIA-748-E in 2026; ISO 31000 risk and NASA's 70% joint confidence level; V-model verification and validation; change, baselines and configuration; decision rights, single-threaded and chief-engineer ownership; governance by exception with tolerances and non-advocacy review; the tool stack and each tool class's failure mode; what a project management plan contains and a worked Wi-Fi 7 multi-link plan with milestones, buffers and a risk register; the practice sets of Toyota, Amazon, Google, NASA, USDS and the FBI Sentinel turnaround, plus what not to copy from Spotify and SAFe; Brooks's law, 100% utilisation, Denver and the 737 MAX report; Little's Law and the metrics that survive; an operating rhythm and a first-30-days checklist |
-| **10-1** | **Value-driven business model** | The commercial side of everything above: what "value-driven" means and the three senses of the phrase that get conflated — value-based management, value-based pricing, and the business-model view of creating, delivering and capturing value; the value slice of willingness to pay, price, cost and opportunity cost, and why your share is set by your **added value** rather than by your effort; what value-driven is *not* — cost-plus, share-driven, feature-driven, revenue-driven — and the three overstated claims about value-based pricing, recurring revenue and outcome-based contracts; the five-part value frame, the three canvases and what each hides, and the four-box model of value proposition, profit formula, key resources and key processes; the evidence base with its sources and the four caveats you must state: Marn and Rosiello's 11.1%, McKinsey's ~8% and 8.7%, the 18.7% volume arithmetic, Adobe's designed revenue trough at $4.06B against $4.40B with 1.439M paid subscriptions, Rolls-Royce's 1962 Power-by-the-Hour, Arm's licence-plus-royalty model and the royalty-base fight, the NDRC's 2015 Qualcomm remedy fixing the base at 65% of net selling price, and the SaaS benchmark conventions; jobs-to-be-done in both lineages with the opportunity algorithm and its weakness; economic value to the customer against a named alternative; willingness-to-pay methods from Van Westendorp to conjoint and live tests, and the difference between the customer value driver tree and the financial one; eight schools of method and which leads for which uncertainty; an eight-phase process with gates, stop branches, discovery-driven planning and a reverse P&L; the tool stack with each class's failure mode; a fifteen-pattern catalogue with the value metric as the first column, a pattern-selection tree, and where value is captured across the communications and silicon stack; appropriability, complementary assets and the four claimants on the value slice; pricing as metric, then structure, then level, with tiers, fences, the pocket-price waterfall and the clauses that decide capture; organisation, incentives, cadence and anti-patterns; the practice sets of Toyota's target costing, Amazon's working backwards and usage pricing, Adobe's designed transition, Rolls-Royce, Michelin, Signify and Xerox, Arm's ecosystem licensing, Porter and Teisberg's outcomes-per-dollar with its critique, and what not to copy; seven failure modes with a diagnosis tree; the value dashboard; a worked industrial wireless case from job statement to unit economics, kill criteria and risk register; and ten short answers |\n
----
+| 目标岗位 | 从哪里开始 |
+| --- | --- |
+| RAN / 协议栈 | `MN` 01-2 → 01-6 → 01-7 → 01-8，再 `DATAPLANE` 05-1 |
+| WLAN / AP 与客户端 | `WLAN` 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
+| 嵌入式 / Linux 平台 | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6，再 `MN` 01-6 |
+| 端侧 AI / 推理系统 | `AI` 06-3 → 06-1 → 06-2，再 `DATAPLANE` 05-2 |
+| 技术负责人 / 架构 | `SILICON` 07-1 与 `MANAGEMENT` 09-1 横向读，其余按需 |
 
-## 5. Using the Knowledge Graph
+## 学习方法
 
-1. **Opening it**: in Obsidian choose "Open folder as vault" and point it at `knowledge-graph/` — not at the project root.
-2. **Entry point**: `00 MOC` is the only navigation page. The other 41 notes are connected bidirectionally through `[[wikilinks]]`; use Graph View to see connection density.
-3. **Naming rule**: notes are numbered `GG-x` by domain group — `00 MOC` is the index, and the eight domain groups are numbered **contiguously from `01`**: `01-x` cellular and mobile communications, `02-x` WLAN, `03-x` low-power and sensor networking, `04-x` embedded and systems software, `05-x` data plane and heterogeneous compute, `06-x` AI inference and agent systems, `07-x` silicon and ISA, `08-x` programming languages and engineering practice (toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog HDL). Group numbers follow the signal path outward, from the air interface to the silicon and language foundations. The file name *is* the topic, so notes sort by number and are searchable by name.
-4. **Note structure**: body of knowledge points → **Anchors** → **Related**. This three-part shape is fixed.
-5. **Diagrams**: notes use Mermaid code blocks, which render natively in Obsidian's reading view. Every note carries diagrams in the sections where structure matters — release timelines, protocol stacks and data paths, control loops, decision trees and state machines — 395 blocks across the vault.
-6. **Search tips**: start with `tags` and `aliases` (defined in frontmatter), then full-text search on specification numbers (for example `38.914`, `802.11bn`).
+- **Anchors 就是考纲。** 每篇 8–20 条有日期、可核查的事实：条款号、冻结日期、实测数字。能脱离文件说出来，就能把它讲住。
+- **先还原一张图。** 图里的结构比正文忘得快，而结构恰恰是最常被追问的部分。
+- **讲回去 90 秒。** 不用行话，讲给领域外的人听；卡在哪个术语上，就回去读哪一段。
+- **按 1 / 3 / 7 / 21 天复习。** 同一篇读第二遍，价值低于读一篇邻居。四周冲刺计划在 MOC 的 §4。
+
+## 许可
+
+本仓库以 **GPL-3.0-or-later 或 AGPL-3.0-or-later** 双许可发布，使用者可任选其一。SPDX 标识符：`GPL-3.0-or-later OR AGPL-3.0-or-later`。
+
+- 许可全文：`LICENSE`（GNU GPL v3）、`LICENSE-AGPL`（GNU AGPL v3）。
+- 你可以自由使用、修改、再分发。再分发或衍生作品须保留版权与许可声明，并以同一许可发布；AGPL 另有「通过网络提供服务亦视为分发」的条款。
+- 被引用的标准编号、书名、ISBN/DOI 与第三方引文归各自权利人所有，本仓库仅作引用与评论之用。
+
+## 贡献
+
+欢迎三类贡献，按价值排序：**带引用的勘误**（说法错了，或对的但过期了）、**填补空白的笔记**（放进已有目录）、**值得收进 `readlist.md` 的参考文献**。
+
+一个 PR 一件事，提交时带 `git commit -s`（DCO 签署，不要求 CLA）。完整检查清单——编号、英文行文、一手来源、`VERIFY` 标记、Anchors/Related/References 结构、Mermaid 图、`readlist.md` 与目录表同步——见 MOC 的 §16。
+
+最有价值的一种提交长这样：给出**说法、一手来源、日期、条款号**，而不是一句「这里不对」。
+
+## 维护与勘误
+
+- 每篇笔记的 **Anchors** 只放可核查的事实，正文负责论证。
+- 无法独立确认的说法标 `VERIFY`，宁可留白也不写成结论。
+- 流行说法与一手来源的差异集中在 [`knowledge-graph/99 Corrections`](knowledge-graph/99%20Corrections%20-%20Verified%20Facts%20That%20Popular%20Sources%20Get%20Wrong.md)：先查这里，再引用。
+- 「什么时候该重读」按目录列在 MOC 的 §17——每个领域的失效触发条件不同。
 
 ---
 
-## 6. Repository Conventions
+# English
 
-1. **Language and file naming**: every note under `knowledge-graph/` is written in **English** so it can be reused directly with international teams and in English interviews. Source documents exist in both languages one-to-one, with **English as the default (no suffix)** and Chinese marked `.cn`: `README.md` / `README.cn.md`, `background.md` / `background.cn.md`, `skills-draft.md` / `skills-draft.cn.md`. `readlist.md` is the single exception — it has no separate Chinese edition because its titles are already kept in their original published form with English descriptions.
-2. **Frontmatter**: every `.md` file carries YAML frontmatter with `title`, `lang`, `category`, `last-updated`, and `copyright`; bilingual pairs also carry `sibling` pointing at the other language, and documents that change carry `version`.
-3. **Fact anchors**: every note ends with an **Anchors** section containing only checkable facts with a date or number (specification numbers, freeze dates, paper DOIs, release versions).
-4. **Doubtful items**: anything not independently confirmed is marked **`VERIFY`** rather than asserted.
-5. **Bidirectional links**: `[[wikilinks]]` are deliberate — a link means the two concepts are argued about together in interviews; link integrity is verifiable.
-6. **Encoding and formatting**: all files are UTF-8; body text uses standard Markdown, tables for comparisons, and blockquotes for thesis/principle statements.
-7. **Copyright header**: every file carries copyright information in both its frontmatter and its footer.
-8. **Reference rule**: in `readlist.md`, titles are kept in their original published form (Chinese books keep the Chinese title and `《》` brackets) and are never translated; every entry's description is written in English.
+## What this is
+
+An engineering knowledge base organised around a single thesis:
+
+> Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into one scheduling problem — deciding **what runs where, when**, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales.
+
+So this is not a list of facts. Every note states where that analogy holds and, more usefully, where it breaks.
+
+- **41 notes across 10 directories.** The directory is the domain; the note number is the reading order.
+- **Every note has the same shape:** claim → layered argument with Mermaid diagrams → **Anchors** (dated, checkable facts) → **Related** (neighbours that get argued about together) → **References** (primary sources).
+- **Notes are written in English only**, so they can be reused with international teams and in English interviews. The documentation is bilingual.
+- **Doubt is marked, not smoothed over.** Claims that could not be independently confirmed carry a `VERIFY` flag, and the gap between the popular claim and the primary source is recorded in one corrections page.
+
+## Repository layout
+
+```
+PersonalSkills/
+├── README.md                    this file, Chinese and English
+├── LICENSE                      GNU General Public License v3.0
+├── LICENSE-AGPL                 GNU Affero General Public License v3.0
+├── other/
+│   ├── background.md  .cn.md    profile, role trajectory, original task statement
+│   └── skills-draft.md  .cn.md  2026 knowledge framework and the A/B/C/D question groups
+└── knowledge-graph/             the Obsidian vault — open *this* folder as a vault
+    ├── 00 MOC - ...md           the only entry point: map, reading method, contribution method
+    ├── 99 Corrections - ...md   verified facts that popular sources get wrong
+    ├── MN/           01-x  mobile network (8 notes) + readlist.md
+    ├── WLAN/         02-x  IEEE 802.11 (13 notes) + readlist.md
+    ├── WSN/          03-x  low-power and sensor networking (1 note) + readlist.md
+    ├── EMBEDDED/     04-x  embedded and systems software (6 notes) + readlist.md
+    ├── DATAPLANE/    05-x  packet plane and heterogeneous compute (2 notes) + readlist.md
+    ├── AI/           06-x  machine learning and inference (3 notes) + readlist.md
+    ├── SILICON/      07-x  silicon and instruction-set architecture (1 note) + readlist.md
+    ├── LANGUAGES/    08-x  programming languages and practice (5 notes) + readlist.md
+    ├── MANAGEMENT/   09-x  engineering project management (1 note) + readlist.md
+    └── BUSINESS/     10-x  value-driven business model (1 note) + readlist.md
+```
+
+Each directory carries its own `readlist.md` — the books, papers, standards and reports behind its notes, sectioned by note number, with `★★★` marking the entries to read or skim before quoting.
+
+## Quick start
+
+1. `git clone`, then in Obsidian choose "Open folder as vault" and point it at **`knowledge-graph/`** — not the repository root.
+2. Start at `00 MOC`. It introduces each of the ten directories, gives the reading order inside each, and documents the reading and contribution methods.
+3. Open the directory that matches your target role, read its notes in the order given, and pull primary sources from that directory's `readlist.md`.
+4. In any note, read the opening claim and the closing **Anchors** first, then the body. It is the fastest way to decide whether the note deserves a close read.
+
+## The ten directories
+
+| Directory | Domain | Notes | Built for |
+| --- | --- | --- | --- |
+| `MN` | 3GPP radio access and the RAN stack: release map, L2, AI/ML for RAN, cellular IoT, random access, the DU scheduler, HARQ, and one open-source implementation | 8 | RAN, protocol stack, baseband software |
+| `WLAN` | IEEE 802.11: generations, power saving, ecosystem, datapath, join, roaming, EasyMesh, scheduling, TSN, baseband and drivers, OpenWrt, openwifi, reliability and determinism | 13 | WLAN stack, AP and gateway, client |
+| `WSN` | Low-power wireless: WPAN medium access, clustering, TSCH, age of information | 1 | IoT, low-power devices |
+| `EMBEDDED` | Embedded and systems software: RTOS, embedded Linux, software architecture, interrupts, concurrency and IPC, device drivers | 6 | Embedded, Linux platform |
+| `DATAPLANE` | Packet plane and heterogeneous compute: DPDK and the 5G UPF, cloud-edge-end, memory pooling and interconnect | 2 | Data plane, edge computing |
+| `AI` | Machine learning and inference: foundations and failure modes, LLM serving, agent systems | 3 | On-device AI, inference systems |
+| `SILICON` | Silicon and instruction-set architecture: where RISC-V sits in communications infrastructure, the L1/L2 boundary | 1 | Baseband silicon, architecture |
+| `LANGUAGES` | Languages and practice: toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog | 5 | Foundation for every role |
+| `MANAGEMENT` | Engineering project management: methodology, lifecycle, planning and earned value, risk, governance, practice | 1 | Technical lead, project management |
+| `BUSINESS` | Value-driven business model: value creation and capture, the value metric, pricing, clauses | 1 | Product, commercial, technical decisions |
+
+Where to start, by target role:
+
+| Target role | Start here |
+| --- | --- |
+| RAN / protocol stack | `MN` 01-2 → 01-6 → 01-7 → 01-8, then `DATAPLANE` 05-1 |
+| WLAN / AP and client | `WLAN` 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
+| Embedded / Linux platform | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6, then `MN` 01-6 |
+| On-device AI / inference | `AI` 06-3 → 06-1 → 06-2, then `DATAPLANE` 05-2 |
+| Technical lead / architect | `SILICON` 07-1 and `MANAGEMENT` 09-1 sideways, the rest on demand |
+
+## How to read it
+
+- **Anchors are the syllabus.** Each note carries 8–20 dated, checkable facts — a clause number, a freeze date, a measured value. If you can state them without the file, you can defend the note.
+- **Reproduce a diagram from memory**, then diff it. Structure decays faster than prose, and structure is what gets tested.
+- **Explain it back in 90 seconds**, without jargon, to someone outside the field. The term you reach for and cannot define is the paragraph to re-read.
+- **Space the passes** at one, three, seven and twenty-one days. A second reading of the same note is worth less than a first reading of a neighbour. The four-week plan is in MOC §4.
+
+## Licence
+
+This repository is dual-licensed under **GPL-3.0-or-later or AGPL-3.0-or-later**; you may use it under either. SPDX identifier: `GPL-3.0-or-later OR AGPL-3.0-or-later`.
+
+- Full texts: `LICENSE` (GNU GPL v3) and `LICENSE-AGPL` (GNU AGPL v3).
+- You may use, modify and redistribute it freely. Redistribution and derivative works must keep the copyright and licence notices and be released under the same licence; the AGPL adds the network-use clause, so offering a modified version as a service also counts as distribution.
+- Specification numbers, book titles, ISBNs, DOIs and third-party quotations remain the property of their respective owners and appear here for reference and comment only.
+
+## Contributing
+
+Three kinds of contribution are welcome, in this order of value: **a correction with a citation** (a claim that is wrong, or right but dated), **a note that fills a gap** in an existing directory, and **a reference** worth adding to a `readlist.md`.
+
+One pull request per idea, committed with `git commit -s` (DCO sign-off; no CLA). The full checklist — numbering, English prose, primary sources, `VERIFY` flags, the Anchors/Related/References shape, Mermaid diagrams, and keeping `readlist.md` and the directory table in sync — is in MOC §16.
+
+The most valuable pull request states **the claim, the primary source, the date and the clause** — not "this is wrong".
+
+## Maintenance and corrections
+
+- **Anchors** hold only checkable facts; the body does the arguing.
+- Claims that could not be independently confirmed are marked `VERIFY` rather than asserted.
+- The gap between the popular claim and the primary source is collected in [`knowledge-graph/99 Corrections`](knowledge-graph/99%20Corrections%20-%20Verified%20Facts%20That%20Popular%20Sources%20Get%20Wrong.md). Check it before you quote a number.
+- What makes each directory go stale — and therefore when to re-read it — is tabulated in MOC §17, because the trigger is different in every domain.
 
 ---
 
-## 7. Fact Checking and Update Strategy
-
-**Division of labour between source documents and the knowledge graph**
-
-- `skills-draft.md` / `skills-draft.cn.md` faithfully preserve the wording and judgement of the original draft, so the original line of thinking stays traceable;
-- verified facts live in the **Anchors** section of each note under `knowledge-graph/`.
-
-**Facts already corrected (cite the Anchors, not the draft)**
-
-| Item | Original draft | Verified conclusion |
-| --- | --- | --- |
-| eRedCap release | attributed to Rel-19 | It is **Rel-18** (frozen 2024-06; 5 MHz, 1 Rx, HD-FDD, ~10 Mbps). Rel-19's contribution is the NTN extension, LP-WUS, and Ambient IoT |
-| Wi-Fi 8 progress | Draft 1.0 (2025-08) | **Draft 1.0 was 2025-07**; Draft 2.0 passed WG ballot on 2026-09-02 at 76.5%; WFA certification around **2028-01** |
-| Rel-21 milestones | "complete 2029, commercial 2030" | Four official milestones: Stage-1 **2027-03** / Stage-2 **2028-06** / Stage-3 **2028-12** / ASN.1+OpenAPI **2029-03** |
-| PREEMPT_RT | not covered | Merged into mainline in **Linux 6.12 (2024-11)** for x86/arm64/RISC-V; 32-bit ARM added in 7.1 |
-| C/C++ standard status | mentions only "C/C++" | **C23 = ISO/IEC 9899:2024** (published 2024-10-31, `__STDC_VERSION__` = 202311L); **C++26 shipped by WG21 on 2026-03-28** (working draft N5046), to be published as ISO/IEC 14882:2026 |
-| AUTOSAR / MISRA versions | not covered | **AUTOSAR R25-11** is current (Release Event 2025-12-04); **MISRA C:2025** is the current C edition and supersedes MISRA C:2023; **MISRA C++:2023** (TC1:2026) targets C++17 — so a MISRA-conformant C++ project is not on C++20/23/26 |
-| TWT origin | often attributed to 802.11ax | It originated in **802.11ah-2016** (Wi-Fi HaLow) and was carried into 802.11ax. 802.11be then added **r-TWT**, which is a latency mechanism first and a power mechanism second |
-| 802.11bi | sometimes described as a wake-up-radio amendment | It is **Enhanced Privacy Protection**, approved for publication **2026-09-25** — see note 02-2. The wake-up radio amendment is **802.11ba-2021** |
-| r-TWT deployment | assumed present in Wi-Fi 7 devices | r-TWT is **optional** in 802.11be and **not required for Wi-Fi CERTIFIED 7**; a 2026 CWNP review reports shipping clients and APs did not advertise support. Treat as `VERIFY` before claiming deployment |
-| Linux bottom halves | "tasklet is the fast deferred-work mechanism" | Tasklets are **deprecated**. The API was modernised around 5.9 and the replacement is **WQ_BH**, merged for **6.9** with `system_bh_wq` and `system_bh_highpri_wq`; it runs in softirq context, may not sleep and requires `max_active = 0`. The tasklet API still exists and conversion is ongoing — see note 04-4 |
-| Power ramping after a contention loss | "a UE that loses contention restarts from Msg1 without ramping power" | It **does** ramp. TS 38.321 clause 5.1.3 increments `PREAMBLE_POWER_RAMPING_COUNTER` on four transmission conditions only — the attempt counter is above one, the SSB/CSI-RS is unchanged, the PHY has not sent the power-ramping-suspension notification, and no LBT failure was reported — with **no carve-out for contention-resolution losses**. The narrow statement that is true is the beam rule: no ramping when the beam changes, whatever the cause. Note that this also removes a common shortcut — collisions cannot be told apart from coverage misses by the power column — see note 01-5 §9.3 |
-| OpenWrt identity | “a router firmware” | It is a **Linux distribution plus a cross-build system** with four downloadable artifacts (source tree, ImageBuilder, SDK, package repository). The wireless stack is a set of independently versioned packages — kernel, `mac80211` backport, driver, `wpad`, firmware and board data — so a wireless regression is often version skew between them, not a bug in one. And OpenWrt ships **no network-level wireless policy**: steering, mesh healing and channel planning are packages you deploy — see note 02-11 |
-| openwifi scope | “an open-source Wi-Fi chip” or “a full modern Wi-Fi stack” | It is a **Linux-mac80211-compatible SDR implementation of 802.11a/g/n** on a Zynq SoC: PHY and low MAC in FPGA, high MAC in mac80211. It is OFDM only (no 802.11b), 20 MHz, MCS 0–7, and measured at iperf TCP 40–50 Mbps; Wi-Fi 6, OFDMA, RFSoC and JCAS/ISAC are **subscription features**, not open source. Note also the name collision: TIP’s OpenWiFi is a different project — a cloud-managed AP architecture on OpenWrt — see note 02-12 |
-| Wi-Fi latency | "a few milliseconds" | Idle, yes. Under a saturating download a deep driver or firmware queue puts latency at **several hundred milliseconds**; FQ-CoDel leaves a slow station above 200 ms median and fast ones around 35 ms, and per-station fair queueing cuts the fast stations by another ~45%. The dominant *loaded* term is queueing, and the dominant *worst-case* term is channel access — raising the PHY rate does not shorten either. See note 02-13 |
-| MLO latency | "more links always means lower latency" | Only when the links are **similarly occupied**. Vendor measurements show STR at 2/8/18 ms versus single-link 30/70/150 ms at the 95th percentile across 10/40/70% load, but with a much busier secondary link, STR can raise worst-case latency above single-link, and single-radio EMLSR gives negligible p95 improvement at medium-to-high load. See note 02-13 |
-| "Good technology wins the market" · "price from cost, then discount" | "the best product sells itself; cost plus margin is the honest price" | Both fail on the same arithmetic. Creating value and capturing it are different activities, and your share is bounded by your **added value** — what the chain loses without you — not by how good the engineering is: Xerox PARC produced the graphical interface and laser printing and captured comparatively little, because appropriability was weak and the complementary assets sat elsewhere. And cost sets the *floor*, not the price: on the average S&P 1500 income statement a 1% price rise lifts operating profit about **8%** (8.7% on Global 1200 figures), roughly 50% more than a 1% variable-cost cut and three times a 1% volume gain, while a 5% price cut needs about **18.7%** more volume to break even. Price to a measured value range instead, and make the **metric** — what you charge for — track the value driver. See note 10-1 |
-| "Agile means no planning" · "add people to catch up" | "agile replaces planning with speed; more people finish sooner" | Both are wrong, and both are testable. Agile increases planning *frequency* and shortens the planning *horizon* — inspect-and-adapt is a control loop, not the absence of one. And Brooks's law: adding people to a late project makes it later, because newcomers need training, the work must be repartitioned, and communication paths grow as n(n−1)/2. The empirical base is harsher than intuition: on Flyvbjerg's 16,000-project database only 8.5% of projects land on budget **and** on time, while the Standish size effect puts small projects at 61% success against 6% for the largest — so the highest-leverage move is splitting the work and limiting WIP, not staffing up. See note 09-1 |
-| OpenAirInterface licence | "open source, Apache or GPL" | None of the three. OAI moved **GPL v2 → OAI Public License v1.1 (2017) → CSSL v1.0**, changed in the RAN repository on **2026-03-27** alongside the Duranta launch under Linux Foundation Networking. CSSL is Apache 2.0 plus a FRAND patent clause, so SEP holders can contribute; it is **not OSI-approved** and commercial use is on FRAND terms. Also worth separating: OAI is a research-grade softmodem — 4-layer DL / 2-layer UL, no production MU-MIMO, static TDD — not a carrier DU, see note 01-8 |
-| NR HARQ process count | "16 by default" | It is **8** when `nrofHARQ-ProcessesForPDSCH` is absent; 16 is the maximum, not the default. And more is not automatically better: every process holds a soft buffer and total UE soft-buffer memory is a capability, so n16 on a cell that only needs six can reduce the combining gain available to each retransmission — see note 01-6 §8.3 |
-
-**Update triggers**
-
-- 3GPP TSG plenary meetings (4 per year) → update 01-1/01-2/01-4
-- New 3GPP TS 38.321 / 38.331 versions and RAN1/RAN2 agreements on random access → update 01-5 (field sizes, counters, windows and parameter ranges are release-specific; TS 38.321 v17.3.0, 2023-01, is the quoted baseline)
-- IEEE 802.11 WG sessions and WFA certification announcements → update 02-1/02-2/02-3
-- OpenWrt stable series releases (roughly annual) and TIP OpenWiFi or OpenSync releases → update 02-11 (the release branch, the kernel and the wireless script generation all move together)
-- TGbn and TGbp ballot milestones, WFA power-management certifications → update 02-2 (AP Power Save is a draft feature; P802.11bp is at D1.0 WG ballot)
-- Linux mainline and LTS releases → update 08-1/04-2/04-4/04-5 (the quoted baseline this cycle: PREEMPT_RT merged in 6.12, WQ_BH in 6.9, EEVDF in 6.6, clone3/pidfd_open in 5.3, RISC-V AIA drivers in 6.10)
-- xLLM / agent framework releases and papers → update 06-1/06-2
-- Major framework releases (scikit-learn, PyTorch, JAX) and textbook editions → update 06-3 (the quoted baseline is scikit-learn 1.9.1 and PyTorch 2.14.1, both September 2026)
-- WG21 / WG14 meetings and GCC / Clang major releases → update 08-2
-- CPython feature releases (annual, October) and PEP acceptances, NumPy major releases → update 08-3
-- MATLAB / Simulink releases (March and September each year) and HDL / Embedded Coder capability changes → update 08-4
-- IEEE 1800 revisions and IEEE 1800.2 (UVM) revisions → update 08-5
-- AUTOSAR releases (annual, each November), MISRA document revisions, Zephyr six-month releases and LTS branches → update 04-3
-- RISC-V International ratifications and the AIA document revisions, plus Arm GIC specification updates → update 04-4/07-1 (the quoted baseline: AIA v1.0 ratified June 2023, document revision 2025-03-12; APLIC/IMSIC drivers merged in Linux 6.10)
-- Workqueue and deferred-work conversions in mainline (the tasklet → WQ_BH migration), scheduler changes (EEVDF, sched_ext) and rt-tests releases → update 04-4/04-5
-- Wi-Fi Alliance Multi-AP / EasyMesh specification revisions and prplMesh releases → update 02-7 (v6.0 is current and has been mandatory for newly tested mesh devices since 2024-12-31; message and TLV numberings grow with each release)
-
----
-
-## 8. Maintainer
-
-Washington Ruan — communications software / embedded software / wireless protocol stack engineer and system architect; focus on 5G RAN L2, WLAN/WFA, IoT/WSN, embedded systems and Linux, AI/ML, cloud-edge-end collaboration and heterogeneous compute.
-
----
-
-## Copyright
-
-Copyright (c) 2026 **Washington Ruan**. All rights reserved.
-
-All documents and notes in this repository are the copyrighted work of Washington Ruan. Commercial publication or redistribution requires written permission.
-
----
-
-© 2026 Washington Ruan. All rights reserved.
+_Copyright (c) 2026 Washington Ruan and contributors · licensed under **GPL-3.0-or-later** or **AGPL-3.0-or-later**, at your option · see `LICENSE` and `LICENSE-AGPL`._

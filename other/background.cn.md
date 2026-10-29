@@ -1,0 +1,48 @@
+---
+title: 个人背景与任务说明
+lang: zh-CN
+category: profile
+version: 1.0
+sibling: background.md
+last-updated: 2026-10-22
+license: GPL-3.0-or-later OR AGPL-3.0-or-later
+---
+
+# 个人背景与任务说明
+
+## 一、背景信息
+
+> 西电通信工程硕士，持有国家中级工程师、高级 AI 训练师证书，IEEE 会员，历任通信软件、嵌入式软件、无线协议栈工程师与系统架构师；深耕 5G RAN L2、WLAN/WFA、IoT、WSN、嵌入式软件、AI/ML、云与边缘计算领域，持续跟进 6G、新一代 WLAN、端边云协同、xLLM、Agent、通信异构融合算法等前沿技术与产业落地；熟悉 C/C++、Python、Linux/RTOS、ARM/RISC-V/x86/FPGA 软硬件开发、Verilog HDL、DPDK、prpl 框架及无线通信协议规范，擅长基于"问题"的解决方案设计、性能调优、算法落地，同时参与新技术预研、实现、立项与行业标准研究工作；具备中英双语办公、跨国团队的研发和技术管理经验。未来将持续跟进信息技术通信 + 异构算力 + AI 的交叉融合领域，深耕技术积淀，致力成长为该领域资深专家工程师。
+
+### 1.1 结构化拆解
+
+| 维度 | 内容 |
+| --- | --- |
+| 学历 | 西安电子科技大学（西电）通信工程硕士 |
+| 资质证书 | 国家中级工程师；高级 AI 训练师 |
+| 学术身份 | IEEE 会员 |
+| 任职轨迹 | 通信软件工程师 → 嵌入式软件工程师 → 无线协议栈工程师 → 系统架构师 |
+| 深耕领域 | 5G RAN L2、WLAN/WFA、IoT、WSN、嵌入式软件、AI/ML、云与边缘计算 |
+| 前沿跟踪 | 6G、新一代 WLAN、端边云协同、xLLM、Agent、通信异构融合算法及其产业落地 |
+| 技术栈 | C/C++、Python、Linux/RTOS、ARM/RISC-V/x86/FPGA 软硬件开发、Verilog HDL、DPDK、prpl 框架、无线通信协议规范 |
+| 能力特长 | 基于"问题"的解决方案设计、性能调优、算法落地 |
+| 研究职责 | 新技术预研、实现、立项与行业标准研究 |
+| 协作属性 | 中英双语办公，跨国团队的研发与技术管理经验 |
+| 未来方向 | 持续跟进 ICT + 异构算力 + AI 的交叉融合，成长为该领域资深专家工程师 |
+
+## 二、任务要求
+
+1. **准备一份面试题纲**：围绕上述背景，形成可直接在面试中使用的提问与应答框架。
+2. **准备一份详细的知识框架**：覆盖每个涉及领域，且每个领域均更新到最新知识。
+3. **信息真实有效**：所有事实、标准编号、时间节点、平台与芯片名称必须可核实。
+4. **输出一份 Word 文档**：按可复制的目录结构组织，便于面试前快速扫读。
+
+## 三、配套文档
+
+- 知识框架与面试题纲详见 `skills-draft.cn.md`
+- 英文版本见 `background.md` 与 `skills-draft.md`
+- 分领域知识点笔记见 `../knowledge-graph/` 目录，按领域分文件夹
+
+---
+
+_Copyright (c) 2026 Washington Ruan and contributors · licensed under **GPL-3.0-or-later** or **AGPL-3.0-or-later**, at your option · see `LICENSE` and `LICENSE-AGPL`._
