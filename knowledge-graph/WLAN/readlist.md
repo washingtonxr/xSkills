@@ -8,7 +8,7 @@ last-updated: 2026-10-29
 
 # Reading list — WLAN · IEEE 802.11
 
-> IEEE 802.11 from the generation map to the silicon: power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, and the reliability/latency/determinism question.
+> IEEE 802.11 from the fundamentals to the silicon: the substrate note that explains what the technology is and where it came from, the generation map, power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, and the reliability/latency/determinism question.
 >
 > One section per note, numbered `GG-x`. Where a note needed no source beyond its own
 > **References**, there is no section here — the note is self-sufficient.
@@ -18,6 +18,7 @@ last-updated: 2026-10-29
 - **Marks.** Type and priority marks (`★★★`, `[Book]`, `[EN]`) are defined once, in the MOC under *Reading marks*. The rule that matters: `★★★` means read or skim before you quote the note in an interview.
 - **Titles** are kept in their published form and never translated; descriptions are English.
 - **Nothing is asserted.** Where a citation could not be confirmed against a publisher, DOI, arXiv record or the issuing body, it is marked `VERIFY`.
+- **Start here:** if you are new to 802.11, read `02-14` first and use its two source books as the spine; the remaining sections assume the vocabulary it defines.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
@@ -745,6 +746,58 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 ### The comparison case
 
 - **[Std · ★★ · EN]** 3GPP TS 22.261 and TR 22.804 — the URLLC service requirements used in the cross-technology comparison, and TS 23.501 for ATSSS as the multi-access reliability counterpart.
+
+---
+
+## 02-14 · WLAN — Wi-Fi Fundamentals: History, Architecture, PHY, MAC and the Road to Wi-Fi 7
+
+The two books this note is built from are the only books in the vault that are read end to end rather than
+consulted. Everything else in this section exists to check them.
+
+### The two books — read these first, in this order
+
+- **[Book · EN · ★★★]** *Wi-Fi 7 In Depth: Your Guide to Mastering Wi-Fi 7, the 802.11be Protocol, and Their Deployment* — Jerome Henry, Binita Gupta, Brian Hart, Malcolm Smith · Addison-Wesley / Cisco Press, 2024 · 385 pp. · ISBN 978-0-13-532351-9
+  - The protocol reference. Chapter 1 is the best short account of the 802.11 architecture, the connection process and channel access in print; ch 2 explains what legacy QoS could not do and therefore why 802.11be exists; ch 3 treats Wi-Fi 6 as the foundation rather than a footnote; ch 5 walks the EHT PPDU field by field; ch 6 is the MLO chapter, including the five client modes that decide what a deployment may promise; ch 7 covers r-TWT, SCS, triggered uplink and TXOP sharing; ch 8 is deployment and site survey; ch 9 is the future-direction chapter.
+  - Read ch 1 twice. Sections 3, 4 and 5 of note 02-14 are essentially a compression of it, and every later chapter assumes it.
+- **[Book · EN · ★★★]** *Wi-Fi 7: Principles, Technology, and Applications* — Gang Cheng, Zhihong Qian, Yiming Jiang, Zhijie Yang, Thirumurthy Rajamanickam · Springer, 2025 · XXVI + 464 pp. · DOI 10.1007/978-981-97-9026-5
+  - The device-vendor reference, written by a Nokia broadband device BU. Chapter 1 is a 77-page Wi-Fi overview with the historical and standards scaffolding; ch 2 is Wi-Fi 6; ch 3 is the Wi-Fi 7 feature set at 136 pages; **ch 4 is the one nobody else writes**: product development and test methods, from EVT to mass production; ch 5 is the Wi-Fi Alliance programme; ch 6 is applications; **ch 7 is the convergence chapter** — 5G-RG, non-3GPP access, ATSSS, FWA; ch 8 is the outlook.
+  - Read ch 4 and ch 7 even if you never touch a product line. They are the two chapters that connect the standard to money.
+
+### Standards — the things the books paraphrase
+
+- **[Std · ★★★ · EN]** IEEE Std 802.11be-2024 — EHT: 320 MHz, 4096-QAM, MRU, preamble puncturing, MLO, r-TWT, SCS, triggered TXOP sharing.
+  - The books describe these accurately; the clause is what settles an argument about a permitted puncturing pattern or an MLO capability bit.
+- **[Std · ★★★ · EN]** IEEE Std 802.11-2020 (and the 2024 revision) — the base document: MAC architecture, frame formats, DCF and EDCA parameters, block acknowledgement.
+  - Table 10-x of the EDCA defaults, clause 10.3 for DCF, clause 9 for frames. Quote the clause, not a blog.
+- **[Std · ★★ · EN]** IEEE Std 802.11-1997, 802.11b-1999, 802.11a-1999, 802.11g-2003, 802.11e-2005, 802.11i-2004, 802.11n-2009, 802.11ac-2013, 802.11ax-2021.
+  - For the history section: read the scope clause of each amendment and note what it says the problem was. The preambles are a primary source for the intent behind each generation.
+
+### History and context
+
+- **[Paper · EN · ★★]** Abramson, N. *The ALOHA System — Another Alternative for Computer Communications*. AFIPS Fall Joint Computer Conference, 1970.
+  - Where random access over a shared medium begins. Every backoff in every Wi-Fi chip is a descendant of this paper.
+- **[Doc · EN · ★★]** FCC. *Report and Order, Unlicensed Use of the 6 GHz Band*, ET Docket No. 18-295, adopted 23 April 2020.
+  - The 1200 MHz allocation, the three device classes, and the AFC framework that decides whether 320 MHz is usable at a given address.
+- **[Doc · EN · ★★]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7* programme (January 2024) and *Wi-Fi CERTIFIED 6E* (January 2021).
+  - What the logo tests, and — more usefully — what it does not. See also `02-3` for the programme history.
+- **[Paper · EN · ★★]** *Wi-Fi: Twenty-Five Years and Counting* — Geraci et al., *Proceedings of the IEEE* 113(11), 2025, arXiv:2507.09613.
+  - The independent cross-check on the history in §2 of note 02-14. Where the two books and this paper disagree on a date, trust the paper and mark the book `VERIFY`.
+- **[Paper · EN · ★★]** Khorov, E., Kiryanov, A., Lyakhov, A., and Bianchi, G. *A Tutorial on IEEE 802.11ax High Efficiency WLANs*. IEEE Communications Surveys & Tutorials 21(1), 2019.
+  - The Wi-Fi 6 mechanisms in §10 of note 02-14, with the analysis behind the uplink-OFDMA round cost.
+
+### Convergence with 5G
+
+- **[Std · ★★ · EN]** 3GPP TS 23.316 — wireless and wireline convergence: 5G-RG, FN-RG and the wireline access gateway function.
+- **[Std · ★★ · EN]** 3GPP TS 23.501 — non-3GPP access: N3IWF for untrusted, TNGF for trusted Wi-Fi.
+- **[Std · ★★ · EN]** 3GPP TS 23.793 — ATSSS: steering, switching and splitting, with MP-TCP, MP-QUIC and ATSSS-LL.
+  - Read the three together, not separately: TS 23.316 gives the residential gateway its 5G identity, TS 23.501 gives Wi-Fi a path into the core, TS 23.793 decides which link carries which flow. The convergence diagram in §17 of note 02-14 is these three clauses drawn once.
+
+### Cross-checks for the arithmetic
+
+- **[Doc · EN · ★]** TP-Link. *What is Wi-Fi 7* — PHY rate derivation table. <https://www.tp-link.com/wifi7/>
+  - A vendor page, not an authority, but it publishes the tone-plan arithmetic (`3920 × 5/6 × log2(4096) / 13.6 µs`) that reproduces 2882.4 Mbps per stream and 46.08 Gbps at 16 streams. Useful precisely because it also publishes the 16-stream number that the standard does not contain.
+- **[Book · EN · ★★]** Gast, M. S. *802.11 Wireless Networks: The Definitive Guide*, 2nd ed., O'Reilly, 2005 — see §02-1.
+  - The IFS, NAV and frame taxonomy in §3 and §5 of note 02-14 are his; the tables are worth checking against the clause.
 
 ---
 

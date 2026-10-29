@@ -12,7 +12,7 @@ last-updated: 2026-10-29
 **一个开源的通信 × 异构计算 × AI 知识库**
 **An open knowledge base for communications, heterogeneous compute and AI**
 
-**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **41 notes** · Obsidian-compatible
+**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **42 notes** · Obsidian-compatible
 
 [中文](#中文) · [English](#english)
 
@@ -28,7 +28,7 @@ last-updated: 2026-10-29
 
 所以这里不是事实清单。每篇笔记都说明这个类比在哪里成立，更重要的是在哪里失效。
 
-- **41 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
+- **42 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
 - **每篇形态固定：** 结论 → 分层论述（配 Mermaid 图）→ **Anchors**（有日期、可核查的事实）→ **Related**（会被一起追问的邻居）→ **References**（一手来源）。
 - **笔记正文只用英文**，以便原样用于国际团队与英文面试；说明文档中英双语。
 - **不确定的就说不知道：** 无法独立确认的说法标注 `VERIFY`；流行说法与一手来源的差异集中记录在勘误表里。
@@ -47,7 +47,7 @@ PersonalSkills/
     ├── 00 MOC - ...md           唯一入口：目录地图、学习方法、贡献方法
     ├── 99 Corrections - ...md   勘误表：流行说法 vs 一手来源
     ├── MN/           01-x  移动通信（8 篇）+ readlist.md
-    ├── WLAN/         02-x  IEEE 802.11（13 篇）+ readlist.md
+    ├── WLAN/         02-x  IEEE 802.11（14 篇）+ readlist.md
     ├── WSN/          03-x  低功耗与传感网（1 篇）+ readlist.md
     ├── EMBEDDED/     04-x  嵌入式与系统软件（6 篇）+ readlist.md
     ├── DATAPLANE/    05-x  数据面与异构计算（2 篇）+ readlist.md
@@ -72,7 +72,7 @@ PersonalSkills/
 | 目录 | 主题 | 篇数 | 面向 |
 | --- | --- | --- | --- |
 | `MN` | 3GPP 空口与 RAN 协议栈：release 地图、L2、AI/ML for RAN、蜂窝 IoT、随机接入、DU 调度器、HARQ，以及一个可读的开源实现 | 8 | RAN、协议栈、基带软件 |
-| `WLAN` | IEEE 802.11：代际、省电、生态、数据通路、接入、漫游、EasyMesh、调度、TSN、基带与驱动、OpenWrt、openwifi、可靠性与确定性 | 13 | WLAN 协议栈、AP/网关、客户端 |
+| `WLAN` | IEEE 802.11：基础与历史、代际、省电、生态、数据通路、接入、漫游、EasyMesh、调度、TSN、基带与驱动、OpenWrt、openwifi、可靠性与确定性 | 14 | WLAN 协议栈、AP/网关、客户端 |
 | `WSN` | 低功耗无线：WPAN 介质访问、分簇、TSCH、信息年龄 | 1 | IoT、低功耗设备 |
 | `EMBEDDED` | 嵌入式与系统软件：RTOS、嵌入式 Linux、软件架构、中断、并发与 IPC、设备驱动 | 6 | 嵌入式、Linux 平台 |
 | `DATAPLANE` | 数据面与异构计算：DPDK 与 5G UPF、端边云协同、内存池化与互联 | 2 | 数据面、边缘计算 |
@@ -87,7 +87,7 @@ PersonalSkills/
 | 目标岗位 | 从哪里开始 |
 | --- | --- |
 | RAN / 协议栈 | `MN` 01-2 → 01-6 → 01-7 → 01-8，再 `DATAPLANE` 05-1 |
-| WLAN / AP 与客户端 | `WLAN` 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
+| WLAN / AP 与客户端 | `WLAN` 02-14 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
 | 嵌入式 / Linux 平台 | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6，再 `MN` 01-6 |
 | 端侧 AI / 推理系统 | `AI` 06-3 → 06-1 → 06-2，再 `DATAPLANE` 05-2 |
 | 技术负责人 / 架构 | `SILICON` 07-1 与 `MANAGEMENT` 09-1 横向读，其余按需 |
@@ -134,7 +134,7 @@ An engineering knowledge base organised around a single thesis:
 
 So this is not a list of facts. Every note states where that analogy holds and, more usefully, where it breaks.
 
-- **41 notes across 10 directories.** The directory is the domain; the note number is the reading order.
+- **42 notes across 10 directories.** The directory is the domain; the note number is the reading order.
 - **Every note has the same shape:** claim → layered argument with Mermaid diagrams → **Anchors** (dated, checkable facts) → **Related** (neighbours that get argued about together) → **References** (primary sources).
 - **Notes are written in English only**, so they can be reused with international teams and in English interviews. The documentation is bilingual.
 - **Doubt is marked, not smoothed over.** Claims that could not be independently confirmed carry a `VERIFY` flag, and the gap between the popular claim and the primary source is recorded in one corrections page.
@@ -153,7 +153,7 @@ PersonalSkills/
     ├── 00 MOC - ...md           the only entry point: map, reading method, contribution method
     ├── 99 Corrections - ...md   verified facts that popular sources get wrong
     ├── MN/           01-x  mobile network (8 notes) + readlist.md
-    ├── WLAN/         02-x  IEEE 802.11 (13 notes) + readlist.md
+    ├── WLAN/         02-x  IEEE 802.11 (14 notes) + readlist.md
     ├── WSN/          03-x  low-power and sensor networking (1 note) + readlist.md
     ├── EMBEDDED/     04-x  embedded and systems software (6 notes) + readlist.md
     ├── DATAPLANE/    05-x  packet plane and heterogeneous compute (2 notes) + readlist.md
@@ -178,7 +178,7 @@ Each directory carries its own `readlist.md` — the books, papers, standards an
 | Directory | Domain | Notes | Built for |
 | --- | --- | --- | --- |
 | `MN` | 3GPP radio access and the RAN stack: release map, L2, AI/ML for RAN, cellular IoT, random access, the DU scheduler, HARQ, and one open-source implementation | 8 | RAN, protocol stack, baseband software |
-| `WLAN` | IEEE 802.11: generations, power saving, ecosystem, datapath, join, roaming, EasyMesh, scheduling, TSN, baseband and drivers, OpenWrt, openwifi, reliability and determinism | 13 | WLAN stack, AP and gateway, client |
+| `WLAN` | IEEE 802.11: fundamentals and history, generations, power saving, ecosystem, datapath, join, roaming, EasyMesh, scheduling, TSN, baseband and drivers, OpenWrt, openwifi, reliability and determinism | 14 | WLAN stack, AP and gateway, client |
 | `WSN` | Low-power wireless: WPAN medium access, clustering, TSCH, age of information | 1 | IoT, low-power devices |
 | `EMBEDDED` | Embedded and systems software: RTOS, embedded Linux, software architecture, interrupts, concurrency and IPC, device drivers | 6 | Embedded, Linux platform |
 | `DATAPLANE` | Packet plane and heterogeneous compute: DPDK and the 5G UPF, cloud-edge-end, memory pooling and interconnect | 2 | Data plane, edge computing |
@@ -193,7 +193,7 @@ Where to start, by target role:
 | Target role | Start here |
 | --- | --- |
 | RAN / protocol stack | `MN` 01-2 → 01-6 → 01-7 → 01-8, then `DATAPLANE` 05-1 |
-| WLAN / AP and client | `WLAN` 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
+| WLAN / AP and client | `WLAN` 02-14 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
 | Embedded / Linux platform | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6, then `MN` 01-6 |
 | On-device AI / inference | `AI` 06-3 → 06-1 → 06-2, then `DATAPLANE` 05-2 |
 | Technical lead / architect | `SILICON` 07-1 and `MANAGEMENT` 09-1 sideways, the rest on demand |

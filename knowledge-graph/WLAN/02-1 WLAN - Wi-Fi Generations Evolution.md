@@ -515,6 +515,7 @@ AI features must demonstrate benefits that justify their **computational complex
 
 ## Related
 
+- [[02-14 WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7]] — the substrate this note assumes: why the MAC is contention-based, the numerology and the rate arithmetic that explain these generation numbers, and the Wi-Fi 7 PHY and MLO detail behind §4
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what each generation cost in silicon: which block of the baseband had to grow, why Wi-Fi 8 raises the LDPC codeword instead of the peak rate, and what the first Wi-Fi 8 platforms actually claim
 - [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
 - [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what each generation's features cost in the packet path: where A-MPDU, BA, MLO reordering and coordination land in the host/device split
