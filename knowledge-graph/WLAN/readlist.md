@@ -3,12 +3,12 @@ title: Reading list — WLAN · IEEE 802.11
 lang: en
 category: reading-list
 license: GPL-3.0-or-later OR AGPL-3.0-or-later
-last-updated: 2026-10-29
+last-updated: 2026-11-01
 ---
 
 # Reading list — WLAN · IEEE 802.11
 
-> IEEE 802.11 from the fundamentals to the silicon: the substrate note that explains what the technology is and where it came from, the generation map, power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, and the reliability/latency/determinism question.
+> IEEE 802.11 from the fundamentals to the silicon: the substrate note that explains what the technology is and where it came from, the generation map, power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, radio resource management, dynamic frequency selection and the reliability/latency/determinism question.
 >
 > One section per note, numbered `GG-x`. Where a note needed no source beyond its own
 > **References**, there is no section here — the note is self-sufficient.
@@ -21,6 +21,7 @@ last-updated: 2026-10-29
 - **Start here:** if you are new to 802.11, read `02-14` first and use its two source books as the spine; the remaining sections assume the vocabulary it defines.
 - **The analog companion:** `02-15` is the only section that is not about the protocol stack. Read it after `02-14` if you care why the numbers in the PHY tables are what they are.
 - **The network view:** `02-16` is the section for how a whole deployment is managed — channels, power, admission, steering and the roam algorithm. Read it after `02-14` and `02-15`, and before vendor-tuning anything.
+- **The regulator's view:** `02-17` is the section where IEEE 802.11 stops being the specification: radar detection, the FCC and ETSI numbers, and what a DFS event costs. Read it after `02-16` — and read it before you plan a 5 GHz channel or promise an availability figure.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
@@ -1088,6 +1089,83 @@ its own arithmetic.
 - **[Book · EN · ★]** There is no good book on Wi-Fi RRM. Vendor documentation and the IEEE clauses
   are the primary literature; anything that presents a single vendor's algorithm as "how Wi-Fi works"
   is marketing. Treat every RRM claim in a book as a claim about one product.
+
+---
+
+## 02-17 · WLAN — Dynamic Frequency Selection: Radar Detection, Channel Rules and Regulatory Behaviour
+
+The section where the specification is *not* the IEEE standard. Everything here is a rule text, a test
+procedure or a vendor implementation, so read in that order: the international recommendation first,
+then the two regional regimes side by side, then the two test procedures, then one implementation.
+
+### Standards — the mechanisms, without the numbers
+
+- **[Std · ★★★ · EN]** IEEE Std 802.11h-2003 — *Spectrum and Transmit Power Management Extensions in
+  the 5 GHz band in Europe* (now consolidated into IEEE Std 802.11-2020, clause 11 (MLME)).
+  - The elements and procedures: Power Constraint, Power Capability, TPC Request/Report, Supported
+  Channels, Channel Switch Announcement, Quiet, IBSS DFS, and the DFS owner. Note what is *absent*:
+  no threshold, no timing, no detection probability — those come from the regulator.
+- **[Std · ★★★ · EN]** ITU-R Recommendation **M.1652-1 (05/2011)** — *Dynamic frequency selection in
+  wireless access systems including radio local area networks for the purpose of protecting the
+  radiodetermination service in the 5 GHz band*.
+  - The international instrument, incorporated by reference in the Radio Regulations. M.1652-0
+  (06/2003) is the version 802.11h was written to implement. Read this before either regional rule:
+  it explains why the two regimes differ in detail but agree in shape.
+- **[Std · ★★ · EN]** ITU-R Report **M.2115-1 (2009)** — *Testing procedures for implementation of
+  dynamic frequency selection*.
+  - The most efficient way to see the regional drift: it tabulates EN 301 893 v1.4.1 against v1.5.1 —
+  threshold definition, the 10-minute CAC for 5600–5650 MHz, off-channel CAC and its 99.99 %
+  detection probability, and the staggered-PRF signals.
+
+### Regulatory — the numbers, both families
+
+- **[Doc · ★★★ · EN]** FCC **47 CFR § 15.407(h)** — TPC in (h)(1), DFS in (h)(2), device security in
+  (i), AFC in (j)–(k).
+  - Read the current eCFR text, not a summary: the CAC is a flat 60 s, the move time is 10 s, the NOP
+  is 30 minutes, the thresholds are −64 / −62 dBm, and there is **no** 5600–5650 MHz CAC exception and
+  **no** uniform-spreading clause left in the text.
+  - <https://www.ecfr.gov/current/title-47/section-15.407>
+- **[Doc · ★★★ · EN]** FCC Office of Engineering and Technology. **KDB 905462 D02** (DFS compliance
+  procedures) and **D03** (clients without radar detection).
+  - Where the FCC numbers actually live: the 200 ms + 60 ms channel closing transmission time, the
+  100 % detection bandwidth, Bin 0 through Bin 6 waveforms, 60/80/70 % detection, and the ~17 %
+  channel loading.
+- **[Doc · ★★ · EN]** FCC **FCC 06-96** (ET Docket 03-122, 2006) and **FCC 14-30** with addendum
+  **FCC 14-141** (GN Docket 13-49, 2014).
+  - Read them together to see what changed: the earlier detection bandwidth was 80 %, the TDWR band was
+  blocked outright, and uniform spreading plus forced random channel selection were removed in 2014.
+  The OET TCB Workshop presentation *DFS New Rules* (October 2014) is the clearest public summary.
+- **[Std · ★★★ · EN]** **ETSI EN 301 893** v2.1.1 (2017-05), clause 4.7 and **Annex D**.
+  - The European numbers: CAC 60 s and **600 s** in 5600–5650 MHz, off-channel CAC 6 min–4 h (1–24 h),
+  CMT 10 s, CCTT **1 s**, NOP 30 min, the −62 dBm threshold derived from EIRP spectral density with a
+  −64 dBm floor, the 23 dBm slave exemption, radar test signals 1–6, and Table D.5 with the 99.99 %
+  and 60 % detection probabilities.
+- **[Doc · ★★ · EN]** ISED Canada **RSS-247** — the FCC alignment plus the flat prohibition on
+  operation in 5600–5650 MHz; and Japan's **ARIB STD-T71** and the local MIIT, ACMA and RRA rules.
+  - Read one non-FCC, non-ETSI rule to internalise that a product carries every table and selects by
+  country code. `VERIFY` each before quoting it.
+- **[Std · ★★ · EN]** **ETSI EN 303 687** v1.1.1 (2023-06) and Commission Implementing Decision
+  **(EU) 2025/893**.
+  - The 6 GHz counter-example: LPI and VLP, and the explicit statement that DFS is **not** a
+  requirement of the standard. This is the reason "move to 6 GHz" is the answer to most DFS complaints.
+
+### Implementation and vendor behaviour
+
+- **[Doc · ★★★ · EN]** Cisco. *Overview on 802.11h, Transmit Power Control and Dynamic Frequency
+  Selection*; the *Dynamic Frequency Selection* chapter of the Catalyst 9800 configuration guide; and
+  the autonomous AP radio configuration guide.
+  - The practitioner's view: the 1-to-10-minute CAC by country, the 200 ms stop plus five CSA beacons,
+  the non-volatile NOP flag that resets to 30 minutes on reboot, Zero Wait DFS (US and Europe only),
+  Flex DFS bandwidth reduction, and the false-positive sources with CleanAir cross-checking.
+- **[Doc · ★★★ · EN]** LWN.net. *nl/cfg/mac80211: add DFS master ability* (Victor Goldenshtein, 2012);
+  and the hostap commit **f4b84ec** *AP MLD: Track radar detection in offloaded DFS case* (2024).
+  - The Linux split in two documents: hostapd is the DFS master and nl80211 pipes commands and events;
+  then how AP MLD adds a per-link dimension when the driver owns detection.
+- **[Doc · ★★ · EN]** OpenWrt. *Wireless configuration / DFS* documentation and `uci_wireless.txt`;
+  and the Infineon/Cypress community note *Steps to Perform Wi-Fi DFS: Channel Availability Check (CAC)
+  using WL Commands*.
+  - The two ends of the practical view: what an operator sees in `iw` and hostapd logs, and what a test
+  house does with `wl dfs_preism`, `wl radar` and radar injection at 6 s and 54 s into the CAC.
 
 ---
 

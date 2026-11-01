@@ -369,7 +369,7 @@ per-radio variable inside the same solve.
 stateDiagram-v2
     [*] --> Select: AP picks a DFS channel
     Select --> CAC: Channel Availability Check
-    CAC --> Serving: 60 s with no radar<br/>(600 s on TDWR channels 120/124/128)
+    CAC --> Serving: 60 s with no radar<br/>(600 s on ETSI channels overlapping 5600-5650 MHz)
     CAC --> Select: radar during CAC — channel blocked
     Serving --> Serving: In-Service Monitoring
     Serving --> Move: radar detected
@@ -380,7 +380,7 @@ stateDiagram-v2
 
 | Parameter | Value | Why it matters to RRM |
 | --- | --- | --- |
-| **CAC** | 60 s (US, most channels); **600 s** on 120/124/128 (TDWR overlap) | A DFS channel is silent for a minute after boot — a real coverage gap |
+| **CAC** | 60 s (FCC, flat for every DFS channel); **600 s** in ETSI domains on channels overlapping 5600–5650 MHz — that is 120/124/128 | A DFS channel is silent for a minute after boot — a real coverage gap |
 | **Channel Move Time** | 10 s | The AP must be gone; this is why event-driven RRM exists |
 | **Non-Occupancy Period** | 30 min | The channel is unusable for half an hour, so the plan must have a fallback |
 | **In-Service Monitoring** | Continuous | Radar detection runs while serving; a false positive costs a CSA |
@@ -390,6 +390,13 @@ fallback plan (UNII-1 36–48 and UNII-3 149–165 in the US) or a radar strike 
 eight channels; and use "Smart DFS"/pre-staged alternates if the site is mission-critical. Zero-wait
 DFS (a second radio pre-scanning the next channel) exists precisely because the 60 s CAC is
 otherwise a visible outage.
+
+One correction worth carrying, because vendor documentation and blogs get it wrong in both
+directions: **the 10-minute CAC is the ETSI rule for channels overlapping 5600–5650 MHz, not an FCC
+one.** The FCC's CAC is a flat 60 s on every DFS channel, and the US answer to TDWR is a dedicated
+waveform test, not a longer silence. The full comparison — thresholds, timings, waveforms, detection
+probabilities, the master/client split and the Linux implementation — is in
+[[02-17 WLAN - Dynamic Frequency Selection - Radar Detection, Channel Rules and Regulatory Behaviour]].
 
 ---
 
@@ -1146,10 +1153,12 @@ The honest limits, which are the interesting part:
   so two overlapping BSSes collide with probability **1/63 ≈ 1.6%**; recovery uses the **BSS Color
   Change Announcement** with a Color Switch Countdown in TBTT units. Legacy HT/VHT/OFDM preambles
   carry no BSS colour and get no benefit.
-- **DFS** (802.11h, now in 802.11-2020): **Channel Availability Check 60 s** (and **600 s** on US
-  channels 120/124/128 overlapping TDWR), **Channel Move Time 10 s**, **Non-Occupancy Period
-  30 minutes**, continuous in-service monitoring. US 5 GHz: UNII-1 (36–48) and UNII-3 (149–165) are
-  non-DFS; UNII-2A (52–64) and UNII-2C/2E (100–144) require DFS.
+- **DFS** (802.11h, now in 802.11-2020 clause 11): **Channel Availability Check 60 s** (FCC, flat; and
+  **600 s** in ETSI domains on channels overlapping 5600–5650 MHz), **Channel Move Time 10 s**,
+  **Non-Occupancy Period 30 minutes**, continuous in-service monitoring. US 5 GHz: UNII-1 (36–48) and
+  UNII-3 (149–165) are non-DFS; UNII-2A (52–64) and UNII-2C/2E (100–144) require DFS. Full detail,
+  including the FCC versus ETSI differences in thresholds, closing time, detection probability and
+  uniform spreading, is in note 02-17.
 - **Admission control**: 802.11e WMM-AC uses **ADDTS/TSPEC**; **HCCA was never deployed**. 802.11aa
   (2012) introduced **SCS**. 802.11be-2024 adds the **QoS Characteristics element (9.4.2.326)** —
   flow identifier, minimum and maximum service interval, maximum packet size, **delay bound**,
@@ -1179,6 +1188,7 @@ The honest limits, which are the interesting part:
 
 ## Related
 
+- [[02-17 WLAN - Dynamic Frequency Selection - Radar Detection, Channel Rules and Regulatory Behaviour]] — the deep dive on §3.6: the FCC and ETSI numbers side by side, the radar waveforms and detection probabilities, the master/client split, the outage budget, zero-wait DFS and the Linux implementation
 - [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — the companion note: the same territory from the client's side, with the full K-V-R triad, the FT key chain, the EasyMesh steering message semantics, and why the client owns the trigger
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the airtime half of the resource: per-station airtime accounting is the objective this note's load balancing wants, and scheduling is the actuator spatial reuse feeds
 - [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the management plane this note's §11 compares against MAPC: 1905.1 CMDUs, controller/agent roles, channel planning and the steering exchange with its real field semantics

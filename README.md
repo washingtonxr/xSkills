@@ -12,7 +12,7 @@ last-updated: 2026-10-29
 **一个开源的通信 × 异构计算 × AI 知识库**
 **An open knowledge base for communications, heterogeneous compute and AI**
 
-**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **44 notes** · Obsidian-compatible
+**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **45 notes** · Obsidian-compatible
 
 [中文](#中文) · [English](#english)
 
@@ -28,7 +28,7 @@ last-updated: 2026-10-29
 
 所以这里不是事实清单。每篇笔记都说明这个类比在哪里成立，更重要的是在哪里失效。
 
-- **44 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
+- **45 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
 - **每篇形态固定：** 结论 → 分层论述（配 Mermaid 图）→ **Anchors**（有日期、可核查的事实）→ **Related**（会被一起追问的邻居）→ **References**（一手来源）。
 - **笔记正文只用英文**，以便原样用于国际团队与英文面试；说明文档中英双语。
 - **不确定的就说不知道：** 无法独立确认的说法标注 `VERIFY`；流行说法与一手来源的差异集中记录在勘误表里。
@@ -87,7 +87,7 @@ PersonalSkills/
 | 目标岗位 | 从哪里开始 |
 | --- | --- |
 | RAN / 协议栈 | `MN` 01-2 → 01-6 → 01-7 → 01-8，再 `DATAPLANE` 05-1 |
-| WLAN / AP 与客户端 | `WLAN` 02-14 → 02-15 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
+| WLAN / AP 与客户端 | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
 | 嵌入式 / Linux 平台 | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6，再 `MN` 01-6 |
 | 端侧 AI / 推理系统 | `AI` 06-3 → 06-1 → 06-2，再 `DATAPLANE` 05-2 |
 | 技术负责人 / 架构 | `SILICON` 07-1 与 `MANAGEMENT` 09-1 横向读，其余按需 |
@@ -134,7 +134,7 @@ An engineering knowledge base organised around a single thesis:
 
 So this is not a list of facts. Every note states where that analogy holds and, more usefully, where it breaks.
 
-- **44 notes across 10 directories.** The directory is the domain; the note number is the reading order.
+- **45 notes across 10 directories.** The directory is the domain; the note number is the reading order.
 - **Every note has the same shape:** claim → layered argument with Mermaid diagrams → **Anchors** (dated, checkable facts) → **Related** (neighbours that get argued about together) → **References** (primary sources).
 - **Notes are written in English only**, so they can be reused with international teams and in English interviews. The documentation is bilingual.
 - **Doubt is marked, not smoothed over.** Claims that could not be independently confirmed carry a `VERIFY` flag, and the gap between the popular claim and the primary source is recorded in one corrections page.
@@ -153,7 +153,7 @@ PersonalSkills/
     ├── 00 MOC - ...md           the only entry point: map, reading method, contribution method
     ├── 99 Corrections - ...md   verified facts that popular sources get wrong
     ├── MN/           01-x  mobile network (8 notes) + readlist.md
-    ├── WLAN/         02-x  IEEE 802.11 (16 notes) + readlist.md
+    ├── WLAN/         02-x  IEEE 802.11 (17 notes) + readlist.md
     ├── WSN/          03-x  low-power and sensor networking (1 note) + readlist.md
     ├── EMBEDDED/     04-x  embedded and systems software (6 notes) + readlist.md
     ├── DATAPLANE/    05-x  packet plane and heterogeneous compute (2 notes) + readlist.md
@@ -193,7 +193,7 @@ Where to start, by target role:
 | Target role | Start here |
 | --- | --- |
 | RAN / protocol stack | `MN` 01-2 → 01-6 → 01-7 → 01-8, then `DATAPLANE` 05-1 |
-| WLAN / AP and client | `WLAN` 02-14 → 02-15 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
+| WLAN / AP and client | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
 | Embedded / Linux platform | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6, then `MN` 01-6 |
 | On-device AI / inference | `AI` 06-3 → 06-1 → 06-2, then `DATAPLANE` 05-2 |
 | Technical lead / architect | `SILICON` 07-1 and `MANAGEMENT` 09-1 sideways, the rest on demand |

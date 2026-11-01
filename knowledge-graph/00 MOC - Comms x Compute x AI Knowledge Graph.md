@@ -9,14 +9,14 @@ tags:
   - ai
   - computing
 license: GPL-3.0-or-later OR AGPL-3.0-or-later
-last-updated: 2026-10-29
+last-updated: 2026-11-01
 ---
 
 # Communications x Heterogeneous Compute x AI — Knowledge Graph
 
 > **One thesis holds this vault together.** Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into a single scheduling problem — deciding *what* runs *where*, *when*, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales. Every note states where that analogy holds and, more usefully, where it breaks.
 
-**Ten directories · 44 notes · one index.** The directory is the domain; the note number is the order to read within it.
+**Ten directories · 45 notes · one index.** The directory is the domain; the note number is the order to read within it.
 
 ## 1. Start here
 
@@ -37,7 +37,7 @@ Two rules make the difference between reading and knowing:
 ```mermaid
 flowchart LR
     MN["MN<br/>mobile network<br/>8 notes"]
-    WLAN["WLAN<br/>IEEE 802.11<br/>16 notes"]
+    WLAN["WLAN<br/>IEEE 802.11<br/>17 notes"]
     WSN["WSN<br/>low-power WPAN<br/>1 note"]
     EMBEDDED["EMBEDDED<br/>systems software<br/>6 notes"]
     DATAPLANE["DATAPLANE<br/>packet plane · fabric<br/>2 notes"]
@@ -125,15 +125,16 @@ References: [`MN/readlist.md`](MN/readlist.md) — 3GPP, ITU-R, O-RAN, and the v
 
 ## 6. `WLAN` — IEEE 802.11
 
-Sixteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the silicon does, what the software on top does, and finally whether any of it can be made deterministic.
+Seventeen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the one function a regulator owns, what the silicon does, what the software on top does, and finally whether any of it can be made deterministic.
 
-**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
+**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-17, the one RRM function with a regulator behind it; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
 
 | Note | What it answers |
 | --- | --- |
 | [[02-14 WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7]] | The substrate under every other note: why 802.11's MAC differs from Ethernet's, the ALOHA-to-802.11be history, the join sequence, CSMA/CA and EDCA, the numerology and the rate arithmetic, Wi-Fi 6 as the hinge, Wi-Fi 7 PHY and MLO, deployment, product test, 5G convergence and trends — built from *Wi-Fi 7 In Depth* (Cisco Press, 2024) and *Wi-Fi 7: Principles, Technology, and Applications* (Springer, 2025) |
 | [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] | The analog half: the five jobs a radio performs, the noise/EVM budget that commissions it, superheterodyne to zero-IF to digital-assisted, the TX and RX chains stage by stage, MIMO and MLO costs, power and coexistence, 802.11bf sensing, and what AI can and cannot change inside a transceiver |
 | [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] | The control plane above a single AP: what RRM actually manages (spectrum, power, airtime, association), the measure-decide-actuate-verify loop and the authority gradient, the 802.11k measurement catalogue, channel assignment families from static plan to ChannelFly to SLE-driven learning, Cisco TPCv1 with its worked equation, DFS, spatial reuse and the constant-product rule, what admission control can and cannot refuse, the steering score function worked numerically, the full roam algorithm with its time budget, and EasyMesh versus 802.11bn MAPC |
+| [[02-17 WLAN - Dynamic Frequency Selection - Radar Detection, Channel Rules and Regulatory Behaviour]] | The one place where the regulator writes the specification: why radar is primary in parts of 5 GHz, the FCC and ETSI numbers side by side (CAC 60 s / 600 s, CMT 10 s, CCTT 200 ms + 60 ms versus 1 s, NOP 30 min, thresholds −64/−62 dBm), the master and client obligation matrices, the radar waveforms and detection probabilities, the 802.11h element and CSA machinery, the outage budget of a DFS event, zero-wait and off-channel CAC, why 160 MHz in 5 GHz is always a DFS channel and why 6 GHz has no DFS at all |
 | [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] | 802.11n → 802.11bn as a feature-by-feature lineage: what each generation was for, which WFA programme certified it, which application paid for it, and why the peak rate stops growing after Wi-Fi 7 |
 | [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] | Energy as the design constraint: legacy PS, U-APSD, SMPS, TWT and r-TWT, wake-up radio, ambient power |
 | [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] | Who decides what a product may claim: the four bodies (IEEE, WFA, WBA, prpl/BBF), the eight-category certification catalogue, Wi-Fi CERTIFIED 6E/7/8, WPA3 and PMF, EasyMesh R1–R6, prplMesh/prplOS/RDK-B, OpenRoaming, and which programme serves which application |
