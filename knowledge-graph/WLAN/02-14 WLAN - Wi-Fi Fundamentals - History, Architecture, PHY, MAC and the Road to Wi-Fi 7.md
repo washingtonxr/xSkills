@@ -1,6 +1,9 @@
 ---
 title: WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7
 domain: wlan
+type: domain-note
+group: "02"
+series: "02-14"
 tags:
   - wlan
   - ieee-802-11
@@ -26,7 +29,7 @@ last-updated: 2026-10-29
 
 # WLAN — Wi-Fi Fundamentals: History, Architecture, PHY, MAC and the Road to Wi-Fi 7
 
-The substrate note. [[02-1 WLAN - Wi-Fi Generations Evolution]] is a feature-by-feature reference for
+The substrate note. [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] is a feature-by-feature reference for
 802.11n → 802.11bn; this note answers the questions that come *before* it: where Wi-Fi came from, what an
 802.11 network physically is, why the MAC is contention-based and what that costs, where the bits per second
 actually come from, and what Wi-Fi 7 changed. It is built from two books that approach the same standard from
@@ -791,7 +794,7 @@ Three design consequences follow, and they are the basis of most throughput debu
 
 802.11be is built on 802.11ax, and four HE mechanisms are the foundation. Each is treated in depth in
 [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] and
-[[02-2 WLAN - Power Saving Mechanisms and Evolution]]; here is the minimum needed to understand EHT.
+[[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]]; here is the minimum needed to understand EHT.
 
 **OFDMA.** The channel is divided into resource units, and different stations get different RUs inside the
 same PPDU. One contention win serves many users, and the fixed preamble cost is shared.
@@ -1309,7 +1312,7 @@ it.
 | AI-native PHY | Pilotless reception, learned receivers in products | Compute cost exceeding the spectral-efficiency gain |
 
 For the standards-level detail behind these, including the 802.11bn ballot history and the Wi-Fi 9 discussion
-in the Wireless Next Generation Standing Committee, see [[02-1 WLAN - Wi-Fi Generations Evolution]] §5 and §7.
+in the Wireless Next Generation Standing Committee, see [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] §5 and §7.
 
 ---
 
@@ -1438,24 +1441,24 @@ between sources (March or May 2028).
 - [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] — the analog half of
   this note: what the EVM and sensitivity tables cost in silicon, why the preamble is 93% of a peak-rate frame, and
   what AI can and cannot change inside a radio
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — the same territory at feature granularity: every amendment
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — the same territory at feature granularity: every amendment
   from 802.11n to 802.11bn with its PHY and MAC parameters, plus the Wi-Fi 8 ballot history and the Wi-Fi 9
   discussion
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence of §4 in full: SAE,
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — the join sequence of §4 in full: SAE,
   OWE, 802.1X, PMF, FT, 6 GHz discovery and multi-link setup
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] —
   the scheduler behind §5 and §10: EDCA parameters, the RU grid, trigger frames, airtime fairness, mac80211
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what §9's aggregation costs in the packet
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — what §9's aggregation costs in the packet
   path, and the host/device split that implements it
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — TWT from the energy side, and why power save became
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — TWT from the energy side, and why power save became
   a contention mechanism
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — §13's latency tools framed as TSN, and
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — §13's latency tools framed as TSN, and
   the converged wired-wireless network
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] —
   what §7's PHY arithmetic costs in silicon, and how the baseband implements the tone plans
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the honest
   limits of Wi-Fi 7's latency claims, and where the stack itself adds delay
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — §16's certification questions in full, plus the Multi-AP
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — §16's certification questions in full, plus the Multi-AP
   specifications that Wi-Fi 8's coordination will need
 - [[01-1 5G-Advanced and 6G Radio Access]] — the cellular side of §17: what 5G does with the same scheduling
   problem

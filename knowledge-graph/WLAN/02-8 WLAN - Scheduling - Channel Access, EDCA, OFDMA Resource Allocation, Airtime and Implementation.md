@@ -45,11 +45,11 @@ aliases:
 > Part of the [[00 MOC - Comms x Compute x AI Knowledge Graph|Comms × Compute × AI knowledge graph]] · group **02 · WLAN**
 
 Every previous note in this group has needed the word *scheduler* and none of them had room to define it.
-[[02-1 WLAN - Wi-Fi Generations Evolution]] says "OFDMA RUs" and "trigger frames" without deriving where
-they come from. [[02-2 WLAN - Power Saving Mechanisms and Evolution]] says TWT without saying what the AP *does*
-with the service period. [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] takes the packet path down
+[[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] says "OFDMA RUs" and "trigger frames" without deriving where
+they come from. [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] says TWT without saying what the AP *does*
+with the service period. [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] takes the packet path down
 to the firmware and stops at the point where somebody has to decide which station gets the next transmission.
-[[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] tunes channel and steering on the
+[[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] tunes channel and steering on the
 assumption that somebody downstream is arbitrating airtime.
 
 This note is that somebody. It walks from the protocol — interframe spaces, contention windows, the resource-unit
@@ -632,7 +632,7 @@ flowchart TB
     P2 --> AIR
 ```
 
-The UMAC/LMAC split is also why [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] can say that
+The UMAC/LMAC split is also why [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] can say that
 association happens once across all links with one AID: the upper half of the MAC genuinely is single.
 
 ### 7.2 The modes, and what each costs the scheduler
@@ -913,7 +913,7 @@ flowchart TB
 ## 11. Scheduling around sleep
 
 A dozing station is not schedulable. This makes power save a scheduling constraint, not just a battery feature,
-and [[02-2 WLAN - Power Saving Mechanisms and Evolution]]'s mechanisms are best read with that in mind.
+and [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]]'s mechanisms are best read with that in mind.
 
 ### 11.1 Legacy PS and U-APSD
 
@@ -974,7 +974,7 @@ else may still win the medium inside someone else's SP. r-TWT adds two channel-a
 r-TWT can operate in trigger mode, and SPs can be aligned with **IEEE 802.1Qbv gate-open times**, which is what
 the IEEE 802.11 liaison to 802.1 describes when it places r-TWT, SCS and TID-to-link mapping alongside each other
 as latency tools. This is the beginning of Wi-Fi talking to TSN on TSN's terms — and the eventual destination of
-the Wi-Fi 8 work described in [[02-1 WLAN - Wi-Fi Generations Evolution]] §5.
+the Wi-Fi 8 work described in [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] §5.
 
 ---
 
@@ -1058,7 +1058,7 @@ actually watch the effect of a fairness knob from userspace.
    controller are one system.
 3. **Hardware acceleration can bypass it.** MediaTek's Wireless Ethernet Dispatch offloads the AP forwarding
    path, and enabling WED is documented as **losing AQL** — again described in
-   [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] §7. Choosing throughput offload silently trades
+   [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] §7. Choosing throughput offload silently trades
    away the queueing control that protects latency.
 
 ### 12.5 The three places a Wi-Fi queue hides
@@ -1137,8 +1137,8 @@ scheduler lives in the DU and is wholly software because its deadline is a slot.
 and its medium is contended, so the real-time decision ends up below any OS — the nearest thing Wi-Fi has to FAPI
 is vendor-internal, and there is no equivalent of the 7-2x interface pushing this work out into a visible place.
 
-For multi-AP scheduling there is one more layer: [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] and
-[[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] describe how a *network* coordinates channel
+For multi-AP scheduling there is one more layer: [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] and
+[[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] describe how a *network* coordinates channel
 and steering. Coordinated resource allocation between APs — the sort of thing Wi-Fi 8's Co-SR, Co-BF and
 coordinated TDMA/OFDMA aim to standardise — is what happens when this per-TXOP loop gets a peer-to-peer
 extension. Today, the closest thing to cross-AP scheduling is static channel planning plus steering.
@@ -1283,15 +1283,16 @@ flowchart TB
 
 ## Related
 
+- [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] — the control plane that sets the channel and power scheduling then lives inside: the RRM loop, the constant-product rule of spatial reuse, and why airtime rather than client count is the resource a load balancer should optimise
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — where the scheduler this note describes actually runs: firmware on a Q6, hardware queues the host cannot inspect, and the queueing decision above the driver that decides whether any of it matters
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what all of this is for: the ladder from EDCA through trigger-based access, TWT, r-TWT and preemption to a latency bound, plus the 802.1 toolbox it has to interoperate with and the AP-as-bridge model that puts it in a wired TSN domain
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — where every feature whose scheduler this note describes came from: RUs and MRU, the EHT tone-plan revision, MLO's upper/lower MAC split, TTLM, SCS and R-TWT, and the Wi-Fi 8 coordination work that extends this loop across APs
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the other half of this problem: every dozing station is one a scheduler cannot put in a participant set, and TWT turns uncontrollable sleep into negotiable schedule
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — the packet path this scheduler feeds, and the SoftMAC / FullMAC / hybrid split that decides whether any of it is observable
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what has to have happened before a station is schedulable at all: association, keys, and the Block Ack session without which every frame needs its own ACK
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — steering as the network's attempt to influence a decision this note shows belongs partly to the client's own access process
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — channel selection and steering as the layer above scheduling, and what the Controller can actually observe
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where WMM certification constrains the EDCA parameters this note treats as defaults
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — what all of this is for: the ladder from EDCA through trigger-based access, TWT, r-TWT and preemption to a latency bound, plus the 802.1 toolbox it has to interoperate with and the AP-as-bridge model that puts it in a wired TSN domain
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — where every feature whose scheduler this note describes came from: RUs and MRU, the EHT tone-plan revision, MLO's upper/lower MAC split, TTLM, SCS and R-TWT, and the Wi-Fi 8 coordination work that extends this loop across APs
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the other half of this problem: every dozing station is one a scheduler cannot put in a participant set, and TWT turns uncontrollable sleep into negotiable schedule
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — the packet path this scheduler feeds, and the SoftMAC / FullMAC / hybrid split that decides whether any of it is observable
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what has to have happened before a station is schedulable at all: association, keys, and the Block Ack session without which every frame needs its own ACK
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — steering as the network's attempt to influence a decision this note shows belongs partly to the client's own access process
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — channel selection and steering as the layer above scheduling, and what the Controller can actually observe
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — where WMM certification constrains the EDCA parameters this note treats as defaults
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the cellular counterpart, and the sharpest way to see what is distinctive here: a scheduler handed a slot versus one that must first win a contended medium
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — why the real-time decision ends up in firmware and the policy in the host
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the execution context the host side of this pipeline runs in
@@ -1362,7 +1363,7 @@ flowchart TB
 31. Ryan, D. *Cisco WLC: EDCA timers* — comparing IEEE 802.11-2016 Table 9-137 against IEEE 802.11-2012 Table 8-105. <https://netgab.net/web/2017/12/05/cisco-wlc-edca-timers/>
     — The side-by-side that makes the TXOP-limit change legible, and the observation behind §3.2's DSSS paragraph: the 2016 change from 0 to 2.528 ms *caps* a slow station, because at 1 Mbps one 1500-byte frame wants ~12 ms of airtime and no longer gets it.
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the airtime knobs as they exist on a real device, including the offload paths that bypass AQL
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the airtime knobs as they exist on a real device, including the offload paths that bypass AQL
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same scheduler reimplemented: backoff, contention window, SIFS and slot time as writable FPGA registers
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — what the scheduler can and cannot promise: the latency budget it controls, AQL as the airtime-based queue limit, and the measured effect of fair queueing and airtime fairness

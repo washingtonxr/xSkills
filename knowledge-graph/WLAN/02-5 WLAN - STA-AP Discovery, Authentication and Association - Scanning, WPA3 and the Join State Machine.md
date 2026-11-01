@@ -1,5 +1,5 @@
 ---
-title: "WLAN — STA/AP Discovery, Authentication and Association"
+title: "WLAN — STA/AP Discovery, Authentication and Association: Scanning, WPA3 and the Join State Machine"
 type: domain-note
 domain: wlan
 group: "02"
@@ -872,23 +872,24 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
 
 ## Related
 
+- [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] — what happens after the join: how the network steers a station to a different AP, band or link, the six phases of a transition, and where the hundreds of milliseconds actually go
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the machinery behind the frames this note traces: vdev and peer objects created by WMI, keys installed into a hardware crypto engine, and the state that has to survive a firmware restart
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced which part of this
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — what has to be negotiated after association before a stream can be scheduled at all: SCS agreements with QoS Characteristics, r-TWT membership, and the capability exchange that decides whether any of it applies
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation introduced which part of this
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — what has to be negotiated after association before a stream can be scheduled at all: SCS agreements with QoS Characteristics, r-TWT membership, and the capability exchange that decides whether any of it applies
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what association makes possible: the AID and Block Ack session a scheduler needs before a station is a candidate, and the EML capabilities it must respect
   sequence: 11i for RSNA, 11w for PMF, 11r/k/v for transition, 11ai for FILS, 11ax for 6 GHz
   discovery and TWT, 11be for multi-link setup
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — what association promises about buffering:
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — what association promises about buffering:
   the listen interval, the AID-indexed TIM, and why a TWT agreement is negotiated only after the
   station is associated
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — how certification constrains this sequence:
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — how certification constrains this sequence:
   WPA3 and PMF requirements, and how a mesh controller steers a station between agents
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what happens to the first data frame
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — what happens to the first data frame
   after the controlled port opens, and where the 4-way handshake sits when it is offloaded to firmware
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management view of
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the management view of
   this join sequence: onboarding delivers the credentials, AP-autoconfiguration creates the BSSs,
   and the policy that decides whether a client gets steered into re-running it
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — FT at ESS scale: where R0KH sits, the
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — FT at ESS scale: where R0KH sits, the
   over-the-DS encapsulation the station never sees, the five ways FT fails, and the steering and
   healing mechanisms this join sequence enables
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the
@@ -963,7 +964,7 @@ every "weak signal" report in a ticket is actually a code 15 or a status 43.
     description of `NL80211_CMD_AUTHENTICATE`, `NL80211_CMD_ASSOCIATE`, `NL80211_CMD_NEW_KEY` and the
     state machine that drives them.
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — who owns the MLME on a router: hostapd as a long-lived ubus server, and how a BSS is added without restarting anything
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — who owns the MLME on a router: hostapd as a long-lived ubus server, and how a BSS is added without restarting anything
 
 ---
 

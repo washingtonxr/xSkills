@@ -74,7 +74,7 @@ Key facts to be able to state:
 | Choice | Consider when |
 | --- | --- |
 | **initramfs / initrd** | Early userspace, small, RAM-resident; used for mounting the real root or for recovery |
-| **SquashFS / EROFS** | Read-only compressed rootfs (routers, CPE — see [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]); paired with an overlay for writes |
+| **SquashFS / EROFS** | Read-only compressed rootfs (routers, CPE — see [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]]); paired with an overlay for writes |
 | **ext4** | Read-write, journaling, mainstream for eMMC/SD |
 | **UBIFS** | Raw NAND with UBI volume management; handles bad blocks and wear levelling |
 | **JFFS2** | Legacy raw NOR/NAND, largely superseded |
@@ -550,7 +550,7 @@ In one line: `NIC DMA → RX ring → hard IRQ → NAPI poll → ip_rcv() → ne
 
 ### 6.4 Kernel ↔ userspace networking control plane
 - **netlink** is the right interface: `NETLINK_ROUTE` (rtnetlink: links, addresses, routes), `NETLINK_KOBJECT_UEVENT`, `NETLINK_NETFILTER`, and **generic netlink** for custom families. `ip`, `ss`, `tc`, and `ethtool` all speak it.
-- **nl80211 / cfg80211 / mac80211** is the Wi-Fi control path: `iw`, `hostapd`, `wpa_supplicant` drive the stack through nl80211. This is the Linux counterpart of everything in [[02-1 WLAN - Wi-Fi Generations Evolution]] and [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+- **nl80211 / cfg80211 / mac80211** is the Wi-Fi control path: `iw`, `hostapd`, `wpa_supplicant` drive the stack through nl80211. This is the Linux counterpart of everything in [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] and [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]].
 - **AF_PACKET / `PF_PACKET`** raw sockets for sniffing and raw L2 injection (`tcpdump`, custom protocols); classic BPF filters attach to these.
 - **AF_XDP** exposes the NIC ring to userspace through an `XSK` UMEM — bypass without giving up the kernel stack; see the bypass comparison in [[08-1 Programming Languages Toolchain and Performance Engineering]].
 - **eBPF attach points**: XDP (driver-level, pre-`skb`), tc ingress/egress, cgroup/skb, sockops, `sk_msg`. Constrained by the **verifier** (bounded loops, no arbitrary memory access) — which is precisely why it is safe to load into a running kernel.
@@ -666,7 +666,7 @@ For a vRAN or UPF deployment the usual answer is: **SR-IOV or VFIO passthrough f
 - **EEVDF** replaced CFS as the default scheduler in **6.6** — lower wakeup-latency jitter, and it invalidates old CFS tuning knobs (`sched_latency_ns`, `sched_min_granularity_ns`).
 - **sched_ext** (merged **6.12**, formally part of **7.0**): scheduling policy implemented as a BPF program, loadable and hot-swappable at runtime, with a watchdog fallback to the fair scheduler. Per-cgroup sub-schedulers and the fixed `ops.dequeue()` callback landed in **7.1**. Directly relevant to "how do I give a workload its own policy" questions.
 - **Rust in the kernel**: introduced in 6.1 as experimental and graduated from experimental status in **7.0** (April 2026) — a peer language for *new* drivers, not a rewrite of C.
-- **Wi-Fi 8 (802.11bn) groundwork** landed in the Linux wireless stack in 7.0 — the Linux counterpart of [[02-1 WLAN - Wi-Fi Generations Evolution]].
+- **Wi-Fi 8 (802.11bn) groundwork** landed in the Linux wireless stack in 7.0 — the Linux counterpart of [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]].
 - **eBPF progression**: from packet filtering to tracing, networking, security and now scheduling — the single most leveraged kernel skill for observability and dataplane work.
 
 ## 10. The "can you actually do this" checklist
@@ -711,11 +711,11 @@ Skills to be able to demonstrate, in increasing order of difficulty:
 - [[05-1 DPDK User Plane and 5G UPF]] — VFIO, hugepages, core isolation, NAPI bypass
 - [[07-1 RISC-V for Communication Infrastructure]] — H extension, AIA, IOMMU on RISC-V targets
 - [[05-2 Cloud-Edge-End Collaboration and Heterogeneous Computing]] — partitioning, memory pooling, NUMA
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] and [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — nl80211/cfg80211/mac80211 as the Linux side of Wi-Fi
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] and [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — nl80211/cfg80211/mac80211 as the Linux side of Wi-Fi
 - [[06-2 Agent Systems and Edge Orchestration]] — IPC and sandboxing model for on-device agents
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — keepalive and lossy-link socket tuning
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — a complete worked example of an embedded Linux network device: procd, ubus, netifd, flash partitions and a cross-build system
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — a complete worked example of an embedded Linux network device: procd, ubus, netifd, flash partitions and a cross-build system
 
 ---
 

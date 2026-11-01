@@ -43,8 +43,8 @@ aliases:
 different vendors discover each other, are configured, measure the network, and are told what to do.
 It does not touch the air interface, and it does not carry user traffic.
 
-[[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] places EasyMesh in the certification landscape;
-[[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] covers what happens when a station actually
+[[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] places EasyMesh in the certification landscape;
+[[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] covers what happens when a station actually
 moves. This note is the middle layer: the protocol itself, how it is deployed, which knobs exist, and
 how to debug a network that is misbehaving.
 
@@ -85,7 +85,7 @@ vendor-specific. That single fact explains most "but it's certified, why is it b
   forwards frames as an ordinary bridge with a 4-address link — no HWMP involved.
 - **"EasyMesh makes roaming seamless."** No. It can *ask*. The station decides. EasyMesh gives the
   agent the measurements and the actuator (BTM request, association control); whether the client
-  moves is the client's business. See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]].
+  moves is the client's business. See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]].
 - **"EasyMesh means Wi-Fi 7."** No. EasyMesh is a release-numbered management framework; Wi-Fi 7 is a
   PHY/MAC generation. R6 is the release that *understands* Wi-Fi 7 (MLO, 320 MHz, AFC, puncturing).
 - **"hostapd implements EasyMesh."** No. hostapd/wpa_supplicant implement exactly two pieces — the WPS
@@ -757,7 +757,7 @@ flowchart TD
 
 1. **802.11k/v/r or equivalent on the fronthaul.** EasyMesh gives you the *decision*; fast roaming
    gives you the *cheap transition*. Without FT or PMK caching every network-initiated move is a full
-   reauthentication. See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]].
+   reauthentication. See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]].
 2. **PMF (802.11w).** Required by Agile Multiband; also the reason a stale-association race can lock a
    client out (§9).
 3. **WPA3 transition, not SAE-only.** The spec forbids SAE-only fronthaul BSSs; use `0x0060`.
@@ -1011,20 +1011,21 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 
 ## Related
 
+- [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] — the decision logic EasyMesh carries over 1905.1: the RRM measure-decide-actuate-verify loop, the steering score function, and how EasyMesh's management-plane coordination differs from 802.11bn's per-TXOP MAPC
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what the controller cannot see: queues inside the chip, statistics that arrive only as firmware events, and an SoC forwarding plane that hides traffic from the host entirely
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where EasyMesh sits among WFA certifications, the
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the layer above it: what a controller has to configure when service periods are aligned across APs and to a wired gate control list, and why multi-AP coordination is the only mechanism that makes a bound survive a neighbour
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — where EasyMesh sits among WFA certifications, the
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the layer above it: what a controller has to configure when service periods are aligned across APs and to a wired gate control list, and why multi-AP coordination is the only mechanism that makes a bound survive a neighbour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the layer below channel selection and steering: airtime fairness per BSS, and the observation that no cross-AP scheduling exists before Wi-Fi 8 coordination
   prpl stack (prplOS / prplMesh / prpl LCM), and the "do not conflate" table against 802.11k/v/r/s
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what EasyMesh can only *request*: the roam
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — what EasyMesh can only *request*: the roam
   decision belongs to the station, BTM is one actuator, and association control is the blunt one
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what a steered client actually
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what a steered client actually
   executes at the new BSS, including Fast BSS Transition, which is not an EasyMesh feature
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation each coordination feature belongs to,
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation each coordination feature belongs to,
   and why Wi-Fi 8 multi-AP coordination is a different problem from EasyMesh management
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — the data path that EasyMesh never
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — the data path that EasyMesh never
   touches, and what the 4-address backhaul looks like in a driver with hardware offload
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — why a sleeping client misses the measurement
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — why a sleeping client misses the measurement
   requests the network depends on, and how TWT interacts with anticipated channel usage reporting
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the
   controller/agent split as an architecture, and why the policy engine is deliberately outside the spec
@@ -1059,7 +1060,7 @@ multicast; and a `0x8024` **Error Response** or an Error Code TLV riding inside 
 22. Huawei. *How Do I Complete EasyMesh Networking on Routers?* — consumer-side onboarding methods (WPS button, wireless relay, Ethernet). https://consumer.huawei.com/en/support/content/en-us16057841/
 23. TP-Link Community. *Knowledge Base: EasyMesh* — deployment and troubleshooting cases, including Ethernet backhaul behind a switch. https://community.tp-link.com/en/home/forum/topic/660384
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — what an EasyMesh deployment lands on: an OpenWrt box with no controller, and the uCentral or prpl agent that supplies one
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — what an EasyMesh deployment lands on: an OpenWrt box with no controller, and the uCentral or prpl agent that supplies one
 
 ---
 

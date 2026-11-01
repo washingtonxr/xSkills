@@ -198,7 +198,7 @@ flowchart TD
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — bare-metal C idioms, volatile vs atomic, `-fno-exceptions` embedded C++ profile
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the consumer of these primitives: sleep-clock ppm setting the TWT wake margin, RTC domains, out-of-band host wake
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[06-3 Machine Learning - Foundations, Core Algorithms and Applications]] — TinyML as an RTOS workload: quantised models on Cortex-M class parts, inference inside a task's deadline, and the memory budget that decides whether a model fits at all
 - [[08-1 Programming Languages Toolchain and Performance Engineering]]

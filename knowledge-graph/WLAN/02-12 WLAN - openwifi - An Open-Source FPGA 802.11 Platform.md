@@ -45,12 +45,12 @@ There is a name collision to clear up before anything else, because it costs peo
   implementation**: an FPGA baseband and low MAC plus a Linux driver, running on a Xilinx Zynq SoC with an Analog
   Devices transceiver. It is the subject of this note.
 - **OpenWiFi** (TIP) is a **cloud-managed AP software architecture** built on OpenWrt, described in
-  [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]].
+  [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]].
 
 They are unrelated projects that happen to share a name. Say which one you mean.
 
 Every note so far has treated the radio as something you configure. [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] opened the chip and showed that the low MAC is firmware you
-cannot read; [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] showed that above the driver
+cannot read; [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] showed that above the driver
 everything is software you can change. Between those two there is a wall: **you can rewrite hostapd, you can rewrite
 the driver, but you cannot change what happens in the 10 microseconds between the end of a frame and the start of its
 acknowledgement.** openwifi is a project built to knock that wall down.
@@ -549,7 +549,7 @@ difference from a normal SoftMAC chip is that the "firmware" is Verilog you can 
 
 ## 10. The two control channels: `sdrctl` and sysfs
 
-OpenWrt's equivalent problem is solved with ubus and UCI (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]]); openwifi solves it with two channels that both terminate in the driver:
+OpenWrt's equivalent problem is solved with ubus and UCI (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]]); openwifi solves it with two channels that both terminate in the driver:
 
 | Channel | Mechanism | Used for |
 | --- | --- | --- |
@@ -623,7 +623,7 @@ Plus the two features that are really about *access*, not about the PHY:
   the contention window were smaller" from a simulation into a measurement.
 - **Time slicing by MAC address.** `time_slice_gen.v` plus the four FPGA queues give you time-gated, scheduled
   queues: a form of airtime reservation implemented in hardware, which is the closest thing on this platform to the
-  scheduled-access mechanisms discussed in [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]].
+  scheduled-access mechanisms discussed in [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]].
 
 ---
 
@@ -820,21 +820,21 @@ and **a modifiable implementation on this end** at the same time.
 ## Related
 - [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the same idea one domain over: an open stack where the low MAC is yours to rewrite, and the same honest distance between a research platform and a product
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the software stack above the driver,
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the software stack above the driver,
   including the TIP OpenWiFi project whose name is easily confused with this one
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the
   commercial counterpart: the same low MAC, implemented as firmware you cannot read
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — SoftMAC versus FullMAC and the five offload planes,
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — SoftMAC versus FullMAC and the five offload planes,
   which is the vocabulary you need to place openwifi's split
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the
   channel-access rules that openwifi lets you rewrite: backoff, contention window, AIFS, TXOP
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what hostapd and wpa_supplicant do on `sdr0`,
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what hostapd and wpa_supplicant do on `sdr0`,
   and why suppressing 802.11b rates matters at association time
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the requirement that makes openwifi's
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the requirement that makes openwifi's
   time-gated FPGA queues worth having
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — where 802.11a/g/n sits in the generation ladder, and what each
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — where 802.11a/g/n sits in the generation ladder, and what each
   later generation added that the open-source feature set does not have
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the power-saving behaviours whose timing the low MAC also
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the power-saving behaviours whose timing the low MAC also
   owns
 - [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — the language and the verification flow the
   FPGA side is written in, including the testbench style openwifi uses

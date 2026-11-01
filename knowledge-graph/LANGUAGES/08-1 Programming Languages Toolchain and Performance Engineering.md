@@ -153,7 +153,7 @@ flowchart TD
 - [[08-3 Python Programming - Language, Object Model and Engineering Practice]] — the tooling and modelling language in depth
 - [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — model-based design and code generation
 - [[08-5 Verilog HDL - RTL Design, Verification and Synthesis Practice]] — the RTL counterpart of the build/profiling method
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the case for profiling the tail: latency requirements stated as a bound on the 95th or 99.9th percentile, and what that changes about the measurements you take
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the case for profiling the tail: latency requirements stated as a bound on the 95th or 99.9th percentile, and what that changes about the measurements you take
 - [[05-1 DPDK User Plane and 5G UPF]]
 - [[07-1 RISC-V for Communication Infrastructure]]
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]

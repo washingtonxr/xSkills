@@ -123,7 +123,7 @@ The VFB is the idea worth exporting: components talk through typed, location-agn
 
 **Adaptive Platform (AP)** — high-performance ECUs, POSIX-based OS, service-oriented, dynamic. Implements the **AUTOSAR Runtime for Adaptive Applications (ARA)**, functional clusters grouped into services, plus the Adaptive Basis. Designed for dynamic update and reconfiguration.
 
-**Why this matters beyond cars:** the VFB/RTE pattern is *exactly* the same problem as a portable Wi-Fi or modem stack — decouple applications from transport so the same code runs over a local API or over a bus. See [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] for the WLAN analogue (prpl's abstraction of the Multi-AP control plane).
+**Why this matters beyond cars:** the VFB/RTE pattern is *exactly* the same problem as a portable Wi-Fi or modem stack — decouple applications from transport so the same code runs over a local API or over a bus. See [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] for the WLAN analogue (prpl's abstraction of the Multi-AP control plane).
 
 **Interesting for a comms person:** the CP BSW explicitly contains a *wireless communication* stack — drivers and HW abstraction for cellular/V2X. So AUTOSAR CP is not "the car stack", it is "the deeply-embedded stack" that happens to include radio.
 
@@ -213,7 +213,7 @@ stateDiagram-v2
     end note
 ```
 
-A protocol stack is exactly this shape — RRC states, Wi-Fi association states, connection lifecycle — which is why the HSM *is* the architecture rather than a detail inside it. See [[01-2 5G NR RAN Layer 2 Protocol Stack]] and [[02-1 WLAN - Wi-Fi Generations Evolution]].
+A protocol stack is exactly this shape — RRC states, Wi-Fi association states, connection lifecycle — which is why the HSM *is* the architecture rather than a detail inside it. See [[01-2 5G NR RAN Layer 2 Protocol Stack]] and [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]].
 
 Constructs, and what each buys:
 
@@ -245,7 +245,7 @@ The hierarchical dispatch trick, in essence: a state handler either consumes an 
 - **Every state machine needs an explicit top-state initial transition**, and every orthogonal region needs its own initial transition.
 - **Never transition inside an entry or exit action** — it produces ill-formed handlers with ambiguous semantics.
 - **Event deferral** (queue an event for later rather than dropping it) is a first-class mechanism in HSM frameworks; using it deliberately is better than a `bool pending_later` flag.
-- Where the state machine is the protocol state (RRC states, Wi-Fi association states, connection lifecycle), the HSM *is* the architecture — link it to [[01-2 5G NR RAN Layer 2 Protocol Stack]] and [[02-1 WLAN - Wi-Fi Generations Evolution]], where the same "modes with inherited behaviour" pattern appears as spec-level state machines.
+- Where the state machine is the protocol state (RRC states, Wi-Fi association states, connection lifecycle), the HSM *is* the architecture — link it to [[01-2 5G NR RAN Layer 2 Protocol Stack]] and [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]], where the same "modes with inherited behaviour" pattern appears as spec-level state machines.
 
 ---
 
@@ -426,7 +426,7 @@ The cut is chosen so each side has a tractable real-time budget *and* a stable i
 
 - MAC scheduling and HARQ timing → [[01-2 5G NR RAN Layer 2 Protocol Stack]]
 - RAN intelligence moved out of the box → [[01-3 AI-ML for RAN and O-RAN RIC]]
-- Wi-Fi: `mac80211`/`cfg80211` is the Linux embodiment of this split → [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]], [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+- Wi-Fi: `mac80211`/`cfg80211` is the Linux embodiment of this split → [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]], [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]]
 - Constrained-device radio duty cycling → [[03-1 Wireless Sensor Networks and Low-Power MAC]]
 
 ---
@@ -598,7 +598,7 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 
 ### 14.2 Wi-Fi router / residential gateway
 
-**Structure**: embedded Linux. Kernel side: `mac80211`/`cfg80211` (softMAC) or a vendor fullMAC driver; userspace: hostapd/wpa_supplicant, a Multi-AP agent (EasyMesh / prplMesh), DHCP/DNS, firewall, telemetry. See [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] and [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
+**Structure**: embedded Linux. Kernel side: `mac80211`/`cfg80211` (softMAC) or a vendor fullMAC driver; userspace: hostapd/wpa_supplicant, a Multi-AP agent (EasyMesh / prplMesh), DHCP/DNS, firewall, telemetry. See [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] and [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]].
 
 **Why**: throughput and feature velocity dominate; determinism matters only inside the driver and firmware. Datapath: `sk_buff` ownership transfer through the stack (single-owner zero-copy), with fast-path offload where the SoC supports it.
 
@@ -667,13 +667,13 @@ The architectural test: can every subsystem answer "what is the deepest sleep st
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the L1/L2 real-time boundary at full scale: the FAPI interface, the eleven-step per-slot pipeline, and the execution model that the layering in §1 has to support
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the wireless case for the split this note argues for: microsecond-scale decisions below any OS, policy above it, and the nearest thing Wi-Fi has to FAPI being vendor-internal
 - [[07-1 RISC-V for Communication Infrastructure]] — the silicon substrate for L1 acceleration and heterogeneous baseband
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the WLAN instantiation of layered control/data separation
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — the WLAN instantiation of layered control/data separation
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — duty cycling and sleep architecture at the constrained end
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the worked example of a power policy split across host, firmware and RF capability
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the worked example of a power policy split across host, firmware and RF capability
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS, eDRX and the power architecture of cellular IoT devices
 - [[05-1 DPDK User Plane and 5G UPF]] — single-owner zero-copy ownership applied at line rate
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the layering argument instantiated on a shipping router: intent, state, control plane, kernel and hardware
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the layering argument instantiated on a shipping router: intent, state, control plane, kernel and hardware
 
 - [[09-1 Engineering Project Management - Methodology, Lifecycle, Tools and Best Practice]] — architecture as the mechanism that decides how much of the work can run in parallel, which is what a schedule network is really describing
 - [[10-1 Value-Driven Business Model - Methodology, Process, Tools and Best Practice]] — architecture as the mechanism that decides how much of the work can run in parallel, and therefore what the cost to serve of a new tier will be

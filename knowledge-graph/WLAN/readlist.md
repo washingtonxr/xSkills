@@ -20,11 +20,12 @@ last-updated: 2026-10-29
 - **Nothing is asserted.** Where a citation could not be confirmed against a publisher, DOI, arXiv record or the issuing body, it is marked `VERIFY`.
 - **Start here:** if you are new to 802.11, read `02-14` first and use its two source books as the spine; the remaining sections assume the vocabulary it defines.
 - **The analog companion:** `02-15` is the only section that is not about the protocol stack. Read it after `02-14` if you care why the numbers in the PHY tables are what they are.
+- **The network view:** `02-16` is the section for how a whole deployment is managed — channels, power, admission, steering and the roam algorithm. Read it after `02-14` and `02-15`, and before vendor-tuning anything.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
 
-## 02-1 · WLAN — Wi-Fi Generations Evolution
+## 02-1 · WLAN — Wi-Fi Generations Evolution: Wi-Fi 4 to Wi-Fi 8 and Beyond
 ### Books
 
 - **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast · O'Reilly, 2005
@@ -50,8 +51,22 @@ last-updated: 2026-10-29
   - The clearest short introduction to the reliability pivot: why UHR replaced throughput as the headline goal, and how multi-AP coordination extends Wi-Fi 7's multi-link operation.
 - **[Paper · EN · ★]** "Future Directions for Wi-Fi 8 and Beyond" — E. Reshef, C. Cordeiro · *IEEE Communications Magazine*, vol. 60, no. 10, pp. 50–55, 2022
   - Pre-802.11bn view of the market drivers and candidate directions that became the UHR brief.
-- **[Paper · EN · ★]** "Towards Wi-Fi 9: Vision, Requirements and Candidate Technologies"
-  - The WNG Standing Committee contributions on post-802.11bn direction: determinism over nominal rate, uplink asymmetry driven by AI workloads, AI-native PHY, deterministic MAC, Age-of-Information scheduling, and the LAN-controller-plus-APs AI architecture. Cited in note 02-1; verify the current citation before quoting.
+- **[Paper · EN · ★★]** "Towards Wi-Fi 9: Vision, Requirements, and Candidate Technologies" — A. Karamyshev, D. Levitsky, E. Khorov · *Problems of Information Transmission*, vol. 61, pp. 383–406, 2025 · DOI 10.1134/S0032946025040040
+  - The WNG Standing Committee contributions on post-802.11bn direction: determinism over nominal rate, uplink asymmetry driven by AI workloads, AI-native PHY, deterministic MAC, Age-of-Information scheduling, and the LAN-controller-plus-APs AI architecture. The primary reference behind note 02-1's §7.
+
+### Certification and applications — the second clock
+
+- **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7*, programme announcement, 8 January 2024.
+  <https://www.wi-fi.org/news-events/newsroom/wi-fi-alliance-introduces-wi-fi-certified-7>
+  - The application set the Alliance itself names for the generation: multi-user AR/VR/XR, immersive 3-D
+  training, electronic gaming, hybrid work, industrial IoT, automotive — plus **EPCS**. Also the market estimate
+  of 233 million Wi-Fi 7 devices in 2024 growing to 2.1 billion by 2028.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Explore all technologies*. <https://www.wi-fi.org/node/47512>
+  - Where the generation programmes sit in the full catalogue, and the source for 85,000+ certifications since 2000.
+- **[Doc · ★★ · EN]** IEEE 802.11 Working Group, *Overview* page.
+  <https://www.ieee802.org/11/overview.html>
+  - Publication dates for every amendment. Cross-read it against the WFA programme dates in note 02-1 §8 — the
+  gap between the two clocks is the point of that section.
 
 ### Standards
 
@@ -70,7 +85,7 @@ last-updated: 2026-10-29
 
 ---
 
-## 02-2 · WLAN — Power Saving Mechanisms and Evolution
+## 02-2 · WLAN — Power Saving Mechanisms and Evolution: Legacy PS, TWT and Wake-Up Radio
 Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item duplicates a reference already listed under **§02-1**, it is cross-referenced rather than repeated, with the specific part to read.
 
 ### Books
@@ -145,7 +160,79 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 02-3 · WLAN Ecosystem — WFA, EasyMesh and prpl
+## 02-3 · WLAN — Ecosystem: WFA Certification, EasyMesh and prpl
+
+The section for the layer above the standard. Read it once end to end before reading any programme document:
+the point of the note is that IEEE, the WFA, the WBA and prpl are four different bodies on four different clocks.
+
+### Primary — Wi-Fi Alliance
+
+- **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Explore all technologies* — the programme catalogue, grouped into
+  access, alternative topologies, applications, network management, performance, security, Wi-Fi (MAC/PHY) and
+  segment-specific. <https://www.wi-fi.org/node/47512>
+  - The single page that answers "what does the WFA actually certify". Also the source for **more than 85,000
+    certifications since 2000**.
+- **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7*, programme announcement, 8 January 2024.
+  <https://www.wi-fi.org/news-events/newsroom/wi-fi-alliance-introduces-wi-fi-certified-7>
+  - The authoritative feature list and the application set the Alliance names: multi-user AR/VR/XR, immersive
+    3-D training, electronic gaming, hybrid work, industrial IoT, automotive, plus **EPCS**.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Our Brands* — which marks are license-free public brands and which are
+  member-only certification marks. <https://www.wi-fi.org/our-brands>
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Why Wi-Fi CERTIFIED* and *How to Certify* — the per-stakeholder value
+  argument, the certification paths, and the recertification rule that a firmware change can void a listing.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED TimeSync*, 5 January 2017.
+  - Sub-microsecond clock synchronisation over 802.11 timing measurement / FTM; the only programme that certifies
+  a time-domain property, and the closest WFA artefact to a wireless-TSN building block.
+
+### Primary — roaming federation
+
+- **[Doc · ★★ · EN]** Wireless Broadband Alliance. *WBA OpenRoaming*, launched 28 May 2020.
+  <https://wballiance.com/?p=14834> · <https://openroaming.org/>
+- **[Doc · ★★ · EN]** CableLabs. *WBA OpenRoaming to Enable Global Wi-Fi Roaming*.
+  <https://www.cablelabs.com/wba-openroaming-to-enable-global-wi-fi-roaming>
+  - The technical decomposition: Passpoint + DNS discovery + RadSec + WRIX, and the RCOI categories
+  (Settlement Free / Settlement) with service levels none / silver / gold.
+
+### Standards and program documents
+
+- **[Standard · ★★★]** **Wi-Fi Alliance certification program specifications** — Wi-Fi CERTIFIED n / ac / ax / be,
+  Wi-Fi CERTIFIED 6 / 6E / 7, WPA3, Wi-Fi Enhanced Open, Protected Management Frames, Wi-Fi EasyMesh, Wi-Fi Agile
+  Multiband, Wi-Fi Data Elements, Wi-Fi Location, Wi-Fi Aware, Wi-Fi QoS Management, Wi-Fi Vantage, Wi-Fi for
+  Matter, Wi-Fi for XR, Wi-Fi HaLow, WiGig
+  - Certification is what makes Wi-Fi a product category rather than a standard. Know which program constrains
+  which behaviour.
+  - **Watch the two clocks.** Wi-Fi CERTIFIED 7 opened January 2024; IEEE published 802.11be-2024 on 22 July
+    2025. Wi-Fi 8 interoperability events ran 7–11 September 2026 and the programme is **not open**; secondary
+    sources disagree on the opening date, so treat any single figure as `VERIFY`.
+- **[Standard · ★★★]** **Wi-Fi EasyMesh Specification** (Wi-Fi Alliance, Multi-AP)
+  - The interoperable multi-AP architecture: controller/agent roles, the 1905.1 abstraction layer, topology
+  discovery, channel planning, client steering, AP auto-configuration. The standards counterpart to the multi-AP
+  coordination mechanisms in 802.11bn. Releases **R1–R6**; **v6.0** announced August 2024, mandatory for newly
+  tested devices from 31 December 2024.
+- **[Standard · ★★]** **IEEE 1905.1a-2014** — Convergent Digital Home Network for Heterogeneous Technologies
+  - The abstraction layer EasyMesh uses to unify Wi-Fi, Ethernet, MoCA and powerline backhaul. Read it to
+  understand where EasyMesh's "multi-AP" is really heterogeneous-backhaul management.
+- **[Standard · ★★]** **IEEE Std 802.11ah-2016** — Wi-Fi HaLow, sub-1 GHz. Channel widths from 1 MHz, range of
+  1 km or more at 150 kbps, more than 8,000 devices per access point.
+- **[Standard · ★★]** **Broadband Forum TR-069 / TR-181** (CPE WAN Management Protocol, device data model) and
+  **TR-369** (User Services Platform, USP)
+  - The remote management stack for carrier-grade gateways. TR-181's data model is where EasyMesh and Wi-Fi
+  parameters are exposed to the operator.
+- **[Doc · ★★]** **prpl Foundation: prplOS, prplMesh, prpl LCM** (open source)
+  - The open-source EasyMesh implementation and its lifecycle-management layer. Read prplMesh to see how the
+  abstract EasyMesh architecture maps onto hostapd, nl80211 and the Linux network stack.
+- **[Doc · ★★]** **OpenWrt documentation** and **hostapd / wpa_supplicant documentation**
+  - The de facto reference implementation for Wi-Fi stack behaviour on Linux. When in doubt about how a feature
+  behaves on a real device, read hostapd.
+- **[Doc · ★]** **RDK-B (Reference Design Kit for Broadband)** documentation
+  - The cable/telco gateway software stack; useful context for the operator-managed device world EasyMesh and
+  prpl target.
+
+### Books
+
+- **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast (see §02-1)
+  - The MAC and management-frame foundation that certification programs build on.
+
 ### Books
 
 - **[Book · EN · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast (see §02-1)
@@ -170,7 +257,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 02-5 · WLAN — STA/AP Discovery, Authentication and Association
+## 02-5 · WLAN — STA/AP Discovery, Authentication and Association: Scanning, WPA3 and the Join State Machine
 ### Books
 
 - **[Book · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast, O'Reilly, 2005. ISBN 978-0-596-10052-0
@@ -218,7 +305,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 02-6 · WLAN — Multi-AP Roaming, Healing and Steering
+## 02-6 · WLAN — Multi-AP Roaming, Healing and Steering: 802.11k/v/r, BTM and Self-Healing
 ### Books
 
 - **[Book · ★★★]** *802.11 Wireless Networks: The Definitive Guide*, 2nd ed. — Matthew Gast, O'Reilly, 2005. ISBN 978-0-596-10052-0
@@ -410,7 +497,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 02-9 · WLAN — Time-Sensitive Networking over Wi-Fi: Research and Practice Across Generations
+## 02-9 · WLAN — Time-Sensitive Networking Across Wi-Fi Generations: From WMM to 802.11bn and IEC-IEEE 60802
 ### Standards and specifications
 
 - **[Standard · ★★★ · EN]** IEEE. *IEEE Std 802.11be-2024 — Amendment 2: Enhancements for Extremely High Throughput (EHT)*, published 22 July 2025 · DOI 10.1109/IEEESTD.2024.11090080 · free via the IEEE GET program
@@ -581,7 +668,7 @@ Supports note `02-2 WLAN - Power Saving Mechanisms and Evolution`. Where an item
 
 ---
 
-## 02-11 · WLAN — OpenWrt and the Software Architecture of a Wireless System
+## 02-11 · WLAN — OpenWrt and the Software Architecture of a Wireless System: netifd, ubus, hostapd and the SDK Trade-Off
 ### The project itself — release, support and the reference hardware
 
 - **[Doc · ★★★ · EN]** OpenWrt Project. *Welcome to the OpenWrt Project*. <https://openwrt.org/>
@@ -836,7 +923,7 @@ literature lives in application notes and conference papers rather than in books
     bandwidth: they are a noise floor plus a fixed SNR, not measurements.
 - **[Std · ★★ · EN]** IEEE P802.11bn/D1.0 (July 2025) and the TGbn PAR — the ELR PPDU (20 MHz, one stream,
   BPSK/QPSK, 1.67 and 3.33 Mbps, RU-level repetition, 3 dB boosted STF/LTF) and the 25% targets.
-- **[Std · ★★ · EN]** IEEE Std 802.11bf-2024 — WLAN sensing: sensing measurement instances, initiation and feedback
+- **[Std · ★★ · EN]** IEEE Std 802.11bf-2025 — WLAN sensing: sensing measurement instances, initiation and feedback
   frames, monostatic and bistatic operation.
 
 ### Measurement
@@ -883,6 +970,124 @@ literature lives in application notes and conference papers rather than in books
 - **[Book · EN · ★★]** Cheng, G., et al. *Wi-Fi 7: Principles, Technology, and Applications*. Springer, 2025 ·
   DOI 10.1007/978-981-97-9026-5 — chapter 4, product development and test, is the closest published account of how a
   radio is characterised from EVT to mass production.
+
+---
+
+## 02-16 · WLAN — Radio Resource Management: Channels, Power, Admission and the Roaming Algorithms
+
+The section for the layer above a single AP. RRM is almost entirely **vendor documentation and
+standard clauses**: there is no good book on it, because the interesting half is proprietary. Read the
+standards first, then one vendor's RRM documentation end to end — Cisco's is the most explicit about
+its own arithmetic.
+
+### Standards — the primitives, and where the decision logic is *not*
+
+- **[Std · ★★★ · EN]** IEEE Std 802.11-2024, clause **11.10** (radio measurement) and clause
+  **11.11** (WNM). The consolidated text for everything in the note: the measurement request/report
+  pairs, BSS transition management, and the reason codes.
+  - Read clause 11.10.9 (Neighbor Report) and 11.10.10 (Beacon Report) together. Together they are
+  the answer to "how does a roam avoid a full scan".
+- **[Std · ★★★ · EN]** IEEE Std 802.11k-2008 — *Radio Resource Measurement of Wireless LANs*.
+  - Neighbor Report and Beacon Report, plus channel load, noise histogram, frame, STA statistics,
+  link measurement, LCI and transmit stream/category. RCPI is encoded `dBm = RCPI/2 - 110`.
+- **[Std · ★★★ · EN]** IEEE Std 802.11v-2011 — *Wireless Network Management*.
+  - BTM: WNM action category 10, actions 6/7/8, preference 0-255 with 0 meaning excluded, the
+  disassociation-imminent flag, and the reason codes that make "steering" describable.
+- **[Std · ★★★ · EN]** IEEE Std 802.11r-2008 — *Fast BSS Transition*.
+  - The PMK-R0 / PMK-R1 hierarchy, over-the-air and over-the-DS, PMK-R1 pull and push, and the FTE
+  that carries the GTK.
+- **[Std · ★★★ · EN]** IEEE Std 802.11h-2003 (now in 802.11-2020) — DFS and TPC.
+  - Channel Availability Check, Channel Move Time, Non-Occupancy Period, and the channel switch
+  announcement that every channel-change algorithm depends on.
+- **[Std · ★★★ · EN]** IEEE Std 802.11ax-2021, clause **26.10** and equation **26-5**.
+  - Spatial reuse: `OBSS_PDmin = -82 dBm`, `OBSS_PDmax = -62 dBm`, and the constant-product rule
+  `TX_PWRmax = TX_PWRref - (OBSS_PD - OBSS_PDmin)`. The only place in 802.11 where RRM acts per frame.
+- **[Std · ★★ · EN]** IEEE Std 802.11e-2005 — WMM Admission Control, ADDTS and TSPEC; and
+  **802.11aa-2012** for the original SCS.
+  - Read them to understand why Wi-Fi admission control is weak: HCCA was never deployed.
+- **[Std · ★★ · EN]** IEEE Std 802.11be-2024, clause **35.3.23** (BTM for MLDs) and element
+  **9.4.2.326** (QoS Characteristics).
+- **[Std · ★★ · EN]** IEEE P802.11bn/D1.x — MAPC (Co-SR, Co-BF, Co-TDMA, Co-RTWT, Co-CR), DSO, NPCA,
+  HIP EDCA, TXOP preemption, and the SMD clauses 37.16.x.
+
+### Vendor RRM documentation — primary, and the only place the algorithms are written down
+
+- **[Doc · ★★★ · EN]** Cisco. *Radio Resource Management White Paper* — chapters "RRM Data Collection
+  Activities", "Dynamic Channel Assignment (DCA)", "Transmit Power Control (TPC) Algorithm",
+  "Coverage Hole Detection and Mitigation Algorithm".
+  - The single most explicit published RRM algorithm. Cost Metric composition, DCA sensitivity
+  thresholds by band, the CPCI list, `Tx_Ideal = Tx_Max + (TPC_threshold - RSSI_3rd)`, why the
+  third-loudest neighbour, and the 3 dB up / 6 dB down hysteresis.
+  - <https://www.cisco.com/c/en/us/td/docs/wireless/controller/technotes/8-3/b_RRM_White_Paper/tpc.html>
+- **[Doc · ★★★ · EN]** Cisco. *Catalyst 9800 Series Wireless Controller Software Configuration Guide*,
+  chapter "Radio Resource Management".
+  - Off-channel dwell <= 70 ms and 0.2% of airtime, the 100 ms voice deferral, RF group formation at
+  -80 dBm, DBS, PSC, DFS handling, 6 GHz client steering thresholds.
+  - <https://www.cisco.com/c/en/us/td/docs/wireless/controller/9800/17-5/config-guide/b_wl_17_5_cg/m_rrm_c9800.html>
+- **[Doc · ★★ · EN]** HPE Aruba Networking. *AOS 10 Architecture* and *Cloud Services* documentation
+  (AirMatch, ClientMatch, Cloud-Assisted Roaming).
+  - The cleanest statement of the plan/client split: AirMatch solves the network once a day,
+  ClientMatch steers individual clients continuously.
+- **[Doc · ★★ · EN]** CommScope RUCKUS. *ChannelFly and Background Scanning* (SmartZone
+  administrator documentation) and the *ChannelFly Predictive Capacity Management* feature brief.
+  - Capacity-based rather than interference-based selection, the 15 s assessment, and 802.11h-based
+  channel moves.
+- **[Doc · ★★ · EN]** CommScope RUCKUS. *ChannelFly 2.0: Smart Interference Management* (2023).
+  - Phase 1 / phase 2: neighbour RX airtime utilisation over the 20 s background scan, RSSI weighting,
+  ~16-entry table, then CCF (default 33) and the Full Optimization Period. Also the Cloud RRM
+  comparison and the human-accept-the-plan workflow.
+- **[Doc · ★★ · EN]** Juniper / HPE Mist. *Radio Management* documentation and the *Mist AI RRM*
+  design notes.
+  - The two-tier model (global daily, event-driven local), the Capacity SLE, the reinforcement-learning
+  validation loop, and the rule that minimum transmit power should match the design power.
+  - <https://www.juniper.net/documentation/us/en/software/mist/mist-wireless/topics/concept/radio-management.html>
+
+### Wi-Fi Alliance — the steering vocabulary
+
+- **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED Agile Multiband Technology Overview* (2021).
+  - The MBO-OCE IE (element ID `0xDD`, OUI `50-6F-9A`, OUI type `0x16`), Assoc Disallowed, the
+  non-preferred channel report, cellular data preference, and the beacon request/report modes.
+  - <https://www.wi-fi.org/system/files/Wi-Fi_CERTIFIED_Agile_Multiband_Technology_Overview_202104.pdf>
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7* (8 January 2024) and the Wi-Fi 8 programme
+  status pages. The second clock: what is certified versus what is merely drafted.
+
+### Regulatory — the constraints RRM cannot argue with
+
+- **[Doc · ★★★ · EN]** FCC 47 CFR §15.407 and *Report and Order* ET Docket No. 18-295 (April 2020):
+  5 GHz DFS sub-bands, and the 6 GHz device classes and AFC.
+- **[Std · ★★ · EN]** ETSI EN 301 893 — DFS and TPC requirements, whose timings differ from the FCC's.
+  - Note the practical consequence: the same AP ships with different power tables and different usable
+  channel lists per region, so an RRM plan is not portable.
+
+### Papers and primary contributions
+
+- **[Paper · EN · ★★]** Khorov, E., Kiryanov, A., Lyakhov, A., and Bianchi, G. *A Tutorial on IEEE
+  802.11ax High Efficiency WLANs*. IEEE Communications Surveys & Tutorials 21(1), 2019.
+  - The analysis behind spatial reuse and the cost of uplink OFDMA round trips that §5 and §6 assume.
+- **[Paper · EN · ★★]** Karamyshev, A., Levitsky, D., and Khorov, E. *A Tutorial on Wi-Fi 8: The
+  Journey to Ultra High Reliability*. Problems of Information Transmission, 2025 ·
+  DOI 10.1134/S003294602502005X.
+  - The UHR feature set in one place: SMD, MAPC, DSO, NPCA, DRU, ELR, HIP EDCA, IDC with PUO/DUO.
+- **[Paper · EN · ★★]** Geraci, G., et al. *Wi-Fi: Twenty-Five Years and Counting*. Proceedings of the
+  IEEE 113(11), 2025 · arXiv:2507.09613 — the independent timeline and 802.11bn status.
+- **[Doc · EN · ★★]** Shi, Z., et al. (Huawei). *Thoughts on Context Transfer in Seamless Roaming*,
+  IEEE 802.11 document **11-25-0040-01-00bn**, February 2025.
+  - The primary contribution behind the SMD discussion: static versus dynamic context, preparation
+  versus transition phase, and preserving context at the current AP MLD to mitigate ping-pong.
+- **[Doc · EN · ★★]** LWN.net. *wifi: Add Seamless Mobility Domain (SMD) AP support* and
+  *wifi: SCS and MSCS* (2025-2026).
+  - The implementation view: SMD-ID, ST Preparation / ST Execution, inter-AP communication, and the
+  SCS/MSCS split between hostapd, mac80211 and the driver.
+
+### Books — thin, and worth knowing why
+
+- **[Book · EN · ★★]** Gast, M. S. *802.11 Wireless Networks: The Definitive Guide*, 2nd ed.,
+  O'Reilly, 2005 (see §02-1).
+  - Still the clearest account of the management frames and the association state machine that the
+  roam algorithm in §9 assumes. It predates 11k/v/r, so treat those chapters as history.
+- **[Book · EN · ★]** There is no good book on Wi-Fi RRM. Vendor documentation and the IEEE clauses
+  are the primary literature; anything that presents a single vendor's algorithm as "how Wi-Fi works"
+  is marketing. Treat every RRM claim in a book as a claim about one product.
 
 ---
 

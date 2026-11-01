@@ -67,7 +67,7 @@ retransmitting and start *reserving and duplicating*, which is precisely the dir
 
 Where this note sits: [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]]
 describes *how* Wi-Fi schedules; this note asks *what you can promise* with that scheduler and with the driver around
-it. [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] is the companion for the 802.1/TSN framing;
+it. [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] is the companion for the 802.1/TSN framing;
 this note is the driver-and-protocol implementation view of the same problem.
 
 ---
@@ -327,7 +327,7 @@ Consequences worth stating out loud:
 | **Antenna/MRC diversity, beamforming** | PHY | 3–6 dB of link margin, which is several MCS steps of margin | Needs sounding (airtime) for explicit BF |
 | **ELR (802.11bn)** | PHY | Repetition + boosted preamble for edge stations; coverage without a new AP | 20 MHz, 1 SS, robust MCS only — low rate by construction |
 | **MLO duplication** (802.11be) | MAC | Send the same MPDU on two links; first copy wins, duplicate dropped at LMAC. Loss rates quoted from 10⁻² to below 10⁻⁵ without waiting for a retransmission | Doubles airtime for that frame; needs two usable links |
-| **802.1CB FRER-style replication** | Network | Duplicate over two APs or two paths, eliminate at the receiver | Two radios, two paths, sequence handling — see [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] |
+| **802.1CB FRER-style replication** | Network | Duplicate over two APs or two paths, eliminate at the receiver | Two radios, two paths, sequence handling — see [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] |
 | **Application FEC / redundancy** | Transport/app | Recovers a loss *without* a retransmission round trip — the only reliability mechanism that does not cost latency | Bandwidth overhead; only works for the payload you control |
 | **Multi-AP redundancy / make-before-break** | Network | Survives AP failure and roaming without a gap | Two associations, two radios, policy complexity |
 
@@ -542,7 +542,7 @@ stateDiagram-v2
 Two operational facts: AQL limits are **tunable at runtime** through mac80211's debugfs (`aql_txq_limit`, with
 per-AC low/high rows), and **offload paths bypass them** — hardware flow offload, WED and vendor fast paths move
 packets past mac80211, which is why turning them on often "fixes" throughput and silently destroys the latency work
-you just did (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] §9 and
+you just did (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] §9 and
 [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] §11).
 
 ### 6.2 Fair queueing and airtime fairness: what the measurements actually show
@@ -730,7 +730,7 @@ actually a rate-selection problem sitting one MCS above what the SNR supports.
 Goal: sub-50 ms RTT under load, no drop on roam.
 Do: WMM AC_VO/VI with correct DSCP→UP mapping; fq_codel or CAKE on the egress feeding the radio and on the WAN
 side with a shaper set below the real rate; AQL on (default); airtime fairness on; **802.11k neighbour reports +
-802.11r FT + 802.11v BTM**; steer with `bss_transition_request` (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] §6);
+802.11r FT + 802.11v BTM**; steer with `bss_transition_request` (see [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] §6);
 disable 1/2/5.5/6 Mb/s legacy rates; design for −65 dBm overlap.
 Expect: p99 RTT in the tens of ms under load; roam handovers ~20–30 ms.
 Do not: expect a bound. You have improved the distribution; you have not made a promise.
@@ -858,7 +858,7 @@ shares — and total throughput to *rise*, because fast stations finally get to 
   quoting a month).
 - **802.11bn feature set discussed in this note**: ELR, multi-AP coordination (Co-RTWT, Co-SR, Co-BF, Co-TDMA,
   Co-CR), seamless roaming domain (SMD), preemption, NPCA, P-EDCA — see
-  [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] for the TSN framing.
+  [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] for the TSN framing.
 - **TSQ / pacing shift**: the mac80211 patch (commit `36148c2bbfbe`) sets `sk_pacing_shift` to **8** (~4 ms) for
   locally originated TCP instead of the default 10 (~1 ms); measured ath9k 1-hop throughput **43.21 → 78.17 →
   123.94 → 128.31 Mbps** for shifts 10/9/8/7, with the commit stating that latency for competing flows rises from
@@ -894,18 +894,18 @@ shares — and total throughput to *rise*, because fast stations finally get to 
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the
   scheduler these mechanisms act on: EDCA parameters, OFDMA allocation, airtime accounting and AQL from the
   scheduling side
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the same problem framed as 802.1 TSN over
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the same problem framed as 802.1 TSN over
   Wi-Fi: the toolbox, the generation ladder, 802.1CB/FRER and the 802.11bn mechanisms
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — where
   the firmware queue that AQL has to bound actually lives, and what the offload planes cost you
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the box you configure all of this
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the box you configure all of this
   on: netifd, hostapd's ubus surface for steering, and the flow-offload/WED trade-off
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the research counterpart: SIFS, slot time,
   contention window, CCA and retry limits as writable registers, which is how you measure what the mechanisms here
   actually do
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — SoftMAC versus FullMAC and the five offload planes,
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — SoftMAC versus FullMAC and the five offload planes,
   which decide whether a host-side latency mechanism is even in the path
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — where 802.11k/v/r are actually invoked, and the sticky
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — where 802.11k/v/r are actually invoked, and the sticky
   client problem
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — NAPI, threaded IRQs and interrupt
   moderation as latency mechanisms

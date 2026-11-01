@@ -1,5 +1,5 @@
 ---
-title: "WLAN — OpenWrt and the Software Architecture of a Wireless System"
+title: "WLAN — OpenWrt and the Software Architecture of a Wireless System: netifd, ubus, hostapd and the SDK Trade-Off"
 type: domain-note
 domain: wlan
 group: "02"
@@ -41,10 +41,10 @@ aliases:
 > Part of the [[00 MOC - Comms x Compute x AI Knowledge Graph|Comms × Compute × AI knowledge graph]] · group **02 · WLAN**
 
 Every other note in this group describes a mechanism that somebody has to implement, configure and keep running.
-[[02-5 WLAN - STA-AP Discovery, Authentication and Association]] says that a station scans, authenticates and
+[[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] says that a station scans, authenticates and
 associates — but not who decides which of those parameters the AP offers.
-[[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] says that 802.11r, k and v exist — but not where the knobs live
-that turn them on. [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] says that a controller
+[[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] says that 802.11r, k and v exist — but not where the knobs live
+that turn them on. [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] says that a controller
 configures a Multi-AP network — but not what software on the AP receives that configuration.
 [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] opens the
 chip and stops at the driver's north edge.
@@ -416,7 +416,7 @@ worth knowing, because they are how netifd, LuCI, usteer, DAWN and cloud agents 
 
 Two consequences follow from that table and they are both interview-grade:
 
-- **Steering in OpenWrt is not in the kernel.** [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] describes
+- **Steering in OpenWrt is not in the kernel.** [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] describes
   BTM and neighbour reports as protocol mechanisms; here is where they are invoked — a user-space daemon
   (`usteer`, or `DAWN` for a distributed variant) calls `bss_transition_request` on the hostapd object for the
   interface the client is currently on. The decision function, the hysteresis, and the ping-pong suppression all
@@ -596,7 +596,7 @@ The knobs, and what they really do:
 | SQM / CAKE | Package | Shaping. Requires software offload at most — hardware offload defeats it |
 
 That last row is the practical rule: **you cannot have hardware flow offload and QoS at the same time.** Which is
-also, in a nutshell, why [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] keeps finding that the
+also, in a nutshell, why [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] keeps finding that the
 last hop of a latency budget is spent in a place the network stack cannot see.
 
 ---
@@ -645,7 +645,7 @@ flowchart LR
 | 802.11s mesh | Yes (`mode 'mesh'`, `mesh_id`), with `mesh11sd` for managed auto-configuration | Layer-2 mesh; not the same as a Multi-AP backhaul |
 | batman-adv | Yes, as a package; B.A.T.M.A.N. advanced is a layer-2 mesh routing protocol often run over 802.11s or over ad-hoc | Good for community mesh; not what an operator means by "mesh Wi-Fi" |
 | WDS / 4-address | Yes | Classic repeater link |
-| EasyMesh / Multi-AP controller | **Not in a default OpenWrt image.** prplMesh (the prpl reference) or a vendor/operator stack provides it | See [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] and [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] |
+| EasyMesh / Multi-AP controller | **Not in a default OpenWrt image.** prplMesh (the prpl reference) or a vendor/operator stack provides it | See [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] and [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] |
 | Cloud management | Not built in; added by TIP OpenWiFi's uCentral agent, OpenSync, or a vendor agent | Section 14 |
 
 The honest summary: **OpenWrt gives you all the per-AP mechanisms and none of the network-level policy.** That is
@@ -748,7 +748,7 @@ OpenSync" exists: OpenSync supplies the cloud-facing data model that OpenWrt del
 
 ### 13.3 prplOS, prplMesh and RDK-B
 
-Covered in [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]: prpl's reference implementation of the Multi-AP
+Covered in [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]]: prpl's reference implementation of the Multi-AP
 specification, and RDK-B as the cable operators' broadband stack. Position them as *the operator's answer to the same
 question OpenWrt answers for the hobbyist*: who owns the device's configuration model.
 
@@ -842,7 +842,7 @@ Six honest limitations, because an interviewer who has run a network will ask:
 | Works after reboot, breaks after reload | The diff path in netifd or hostapd | `wifi down && wifi up` instead of `wifi reload`, then compare |
 | One radio works, the other does not | Board data, MAC, or the `path` in UCI | Compare `wifi-device` `path` values against `/sys/class/ieee80211/*/device` |
 
-The method behind that table is the same one used in [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]]: **walk the boundaries in order, and at each boundary ask which of the two sides is telling you the truth.** Config → ubus → hostapd → nl80211 → driver → air.
+The method behind that table is the same one used in [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]]: **walk the boundaries in order, and at each boundary ask which of the two sides is telling you the truth.** Config → ubus → hostapd → nl80211 → driver → air.
 
 ---
 
@@ -919,25 +919,25 @@ The method behind that table is the same one used in [[02-7 WLAN - Wi-Fi EasyMes
 
 ## Related
 
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the ecosystem half of this story: certification, the Multi-AP
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — the ecosystem half of this story: certification, the Multi-AP
   specification, prplMesh and prplOS as the operator's answer to the same configuration question
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the multi-AP control plane that OpenWrt
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the multi-AP control plane that OpenWrt
   does not provide by default, and what a controller can observe
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the protocol mechanisms that section 6's ubus methods
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — the protocol mechanisms that section 6's ubus methods
   (`bss_transition_request`, `bss_mgmt_enable`) actually invoke
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the 802.11 state machines hostapd owns on
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — the 802.11 state machines hostapd owns on
   OpenWrt's behalf
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the
   other side of the nl80211 boundary: what the driver and its firmware do with what hostapd asks for
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — the packet path in full, including the offload planes
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — the packet path in full, including the offload planes
   that section 9 of this note can only switch on or off
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — why
   bypassing AQL with WED changes the fairness behaviour of the box
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the requirement that makes the
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the requirement that makes the
   hardware-offload-versus-observability trade in section 9 a real engineering decision rather than a benchmark
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced each feature whose support status in
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation introduced each feature whose support status in
   section 15 is uneven
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — TWT on an OpenWrt AP, and what has to be configured for it
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — TWT on an OpenWrt AP, and what has to be configured for it
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — the embedded-Linux substrate:
   boot chain, flash partitions and the device tree that section 10's board data depends on
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the layering argument

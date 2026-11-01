@@ -963,7 +963,7 @@ Anything not listed here and not independently confirmed is marked `VERIFY` rath
 - [[01-8 5G NR - OpenAirInterface - Architecture of an Open-Source NR Stack]] — the mechanism as data structures: HARQ as available and retransmission `NR_list_t` pools, the RV cycling table, and the k1/k2 floors that decide whether a UE can attach at all
 
 - [[01-2 5G NR RAN Layer 2 Protocol Stack]] — the layer that owns HARQ, and where BSR, LCP and RLC ARQ meet it
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the same question asked of a contended medium: what happens to a retransmission scheme when the retry budget is a deadline rather than a count, and why Wi-Fi has to schedule around the air instead of around a slot
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the same question asked of a contended medium: what happens to a retransmission scheme when the retry budget is a deadline rather than a count, and why Wi-Fi has to schedule around the air instead of around a slot
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — HARQ as one of the
   four resources the DU scheduler allocates, and the per-slot pipeline this note's state machines sit inside
 - [[01-5 NR Random Access - UE RACH Procedure, Signalling and Tuning]] — the one place in NR where a

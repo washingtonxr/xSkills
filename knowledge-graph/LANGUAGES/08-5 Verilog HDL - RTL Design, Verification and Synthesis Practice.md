@@ -27,7 +27,7 @@ Verilog is the language in which the baseband finally becomes gates. Everything 
 
 The thesis: **Verilog is not a programming language with parallel extensions; it is a hardware description whose simulation semantics are defined by an event-driven scheduler and whose synthesis semantics are defined by a small synthesizable subset.** Almost every RTL bug is a disagreement between those two readings of the same file.
 
-Companion notes: [[08-1 Programming Languages Toolchain and Performance Engineering]] (toolchain and performance method), [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] (HDL Coder as one producer of this code), [[07-1 RISC-V for Communication Infrastructure]] (the ISA that the cores are built from), [[01-1 5G-Advanced and 6G Radio Access]] (the PHY functions being implemented), [[02-1 WLAN - Wi-Fi Generations Evolution]] (the WLAN PHY variants).
+Companion notes: [[08-1 Programming Languages Toolchain and Performance Engineering]] (toolchain and performance method), [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] (HDL Coder as one producer of this code), [[07-1 RISC-V for Communication Infrastructure]] (the ISA that the cores are built from), [[01-1 5G-Advanced and 6G Radio Access]] (the PHY functions being implemented), [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] (the WLAN PHY variants).
 
 ---
 
@@ -479,7 +479,7 @@ Two Verilog-specific fixed-point traps worth memorising: a **part-select of a si
 - [[08-4 MATLAB and Simulink - Programming, Modelling and Code Generation]] — HDL Coder as a producer of this RTL, and fixed-point as the contract
 - [[07-1 RISC-V for Communication Infrastructure]] — cores implemented in this language family; baseband accelerator integration
 - [[01-1 5G-Advanced and 6G Radio Access]] — PHY functions the RTL implements
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — WLAN PHY variants and their implementation cost
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — WLAN PHY variants and their implementation cost
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — the software side of the same hardware boundary
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the bit-true C model the testbench compares against
 

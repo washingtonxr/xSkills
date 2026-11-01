@@ -1,6 +1,9 @@
 ---
-title: WLAN - Wi-Fi Generations Evolution (Wi-Fi 4 to Wi-Fi 8 and Beyond)
+title: "WLAN — Wi-Fi Generations Evolution: Wi-Fi 4 to Wi-Fi 8 and Beyond"
 domain: wlan
+type: domain-note
+group: "02"
+series: "02-1"
 tags:
   - wlan
   - ieee-802-11
@@ -31,7 +34,7 @@ last-updated: 2026-10-25
 
 # WLAN — Wi-Fi Generations Evolution (Wi-Fi 4 → Wi-Fi 8 → Wi-Fi 9)
 
-Full generational reference. Ecosystem, certification and mesh software live in [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+Full generational reference. Ecosystem, certification and mesh software live in [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]].
 
 ## 0. Generation map
 
@@ -428,7 +431,7 @@ flowchart LR
     L1 --> L2 --> L3 --> L4 --> L5
 ```
 
-Read the chain as an argument about *what the scheduler is allowed to know and control*: by Wi-Fi 8 it must know and control the airtime of neighbouring BSSs, which is why the feature depends on an inter-AP control channel and on the ecosystem software covered in [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]].
+Read the chain as an argument about *what the scheduler is allowed to know and control*: by Wi-Fi 8 it must know and control the airtime of neighbouring BSSs, which is why the feature depends on an inter-AP control channel and on the ecosystem software covered in [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]].
 
 ### 6.3 The efficiency-mechanism chain
 `Frame aggregation (Wi-Fi 4: amortise MAC overhead) → wider channels + higher QAM (Wi-Fi 5: more bits per Hz) → OFDMA + spatial reuse (Wi-Fi 6: share airtime, reduce deferral) → MRU + puncturing (Wi-Fi 7: stop wasting spectrum) → multi-AP coordination (Wi-Fi 8: stop wasting airtime between APs)`
@@ -502,6 +505,75 @@ AI features must demonstrate benefits that justify their **computational complex
 
 ---
 
+## 8. Standards, certification and applications by generation
+
+Three clocks run in parallel and they are routinely confused: **the IEEE publishes the amendment, the Wi-Fi
+Alliance opens the certification programme, and the market adopts the application.** The first two have been out
+of step by years on every generation since Wi-Fi 6.
+
+```mermaid
+timeline
+    title IEEE publication, WFA programme and the application each generation unlocked
+    1997 : 802.11 prime · 2 Mbps · a cable replacement for Ethernet
+    1999 : 802.11a and 802.11b · 54 and 11 Mbps
+    2003 : 802.11g · 54 Mbps in 2.4 GHz
+    2009 : 802.11n · Wi-Fi 4 · MIMO and aggregation
+    2013 : 802.11ac · Wi-Fi 5 · 160 MHz and DL MU-MIMO
+    2019 : Wi-Fi CERTIFIED 6 opens two years before the IEEE publishes ax
+    2021 : 802.11ax published 19 May · Wi-Fi 6E opens January
+    2024 : Wi-Fi CERTIFIED 7 opens 8 January
+    2025 : 802.11be-2024 published 22 July
+    2028 : 802.11bn final approval projected March to May
+```
+
+### 8.1 What each generation was actually for
+
+| Generation | IEEE amendment | WFA programme | The application that paid for it | What it enabled that the previous generation could not |
+| --- | --- | --- | --- | --- |
+| **Wi-Fi 4** | 802.11n, 2009 | Wi-Fi CERTIFIED n | Replacing the Ethernet cable in the home; multi-room SD/HD video | A wireless link that was finally *faster than the WAN*, so the bottleneck moved off the LAN |
+| **Wi-Fi 5** | 802.11ac, 2013 | Wi-Fi CERTIFIED ac | 4K video, wireless "gigabit" as a retail claim, dense apartment blocks | 160 MHz and DL MU-MIMO: one AP serving several clients in the same time-frequency resource |
+| **Wi-Fi 6** | 802.11ax, published 19 May 2021 | Wi-Fi CERTIFIED 6 (2019) | Stadiums, airports, lecture halls, dense enterprise, IoT fleets | OFDMA and BSS Color made *many simultaneous small-packet clients* viable rather than merely possible |
+| **Wi-Fi 6E** | 802.11ax in 6 GHz | Wi-Fi CERTIFIED 6E (January 2021) | AR/VR, high-density venues, clean-spectrum enterprise | 1200 MHz of greenfield with **no legacy devices allowed** — WPA3 and PMF are mandatory on the band |
+| **Wi-Fi 7** | 802.11be-2024 | Wi-Fi CERTIFIED 7 (8 January 2024) | Multi-user AR/VR/XR, immersive 3D training, cloud gaming, hybrid work, industrial IoT, automotive; **EPCS** for emergency services | MLO and r-TWT: bounded latency as a *product claim*, not just throughput |
+| **Wi-Fi 8** | 802.11bn, ~2028 | Not open; interoperability events 2026 | Industrial automation, mobile robotics, healthcare, smart factories | Multi-AP coordination: the worst case becomes designable rather than hoped for |
+| **Wi-Fi 9** | post-802.11bn | — | Embodied and edge AI, deterministic control, mmWave and light | Uplink-heavy AI traffic and determinism as baseline requirements |
+
+### 8.2 The rate curve, drawn honestly
+
+```mermaid
+xychart-beta
+    title "Peak PHY rate by generation — IEEE ceiling in Gbps"
+    x-axis ["Wi-Fi 4", "Wi-Fi 5", "Wi-Fi 6", "Wi-Fi 7", "Wi-Fi 8"]
+    y-axis "Gbps" 0 --> 25
+    bar [0.6, 6.93, 9.6, 23.06, 23.06]
+```
+
+Two things that diagram is designed to make you say out loud:
+
+- **Wi-Fi 5 to Wi-Fi 6 was only a 1.39× increase in peak rate** even though the symbol duration grew 3.78×. Wi-Fi 6
+  bought *efficiency*, not speed, and the flat curve says so.
+- **Wi-Fi 7 to Wi-Fi 8 is flat.** Wi-Fi 8 keeps Wi-Fi 7's bands, widths and modulation. Every gain has to come from
+  scheduling and coordination, which is exactly why it is a reliability release.
+
+### 8.3 Standards → certification → deployment
+
+```mermaid
+flowchart LR
+    IEEE["IEEE 802.11<br/>publishes the amendment<br/>defines mechanisms"]
+    WFA["Wi-Fi Alliance<br/>writes the test plan<br/>opens the certification programme"]
+    VEN["Vendor silicon and product<br/>may ship 'ready' before either completes"]
+    APP["Application<br/>AR/VR · industrial · IoT · venue"]
+    IEEE --> WFA
+    WFA --> VEN
+    VEN --> APP
+    IEEE -.->|"pre-standard silicon rides<br/>a stable draft"| VEN
+```
+
+The dotted arrow is the one that causes the trouble: **pre-standard hardware is real and is sold**, and it cannot
+be guaranteed to interoperate with certified products because features may still be trimmed in later drafts.
+
+---
+
 ## Anchors — verified facts
 
 **Wi-Fi 4 (802.11n, 2009)**: up to 4 spatial streams, 40 MHz, 64-QAM, MCS 0–76, short GI 400 ns (+~11%), A-MPDU max 64 KB / 64 subframes, compressed BlockAck 64-bit bitmap, STBC, SMPS, HT-MF vs HT-GF, **600 Mbps** ceiling; 72 Mbps single-stream 20 MHz short GI.
@@ -517,22 +589,69 @@ AI features must demonstrate benefits that justify their **computational complex
 
 - [[02-14 WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7]] — the substrate this note assumes: why the MAC is contention-based, the numerology and the rate arithmetic that explain these generation numbers, and the Wi-Fi 7 PHY and MLO detail behind §4
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what each generation cost in silicon: which block of the baseband had to grow, why Wi-Fi 8 raises the LDPC codeword instead of the peak rate, and what the first Wi-Fi 8 platforms actually claim
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what each generation's features cost in the packet path: where A-MPDU, BA, MLO reordering and coordination land in the host/device split
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — which generation introduced which part of the join sequence: 11i, 11w, 11r/k/v, 11ai, 11ax 6 GHz discovery, 11be multi-link setup
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the determinism line through the same generations: what each one did for the clock, for bounded latency, for reliability and for resource management, and why Wi-Fi 8 finally wrote the target down as a number
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the same generations read through energy instead of rate: how each one attacked a different term of the power equation
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — what each generation's features cost in the packet path: where A-MPDU, BA, MLO reordering and coordination land in the host/device split
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — which generation introduced which part of the join sequence: 11i, 11w, 11r/k/v, 11ai, 11ax 6 GHz discovery, 11be multi-link setup
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the determinism line through the same generations: what each one did for the clock, for bounded latency, for reliability and for resource management, and why Wi-Fi 8 finally wrote the target down as a number
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what each generation's scheduling features actually do: RUs and MRU, the trigger frame, the EHT tone-plan revision, MLO's upper/lower MAC split, TID-to-link mapping, and r-TWT
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — what those features are for once there are many APs: 11k/v/r as one transition system, 11be MLD-level BTM and link reconfiguration, 11bn SMD as the first standard answer to client-controlled roaming
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management plane that has to keep up with each generation: releases v1.0→v6.0, and how Wi-Fi 7 MLO changes what a controller configures and steers
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — what those features are for once there are many APs: 11k/v/r as one transition system, 11be MLD-level BTM and link reconfiguration, 11bn SMD as the first standard answer to client-controlled roaming
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the management plane that has to keep up with each generation: releases v1.0→v6.0, and how Wi-Fi 7 MLO changes what a controller configures and steers
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]]
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
 - [[06-2 Agent Systems and Edge Orchestration]]
 - [[01-3 AI-ML for RAN and O-RAN RIC]]
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — which generation's features become configuration knobs and package versions, and the platform whose release branch decides what you can actually run
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — which generation's features become configuration knobs and package versions, and the platform whose release branch decides what you can actually run
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the contrast: an implementation of 802.11a/g and n whose PHY and low MAC are Verilog, so a generation's mechanics can be rewritten rather than configured
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — which generation's mechanisms are available for a latency or reliability target, from EDCA in 802.11e to r-TWT and MLO in 802.11be to preemption in 802.11bn
+
+---
+
+## References
+
+**Primary — IEEE**
+
+1. IEEE 802.11 Working Group. *Overview of the IEEE 802.11 Working Group* and the working-group home page —
+   authoritative publication dates for every amendment and the current ballot status of each task group.
+   <https://www.ieee802.org/11/overview.html> · <https://ieee802.org/11/>
+   - The source for: 802.11ax-2021 published 19 May 2021; 802.11be-2024 published 22 July 2025; 802.11bf-2025
+     published 26 September 2025; 802.11bk-2025 published 5 September 2025; 802.11bh-2024 published 3 June 2025;
+     802.11-2024 published 28 April 2025.
+2. IEEE Std 802.11be-2024. *Enhancements for Extremely High Throughput (EHT)*. Board approval 26 September 2024,
+   published 22 July 2025. ISBN 979-8-8557-1956-7.
+   - The PAR scope is worth reading directly: at least one mode capable of **at least 30 Gbit/s** at the MAC SAP,
+     and at least one mode capable of **improved worst-case latency and jitter**.
+3. P802.11bn PAR — the UHR amendment's own statement of its targets: **25% throughput increase at a given SINR,
+   25% reduction in the 95th-percentile latency, 25% reduction in MPDU loss**, including during BSS transitions.
+4. IEEE Std 802.11n-2009, 802.11ac-2013, 802.11ax-2021 — the HT, VHT and HE amendments behind Wi-Fi 4, 5 and 6.
+
+**Primary — Wi-Fi Alliance**
+
+5. Wi-Fi Alliance. *Wi-Fi CERTIFIED 7* — programme announcement, 8 January 2024.
+   <https://www.wi-fi.org/news-events/newsroom/wi-fi-alliance-introduces-wi-fi-certified-7>
+   - The authoritative feature list (320 MHz, MLO, 4K QAM, 512 compressed BlockAck, MRU, triggered uplink access,
+     EPCS) and the named application set: multi-user AR/VR/XR, immersive 3-D training, electronic gaming, hybrid
+     work, industrial IoT and automotive.
+
+**Secondary — analysis and cross-checks**
+
+6. Khorov, E., Kiryanov, A., Lyakhov, A., and Bianchi, G. *A Tutorial on IEEE 802.11ax High Efficiency WLANs*.
+   IEEE Communications Surveys & Tutorials 21(1), 2019.
+   - The analysis behind the OFDMA and spatial-reuse claims in §3, including the cost of an uplink OFDMA round.
+7. Geraci, G., et al. *Wi-Fi: Twenty-Five Years and Counting*. Proceedings of the IEEE 113(11), 2025 ·
+   arXiv:2507.09613 — the independent timeline and generation framing used throughout.
+8. Karamyshev, A., Levitsky, D., and Khorov, E. *Towards Wi-Fi 9: Vision, Requirements, and Candidate
+   Technologies*. Problems of Information Transmission 61, pp. 383–406 (2025). DOI 10.1134/S0032946025040040.
+   - The source for §7: the determinism-first thesis, the AI-native PHY and MAC candidates, and the six things
+     standardisation must add.
+9. Henry, J., Gupta, B., Hart, B., and Smith, M. *Wi-Fi 7 In Depth*. Cisco Press, 2024.
+   - The four authors are 802.11 voters; the working group links the book as its detailed guide to 802.11be.
+10. Cheng, G., Qian, Z., Jiang, Y., Yang, Z., and Rajamanickam, T. *Wi-Fi 7: Principles, Technology, and
+    Applications*. Springer, 2025. DOI 10.1007/978-981-97-9026-5 — the device-vendor view, including how a
+    generation becomes a product and how it is tested.
+11. Gast, M. S. *802.11 Wireless Networks: The Definitive Guide*, 2nd ed., O'Reilly, 2005.
+    - Still the clearest published account of the pre-11n generations and of why 802.11's MAC differs from 802.3's.
 
 ---
 

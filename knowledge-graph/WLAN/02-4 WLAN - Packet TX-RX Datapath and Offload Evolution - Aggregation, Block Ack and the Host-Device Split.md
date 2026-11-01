@@ -1,5 +1,5 @@
 ---
-title: "WLAN — Packet TX/RX Datapath and Offload Evolution"
+title: "WLAN — Packet TX/RX Datapath and Offload Evolution: Aggregation, Block Ack and the Host-Device Split"
 type: domain-note
 domain: wlan
 group: "02"
@@ -42,8 +42,8 @@ has been progressively shortened by moving work into hardware and firmware. The 
 **every generation of Wi-Fi has not made the packet path shorter — it has made the per-packet work
 in the host smaller and the per-aggregate work in the device larger.**
 
-Related: [[02-1 WLAN - Wi-Fi Generations Evolution]] for what each generation added;
-[[02-2 WLAN - Power Saving Mechanisms and Evolution]] for why the path sometimes stops;
+Related: [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] for what each generation added;
+[[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] for why the path sometimes stops;
 [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] for the Linux
 networking substrate (NAPI, DMA rings, `ndo_start_xmit`);
 [[05-1 DPDK User Plane and 5G UPF]] for the kernel-bypass counterpart on the wired side.
@@ -610,7 +610,7 @@ all; they add a **coordinator** that decides *which AP transmits when*. In datap
 plane-5 (control-plane) offload with a much tighter latency budget than roaming ever had: a
 coordination decision that takes 100 ms is useless when a TXOP is 5 ms. Expect the interesting
 engineering to be in the scheduler's interface to the MAC, not in the DMA path. See
-[[02-1 WLAN - Wi-Fi Generations Evolution]] for the feature set and [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]]
+[[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] for the feature set and [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]]
 for how coordination gets standardised and certified.
 
 *One terminology trap:* in 3GPP documents, **"Wi-Fi offload" means something completely
@@ -622,7 +622,7 @@ this wrong is a credibility loss out of proportion to its difficulty; see
 ## 10. Where power save interrupts the path
 
 The datapath is not always on, and the AP's TX path has to handle a station that is asleep. In
-short (the full treatment is in [[02-2 WLAN - Power Saving Mechanisms and Evolution]]):
+short (the full treatment is in [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]]):
 
 - The AP **buffers** frames per station and advertises them in the **TIM** bitmap in the beacon.
 - A dozing station wakes, reads the TIM, and either sends **PS-Poll** (one frame per poll) or, with
@@ -714,14 +714,14 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 ## Related
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the silicon and firmware underneath the offload planes this note catalogues: WMI and HTT, copy engines and SRNG rings, who owns reordering and rate control, and a second SoC-side accelerator that makes packets disappear from the host
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — the features this datapath exists to carry
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — where a deadline is actually spent: hardware timestamping, queueing and the offload boundaries that decide whether a bound is observable at all, and the deadline-aware retry policy this datapath has to honour
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — the features this datapath exists to carry
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — where a deadline is actually spent: hardware timestamping, queueing and the offload boundaries that decide whether a bound is observable at all, and the deadline-aware retry policy this datapath has to honour
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what sits at the bottom of the TX path this note traces: EDCA queueing, FQ-CoDel and AQL inside `mac80211`, the three places a Wi-Fi queue hides, and why the per-TXOP decision lands in firmware
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — where the datapath stops, and how the AP buffers
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification of aggregation/QoS features, mesh forwarding, open AP software stacks
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what happens before the first packet: the join sequence, and where the 4-way handshake sits when it is offloaded to firmware
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — why the datapath restarts on every roam: a new PN space, new Block Ack agreements, an FDB entry that has to move, and flow-offload state that has to be reprogrammed at the target AP
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management plane that never touches this datapath, and the one place they meet: the four-address wireless backhaul and the per-bSTA VLAN it implies
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — where the datapath stops, and how the AP buffers
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — certification of aggregation/QoS features, mesh forwarding, open AP software stacks
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what happens before the first packet: the join sequence, and where the 4-way handshake sits when it is offloaded to firmware
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — why the datapath restarts on every roam: a new PN space, new Block Ack agreements, an FDB entry that has to move, and flow-offload state that has to be reprogrammed at the target AP
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the management plane that never touches this datapath, and the one place they meet: the four-address wireless backhaul and the per-bSTA VLAN it implies
 - [[04-2 Linux Embedded Development - Drivers, Applications and Core Subsystems]] — NAPI, DMA rings, device model, the kernel RX path in isolation
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the generic form of this note's interrupt path: NAPI as the coalesce-then-poll pattern, MSI-X per-queue affinity for RSS, and the coalescing versus latency trade that decides what the Wi-Fi interrupt costs
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — MAC/PHY split, FAPI, why the datapath is layered the way it is
@@ -747,7 +747,7 @@ stack. Whichever boundary loses or delays them is the layer. Everything else is 
 14. FD.io. *VPP hostap plugin* documentation — userspace 802.11 data plane over hostap's driver wrapper. <https://wiki.fd.io/view/VPP>
 15. "MAC Level Throughput Comparison: 802.11ax vs. 802.11ac." arXiv:1803.10189 — the analytical treatment of A-MPDU size, BA window, and why the 256-MPDU window needs extended BA.
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the offload planes as switches you can throw on a real box, and what each one costs you in observability
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the offload planes as switches you can throw on a real box, and what each one costs you in observability
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a data path visible end to end including the DMA and interrupt boundaries this note stops at, because the low MAC is Verilog
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the latency consequences of each offload plane, and why a fast path that bypasses mac80211 also bypasses the queue management that bounds latency

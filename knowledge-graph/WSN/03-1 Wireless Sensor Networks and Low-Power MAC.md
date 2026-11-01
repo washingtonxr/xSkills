@@ -139,7 +139,7 @@ flowchart LR
 ```
 - Relevant because both 802.11 "next-gen" discussions and industrial sensing are shifting from "how many bits" to "how stale is the state".
 - Scheduling for AoI changes policy: it favours fresh, small, evenly-spaced updates over batched large transfers, and it penalises queues.
-- See [[02-1 WLAN - Wi-Fi Generations Evolution]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
+- See [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — AoI scheduling is an explicit theme in post-802.11bn scope discussions.
 
 ## 7. The embedded-system hard question
 
@@ -168,8 +168,8 @@ See [[04-1 Embedded Systems RTOS and Hardware Interfaces]].
 
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]]
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]]
-- [[02-1 WLAN - Wi-Fi Generations Evolution]]
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the Wi-Fi answer to the same duty-cycling problem: TWT, TIM segmentation, wake-up radio, ambient power
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]]
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the Wi-Fi answer to the same duty-cycling problem: TWT, TIM segmentation, wake-up radio, ambient power
 
 ---
 

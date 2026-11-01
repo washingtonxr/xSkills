@@ -1,5 +1,5 @@
 ---
-title: "WLAN — Multi-AP Roaming, Healing and Steering"
+title: "WLAN — Multi-AP Roaming, Healing and Steering: 802.11k/v/r, BTM and Self-Healing"
 type: domain-note
 domain: wlan
 group: "02"
@@ -51,7 +51,7 @@ eventually disconnect — but it cannot move a client. Every steering mechanism 
 changing what the client's own algorithm will decide, and every healing mechanism that involves a
 client is really a steering mechanism with a different trigger.
 
-[[02-5 WLAN - STA-AP Discovery, Authentication and Association]] covers the join sequence and the FT
+[[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] covers the join sequence and the FT
 key hierarchy in isolation. This note is about what happens when there are *many* APs: what the
 station sees, what the network knows, who decides, what the decision costs, and what breaks when a
 node dies at the wrong moment.
@@ -215,7 +215,7 @@ Two practical points that separate people who have run this from people who have
 6 GHz changes the arithmetic: 59 overlapping 20 MHz channels, no wildcard probe requests, and
 scanning is steered to the **15 preferred scanning channels (PSCs)**. A 6 GHz-capable client that
 does not know about PSCs scans 59 channels and roams badly. See
-[[02-5 WLAN - STA-AP Discovery, Authentication and Association]] §2.3.
+[[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] §2.3.
 
 ### 3.3 The transition — one sequence that names every frame
 
@@ -342,7 +342,7 @@ invisible until it is not.
 - **The bridge does not move by itself.** A reassociation updates the AP's station table, but a
   bridged AP still has to learn the client's MAC on the new port and age it out on the old one.
   Multicast/broadcast forwarding entries and any flow-offload state (see
-  [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]]) must be reprogrammed at the target.
+  [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]]) must be reprogrammed at the target.
 - **The IP layer sees nothing.** Same subnet means the same IP, same ARP cache, same TCP connection.
   This is the entire value of an ESS: L2 mobility with L3 transparency. It also means a roam that is
   200 ms on the air shows up as a TCP retransmit and a jitter spike, not as a disconnect.
@@ -470,7 +470,7 @@ The message names are worth memorising because they map one-to-one onto the desi
 `Client Association Control Request`, `Steering Completed`, `Client Disassociation Stats`,
 `Backhaul Steering Request`. They ride IEEE 1905.1 CMDUs in the Multi-AP message-type range (the
 policy message is `0x8003`, backhaul steering `0x8019`, client disassociation stats `0x8022`), which
-is exactly the boundary between [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] and this note: 1905.1
+is exactly the boundary between [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] and this note: 1905.1
 carries the policy, 802.11 carries the action.
 
 ### 4.5 Assoc control — the actuator of last resort
@@ -855,24 +855,25 @@ ride an IEEE 1905.1 control plane.
 
 ## Related
 
+- [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] — the network-side complement to this note: the steering score function worked numerically, the channel, power and admission loops a BTM request comes out of, and EasyMesh versus 802.11bn MAPC as two different meanings of "multi-AP"
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — what a transition costs below the management plane: peer and key state held inside firmware, and what SMD's connect-before-disconnect demands of the driver's station state machine
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the join sequence this note
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the transition as a hole in any latency bound: a roam measured in hundreds of milliseconds against a 1 ms cycle, and SMD as Wi-Fi 8's first standard answer
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — the join sequence this note
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the transition as a hole in any latency bound: a roam measured in hundreds of milliseconds against a 1 ms cycle, and SMD as Wi-Fi 8's first standard answer
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what steering is trying to influence: the per-station airtime accounting and the fact that the roam decision still belongs to the client's own access process
   assumes: the MLME states, the PMK→PMK-R0→PMK-R1→PTK chain, and the FT exchange described in
   isolation rather than at ESS scale
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation contributed which mechanism:
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation contributed which mechanism:
   11k/v/r for transition, 11ai for FILS, 11ax for 6 GHz discovery, 11be for MLD-level BTM and link
   reconfiguration, 11bn for SMD and MAPC
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the control plane that
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the control plane that
   carries these steering messages: 1905.1 CMDUs, the Client Steering Request/BTM Report/Association
   Control exchange with its real field semantics, plus the tuning knobs and the debugging method
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — the controller/agent architecture the steering
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — the controller/agent architecture the steering
   messages ride on, and what certification actually requires
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what has to be reprogrammed at the
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — what has to be reprogrammed at the
   target AP before the first packet after a roam can be delivered: keys, BA sessions, FDB entries,
   flow-offload state
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — why a power-save client misses the frames
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — why a power-save client misses the frames
   that would have triggered its roam, and how TWT agreements constrain the target AP's scheduling
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — the
   same controller/agent split as an architectural pattern: policy at the top, mechanism at the
@@ -961,7 +962,7 @@ ride an IEEE 1905.1 control plane.
     Addison-Wesley, 2003. ISBN 978-0-321-13620-6. — The key hierarchy that PMKSA caching, OKC and FT
     each cut into at a different depth.
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — where 802.11k and 802.11v are actually invoked: hostapd's `bss_mgmt_enable` and `bss_transition_request` ubus methods, and the user-space daemon that decides when
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — where 802.11k and 802.11v are actually invoked: hostapd's `bss_mgmt_enable` and `bss_transition_request` ubus methods, and the user-space daemon that decides when
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the roaming latency budget — scan, authentication and reassociation — and why roaming is usually the real reliability failure rather than a radio failure
 

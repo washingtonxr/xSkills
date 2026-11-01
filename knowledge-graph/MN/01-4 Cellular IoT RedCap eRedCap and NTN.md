@@ -153,7 +153,7 @@ A defensible minimal-change answer:
 - [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — where the long NTN round trip finally breaks HARQ: 32 processes, `K_offset`, and per-process feedback disabling pushing reliability back onto RLC
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — where these constraints bite in the scheduler: a RedCap BWP caps the PRBs allocatable per slot, and NTN runs 32 processes with per-process feedback disabling
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]]
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the WLAN-side parallel: LP-WUS vs 802.11ba wake-up radio, eDRX vs TWT, ambient IoT vs 802.11bp AMP
 - [[06-2 Agent Systems and Edge Orchestration]]
 
 ---

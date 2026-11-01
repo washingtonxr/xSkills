@@ -719,7 +719,7 @@ sudo ./phc2sys -w -m -s ens2f0 -R 8 -f configs/c3.cfg
 The part that actually fails in a lab, and always in this order: **PTP lock, then M-plane, then C/U-plane.**
 An O-RU that has not achieved PTP lock will not transmit; an O-RU that is misconfigured by the M-plane will
 transmit at the wrong gain or on the wrong beam; only after both does the C/U-plane matter. This mirrors the
-lesson in [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] §11.1: in a split RAN the clock is
+lesson in [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] §11.1: in a split RAN the clock is
 the first dependency, not a detail.
 
 ## 15. The OAI nrUE

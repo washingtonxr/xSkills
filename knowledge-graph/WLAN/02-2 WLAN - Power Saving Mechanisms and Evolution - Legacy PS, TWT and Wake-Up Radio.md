@@ -1,5 +1,5 @@
 ---
-title: "WLAN — Power Saving Mechanisms and Evolution"
+title: "WLAN — Power Saving Mechanisms and Evolution: Legacy PS, TWT and Wake-Up Radio"
 type: domain-note
 domain: wlan
 group: "02"
@@ -30,7 +30,7 @@ last-updated: 2026-10-25
 
 # WLAN — Power Saving Mechanisms and Evolution
 
-Companion to [[02-1 WLAN - Wi-Fi Generations Evolution]]. That note asks *how fast and how reliably*; this one asks **at what energy cost**, and treats power saving as its own evolutionary line rather than a footnote under each generation.
+Companion to [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]]. That note asks *how fast and how reliably*; this one asks **at what energy cost**, and treats power saving as its own evolutionary line rather than a footnote under each generation.
 
 The through-line: every generation has attacked a *different* term of the same energy equation, and the ones that failed failed because they optimised the wrong term.
 
@@ -471,22 +471,66 @@ Every scheduled wake needs a **wake margin** covering sleep-clock drift. A 20 pp
 ## Related
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — where the sleep mechanisms this note describes are implemented: firmware-managed power states on a Q6 processor, WoW and packet filters, and the firmware lifecycle a suspend has to survive
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — the throughput/reliability line; this note is the energy line through the same generations
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — where the service period this note invented went next: TWT's wake windows repurposed as r-TWT's protected windows, and the same agreement read as a latency tool instead of a sleep tool
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — the throughput/reliability line; this note is the energy line through the same generations
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — what WFA actually certifies (WMM-PS, Wi-Fi CERTIFIED 6 Release 2 power features)
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — where the datapath stops: AP per-STA buffering, TIM/PS-Poll/U-APSD trigger, and why an offload engine that bypasses the per-STA queue cannot honour power save
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — where the service period this note invented went next: TWT's wake windows repurposed as r-TWT's protected windows, and the same agreement read as a latency tool instead of a sleep tool
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the consumer of everything this note negotiates: TWT as schedulable state, the r-TWT access rules, why a dozing station is not schedulable, and the service period as a scheduled TXOP
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what association commits the AP to: the listen interval, the AID that indexes the TIM bitmap, and TWT agreements negotiated only after the station is associated
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — why a power-save client roams badly: it is asleep through the frames that would have triggered the decision, and a TWT agreement on the old AP does not travel with it
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the other side of the same problem: a controller steering on measurements of a client that is asleep, and TWT service periods published as anticipated channel usage
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what association commits the AP to: the listen interval, the AID that indexes the TIM bitmap, and TWT agreements negotiated only after the station is associated
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — why a power-save client roams badly: it is asleep through the frames that would have triggered the decision, and a TWT agreement on the old AP does not travel with it
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the other side of the same problem: a controller steering on measurements of a client that is asleep, and TWT service periods published as anticipated channel usage
 - [[03-1 Wireless Sensor Networks and Low-Power MAC]] — the non-Wi-Fi low-power MAC tradition: TSCH, duty cycling, AoI
 - [[01-4 Cellular IoT RedCap eRedCap and NTN]] — LP-WUS and eRedCap: the cellular answer to the same battery problem
 - [[04-1 Embedded Systems RTOS and Hardware Interfaces]] — sleep-clock accuracy, RTC domains, wake sources, DMA offload
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — how a power policy is layered: host policy vs firmware state machine vs RF capability
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — where the power-saving knobs live on a real AP, and what has to be configured before TWT does anything
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — where the power-saving knobs live on a real AP, and what has to be configured before TWT does anything
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the other side of the TWT argument: the same mechanism that saves power adds latency if the interval is long, and protects latency if the service period is restricted
+
+---
+
+## References
+
+**Primary — IEEE**
+
+1. IEEE Std 802.11-2024 — the base document (published 28 April 2025): clause 11 power management, PS-Poll and
+   the TIM/DTIM machinery, U-APSD, SMPS, BSS Max Idle, and the TWT agreement elements.
+2. IEEE Std 802.11ax-2021 — *Enhancements for High Efficiency*: broadcast TWT, TWT with trigger frames, and the
+   interaction between a service period and scheduled access.
+3. IEEE Std 802.11be-2024 — *Enhancements for Extremely High Throughput*: **r-TWT** restricted service periods and
+   their access rules.
+4. IEEE Std 802.11ah-2016 — Wi-Fi HaLow: TIM segmentation, page slicing, non-TIM STA with TWT, RAW via RPS,
+   bidirectional TXOP, relay limited to two hops, up to ~8191 AIDs.
+5. IEEE Std 802.11ba-2021 — *Wake-Up Radio Operation*, published 8 October 2021: the wake-up receiver duty cycle
+   that makes a primary radio worth switching off at all.
+6. P802.11bp — *Ambient Power Communications*. PAR approved March 2024; D1.0 initial WG ballot 15 October –
+   30 November 2026 (LB298); final 802.11 WG approval projected January 2028, SASB May 2028. Sub-1 GHz plus
+   2.4 GHz (`AC_BK`), RF energy harvesting, battery-free stations.
+7. IEEE Std 802.11bi — *Enhanced Service with Privacy Protection*, approved for publication 25 September 2026.
+   **Not** a wake-up-radio amendment; the two are routinely confused.
+
+**Primary — Wi-Fi Alliance**
+
+8. Wi-Fi CERTIFIED 6 Release 2 — the power features the Alliance actually certifies: broadcast TWT, extended
+   sleep and dynamic SMPS, alongside WMM-Power Save for the legacy mechanisms.
+
+**Secondary — measurement and critique**
+
+9. Pefkianakis, I., Li, Y., and Lu, S. *What is Wrong/Right with IEEE 802.11n Spatial Multiplexing Power Save
+   Feature?* ICNP 2011.
+   - The numbers behind the SMPS critique: ~2.5 W for a high-rate 802.11n receiver, up to 1.15 W instantaneous
+     SMPS saving, **up to 78.6% per-bit energy difference** from choosing the optimal chain configuration, and
+     MRES outperforming SMPS by up to 37%.
+10. Park, C. and Adnan, A. (2016) — idle listening exceeds transmission energy for low-to-moderate traffic IoT;
+    downclocking plus aggregation as the countermeasure.
+
+**Cross-checks**
+
+11. Khorov, E., et al. *A Tutorial on IEEE 802.11ax High Efficiency WLANs*. IEEE Communications Surveys &
+    Tutorials 21(1), 2019 — TWT in the context of the rest of 802.11ax.
+12. Geraci, G., et al. *Wi-Fi: Twenty-Five Years and Counting*. Proceedings of the IEEE 113(11), 2025 ·
+    arXiv:2507.09613 — the independent timeline for the power-saving mechanisms across generations.
 
 ---
 

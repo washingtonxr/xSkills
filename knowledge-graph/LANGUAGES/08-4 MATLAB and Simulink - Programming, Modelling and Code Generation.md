@@ -456,7 +456,7 @@ Verification levels, in increasing confidence: **MIL** (model in the loop, the m
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling method shared across languages
 - [[04-3 Embedded Software Architecture - Patterns, Layering and Wireless System Structure]] — where generated code lands in an embedded architecture
 - [[01-1 5G-Advanced and 6G Radio Access]] — the link-level algorithms these tools model
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — PHY feature set that the simulations must reproduce
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — PHY feature set that the simulations must reproduce
 - [[07-1 RISC-V for Communication Infrastructure]] — the hardware alternative to a fixed-point DSP/FPGA implementation
 
 ## References

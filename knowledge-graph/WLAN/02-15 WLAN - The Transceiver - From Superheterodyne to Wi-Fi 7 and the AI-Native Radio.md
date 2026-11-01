@@ -678,7 +678,7 @@ the PA.** A PA capable of 26 dBm is routinely run at 18 dBm because the antenna 
 
 ## 15. The radio as a sensor — 802.11bf changes the requirements
 
-IEEE 802.11bf-2024 (published September 2024) makes WLAN sensing a standardised function rather than a research
+IEEE 802.11bf-2025 (published 26 September 2025) makes WLAN sensing a standardised function rather than a research
 exploit. It defines sensing measurement instances, initiation and feedback frames, and both monostatic (one device)
 and bistatic (two devices) configurations.
 
@@ -930,7 +930,7 @@ coordination, and a PA that is still only 15% efficient.
   1–7.25 GHz, backward compatible with 2.4/5/6 GHz. The **ELR PPDU** is 20 MHz only, one spatial stream, BPSK and
   QPSK only, 1.67 and 3.33 Mbps, with RU-level repetition, two ELR-MARK symbols, and 3 dB power boosting on
   UHR-STF/UHR-LTF. Bandwidth, constellation and stream count are otherwise unchanged from 802.11be.
-- **802.11bf-2024** (published September 2024; PAR September 2020): defines WLAN sensing in 1–7.125 GHz and above
+- **802.11bf-2025** (board approval 28 May 2025, published 26 September 2025; PAR modification approved 21 March 2024): defines WLAN sensing in 1–7.125 GHz and above
   45 GHz, with sensing measurement instances, sensing initiation and feedback frames, and monostatic and bistatic
   configurations.
 - **Range resolution** c/(2B): 7.5 m at 20 MHz, 0.47 m at 320 MHz. Angular resolution is set by element count and
@@ -961,19 +961,19 @@ coordination, and a PA that is still only 15% efficient.
 - [[02-14 WLAN - Wi-Fi Fundamentals - History, Architecture, PHY, MAC and the Road to Wi-Fi 7]] — the waveform this
   radio has to produce: tone plans, the rate equation, the EHT PPDU field by field, and the generation history this
   note assumes
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — the same ladder told from the standard's side: what each amendment
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — the same ladder told from the standard's side: what each amendment
   promised, and what it cost in silicon
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the
   digital half: where the DPD engine, the calibration firmware and the CSI export actually live
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — what happens to a frame after the transceiver hands
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — what happens to a frame after the transceiver hands
   it over, and which of the five offload planes decides whether the host ever sees the CSI
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — why the SIFS and
   symbol budgets in §17 are the hard constraint on any AI in the radio
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the determinism requirement that made 802.11bn
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the determinism requirement that made 802.11bn
   a receiver-first generation
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — why a
   better radio does not fix a scheduling problem, and vice versa
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — the other half of the energy budget in §13: sleep, TWT and
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — the other half of the energy budget in §13: sleep, TWT and
   what the radio costs when it is awake
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the only place in this vault where the PHY is
   writable, and therefore the only place where these claims can be measured rather than believed
@@ -1004,7 +1004,7 @@ coordination, and a PA that is still only 15% efficient.
 - IEEE Std 802.11be-2024, clause 36.3.19.4 (transmitter modulation accuracy), and the draft text in
   `IEEE 802.11-20/1253r6`, which records the −38 dB motion for 4096-QAM and the ±3-subcarrier LO-leakage exclusion.
 - IEEE P802.11bn/D1.0 (July 2025) and the TGbn PAR — the 25% targets, the 1–7.25 GHz scope, and the ELR PPDU.
-- IEEE Std 802.11bf-2024 — WLAN sensing.
+- IEEE Std 802.11bf-2025. *WLAN Sensing*. IEEE, 2025. Published 26 September 2025.
 - IEEE Std 802.11-1997, 802.11b-1999, 802.11a-1999, 802.11g-2003, 802.11n-2009, 802.11ac-2013 — for the generation
   table in §7. Read each scope clause for what the amendment said the problem was.
 

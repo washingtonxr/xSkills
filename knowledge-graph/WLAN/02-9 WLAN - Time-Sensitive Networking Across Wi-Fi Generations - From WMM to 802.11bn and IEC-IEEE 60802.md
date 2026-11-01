@@ -1,5 +1,5 @@
 ---
-title: "WLAN — Time-Sensitive Networking over Wi-Fi: Research and Practice Across Generations"
+title: "WLAN — Time-Sensitive Networking Across Wi-Fi Generations: From WMM to 802.11bn and IEC-IEEE 60802"
 type: domain-note
 domain: wlan
 group: "02"
@@ -51,8 +51,8 @@ Every note in this group has quietly assumed that a frame eventually gets throug
 [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] ends with
 the admission that EDCA gives you *priorities*, not *guarantees*: the medium is contended, the contention is
 statistical, and the tail of the delay distribution belongs to whoever else is on the channel.
-[[02-2 WLAN - Power Saving Mechanisms and Evolution]] introduced TWT as a way to make a station sleep, and left
-the AP's side of the service period unexplored. [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] shows a
+[[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] introduced TWT as a way to make a station sleep, and left
+the AP's side of the service period unexplored. [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] shows a
 transition that can cost hundreds of milliseconds — an eternity next to a 1 ms control cycle.
 
 This note is about the other half of the requirement: not "how fast" but "by when, every time". It walks the
@@ -815,7 +815,7 @@ graph TD
 physical device — within which handshake states, sequence numbers, security keys and capabilities can be
 transferred. It enables per-link transition of a client MLD between AP MLDs. For a mobile robot crossing cells,
 this is the difference between a bound that holds and a bound with a 200 ms hole in it — the phenomenon
-[[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] describes from the client's side.
+[[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] describes from the client's side.
 
 Also in scope, with latency relevance: **DSO** (dynamic subband operation) and **DBE** (dynamic bandwidth
 expansion) for spectrum use; **ELR** (enhanced long range, 20 MHz, one spatial stream, BPSK/QPSK with
@@ -1361,7 +1361,7 @@ the service-period interval is the dominant term in the latency bound, and the r
 | Latency spikes at a regular period | Another station's TXOP or a beacon interval interaction | Capture the airtime and correlate | Align SPs, shorten TXOP limits |
 | r-TWT configured and no improvement | A non-participating or legacy station in the BSS | Check capability of every associated STA | Enforce a managed band, or admit only capable STAs |
 | Bound holds when idle, breaks under load | Load is unbounded, so the schedule is over-committed | Measure deadline-miss ratio versus offered load | Admission control, or a longer cycle |
-| Jitter fine, occasional huge outliers | Roaming or scanning | Correlate with roam events and scan results | See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]]; SMD in Wi-Fi 8 |
+| Jitter fine, occasional huge outliers | Roaming or scanning | Correlate with roam events and scan results | See [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]]; SMD in Wi-Fi 8 |
 | Duplicate frames arriving | An elimination function is missing or misconfigured | Count sequence numbers per stream | Fix the FRER elimination point |
 | Sync error exceeds budget | Software timestamping or long FTM intervals | Compare HW and SW timestamp paths, check FTM rate | Move timestamping to hardware, shorten intervals |
 | SCS requests rejected | Resources unavailable or capability missing | Read the status code in the SCS Response | Reduce the request, or add airtime |
@@ -1552,20 +1552,20 @@ by "a scheduler that must first win a contended medium".
 
 - [[02-10 WLAN - Baseband and Driver Architecture for Wi-Fi 6, 7 and 8 - Qualcomm as the Reference Design]] — the machinery a latency bound has to be delivered by: where frames actually queue, what the firmware scheduler owns, why the host's airtime estimate is systematically low, and the missing host API that would carry a requirement down to the thing that can honour it
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — the mechanism layer this note's determinism story sits on: EDCA, the RU grid, trigger frames, airtime fairness, and why a Wi-Fi scheduler must win the medium before it can schedule it
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — TWT as a power-saving mechanism, and therefore the origin of the service period that r-TWT turns into a latency tool
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation each feature belongs to, and where Wi-Fi 8's quantified latency target came from
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the client-controlled transition that puts a hole in any latency bound, and what SMD does about it
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — where the deadline is actually spent: host, firmware, and the offload boundaries a scheduled design has to respect
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the multi-AP management plane that a coordinated-schedule deployment has to configure, and what a controller can actually observe
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — where certification constrains practice: WMM, Wi-Fi QoS Management, and what vendors actually implement
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — what has to have happened before a station can be scheduled at all
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — TWT as a power-saving mechanism, and therefore the origin of the service period that r-TWT turns into a latency tool
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation each feature belongs to, and where Wi-Fi 8's quantified latency target came from
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — the client-controlled transition that puts a hole in any latency bound, and what SMD does about it
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — where the deadline is actually spent: host, firmware, and the offload boundaries a scheduled design has to respect
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the multi-AP management plane that a coordinated-schedule deployment has to configure, and what a controller can actually observe
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — where certification constrains practice: WMM, Wi-Fi QoS Management, and what vendors actually implement
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — what has to have happened before a station can be scheduled at all
 - [[01-6 NR DU MAC Scheduler - Resource Allocation, HARQ and Real-Time Implementation]] — the cellular scheduler: a slot that is already owned, against a medium that must first be won
 - [[01-7 NR HARQ - Retransmission Flow, Timelines and LTE Comparison]] — the other side of reliability: retransmission counted against a deadline rather than a retry limit
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the execution context a host-side TSN stack and its timestamping path run in
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — where hardware timestamping lives: the NIC driver, its DMA path, and the interrupt latency that decides whether a timestamp is trustworthy
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling worst-case rather than mean behaviour in a path whose deadline is measured in microseconds
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the box that has to be configured for a latency bound, and the offload-versus-observability trade that decides whether the bound is even measurable
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the box that has to be configured for a latency bound, and the offload-versus-observability trade that decides whether the bound is even measurable
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — a platform where scheduled access can be built in hardware: time-gated FPGA queues addressed by MAC address
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — the implementation view of the same problem: which driver and protocol mechanisms produce the numbers the 802.1 toolbox asks for, and what is honestly achievable

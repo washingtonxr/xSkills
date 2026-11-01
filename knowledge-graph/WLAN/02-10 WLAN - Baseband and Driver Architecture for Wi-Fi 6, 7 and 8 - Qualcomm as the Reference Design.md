@@ -44,8 +44,8 @@ aliases:
 Every other note in this group treats the radio as a black box that emits and absorbs frames.
 [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] describes
 the scheduler as if the hardware merely executed decisions made above it.
-[[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] traces the packet path and stops at the point where
-"offload" begins. [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] asks for a latency bound and
+[[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] traces the packet path and stops at the point where
+"offload" begins. [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] asks for a latency bound and
 discovers that the bound is spent somewhere between a socket and an antenna, in a place most software engineers
 never look.
 
@@ -1029,7 +1029,7 @@ single most valuable thing a software engineer can contribute to this generation
    is no longer inside one chip. That requires shared timing, inter-AP messaging, telemetry, and a controller that
    can observe a distributed schedule — none of which exists as a standard host API today.
 5. **Determinism as a first-class driver interface.**
-   [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] states the requirement; the missing piece is
+   [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] states the requirement; the missing piece is
    a host API that carries an application's latency bound down to the thing that can honour it, and an accounting
    path that carries evidence back up.
 6. **One chip, many radios, and coexistence as a firmware discipline.** FastConnect 8800 integrates Wi-Fi 8,
@@ -1239,15 +1239,15 @@ latency targets achievable in a real deployment, and it is the one with no stand
 ## Related
 
 - [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] — the other half of the same die: the analog front end that feeds this baseband, where DPD and calibration actually run, and why a neural receiver cannot fit inside a 13.6 µs symbol
-- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution]] — the packet-path view this note's silicon view sits under: SoftMAC and FullMAC, the five offload planes, and what "offload" costs you in observability
+- [[02-4 WLAN - Packet TX-RX Datapath and Offload Evolution - Aggregation, Block Ack and the Host-Device Split]] — the packet-path view this note's silicon view sits under: SoftMAC and FullMAC, the five offload planes, and what "offload" costs you in observability
 - [[02-8 WLAN - Scheduling - Channel Access, EDCA, OFDMA Resource Allocation, Airtime and Implementation]] — what the firmware scheduler in section 6 is actually deciding, and why a Wi-Fi scheduler must win the medium first
-- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations]] — the requirement that section 11's queueing numbers and section 16's host-API gap exist to serve
-- [[02-1 WLAN - Wi-Fi Generations Evolution]] — which generation introduced each feature whose silicon cost section 4 itemises
-- [[02-2 WLAN - Power Saving Mechanisms and Evolution]] — TWT and the power states section 13 suspends into
-- [[02-5 WLAN - STA-AP Discovery, Authentication and Association]] — the state the host half of section 6's ownership table maintains
-- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering]] — the transition that SMD in section 16 is designed to remove
-- [[02-7 WLAN - Wi-Fi EasyMesh, Operation, Tuning and Troubleshooting]] — the management plane a multi-AP coordination deployment has to configure, and what a controller can actually observe
-- [[02-3 WLAN Ecosystem - WFA, EasyMesh and prpl]] — certification and what vendors actually ship, which is the only reliable guide to which of these features exist in products
+- [[02-9 WLAN - Time-Sensitive Networking Across Wi-Fi Generations - From WMM to 802.11bn and IEC-IEEE 60802]] — the requirement that section 11's queueing numbers and section 16's host-API gap exist to serve
+- [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] — which generation introduced each feature whose silicon cost section 4 itemises
+- [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] — TWT and the power states section 13 suspends into
+- [[02-5 WLAN - STA-AP Discovery, Authentication and Association - Scanning, WPA3 and the Join State Machine]] — the state the host half of section 6's ownership table maintains
+- [[02-6 WLAN - Multi-AP Roaming, Healing and Steering - 802.11k, 11v, 11r, BTM and Self-Healing]] — the transition that SMD in section 16 is designed to remove
+- [[02-7 WLAN - Wi-Fi EasyMesh - Operation, Tuning and Troubleshooting]] — the management plane a multi-AP coordination deployment has to configure, and what a controller can actually observe
+- [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] — certification and what vendors actually ship, which is the only reliable guide to which of these features exist in products
 - [[04-6 Linux Device Drivers - Model, Probe, Data Path, Power and Bring-Up]] — the generic driver model this driver is a guest in: probe ordering, devres, DMA ownership, runtime PM and the bring-up method section 8 assumes
 - [[04-4 Linux Interrupts - Types, Handlers, Threaded IRQs and Deferred Work]] — the NAPI and tasklet machinery of section 10 in full, including why threaded NAPI changes the picture
 - [[04-5 Linux Concurrency - Kernel and User Mode, Processes, Threads and IPC]] — the locking and context rules a driver whose rings are written concurrently by a device has to obey
@@ -1256,7 +1256,7 @@ latency targets achievable in a real deployment, and it is the one with no stand
 - [[08-1 Programming Languages Toolchain and Performance Engineering]] — profiling a path whose cost is per-descriptor, not per-packet
 - [[08-2 C and C++ Programming - Language Features, STL and Systems Practice]] — the kernel C idioms this driver is written in: `container_of`, `FIELD_GET`, `READ_ONCE` and `WRITE_ONCE`, and the barriers that make a doorbell correct
 
-- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System]] — the other side of the driver: how a router configures what section 6 describes, and where the firmware and board data come from
+- [[02-11 WLAN - OpenWrt and the Software Architecture of a Wireless System - netifd, ubus, hostapd and the SDK Trade-Off]] — the other side of the driver: how a router configures what section 6 describes, and where the firmware and board data come from
 - [[02-12 WLAN - openwifi - An Open-Source FPGA 802.11 Platform]] — the same low MAC and PHY, but in Verilog you can edit and registers you can read
 
 - [[02-13 WLAN - Reliability, Low Latency and Determinism - What the Wi-Fi Stack Can Actually Do]] — why AQL exists — the firmware queue the host cannot see — and what the offload paths cost when you are trying to bound latency
