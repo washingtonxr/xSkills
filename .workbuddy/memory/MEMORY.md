@@ -23,8 +23,9 @@ Personal knowledge base for interview preparation at the intersection of
 - `00 MOC - Comms x Compute x AI Knowledge Graph.md` is the single entry point (directory map,
   reading/memory method, contribution method, maintenance triggers, staleness table).
 - One folder per domain: `MN/ WLAN/ WSN/ EMBEDDED/ DATAPLANE/ AI/ SILICON/ LANGUAGES/
-  MANAGEMENT/ BUSINESS/ HAM/`. Obsidian resolves wikilinks by note name, so moving a note
-  between folders does not break links.
+  MANAGEMENT/ BUSINESS/ HAM/ SECURITY/`. Obsidian resolves wikilinks by note name, so moving a
+  note between folders does not break links. `SECURITY` is the one cross-cutting directory — it
+  links out to WLAN 02-19, MN, EMBEDDED and DATAPLANE rather than duplicating them.
 - `99 Corrections - Verified Facts That Popular Sources Get Wrong.md` — source-vs-verified
   discrepancies; a new note that corrects a popular claim adds rows there.
 
@@ -43,6 +44,7 @@ Personal knowledge base for interview preparation at the intersection of
 | `09-x` | `MANAGEMENT` | 09-1 engineering project management |
 | `10-x` | `BUSINESS` | 10-1 value-driven business model |
 | `11-x` | `HAM` | 11-1 amateur radio history/regulation · 11-2 operating practice |
+| `12-x` | `SECURITY` | 12-1 cryptographic foundations (primitives, protocols, trust anchors) · 12-2 threats and defences (attack surface, detection, IR) · 12-3 standards and architecture (risk, controls, compliance, zero trust) · 12-4 the frontier (AI-native threats, PQC migration) |
 
 Per-note detail is *not* duplicated here — it lives in each note's title, its directory
 `readlist.md`, and the MOC table row. Renumbering a note means renumbering its readlist

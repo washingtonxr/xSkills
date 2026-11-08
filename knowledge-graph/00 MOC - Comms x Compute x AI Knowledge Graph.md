@@ -16,7 +16,7 @@ last-updated: 2026-11-08
 
 > **One thesis holds this vault together.** Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into a single scheduling problem — deciding *what* runs *where*, *when*, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales. Every note states where that analogy holds and, more usefully, where it breaks.
 
-**Eleven directories · 49 notes · one index.** The directory is the domain; the note number is the order to read within it.
+**Twelve directories · 53 notes · one index.** The directory is the domain; the note number is the order to read within it.
 
 ## 1. Start here
 
@@ -47,6 +47,7 @@ flowchart LR
     MANAGEMENT["MANAGEMENT<br/>project management<br/>1 note"]
     BUSINESS["BUSINESS<br/>business model<br/>1 note"]
     HAM["HAM<br/>amateur radio<br/>2 notes"]
+    SECURITY["SECURITY<br/>network security<br/>4 notes"]
 
     WSN --> MN
     WLAN --> MN
@@ -67,9 +68,13 @@ flowchart LR
     HAM --> LANGUAGES
     WLAN --> MANAGEMENT
     MANAGEMENT --> BUSINESS
+    WLAN --> SECURITY
+    SECURITY --> MN
+    SECURITY --> EMBEDDED
+    SECURITY --> DATAPLANE
 ```
 
-The first eight directories walk the signal path outward: air interface, then the wireless edges, then the software underneath them, then the packet plane, then the AI workloads that consume it, then the silicon and language foundations. `MANAGEMENT` and `BUSINESS` sit outside that path on purpose — one decides *which* of the technical work gets attempted, the other decides *what it is worth*. `HAM` sits outside it for the opposite reason: it is not a product domain at all, but the same physics practised under a licence held by an individual, which makes it the best place to check whether the reasoning above survives without a vendor's test equipment.
+The first eight directories walk the signal path outward: air interface, then the wireless edges, then the software underneath them, then the packet plane, then the AI workloads that consume it, then the silicon and language foundations. `MANAGEMENT` and `BUSINESS` sit outside that path on purpose — one decides *which* of the technical work gets attempted, the other decides *what it is worth*. `HAM` sits outside it for the opposite reason: it is not a product domain at all, but the same physics practised under a licence held by an individual, which makes it the best place to check whether the reasoning above survives without a vendor's test equipment. `SECURITY` is the one directory with an edge into almost every other, because it is not a domain of the signal path at all — it is the set of properties the rest are supposed to have.
 
 ## 3. Reading marks
 
@@ -273,16 +278,37 @@ mechanisms, the antenna and feedline arithmetic, the mode catalogue, and the con
 
 References: [`HAM/readlist.md`](HAM/readlist.md) — the ITU Radio Regulations, Part 97, MIIT Order 67, the ARRL handbooks, and the antenna and propagation texts.
 
-## 16. Cross-cutting threads
+## 16. `SECURITY` — Network and systems security
 
-Four ideas recur, and the notes are more useful read as four passes over them than as eleven separate domains:
+Four notes that cut across every other directory: the cryptography everything else depends on, the
+attacks that actually happen, the frameworks that decide what gets funded, and the three forces
+rearranging all of it. This is the only directory that is not a domain of the signal path — it is the
+set of properties the rest are supposed to have, which is why it is worth reading even if you never
+work in security as a job.
+
+**Read first:** 12-1 for the substrate. Then 12-2 if you are defending a network, 12-3 if you have to
+justify the budget, 12-4 if you are planning past the current fiscal year.
+
+| Note | What it answers |
+| --- | --- |
+| [[12-1 SECURITY - Cryptographic Foundations - Primitives, Protocols and Trust Anchors]] | The chain from primitive to protocol to key lifecycle, and where it breaks: AES modes and nonce reuse, HKDF and domain separation, RSA padding oracles, X25519 and Ed25519, PKI and transparency, TLS 1.3 with its full key schedule, the post-quantum standards with their byte counts, and thirteen named failures mapped to the joint they broke |
+| [[12-2 SECURITY - Threats and Defences - Attack Surface, Detection and Incident Response]] | The adversary priced as an economic actor: the kill chain against the 15-tactic ATT&CK matrix, identity as the perimeter including AiTM and token theft, unauthenticated L2/L3 protocols from ARP to BGP, the 31.4 Tbps DDoS record, supply chain and OAuth, ransomware economics, detection as code, and incident response where the first hour decides the cost |
+| [[12-3 SECURITY - Standards and Architecture - Risk, Controls, Compliance and Zero Trust]] | How risk becomes a funded decision: a worked FAIR calculation, the five catalogues (CSF 2.0, 800-53, ISO 27001, CIS, IEC 62443) and how they map, zero trust from the seven tenets to PDP/PEP, the regulation map from GDPR to NIS2, DORA, the CRA and MLPS 2.0, audit evidence that is cheap to produce, and the metrics that are not vanity |
+| [[12-4 SECURITY - The Frontier - AI-Native Threats, Post-Quantum Migration and the Next Decade]] | Three forces at once: AI as attack surface (OWASP LLM 2025 and agentic ASI), as attacker and as defender; identity for workloads and agents; the PQC programme with its five workstreams and six failure modes; confidential computing honestly assessed; resilience; and ten unsolved research problems |
+
+References: [`SECURITY/readlist.md`](SECURITY/readlist.md) — the RFCs, NIST FIPS and SP 800 series, ISO and IEC standards, the EU regulations, and the incident analyses the notes are built from.
+
+## 17. Cross-cutting threads
+
+Five ideas recur, and the notes are more useful read as five passes over them than as twelve separate domains:
 
 1. **Determinism.** Tail latency is the shared KPI across Wi-Fi 8 UHR, URLLC and agent orchestration barriers.
 2. **Memory semantics.** KV cache, memory pooling and UnifiedBus global addressing are the same battle fought at three layers.
 3. **Interface semantics.** L1 accelerator ↔ L2 core, NPU ↔ CPU, coordinator ↔ worker — the boundary always costs more than the compute.
 4. **Verification methodology.** Simulation → data replay → hardware-in-the-loop is the only credible path, for AI schedulers and for an AI-native PHY alike.
+5. **Trust boundaries.** Every design in this vault eventually asks where one principal's authority ends and another's begins — a DU and a CU, a host and a device, an AP and a client, an orchestrator and an agent. `SECURITY` is the directory that names the boundary explicitly, and the other directories are where it gets crossed.
 
-## 17. Contributing
+## 18. Contributing
 
 The vault is meant to be corrected. Three kinds of contribution are welcome, in this order of value: **a correction with a citation** (a claim that is wrong, or right but dated), **a note that fills a gap** in an existing directory, and **a reference** worth adding to a directory's `readlist.md`.
 
@@ -303,7 +329,7 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 
 **Licence of contributions.** By contributing you agree to license your contribution under the same terms as the repository — GPL-3.0-or-later or AGPL-3.0-or-later, at the user's option.
 
-## 18. Maintenance and verification
+## 19. Maintenance and verification
 
 - **Anchors** hold only checkable facts: a specification number, a clause, a freeze or publication date, a measured value, an ISBN or DOI. Everything else belongs in the body.
 - **`VERIFY`** marks a claim that is plausible but not independently confirmed. Each directory carries a handful on purpose; they are the honest edge of the vault, not an embarrassment.
@@ -322,9 +348,10 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 | `LANGUAGES` | WG21 and WG14 meetings, GCC and Clang majors, CPython each October, MATLAB R20xxa/b, IEEE 1800 and 1800.2, MISRA documents | C++26 shipped 2026-03-28, CPython 3.15.0 (2026-10-09), 1800-2023, MISRA C:2025 |
 | `MANAGEMENT` | PMI, PeopleCert and ISO/TC 258 editions; the annual DORA report | PMBOK 7 (2021), PRINCE2 Version 7 (2023), EIA-748-E (2026) |
 | `BUSINESS` | Company annual reports and filings, pricing benchmark surveys, competition-law decisions | Adobe FY2013, Rolls-Royce PBH 1962, NDRC 2015 |
+| `SECURITY` | IETF RFCs (TLS, QUIC, IPsec, hybrid groups), NIST FIPS and SP 800 releases, CSF and 800-53 revisions, ISO 27001 amendments, EU regulation application dates, CISA and ENISA guidance, ATT&CK matrix versions | TLS 1.3 = RFC 9846 (2026-07), hybrid groups RFC 10024 (2026-08), FIPS 203/204/205 (2024-08-13), CSF 2.0 (2024-02-26), ATT&CK 15 tactics (2026) |
 | `HAM` | ITU Radio Regulations after each WARC, national licence orders (FCC Part 97, MIIT orders, Ofcom variations), ARRL/FCC licence counts, IARU band plans | ITU RR 2020 + WRC-19, FCC 23-93 (2023), MIIT Order 67 (2024), FCC 60 m R&O (2025) |
 
-## 19. Conventions
+## 20. Conventions
 
 - One note per topic, named by its number: `GG-x`, where `GG` is the directory and `x` the order within it. The file name *is* the topic, so notes sort by number and stay searchable by name.
 - Notes are **English only**, so they can be reused with international teams and in English interviews. The source documents in `other/` exist in both languages.
@@ -332,7 +359,7 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 - Tables for comparisons, blockquotes for claims, Mermaid for anything structural.
 - Every file carries `license: GPL-3.0-or-later OR AGPL-3.0-or-later` in its frontmatter and the same licence line in its footer.
 
-## 20. Outside this vault
+## 21. Outside this vault
 
 Obsidian is opened at `knowledge-graph/`, so files above it are not visible to the graph and cannot be wikilinked. They are ordinary Markdown:
 
