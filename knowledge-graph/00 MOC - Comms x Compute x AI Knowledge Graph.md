@@ -9,14 +9,14 @@ tags:
   - ai
   - computing
 license: GPL-3.0-or-later OR AGPL-3.0-or-later
-last-updated: 2026-11-01
+last-updated: 2026-11-08
 ---
 
 # Communications x Heterogeneous Compute x AI — Knowledge Graph
 
 > **One thesis holds this vault together.** Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into a single scheduling problem — deciding *what* runs *where*, *when*, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales. Every note states where that analogy holds and, more usefully, where it breaks.
 
-**Ten directories · 45 notes · one index.** The directory is the domain; the note number is the order to read within it.
+**Eleven directories · 48 notes · one index.** The directory is the domain; the note number is the order to read within it.
 
 ## 1. Start here
 
@@ -37,7 +37,7 @@ Two rules make the difference between reading and knowing:
 ```mermaid
 flowchart LR
     MN["MN<br/>mobile network<br/>8 notes"]
-    WLAN["WLAN<br/>IEEE 802.11<br/>17 notes"]
+    WLAN["WLAN<br/>IEEE 802.11<br/>18 notes"]
     WSN["WSN<br/>low-power WPAN<br/>1 note"]
     EMBEDDED["EMBEDDED<br/>systems software<br/>6 notes"]
     DATAPLANE["DATAPLANE<br/>packet plane · fabric<br/>2 notes"]
@@ -46,6 +46,7 @@ flowchart LR
     LANGUAGES["LANGUAGES<br/>C/C++ · Python · HDL<br/>5 notes"]
     MANAGEMENT["MANAGEMENT<br/>project management<br/>1 note"]
     BUSINESS["BUSINESS<br/>business model<br/>1 note"]
+    HAM["HAM<br/>amateur radio<br/>2 notes"]
 
     WSN --> MN
     WLAN --> MN
@@ -61,11 +62,14 @@ flowchart LR
     DATAPLANE --> AI
     AI --> DATAPLANE
     MN --> MANAGEMENT
+    WLAN --> HAM
+    HAM --> MN
+    HAM --> LANGUAGES
     WLAN --> MANAGEMENT
     MANAGEMENT --> BUSINESS
 ```
 
-The first eight directories walk the signal path outward: air interface, then the wireless edges, then the software underneath them, then the packet plane, then the AI workloads that consume it, then the silicon and language foundations. `MANAGEMENT` and `BUSINESS` sit outside that path on purpose — one decides *which* of the technical work gets attempted, the other decides *what it is worth*.
+The first eight directories walk the signal path outward: air interface, then the wireless edges, then the software underneath them, then the packet plane, then the AI workloads that consume it, then the silicon and language foundations. `MANAGEMENT` and `BUSINESS` sit outside that path on purpose — one decides *which* of the technical work gets attempted, the other decides *what it is worth*. `HAM` sits outside it for the opposite reason: it is not a product domain at all, but the same physics practised under a licence held by an individual, which makes it the best place to check whether the reasoning above survives without a vendor's test equipment.
 
 ## 3. Reading marks
 
@@ -125,9 +129,9 @@ References: [`MN/readlist.md`](MN/readlist.md) — 3GPP, ITU-R, O-RAN, and the v
 
 ## 6. `WLAN` — IEEE 802.11
 
-Seventeen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the one function a regulator owns, what the silicon does, what the software on top does, and finally whether any of it can be made deterministic.
+Eighteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the one function a regulator owns, what the silicon does, what the software on top does, whether any of it can be made deterministic, and finally what the generation after Wi-Fi 8 proposes to do with learning.
 
-**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-17, the one RRM function with a regulator behind it; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
+**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-17, the one RRM function with a regulator behind it; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-18 for what comes after Wi-Fi 8; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
 
 | Note | What it answers |
 | --- | --- |
@@ -135,6 +139,7 @@ Seventeen notes that take Wi-Fi apart in the order a product is built: what the 
 | [[02-15 WLAN - The Transceiver - From Superheterodyne to Wi-Fi 7 and the AI-Native Radio]] | The analog half: the five jobs a radio performs, the noise/EVM budget that commissions it, superheterodyne to zero-IF to digital-assisted, the TX and RX chains stage by stage, MIMO and MLO costs, power and coexistence, 802.11bf sensing, and what AI can and cannot change inside a transceiver |
 | [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] | The control plane above a single AP: what RRM actually manages (spectrum, power, airtime, association), the measure-decide-actuate-verify loop and the authority gradient, the 802.11k measurement catalogue, channel assignment families from static plan to ChannelFly to SLE-driven learning, Cisco TPCv1 with its worked equation, DFS, spatial reuse and the constant-product rule, what admission control can and cannot refuse, the steering score function worked numerically, the full roam algorithm with its time budget, and EasyMesh versus 802.11bn MAPC |
 | [[02-17 WLAN - Dynamic Frequency Selection - Radar Detection, Channel Rules and Regulatory Behaviour]] | The one place where the regulator writes the specification: why radar is primary in parts of 5 GHz, the FCC and ETSI numbers side by side (CAC 60 s / 600 s, CMT 10 s, CCTT 200 ms + 60 ms versus 1 s, NOP 30 min, thresholds −64/−62 dBm), the master and client obligation matrices, the radar waveforms and detection probabilities, the 802.11h element and CSA machinery, the outage budget of a DFS event, zero-wait and off-channel CAC, why 160 MHz in 5 GHz is always a DFS channel and why 6 GHz has no DFS at all |
+| [[02-18 WLAN - AI in Wi-Fi - Learning Inside the Protocol and the 802.11bx Vision for PHY and MAC]] | The generation after Wi-Fi 8, read from the two papers that define the conversation: the three roles AI plays (as a protocol, as a platform, as traffic), the 802.11bx and 802.11bu paper trail with dates, the PHY candidates ranked by what they cost and what they would break (CSI compression and neural receivers versus pilotless and learned constellations), the four MAC time loops, why a learned MAC cannot promise five nines, the AC_AI case study with its parameters and its arithmetic, determinism as a bound enforced outside the learner, and the four gates every AI feature has to pass |
 | [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] | 802.11n → 802.11bn as a feature-by-feature lineage: what each generation was for, which WFA programme certified it, which application paid for it, and why the peak rate stops growing after Wi-Fi 7 |
 | [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] | Energy as the design constraint: legacy PS, U-APSD, SMPS, TWT and r-TWT, wake-up radio, ambient power |
 | [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] | Who decides what a product may claim: the four bodies (IEEE, WFA, WBA, prpl/BBF), the eight-category certification catalogue, Wi-Fi CERTIFIED 6E/7/8, WPA3 and PMF, EasyMesh R1–R6, prplMesh/prplOS/RDK-B, OpenRoaming, and which programme serves which application |
@@ -251,16 +256,32 @@ The second non-technical directory, and the one that decides whether the shipped
 
 References: [`BUSINESS/readlist.md`](BUSINESS/readlist.md).
 
-## 15. Cross-cutting threads
+## 15. `HAM` — Amateur radio
 
-Four ideas recur, and the notes are more useful read as four passes over them than as ten separate domains:
+Two notes on the one service where the licensee owns the transmitter: what the treaty actually says,
+how a century of negotiation produced the present band edges, who issues the licence and on what
+evidence, and what the 2026 numbers mean. Then the method — the link budget, the six propagation
+mechanisms, the antenna and feedline arithmetic, the mode catalogue, and the conventions of a contact.
+
+**Read first:** 11-1, §1 and §8 if you only want the institutional frame; then 11-2 end to end.
+
+| Note | What it answers |
+| --- | --- |
+| [[11-1 HAM - Amateur Radio - History, Regulation and the State of the Hobby]] | The service as a legal object and as a century-long project: the ITU definition and its six constraints, the 1912 accident that gave amateurs shortwave, the ARRL/IARU/regulator loop, the licence ladders of five countries, the band map, the 2026 licensee statistics, and what the hobby has actually contributed |
+| [[11-2 HAM - Operating Practice - Station, Propagation, Modes and the QSO]] | The station as four numbers and a chain: worked link budgets, receiver noise and dynamic range, skywave and NVIS with the secant law, dipoles through dishes, feedline loss and common-mode current, the mode catalogue with bandwidth and threshold, and the full QSO procedure including split operation |
+
+References: [`HAM/readlist.md`](HAM/readlist.md) — the ITU Radio Regulations, Part 97, MIIT Order 67, the ARRL handbooks, and the antenna and propagation texts.
+
+## 16. Cross-cutting threads
+
+Four ideas recur, and the notes are more useful read as four passes over them than as eleven separate domains:
 
 1. **Determinism.** Tail latency is the shared KPI across Wi-Fi 8 UHR, URLLC and agent orchestration barriers.
 2. **Memory semantics.** KV cache, memory pooling and UnifiedBus global addressing are the same battle fought at three layers.
 3. **Interface semantics.** L1 accelerator ↔ L2 core, NPU ↔ CPU, coordinator ↔ worker — the boundary always costs more than the compute.
 4. **Verification methodology.** Simulation → data replay → hardware-in-the-loop is the only credible path, for AI schedulers and for an AI-native PHY alike.
 
-## 16. Contributing
+## 17. Contributing
 
 The vault is meant to be corrected. Three kinds of contribution are welcome, in this order of value: **a correction with a citation** (a claim that is wrong, or right but dated), **a note that fills a gap** in an existing directory, and **a reference** worth adding to a directory's `readlist.md`.
 
@@ -281,7 +302,7 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 
 **Licence of contributions.** By contributing you agree to license your contribution under the same terms as the repository — GPL-3.0-or-later or AGPL-3.0-or-later, at the user's option.
 
-## 17. Maintenance and verification
+## 18. Maintenance and verification
 
 - **Anchors** hold only checkable facts: a specification number, a clause, a freeze or publication date, a measured value, an ISBN or DOI. Everything else belongs in the body.
 - **`VERIFY`** marks a claim that is plausible but not independently confirmed. Each directory carries a handful on purpose; they are the honest edge of the vault, not an embarrassment.
@@ -300,8 +321,9 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 | `LANGUAGES` | WG21 and WG14 meetings, GCC and Clang majors, CPython each October, MATLAB R20xxa/b, IEEE 1800 and 1800.2, MISRA documents | C++26 shipped 2026-03-28, CPython 3.15.0 (2026-10-09), 1800-2023, MISRA C:2025 |
 | `MANAGEMENT` | PMI, PeopleCert and ISO/TC 258 editions; the annual DORA report | PMBOK 7 (2021), PRINCE2 Version 7 (2023), EIA-748-E (2026) |
 | `BUSINESS` | Company annual reports and filings, pricing benchmark surveys, competition-law decisions | Adobe FY2013, Rolls-Royce PBH 1962, NDRC 2015 |
+| `HAM` | ITU Radio Regulations after each WARC, national licence orders (FCC Part 97, MIIT orders, Ofcom variations), ARRL/FCC licence counts, IARU band plans | ITU RR 2020 + WRC-19, FCC 23-93 (2023), MIIT Order 67 (2024), FCC 60 m R&O (2025) |
 
-## 18. Conventions
+## 19. Conventions
 
 - One note per topic, named by its number: `GG-x`, where `GG` is the directory and `x` the order within it. The file name *is* the topic, so notes sort by number and stay searchable by name.
 - Notes are **English only**, so they can be reused with international teams and in English interviews. The source documents in `other/` exist in both languages.
@@ -309,7 +331,7 @@ The vault is meant to be corrected. Three kinds of contribution are welcome, in 
 - Tables for comparisons, blockquotes for claims, Mermaid for anything structural.
 - Every file carries `license: GPL-3.0-or-later OR AGPL-3.0-or-later` in its frontmatter and the same licence line in its footer.
 
-## 19. Outside this vault
+## 20. Outside this vault
 
 Obsidian is opened at `knowledge-graph/`, so files above it are not visible to the graph and cannot be wikilinked. They are ordinary Markdown:
 

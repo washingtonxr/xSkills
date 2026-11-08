@@ -3,12 +3,12 @@ title: Reading list — WLAN · IEEE 802.11
 lang: en
 category: reading-list
 license: GPL-3.0-or-later OR AGPL-3.0-or-later
-last-updated: 2026-11-01
+last-updated: 2026-11-08
 ---
 
 # Reading list — WLAN · IEEE 802.11
 
-> IEEE 802.11 from the fundamentals to the silicon: the substrate note that explains what the technology is and where it came from, the generation map, power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, radio resource management, dynamic frequency selection and the reliability/latency/determinism question.
+> IEEE 802.11 from the fundamentals to the silicon: the substrate note that explains what the technology is and where it came from, the generation map, power saving, the certification and Multi-AP ecosystem, the packet datapath, discovery and association, roaming, EasyMesh, scheduling, TSN, baseband and driver architecture, OpenWrt, openwifi, radio resource management, dynamic frequency selection, AI in WLAN and the Wi-Fi 9 question, and the reliability/latency/determinism question.
 >
 > One section per note, numbered `GG-x`. Where a note needed no source beyond its own
 > **References**, there is no section here — the note is self-sufficient.
@@ -22,6 +22,7 @@ last-updated: 2026-11-01
 - **The analog companion:** `02-15` is the only section that is not about the protocol stack. Read it after `02-14` if you care why the numbers in the PHY tables are what they are.
 - **The network view:** `02-16` is the section for how a whole deployment is managed — channels, power, admission, steering and the roam algorithm. Read it after `02-14` and `02-15`, and before vendor-tuning anything.
 - **The regulator's view:** `02-17` is the section where IEEE 802.11 stops being the specification: radar detection, the FCC and ETSI numbers, and what a DFS event costs. Read it after `02-16` — and read it before you plan a 5 GHz channel or promise an availability figure.
+- **The next generation:** `02-18` is the one section about a standard that does not exist yet — what AI can do at PHY and MAC, what the two defining papers propose, and which proposals can be given a bound. Read it last, after `02-1` has given you the generation ladder.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
@@ -1166,6 +1167,97 @@ then the two regional regimes side by side, then the two test procedures, then o
   using WL Commands*.
   - The two ends of the practical view: what an operator sees in `iw` and hostapd logs, and what a test
   house does with `wl dfs_preism`, `wl radar` and radar injection at 6 s and 54 s into the CAC.
+
+---
+
+## 02-18 · WLAN — AI in Wi-Fi: Learning Inside the Protocol and the 802.11bx Vision for PHY and MAC
+
+The only section in this directory about a standard that has not been written. Everything here is either a
+paper, a study-group contribution or an approved PAR, so read it as a forecast with citations rather than as a
+specification — and note which claims have a date and which have a project number.
+
+### The two papers that define the conversation
+
+- **[Paper · ★★★ · EN]** Wilhelmi, F., Kosek-Szott, K., Szott, S., Bellalta, B. *IEEE 802.11bx — WLAN
+  Intelligent Networking (WIN): Toward an AI-Ready Wi-Fi 9*. arXiv:2610.07900, 2026.
+  - Read this first. It is the source of the **three roles** (protocol, platform, traffic), the driver numbers,
+    the standardisation timeline, and the only published simulation of a fifth access category. It is also
+    candid that the inclusion of specific AI features "remains uncertain".
+  - <https://arxiv.org/abs/2610.07900>
+- **[Paper · ★★★ · EN]** Karamyshev, A., Levitsky, I., Khorov, E. *Towards Wi-Fi 9: Vision, Requirements, and
+  Candidate Technologies*. Problems of Information Transmission 61(4):383–406, 2025. DOI
+  10.1134/S0032946025040040.
+  - The requirements ladder and the candidate tables, plus the parts the tutorial skips: Greenfield mode and why
+    802.11n's version died, the spectrum argument, and the deferral of preemption and D-MIMO. Its §5 is the map
+    of the PHY and MAC territory.
+- **[Paper · ★★ · EN]** Karamyshev, A., Levitsky, I., Bankov, D., Khorov, E. *A Tutorial on Wi-Fi 8: The
+  Journey to Ultra High Reliability*. Problems of Information Transmission 61(2):164–210, 2025.
+  - The baseline every Wi-Fi 9 proposal extends: DRU, ELR, UEQM, NPCA, P-EDCA, MAPC, SMD. Read the MAPC section
+    before the "beyond two APs" argument.
+
+### The standardisation record
+
+- **[Doc · ★★★ · EN]** IEEE 802.11. **WLAN Intelligent Networking (WIN) Study Group** meeting updates —
+  <https://www.ieee802.org/11/Reports/win_update.htm>.
+  - The authoritative status: PAR and CSD target **January 2027**, scope still under debate, no performance
+    targets yet. Use this, not a secondary summary, when asked "when will Wi-Fi 9 be finished".
+- **[Doc · ★★★ · EN]** IEEE 802.11. **AI Offload (AIO) Study Group** updates and the **P802.11bu** PAR and CSD
+  (DCN 11-26/978, 11-26/979) — <https://www.ieee802.org/11/Reports/aio_update.htm>.
+  - The one AI item with an approved project. Read the PAR for scope and the contribution list for what the
+    industry actually wants: glasses, vehicles, agents, sensing.
+- **[Doc · ★★ · EN]** IEEE 802.11 home page, *recent standards approvals* and ballot status —
+  <https://www.ieee802.org/11/>.
+  - The dates that keep moving: TGbn D2.0 ballot, 802.11bi-2026, 802.11bf-2025, 802.11bt, 802.11bq, 802.11br,
+    802.11bp.
+
+### The background you need before arguing about it
+
+- **[Paper · ★★★ · EN]** Szott, S., Kosek-Szott, K., Gawłowicz, P., Gómez, J. T., Bellalta, B., Zubow, A.,
+  Dressler, F. *Wi-Fi Meets ML: A Survey on Improving IEEE 802.11 Performance with Machine Learning*. IEEE
+  Communications Surveys and Tutorials 24(3):1843–1893, 2022.
+  - The survey the whole field cites. Read the channel-access and rate-adaptation sections for the fairness
+    objection, and the framing of what is learnable at all.
+- **[Paper · ★★★ · EN]** Bianchi, G. *Performance Analysis of the IEEE 802.11 Distributed Coordination
+  Function*. IEEE JSAC 18(3):535–547, 2000.
+  - Not about AI, and essential anyway: it is the proof that EDCA's behaviour is an **equilibrium property**.
+    That is the argument for why a learned MAC cannot be evaluated per device.
+- **[Paper · ★★ · EN]** Hoydis, J., Aït Aoudia, F., Valcarce, A., Viswanathan, H. *Toward a 6G AI-Native Air
+  Interface*. IEEE Communications Magazine 59(5):76–81, 2021.
+  - Where the neural receiver and pilotless reception come from, and the reference point for how far the Wi-Fi
+    version of the same idea is from shipping.
+- **[Paper · ★★ · EN]** Galati-Giordano, L., Geraci, G., Carrascosa, M., Bellalta, B. *What Will Wi-Fi 8 Be? A
+  Primer on IEEE 802.11bn Ultra High Reliability*. IEEE Communications Magazine 62(8):126–132, 2024.
+  - The cleanest short statement of what 802.11bn is trying to do, which is the starting point for everything
+    Wi-Fi 9 is being asked to improve on.
+- **[Paper · ★★ · EN]** Barannikov, A., Levitsky, I., Loginov, V., Khorov, E. *CSI Compression Method With
+  Dual Differential Feedback for Next-Generation Wi-Fi Networks*. IEEE Wireless Communications Letters
+  14(2):475–478, 2025.
+  - The concrete number behind the strongest PHY proposal: up to 40 % less feedback at comparable complexity.
+
+### The two AI-specific designs worth reading in full
+
+- **[Paper · ★★ · EN]** Han, M., Sun, X. *A Task Decomposition and Planning Framework for Efficient LLM
+  Inference in AI-Enabled WiFi-Offload Networks*. arXiv:2604.21399, 2026.
+  - Task-aware scheduling: ~20 % lower latency and ~80 % better task reward. Read it for the argument that the
+    packet is the wrong unit of priority for agentic traffic.
+- **[Paper · ★★ · EN]** Cavalcanti, D., Cordeiro, C., Smith, M., Regev, A. *WiFi TSN: Enabling Deterministic
+  Wireless Connectivity over 802.11*. IEEE Communications Standards Magazine 6(4):22–29, 2022.
+  - The determinism target and the TSN mechanisms that Wi-Fi keeps borrowing: preemption, scheduled windows,
+    and why the unlicensed medium makes them hard.
+
+### Practice
+
+- **[Doc · ★★ · EN]** Wi-Fi Alliance, *Wi-Fi Multimedia (WMM) specification* and the default EDCA parameter set
+  — VO 2/3/7/1.504 ms, VI 2/7/15/3.008 ms, BE 3/15/1023/0, BK 7/15/1023/0.
+  - The baseline against which any proposed fifth access category has to be compared. Note that the `AC_AI`
+    study uses its own parameterisation, not these values.
+- **[Doc · ★★ · EN]** Komondor simulator, <https://github.com/wn-upf/Komondor>.
+  - The ns-3 Wi-Fi model the `AC_AI` case study used (commit `4e1cca5`). Reproducing its figure is the fastest
+    way to understand why a fifth queue changes the tail and not the median.
+- **[Doc · ★ · EN]** Cisco Catalyst 9800 and Juniper Mist documentation on AI-driven RRM, and Qualcomm's
+  AI-enhanced Wi-Fi 7 and Wi-Fi 8 platform announcements.
+  - What already ships without a standard: channel and power optimisation, client steering, anomaly detection.
+    Useful for calibrating how much of "AI in Wi-Fi" is a product claim and how much is a research proposal.
 
 ---
 

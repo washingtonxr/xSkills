@@ -12,7 +12,7 @@ last-updated: 2026-10-29
 **一个开源的通信 × 异构计算 × AI 知识库**
 **An open knowledge base for communications, heterogeneous compute and AI**
 
-**License** GPL-3.0-or-later or AGPL-3.0-or-later · **10 directories** · **45 notes** · Obsidian-compatible
+**License** GPL-3.0-or-later or AGPL-3.0-or-later · **11 directories** · **48 notes** · Obsidian-compatible
 
 [中文](#中文) · [English](#english)
 
@@ -28,7 +28,7 @@ last-updated: 2026-10-29
 
 所以这里不是事实清单。每篇笔记都说明这个类比在哪里成立，更重要的是在哪里失效。
 
-- **45 篇笔记，10 个目录。** 目录即主题，笔记编号即阅读顺序。
+- **48 篇笔记，11 个目录。** 目录即主题，笔记编号即阅读顺序。
 - **每篇形态固定：** 结论 → 分层论述（配 Mermaid 图）→ **Anchors**（有日期、可核查的事实）→ **Related**（会被一起追问的邻居）→ **References**（一手来源）。
 - **笔记正文只用英文**，以便原样用于国际团队与英文面试；说明文档中英双语。
 - **不确定的就说不知道：** 无法独立确认的说法标注 `VERIFY`；流行说法与一手来源的差异集中记录在勘误表里。
@@ -47,7 +47,7 @@ PersonalSkills/
     ├── 00 MOC - ...md           唯一入口：目录地图、学习方法、贡献方法
     ├── 99 Corrections - ...md   勘误表：流行说法 vs 一手来源
     ├── MN/           01-x  移动通信（8 篇）+ readlist.md
-    ├── WLAN/         02-x  IEEE 802.11（16 篇）+ readlist.md
+    ├── WLAN/         02-x  IEEE 802.11（18 篇）+ readlist.md
     ├── WSN/          03-x  低功耗与传感网（1 篇）+ readlist.md
     ├── EMBEDDED/     04-x  嵌入式与系统软件（6 篇）+ readlist.md
     ├── DATAPLANE/    05-x  数据面与异构计算（2 篇）+ readlist.md
@@ -55,7 +55,8 @@ PersonalSkills/
     ├── SILICON/      07-x  芯片与指令集（1 篇）+ readlist.md
     ├── LANGUAGES/    08-x  编程语言与工程实践（5 篇）+ readlist.md
     ├── MANAGEMENT/   09-x  工程项目管理（1 篇）+ readlist.md
-    └── BUSINESS/     10-x  价值主导的商业模式（1 篇）+ readlist.md
+    ├── BUSINESS/     10-x  价值主导的商业模式（1 篇）+ readlist.md
+    └── HAM/          11-x  业余无线电（2 篇）+ readlist.md
 ```
 
 每个目录自带一份 `readlist.md`：该目录的书籍、论文、标准与技术报告，按笔记编号分节，`★★★` 表示「引用前至少翻过」。
@@ -63,16 +64,16 @@ PersonalSkills/
 ## 快速开始
 
 1. `git clone` 之后，用 Obsidian「打开文件夹作为仓库」，**指向 `knowledge-graph/`**——不是仓库根目录。
-2. 从 `00 MOC` 开始。它给出十个目录的扼要介绍、每个目录的阅读顺序、学习方法与贡献方法。
+2. 从 `00 MOC` 开始。它给出十一个目录的扼要介绍、每个目录的阅读顺序、学习方法与贡献方法。
 3. 进入与你目标岗位对应的目录，按该目录给出的顺序读笔记；需要一手来源时，翻该目录的 `readlist.md`。
 4. 每篇笔记先读开头的结论与末尾的 **Anchors**，再回读正文。这是判断「这篇值不值得细读」最快的办法。
 
-## 十个目录
+## 十一个目录
 
 | 目录 | 主题 | 篇数 | 面向 |
 | --- | --- | --- | --- |
 | `MN` | 3GPP 空口与 RAN 协议栈：release 地图、L2、AI/ML for RAN、蜂窝 IoT、随机接入、DU 调度器、HARQ，以及一个可读的开源实现 | 8 | RAN、协议栈、基带软件 |
-| `WLAN` | IEEE 802.11：基础与历史、收发机与射频、代际与应用、省电、生态与 WFA 认证、数据通路、接入、漫游、EasyMesh、调度、无线资源管理 RRM、TSN、基带与驱动、OpenWrt、openwifi、可靠性与确定性 | 16 | WLAN 协议栈、AP/网关、客户端 |
+| `WLAN` | IEEE 802.11：基础与历史、收发机与射频、代际与应用、省电、生态与 WFA 认证、数据通路、接入、漫游、EasyMesh、调度、无线资源管理 RRM、动态频率选择 DFS、AI 在 WLAN 中的应用与 Wi-Fi 9、TSN、基带与驱动、OpenWrt、openwifi、可靠性与确定性 | 18 | WLAN 协议栈、AP/网关、客户端 |
 | `WSN` | 低功耗无线：WPAN 介质访问、分簇、TSCH、信息年龄 | 1 | IoT、低功耗设备 |
 | `EMBEDDED` | 嵌入式与系统软件：RTOS、嵌入式 Linux、软件架构、中断、并发与 IPC、设备驱动 | 6 | 嵌入式、Linux 平台 |
 | `DATAPLANE` | 数据面与异构计算：DPDK 与 5G UPF、端边云协同、内存池化与互联 | 2 | 数据面、边缘计算 |
@@ -81,16 +82,18 @@ PersonalSkills/
 | `LANGUAGES` | 编程语言与工程实践：工具链与性能、C/C++、Python、MATLAB/Simulink、Verilog | 5 | 所有岗位的底层能力 |
 | `MANAGEMENT` | 工程项目管理：方法论、生命周期、计划与挣值、风险、治理、成熟企业实践 | 1 | 技术负责人、项目管理 |
 | `BUSINESS` | 价值主导的商业模式：价值创造与捕获、计费度量、定价、条款 | 1 | 产品、商业化、技术决策 |
+| `HAM` | 业余无线电：服务定义与百年监管史、执照等级、频段与 2026 现状；电台预算、传播机制、天线与馈线、模式选择与通联规程 | 2 | 射频与无线系统、协议与标准、个人技术深度 |
 
 按目标岗位选起点：
 
 | 目标岗位 | 从哪里开始 |
 | --- | --- |
 | RAN / 协议栈 | `MN` 01-2 → 01-6 → 01-7 → 01-8，再 `DATAPLANE` 05-1 |
-| WLAN / AP 与客户端 | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
+| WLAN / AP 与客户端 | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-18 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10，再 02-13 与 02-9 |
 | 嵌入式 / Linux 平台 | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6，再 `MN` 01-6 |
 | 端侧 AI / 推理系统 | `AI` 06-3 → 06-1 → 06-2，再 `DATAPLANE` 05-2 |
 | 技术负责人 / 架构 | `SILICON` 07-1 与 `MANAGEMENT` 09-1 横向读，其余按需 |
+| 射频 / 业余无线电 | `HAM` 11-1 → 11-2，再回 `WLAN` 02-15 看同一套收发机数学 |
 
 ## 学习方法
 
@@ -111,7 +114,7 @@ PersonalSkills/
 
 欢迎三类贡献，按价值排序：**带引用的勘误**（说法错了，或对的但过期了）、**填补空白的笔记**（放进已有目录）、**值得收进 `readlist.md` 的参考文献**。
 
-一个 PR 一件事，提交时带 `git commit -s`（DCO 签署，不要求 CLA）。完整检查清单——编号、英文行文、一手来源、`VERIFY` 标记、Anchors/Related/References 结构、Mermaid 图、`readlist.md` 与目录表同步——见 MOC 的 §16。
+一个 PR 一件事，提交时带 `git commit -s`（DCO 签署，不要求 CLA）。完整检查清单——编号、英文行文、一手来源、`VERIFY` 标记、Anchors/Related/References 结构、Mermaid 图、`readlist.md` 与目录表同步——见 MOC 的 §17。
 
 最有价值的一种提交长这样：给出**说法、一手来源、日期、条款号**，而不是一句「这里不对」。
 
@@ -120,7 +123,7 @@ PersonalSkills/
 - 每篇笔记的 **Anchors** 只放可核查的事实，正文负责论证。
 - 无法独立确认的说法标 `VERIFY`，宁可留白也不写成结论。
 - 流行说法与一手来源的差异集中在 [`knowledge-graph/99 Corrections`](knowledge-graph/99%20Corrections%20-%20Verified%20Facts%20That%20Popular%20Sources%20Get%20Wrong.md)：先查这里，再引用。
-- 「什么时候该重读」按目录列在 MOC 的 §17——每个领域的失效触发条件不同。
+- 「什么时候该重读」按目录列在 MOC 的 §18——每个领域的失效触发条件不同。
 
 ---
 
@@ -134,7 +137,7 @@ An engineering knowledge base organised around a single thesis:
 
 So this is not a list of facts. Every note states where that analogy holds and, more usefully, where it breaks.
 
-- **45 notes across 10 directories.** The directory is the domain; the note number is the reading order.
+- **48 notes across 11 directories.** The directory is the domain; the note number is the reading order.
 - **Every note has the same shape:** claim → layered argument with Mermaid diagrams → **Anchors** (dated, checkable facts) → **Related** (neighbours that get argued about together) → **References** (primary sources).
 - **Notes are written in English only**, so they can be reused with international teams and in English interviews. The documentation is bilingual.
 - **Doubt is marked, not smoothed over.** Claims that could not be independently confirmed carry a `VERIFY` flag, and the gap between the popular claim and the primary source is recorded in one corrections page.
@@ -153,7 +156,7 @@ PersonalSkills/
     ├── 00 MOC - ...md           the only entry point: map, reading method, contribution method
     ├── 99 Corrections - ...md   verified facts that popular sources get wrong
     ├── MN/           01-x  mobile network (8 notes) + readlist.md
-    ├── WLAN/         02-x  IEEE 802.11 (17 notes) + readlist.md
+    ├── WLAN/         02-x  IEEE 802.11 (18 notes) + readlist.md
     ├── WSN/          03-x  low-power and sensor networking (1 note) + readlist.md
     ├── EMBEDDED/     04-x  embedded and systems software (6 notes) + readlist.md
     ├── DATAPLANE/    05-x  packet plane and heterogeneous compute (2 notes) + readlist.md
@@ -161,7 +164,8 @@ PersonalSkills/
     ├── SILICON/      07-x  silicon and instruction-set architecture (1 note) + readlist.md
     ├── LANGUAGES/    08-x  programming languages and practice (5 notes) + readlist.md
     ├── MANAGEMENT/   09-x  engineering project management (1 note) + readlist.md
-    └── BUSINESS/     10-x  value-driven business model (1 note) + readlist.md
+    ├── BUSINESS/     10-x  value-driven business model (1 note) + readlist.md
+    └── HAM/          11-x  amateur radio (2 notes) + readlist.md
 ```
 
 Each directory carries its own `readlist.md` — the books, papers, standards and reports behind its notes, sectioned by note number, with `★★★` marking the entries to read or skim before quoting.
@@ -178,7 +182,7 @@ Each directory carries its own `readlist.md` — the books, papers, standards an
 | Directory | Domain | Notes | Built for |
 | --- | --- | --- | --- |
 | `MN` | 3GPP radio access and the RAN stack: release map, L2, AI/ML for RAN, cellular IoT, random access, the DU scheduler, HARQ, and one open-source implementation | 8 | RAN, protocol stack, baseband software |
-| `WLAN` | IEEE 802.11: fundamentals and history, transceiver and RF, generations and applications, power saving, ecosystem and WFA certification, datapath, join, roaming, EasyMesh, scheduling, RRM, TSN, baseband and drivers, OpenWrt, openwifi, reliability and determinism | 16 | WLAN stack, AP and gateway, client |
+| `WLAN` | IEEE 802.11: fundamentals and history, transceiver and RF, generations and applications, power saving, ecosystem and WFA certification, datapath, join, roaming, EasyMesh, scheduling, RRM, DFS, AI in WLAN and the Wi-Fi 9 question, TSN, baseband and drivers, OpenWrt, openwifi, reliability and determinism | 18 | WLAN stack, AP and gateway, client |
 | `WSN` | Low-power wireless: WPAN medium access, clustering, TSCH, age of information | 1 | IoT, low-power devices |
 | `EMBEDDED` | Embedded and systems software: RTOS, embedded Linux, software architecture, interrupts, concurrency and IPC, device drivers | 6 | Embedded, Linux platform |
 | `DATAPLANE` | Packet plane and heterogeneous compute: DPDK and the 5G UPF, cloud-edge-end, memory pooling and interconnect | 2 | Data plane, edge computing |
@@ -187,16 +191,18 @@ Each directory carries its own `readlist.md` — the books, papers, standards an
 | `LANGUAGES` | Languages and practice: toolchain and performance, C/C++, Python, MATLAB/Simulink, Verilog | 5 | Foundation for every role |
 | `MANAGEMENT` | Engineering project management: methodology, lifecycle, planning and earned value, risk, governance, practice | 1 | Technical lead, project management |
 | `BUSINESS` | Value-driven business model: value creation and capture, the value metric, pricing, clauses | 1 | Product, commercial, technical decisions |
+| `HAM` | Amateur radio: the service definition and a century of regulation, licence classes, bands and the 2026 state of the hobby; station budgets, propagation, antennas and feedlines, mode selection and contact procedure | 2 | RF and wireless systems, protocols and standards, personal technical depth |
 
 Where to start, by target role:
 
 | Target role | Start here |
 | --- | --- |
 | RAN / protocol stack | `MN` 01-2 → 01-6 → 01-7 → 01-8, then `DATAPLANE` 05-1 |
-| WLAN / AP and client | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
+| WLAN / AP and client | `WLAN` 02-14 → 02-15 → 02-16 → 02-17 → 02-18 → 02-1 → 02-5 → 02-4 → 02-8 → 02-10, then 02-13 and 02-9 |
 | Embedded / Linux platform | `EMBEDDED` 04-3 → 04-1 → 04-2 → 04-4 → 04-5 → 04-6, then `MN` 01-6 |
 | On-device AI / inference | `AI` 06-3 → 06-1 → 06-2, then `DATAPLANE` 05-2 |
 | Technical lead / architect | `SILICON` 07-1 and `MANAGEMENT` 09-1 sideways, the rest on demand |
+| RF / amateur radio | `HAM` 11-1 → 11-2, then back to `WLAN` 02-15 for the same transceiver arithmetic |
 
 ## How to read it
 
@@ -217,7 +223,7 @@ This repository is dual-licensed under **GPL-3.0-or-later or AGPL-3.0-or-later**
 
 Three kinds of contribution are welcome, in this order of value: **a correction with a citation** (a claim that is wrong, or right but dated), **a note that fills a gap** in an existing directory, and **a reference** worth adding to a `readlist.md`.
 
-One pull request per idea, committed with `git commit -s` (DCO sign-off; no CLA). The full checklist — numbering, English prose, primary sources, `VERIFY` flags, the Anchors/Related/References shape, Mermaid diagrams, and keeping `readlist.md` and the directory table in sync — is in MOC §16.
+One pull request per idea, committed with `git commit -s` (DCO sign-off; no CLA). The full checklist — numbering, English prose, primary sources, `VERIFY` flags, the Anchors/Related/References shape, Mermaid diagrams, and keeping `readlist.md` and the directory table in sync — is in MOC §17.
 
 The most valuable pull request states **the claim, the primary source, the date and the clause** — not "this is wrong".
 
@@ -226,7 +232,7 @@ The most valuable pull request states **the claim, the primary source, the date 
 - **Anchors** hold only checkable facts; the body does the arguing.
 - Claims that could not be independently confirmed are marked `VERIFY` rather than asserted.
 - The gap between the popular claim and the primary source is collected in [`knowledge-graph/99 Corrections`](knowledge-graph/99%20Corrections%20-%20Verified%20Facts%20That%20Popular%20Sources%20Get%20Wrong.md). Check it before you quote a number.
-- What makes each directory go stale — and therefore when to re-read it — is tabulated in MOC §17, because the trigger is different in every domain.
+- What makes each directory go stale — and therefore when to re-read it — is tabulated in MOC §18, because the trigger is different in every domain.
 
 ---
 
