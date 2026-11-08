@@ -23,6 +23,7 @@ last-updated: 2026-11-08
 - **The network view:** `02-16` is the section for how a whole deployment is managed — channels, power, admission, steering and the roam algorithm. Read it after `02-14` and `02-15`, and before vendor-tuning anything.
 - **The regulator's view:** `02-17` is the section where IEEE 802.11 stops being the specification: radar detection, the FCC and ETSI numbers, and what a DFS event costs. Read it after `02-16` — and read it before you plan a 5 GHz channel or promise an availability figure.
 - **The next generation:** `02-18` is the one section about a standard that does not exist yet — what AI can do at PHY and MAC, what the two defining papers propose, and which proposals can be given a bound. Read it last, after `02-1` has given you the generation ladder.
+- **The security spine:** `02-19` is the section to read when the question is "is this actually safe", not "how fast is it". It runs from the key ladder and the beacon selectors through SAE, 802.1X, PMF and the 2017–2026 design-flaw class, then splits mesh security into 802.11s peering versus the EasyMesh 1905 control plane, and closes with post-quantum 802.11bt and a hardening playbook. Read it after `02-5`, and again before you sign a design document.
 - **Not covered here:** `02-4` has no separate section — its sources (the mac80211 code paths and the vendor offload documentation) are cited in the note's own **References**.
 
 ---
@@ -1258,6 +1259,88 @@ specification — and note which claims have a date and which have a project num
   AI-enhanced Wi-Fi 7 and Wi-Fi 8 platform announcements.
   - What already ships without a standard: channel and power optimisation, client steering, anomaly detection.
     Useful for calibrating how much of "AI in Wi-Fi" is a product claim and how much is a research proposal.
+
+---
+
+## 02-19 · WLAN — Security: RSNA, WPA3, Mesh Security and the Threat Horizon
+
+The directory's security spine. Everything here is either a standard clause, a certification requirement or a
+published attack with a CVE, and the note is organised by *what an attacker can do* rather than by acronym
+order — which is why the same mechanism (an unauthenticated header bit) appears in 2017, 2021, 2023 and 2026.
+
+### Read these first
+
+- **[Standard · ★★★ · EN]** IEEE. *802.11-2020*, clause 12 (Security), including 12.7.6 (4-way handshake), plus
+  *802.11i-2004* for RSNA and *802.11w-2009* for PMF. The normative text behind §2, §6 and §7.
+  - Read 12.7.6 with a capture open. The order of EAPOL messages and which key wraps which is the single most
+    examined detail in a Wi-Fi security interview.
+- **[Spec · ★★★ · EN]** Wi-Fi Alliance. *WPA3 Specification v3.5*.
+  - The AKM and cipher selectors in §2.2, the transition-mode rules in §4.4 and the closed 192-bit suite in
+    §5.3 all come from here. Note §3.4: a BSS enabling EHT or MLO **shall** enable GCMP-256.
+- **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7 Technology Overview*, January 2024.
+  - One page on security, and it is binding: WPA3, PMF, beacon protection, Enhanced Open. This is what "Wi-Fi 7
+    requires WPA3" actually means in a certification test.
+
+### The four attacks worth reading in full
+
+- **[Paper · ★★★ · EN]** Vanhoef, M., Ronen, E. *Dragonblood: A Security Analysis of WPA3's SAE Handshake*. 2019.
+  - CVE-2019-9494 to -9497 plus two downgrades. Read it for the lesson, not the exploit: the PAKE survived, the
+    password-to-element encoding and the transition mode did not.
+- **[Paper · ★★★ · EN]** Vanhoef, M. *Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2*. CCS 2017 —
+  <https://www.krackattacks.com/>.
+  - Ten CVEs, and the clearest example of a reliability mechanism becoming a security hole.
+- **[Paper · ★★★ · EN]** Vanhoef, M. *Fragment and Forge: Breaking Wi-Fi Through Frame Aggregation and
+  Fragmentation*. USENIX Security 2021 — <https://www.fragattacks.com/>.
+  - The attack that proved framing matters more than ciphers. Three design flaws in the standard itself.
+- **[Paper · ★★★ · EN]** Zhou, X., Pu, J., Liu, Z., Qian, Z., Tan, Z., Krishnamurthy, S. V., Vanhoef, M.
+  *AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks*. NDSS 2026.
+  - Client isolation is not standardised, and every tested router failed. The enterprise variant steals RADIUS
+    traffic, which is the part to remember.
+
+### Mesh: two different problems wearing one word
+
+- **[Standard · ★★★ · EN]** IEEE. *802.11s-2011* — mesh, MPM, SAE, AMPE, MPTK/MTK/MGTK, HWMP.
+  - §10.1's point is that peering and authentication are separate stages. A profile without AMPE peers without
+    authentication and says nothing about it.
+- **[Paper · ★★★ · EN]** *Untangling the Knot: Breaking Access Control in Home Wireless Mesh Networks*. CCS 2024.
+  - The most important mesh-security paper of the decade. EasyMesh NAPS has opportunistic encryption and no trust
+    anchor, so a wireless client can pull fresh fronthaul and backhaul passphrases and defeat rekeying.
+- **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi EasyMesh Deployment Guidelines*.
+  - One sentence carries the whole argument: prefer DPP onboarding over WPS push-button "in order to enable 1905
+    layer security".
+- **[Paper · ★★ · EN]** *WCDCAnalyzer: Wi-Fi Direct, Easy Connect and EasyMesh analysis*. NDSS 2026.
+  - The privacy half: bootstrap-key hash oracle, a static global MAC in QR data, and a reusable DPP chirp hash.
+
+### Where it goes next
+
+- **[Standard · ★★★ · EN]** IEEE 802.11 TGbt. *P802.11bt — Post-Quantum Cryptography*, PAR and task-group updates —
+  <https://www.ieee802.org/11/Reports/tgbt_update.htm>.
+  - **This is the PQC amendment, not 802.11bi.** PQC AKMs, a PQC PAKE, PQC signatures, handshake changes, and
+    proof of work against DoS. Draft 1.0 took 650 comments in 2026.
+- **[Standard · ★★ · EN]** IEEE 802.11 TGbi. *P802.11bi-2026 — Enhanced Privacy Protection* —
+  <https://www.ieee802.org/11/Reports/tgbi_update.htm>.
+  - Frame anonymization, MAC change during association, encrypted Reassociation Request, AP-side beacon privacy.
+    A privacy amendment, not a cryptographic one.
+- **[Standard · ★★ · EN]** IEEE. *802.11be-2024*, multi-link security procedures.
+  - One PMKSA and one PTK per MLD pair, per-link group keys, one PN space across links. The first real change to
+    the key architecture since 802.11i.
+- **[Regulation · ★★ · EN]** Commission Delegated Regulation (EU) 2022/30 with *EN 18031-1/-2/-3:2024*, applicable
+  from 1 August 2025.
+  - Security as a CE-marking requirement: no universal default passwords, a secure update mechanism, privacy
+    assets enumerated. The support window is now a security parameter.
+
+### Practice
+
+- **[Tool · ★★ · EN]** `iw`, `hostapd_cli`, and Wireshark filters `wlan.rsn.akms`, `wlan.rsn.pcs`,
+  `eapol`, `wlan.fc.protected`.
+  - §12.3 is the checklist. The single highest-value check is whether the beacon still advertises both PSK and
+    SAE — that is transition mode, and it is a downgrade path.
+- **[Doc · ★★ · EN]** hostapd and wpa_supplicant documentation, <https://w1.fi/>.
+  - `sae_pwe=2`, `ieee80211w=2`, `sae_require_mfp=1`, `transition_disable=1`. Read the source for how MLO derives
+    the PTK from MLD addresses — it is the clearest explanation of §13.2 anywhere.
+- **[Doc · ★ · EN]** Aruba and Cisco WPA3-Enterprise configuration guides.
+  - Real RSNE examples for the 192-bit profile, including the part vendors rarely say out loud: it interoperates
+    with nothing else, by design.
 
 ---
 

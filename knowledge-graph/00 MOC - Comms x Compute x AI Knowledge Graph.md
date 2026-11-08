@@ -16,7 +16,7 @@ last-updated: 2026-11-08
 
 > **One thesis holds this vault together.** Cellular and WLAN protocol stacks, heterogeneous compute and on-device AI are converging into a single scheduling problem — deciding *what* runs *where*, *when*, under a hard latency and power budget. A RAN MAC scheduler, an edge task router and an LLM inference engine are the same closed loop at three different time scales. Every note states where that analogy holds and, more usefully, where it breaks.
 
-**Eleven directories · 48 notes · one index.** The directory is the domain; the note number is the order to read within it.
+**Eleven directories · 49 notes · one index.** The directory is the domain; the note number is the order to read within it.
 
 ## 1. Start here
 
@@ -37,7 +37,7 @@ Two rules make the difference between reading and knowing:
 ```mermaid
 flowchart LR
     MN["MN<br/>mobile network<br/>8 notes"]
-    WLAN["WLAN<br/>IEEE 802.11<br/>18 notes"]
+    WLAN["WLAN<br/>IEEE 802.11<br/>19 notes"]
     WSN["WSN<br/>low-power WPAN<br/>1 note"]
     EMBEDDED["EMBEDDED<br/>systems software<br/>6 notes"]
     DATAPLANE["DATAPLANE<br/>packet plane · fabric<br/>2 notes"]
@@ -129,9 +129,9 @@ References: [`MN/readlist.md`](MN/readlist.md) — 3GPP, ITU-R, O-RAN, and the v
 
 ## 6. `WLAN` — IEEE 802.11
 
-Eighteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the one function a regulator owns, what the silicon does, what the software on top does, whether any of it can be made deterministic, and finally what the generation after Wi-Fi 8 proposes to do with learning.
+Nineteen notes that take Wi-Fi apart in the order a product is built: what the technology is and where it came from, what the radio underneath it is doing, what the generations promise and who certifies them, how a station joins and stays joined, how frames actually move, how the AP schedules, who manages the radio resource across all of it, what the one function a regulator owns, what the silicon does, what the software on top does, whether any of it can be made deterministic, what the generation after Wi-Fi 8 proposes to do with learning, and finally what holds it all together when an attacker is in range.
 
-**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-17, the one RRM function with a regulator behind it; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-18 for what comes after Wi-Fi 8; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
+**Read first:** 02-14, the fundamentals; then 02-15, the radio underneath them; then 02-16, how a network manages channels, power and association across many APs; then 02-17, the one RRM function with a regulator behind it; then 02-1 → 02-5 → 02-4 → 02-8 → 02-10; then 02-13 and 02-9, the two that answer "can it be deterministic"; 02-18 for what comes after Wi-Fi 8; 02-19 for the security model everything else rests on; 02-2, 02-3, 02-6, 02-7, 02-11, 02-12 as needed.
 
 | Note | What it answers |
 | --- | --- |
@@ -140,6 +140,7 @@ Eighteen notes that take Wi-Fi apart in the order a product is built: what the t
 | [[02-16 WLAN - Radio Resource Management - Channels, Power, Admission and the Roaming Algorithms]] | The control plane above a single AP: what RRM actually manages (spectrum, power, airtime, association), the measure-decide-actuate-verify loop and the authority gradient, the 802.11k measurement catalogue, channel assignment families from static plan to ChannelFly to SLE-driven learning, Cisco TPCv1 with its worked equation, DFS, spatial reuse and the constant-product rule, what admission control can and cannot refuse, the steering score function worked numerically, the full roam algorithm with its time budget, and EasyMesh versus 802.11bn MAPC |
 | [[02-17 WLAN - Dynamic Frequency Selection - Radar Detection, Channel Rules and Regulatory Behaviour]] | The one place where the regulator writes the specification: why radar is primary in parts of 5 GHz, the FCC and ETSI numbers side by side (CAC 60 s / 600 s, CMT 10 s, CCTT 200 ms + 60 ms versus 1 s, NOP 30 min, thresholds −64/−62 dBm), the master and client obligation matrices, the radar waveforms and detection probabilities, the 802.11h element and CSA machinery, the outage budget of a DFS event, zero-wait and off-channel CAC, why 160 MHz in 5 GHz is always a DFS channel and why 6 GHz has no DFS at all |
 | [[02-18 WLAN - AI in Wi-Fi - Learning Inside the Protocol and the 802.11bx Vision for PHY and MAC]] | The generation after Wi-Fi 8, read from the two papers that define the conversation: the three roles AI plays (as a protocol, as a platform, as traffic), the 802.11bx and 802.11bu paper trail with dates, the PHY candidates ranked by what they cost and what they would break (CSI compression and neural receivers versus pilotless and learned constellations), the four MAC time loops, why a learned MAC cannot promise five nines, the AC_AI case study with its parameters and its arithmetic, determinism as a bound enforced outside the learner, and the four gates every AI feature has to pass |
+| [[02-19 WLAN - Security - RSNA, WPA3, Mesh Security and the Threat Horizon]] | Security from first principles rather than acronym order: the four questions every mechanism answers, the key ladder from passphrase to TK, the AKM and cipher selectors read out of a beacon, SAE and what Dragonblood actually broke, the enterprise certificate model and the closed 192-bit suite, PMF, beacon protection and OCV, and then the design-flaw class where every serious attack since 2017 lives (KRACK, Kr00k, FragAttacks, Framing Frames, SSID Confusion, AirSnitch). Mesh security in two halves, 802.11s peering and HWMP routing versus EasyMesh's 1905 control plane, followed by the post-quantum amendment 802.11bt, MLO and MAPC key architecture, and a hardening playbook |
 | [[02-1 WLAN - Wi-Fi Generations Evolution - Wi-Fi 4 to Wi-Fi 8 and Beyond]] | 802.11n → 802.11bn as a feature-by-feature lineage: what each generation was for, which WFA programme certified it, which application paid for it, and why the peak rate stops growing after Wi-Fi 7 |
 | [[02-2 WLAN - Power Saving Mechanisms and Evolution - Legacy PS, TWT and Wake-Up Radio]] | Energy as the design constraint: legacy PS, U-APSD, SMPS, TWT and r-TWT, wake-up radio, ambient power |
 | [[02-3 WLAN - Ecosystem - WFA Certification, EasyMesh and prpl]] | Who decides what a product may claim: the four bodies (IEEE, WFA, WBA, prpl/BBF), the eight-category certification catalogue, Wi-Fi CERTIFIED 6E/7/8, WPA3 and PMF, EasyMesh R1–R6, prplMesh/prplOS/RDK-B, OpenRoaming, and which programme serves which application |
