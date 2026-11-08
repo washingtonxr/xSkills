@@ -1264,50 +1264,87 @@ specification — and note which claims have a date and which have a project num
 
 ## 02-19 · WLAN — Security: RSNA, WPA3, Mesh Security and the Threat Horizon
 
-The directory's security spine. Everything here is either a standard clause, a certification requirement or a
-published attack with a CVE, and the note is organised by *what an attacker can do* rather than by acronym
-order — which is why the same mechanism (an unauthenticated header bit) appears in 2017, 2021, 2023 and 2026.
+The directory's security spine, and the only note in the vault that opens in 1997 on purpose. It is built as a
+ladder of fifteen rungs: the problem, the first attempt, the architecture, the handshake, the cipher, the two
+authentication routes, the three things the cipher does not cover, then operations and the horizon. Read to the
+rung that answers your question and stop — §1 has the ladder as a table.
 
-### Read these first
+Two reading strategies, depending on what you already know. If you have deployed Wi-Fi and want the theory, start
+at §5 (what the cipher covers) and read forward through §9. If you know the cryptography and want the protocol,
+start at §2 and stop at §5.
+
+### The history, because it is the argument
+
+- **[Paper · ★★★ · EN]** Borisov, N., Goldberg, I., Wagner, D. *Intercepting Mobile Communications: The
+  Insecurity of 802.11*. MobiCom 2001.
+  - The taxonomy — passive, active, active-with-known-plaintext, table-based — is still the clearest way to
+    explain why a stream cipher with a 24-bit IV is not a design. §2.3 is built on it.
+- **[Paper · ★★★ · EN]** Cam-Winget, N., Housley, R., Wagner, D., Walker, J. *Security flaws in 802.11 data link
+  protocols*. Communications of the ACM 46(5), 2003.
+  - The argument that a link layer cannot be secured link-layer-locally, written while 802.11i was in draft. Every
+    "layer 2 is a hop, not a boundary" sentence in §13 traces back to this.
+- **[Paper · ★★★ · EN]** Tews, E., Beck, M. *Practical attacks against WEP and WPA*. WiSec 2009.
+  - Twelve minutes, twelve bytes, and a Michael key. Read it for the mechanism: the countermeasure *is* the
+    oracle, and Michael is as cheap to invert as to compute. §2.5.
+- **[Paper · ★★★ · EN]** He, C., Sundararajan, M., Datta, A., Derek, A., Mitchell, J. C. *A modular correctness
+  proof of IEEE 802.11i and TLS*. CCS 2005, DOI 10.1145/1102120.1102124.
+  - What "the protocol is correct" meant in 2005, and the necessary counterpart to KRACK: the protocol was proved,
+    the implementation's notion of "install once" was not. §4.5.
+
+### The normative text
 
 - **[Standard · ★★★ · EN]** IEEE. *802.11-2020*, clause 12 (Security), including 12.7.6 (4-way handshake), plus
-  *802.11i-2004* for RSNA and *802.11w-2009* for PMF. The normative text behind §2, §6 and §7.
-  - Read 12.7.6 with a capture open. The order of EAPOL messages and which key wraps which is the single most
-    examined detail in a Wi-Fi security interview.
+  *802.11i-2004* for RSNA and *802.11w-2009* for PMF.
+  - The text behind §3, §4, §5 and §8. Read 12.7.6 with a capture open: the order of EAPOL messages and which key
+    wraps which is the single most examined detail in a Wi-Fi security interview.
+- **[Standard · ★★ · EN]** IEEE. *802.1X-2020 — Port-Based Network Access Control*.
+  - The controlled-port model that RSNA imports, and the reason the AP is a pass-through rather than the
+    authenticator. §7.2.
 - **[Spec · ★★★ · EN]** Wi-Fi Alliance. *WPA3 Specification v3.5*.
-  - The AKM and cipher selectors in §2.2, the transition-mode rules in §4.4 and the closed 192-bit suite in
-    §5.3 all come from here. Note §3.4: a BSS enabling EHT or MLO **shall** enable GCMP-256.
+  - The AKM and cipher selectors in §3.5, the transition-mode rules in §6.6 and the closed 192-bit suite in §7.4
+    all come from here. Note §3.4: a BSS enabling EHT or MLO **shall** enable GCMP-256.
 - **[Doc · ★★★ · EN]** Wi-Fi Alliance. *Wi-Fi CERTIFIED 7 Technology Overview*, January 2024.
   - One page on security, and it is binding: WPA3, PMF, beacon protection, Enhanced Open. This is what "Wi-Fi 7
     requires WPA3" actually means in a certification test.
 
-### The four attacks worth reading in full
+### The six attacks worth reading in full
 
-- **[Paper · ★★★ · EN]** Vanhoef, M., Ronen, E. *Dragonblood: A Security Analysis of WPA3's SAE Handshake*. 2019.
-  - CVE-2019-9494 to -9497 plus two downgrades. Read it for the lesson, not the exploit: the PAKE survived, the
-    password-to-element encoding and the transition mode did not.
 - **[Paper · ★★★ · EN]** Vanhoef, M. *Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2*. CCS 2017 —
   <https://www.krackattacks.com/>.
-  - Ten CVEs, and the clearest example of a reliability mechanism becoming a security hole.
+  - Ten CVEs, and the clearest example of a reliability mechanism becoming a security hole. §9.2.
+- **[Paper · ★★★ · EN]** Vanhoef, M., Ronen, E. *Dragonblood: Analyzing the Dragonfly Handshake of WPA3 and
+  EAP-pwd*. IEEE S&P 2020, pp. 517–533, DOI 10.1109/SP40000.2020.00031.
+  - Read it for the lesson, not the exploit: the PAKE survived, the password-to-element encoding and the
+    transition mode did not. The published version prices a 10¹⁰-entry dictionary at under $1. §6.4.
 - **[Paper · ★★★ · EN]** Vanhoef, M. *Fragment and Forge: Breaking Wi-Fi Through Frame Aggregation and
   Fragmentation*. USENIX Security 2021 — <https://www.fragattacks.com/>.
-  - The attack that proved framing matters more than ciphers. Three design flaws in the standard itself.
+  - The attack that proved framing matters more than ciphers. Three design flaws in the standard itself. §9.4.
+- **[Paper · ★★★ · EN]** Schepers, D., Ranganathan, A., Vanhoef, M. *Framing Frames: Bypassing Wi-Fi Encryption by
+  Manipulating Transmit Queues*. USENIX Security 2023.
+  - The queue as a security object. The diagram in §9.5 — four queues, four teams — is the paper's contribution
+    compressed.
+- **[Paper · ★★ · EN]** Gollier, H., Vanhoef, M. *SSID Confusion: Making Wi-Fi Clients Connect to the Wrong
+  Network*. 2024, CVE-2023-52424.
+  - One unbound field, six protocols, and the best available argument against credential reuse. §9.6.
 - **[Paper · ★★★ · EN]** Zhou, X., Pu, J., Liu, Z., Qian, Z., Tan, Z., Krishnamurthy, S. V., Vanhoef, M.
   *AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks*. NDSS 2026.
   - Client isolation is not standardised, and every tested router failed. The enterprise variant steals RADIUS
-    traffic, which is the part to remember.
+    traffic, which is the part to remember. §9.7.
 
-### Mesh: two different problems wearing one word
+### Mesh and onboarding: two different problems wearing one word
 
 - **[Standard · ★★★ · EN]** IEEE. *802.11s-2011* — mesh, MPM, SAE, AMPE, MPTK/MTK/MGTK, HWMP.
-  - §10.1's point is that peering and authentication are separate stages. A profile without AMPE peers without
+  - §11.1's point is that peering and authentication are separate stages. A profile without AMPE peers without
     authentication and says nothing about it.
 - **[Paper · ★★★ · EN]** *Untangling the Knot: Breaking Access Control in Home Wireless Mesh Networks*. CCS 2024.
   - The most important mesh-security paper of the decade. EasyMesh NAPS has opportunistic encryption and no trust
-    anchor, so a wireless client can pull fresh fronthaul and backhaul passphrases and defeat rekeying.
+    anchor, so a wireless client can pull fresh fronthaul and backhaul passphrases and defeat rekeying. §12.2.
 - **[Doc · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi EasyMesh Deployment Guidelines*.
   - One sentence carries the whole argument: prefer DPP onboarding over WPS push-button "in order to enable 1905
     layer security".
+- **[Spec · ★★ · EN]** Wi-Fi Alliance. *Wi-Fi Easy Connect (Device Provisioning Protocol) Specification*.
+  - Bootstrap key, DPP authentication, configuration, and the **connector** — the signed capability that makes
+    authorisation scale and revocation possible. §12.3 has the flow; the spec has the frame formats.
 - **[Paper · ★★ · EN]** *WCDCAnalyzer: Wi-Fi Direct, Easy Connect and EasyMesh analysis*. NDSS 2026.
   - The privacy half: bootstrap-key hash oracle, a static global MAC in QR data, and a reusable DPP chirp hash.
 
@@ -1320,29 +1357,27 @@ order — which is why the same mechanism (an unauthenticated header bit) appear
 - **[Standard · ★★ · EN]** IEEE 802.11 TGbi. *P802.11bi-2026 — Enhanced Privacy Protection* —
   <https://www.ieee802.org/11/Reports/tgbi_update.htm>.
   - Frame anonymization, MAC change during association, encrypted Reassociation Request, AP-side beacon privacy.
-    A privacy amendment, not a cryptographic one.
+    A privacy amendment, not a cryptographic one. §10.2.
 - **[Standard · ★★ · EN]** IEEE. *802.11be-2024*, multi-link security procedures.
   - One PMKSA and one PTK per MLD pair, per-link group keys, one PN space across links. The first real change to
-    the key architecture since 802.11i.
+    the key architecture since 802.11i. §14.2.
 - **[Regulation · ★★ · EN]** Commission Delegated Regulation (EU) 2022/30 with *EN 18031-1/-2/-3:2024*, applicable
   from 1 August 2025.
   - Security as a CE-marking requirement: no universal default passwords, a secure update mechanism, privacy
-    assets enumerated. The support window is now a security parameter.
+    assets enumerated. The support window is now a security parameter. §14.5.
 
 ### Practice
 
 - **[Tool · ★★ · EN]** `iw`, `hostapd_cli`, and Wireshark filters `wlan.rsn.akms`, `wlan.rsn.pcs`,
   `eapol`, `wlan.fc.protected`.
-  - §12.3 is the checklist. The single highest-value check is whether the beacon still advertises both PSK and
+  - §13.3 is the checklist. The single highest-value check is whether the beacon still advertises both PSK and
     SAE — that is transition mode, and it is a downgrade path.
+- **[Guideline · ★★ · EN]** NIST. *SP 800-97, Establishing Wireless Robust Security Networks* (2007) and
+  *SP 800-153, Guidelines for Securing Wireless LANs* (2012).
+  - Dated in places, still the best free description of how an 802.1X WLAN is supposed to be built and audited.
 - **[Doc · ★★ · EN]** hostapd and wpa_supplicant documentation, <https://w1.fi/>.
   - `sae_pwe=2`, `ieee80211w=2`, `sae_require_mfp=1`, `transition_disable=1`. Read the source for how MLO derives
-    the PTK from MLD addresses — it is the clearest explanation of §13.2 anywhere.
-- **[Doc · ★ · EN]** Aruba and Cisco WPA3-Enterprise configuration guides.
-  - Real RSNE examples for the 192-bit profile, including the part vendors rarely say out loud: it interoperates
-    with nothing else, by design.
-
----
+    the PTK from MLD addresses — it is the clearest explanation of §14.2 anywhere.
 
 ## Standards and repositories
 
